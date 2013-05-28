@@ -27,3 +27,5 @@
 	<g:textField name="nombre" value="${alumnoInstance?.nombre}"/>
 </div>
 
+
+
