@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM
+			"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.educacion.academica" >
+
+<class name="Carrera"
+	   table="carrera"
+	   lazy="true">
+
+	<!-- Common id property. -->
+	<id name="id"
+		type="string"
+		column="carrera"
+		unsaved-value="null">
+		<!--access="org.hibernate.auction.persistence.DirectSetAccessor"> -->
+
+		<generator class="assigned"/>
+	</id>
+
+
+    <property   name="denominacion"
+                column="denominacion"
+                type="string"
+                length="255"
+                not-null="false"/>
+
+    <property   name="duracion"
+                column="duracion"
+                type="string"
+                length="255"
+                not-null="false"/>
+
+    <property   name="modalidad"
+                column="modalidad"
+                type="integer"
+                length="255"
+                not-null="false"/>
+
+    <property   name="titulo"
+                column="titulo"
+                type="string"
+                not-null="true"/>
+
+    <property   name="validez"
+                column="validez"
+                type="string"
+                not-null="true"/>
+
+    <property   name="perfilegresado"
+                column="perfilegresado"
+                type="string"
+                not-null="true"/>
+
+    <property   name="ocupacional"
+                column="ocupacional"
+                type="string"
+                not-null="true"/>
+
+    <property   name="estado"
+                column="estado"
+                type="integer"
+                not-null="true"/>
+
+    <set name="aniosLectivos" table="carreraaniolectivo"
+         inverse="false" lazy="true" fetch="select" cascade="all" >
+        <key>
+            <column name="carrera" not-null="true" />
+        </key>
+        <many-to-many entity-name="com.educacion.academica.AnioLectivo">
+            <column name="aniolectivo" not-null="true" />
+        </many-to-many>
+    </set>
+
+
+</class>
+
+</hibernate-mapping>

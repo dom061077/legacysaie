@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM
+			"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.educacion.academica" >
+
+<class name="AnioLectivo"
+	   table="anioslectivos"
+	   lazy="true">
+
+	<!-- Common id property. -->
+	<id name="id"
+		type="long"
+		column="aniolectivo"
+		unsaved-value="null">
+		<!--access="org.hibernate.auction.persistence.DirectSetAccessor"> -->
+
+		<generator class="native"/>
+	</id>
+
+    <property   name="descripcion"
+                column="descripcion"
+                type="string"
+                length="255"
+                not-null="false"/>
+
+    <property   name="anio"
+                column="anio"
+                type="integer"
+                not-null="false"/>
+
+    <property   name="estado"
+                column="estado"
+                type="integer"
+                not-null="false"/>
+
+    <set name="carreras" table="carreraaniolectivo"
+         inverse="false" lazy="true" fetch="select" cascade="all" >
+        <key>
+            <column name="aniolectivo" not-null="true" />
+        </key>
+        <many-to-many entity-name="com.educacion.academica.Carrera">
+            <column name="carrera" not-null="true" />
+        </many-to-many>
+    </set>
+
+
+</class>
+
+</hibernate-mapping>
