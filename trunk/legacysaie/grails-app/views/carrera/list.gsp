@@ -9,7 +9,7 @@
 	</head>
 	<body>
         <div id="grid-example"></div>
-	</body>
+
     <script type="text/javascript">
         Ext.onReady(function(){
             Ext.QuickTips.init();
@@ -173,5 +173,7 @@
             grid.render('grid-example');
         });
     </script>
+
+	</body>
 
 </html>
