@@ -9,6 +9,7 @@ package com.alumno.alumno;
  */
 public class Alumno implements java.io.Serializable  {
     private Long id;
+
     private String numeroDocumento;
     private String apellido;
     private String nombre;
