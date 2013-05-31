@@ -41,6 +41,7 @@ custom accessor only uses getter methods and sets fields directly).
 		<generator class="native"/>
 	</id>
 
+    <property name="tipoDocumento" column="tipodocumento" type="tipodocumento_enum" not-null="true"/>
 
     <property   name="numeroDocumento"
                 column="numerodocumento"

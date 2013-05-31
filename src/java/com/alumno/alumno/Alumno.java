@@ -1,5 +1,7 @@
 package com.alumno.alumno;
 
+import com.educacion.enums.alumno.TipoDocumentoEnumType;
+
 /**
  * Created by IntelliJ IDEA.
  * User: danielmedina
@@ -14,6 +16,7 @@ public class Alumno implements java.io.Serializable  {
     private String apellido;
     private String nombre;
     private Integer anioEgreso;
+    private TipoDocumentoEnumType tipoDocumento;
 
     public Long getId() {
         return id;
@@ -54,5 +57,13 @@ public class Alumno implements java.io.Serializable  {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public TipoDocumentoEnumType getTipoDocumento() {
+        return tipoDocumento;
+    }
+
+    public void setTipoDocumento(TipoDocumentoEnumType tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
     }
 }

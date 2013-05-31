@@ -13,9 +13,11 @@
 
 		<mapping resource='someresource.hbm.xml'/>
 	-->
+        <mapping resource="EnumsUserType.hbm.xml"/>
         <mapping resource="Alumno.hbm.xml"/>
         <mapping resource="Carrera.hbm.xml"/>
         <mapping resource="AnioLectivo.hbm.xml"/>
+
 	</session-factory>
 
 </hibernate-configuration>
