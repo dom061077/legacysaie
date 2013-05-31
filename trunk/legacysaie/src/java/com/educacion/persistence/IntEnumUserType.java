@@ -1,4 +1,4 @@
-package com.educacion.enums;
+package com.educacion.persistence;
 
 import java.io.Serializable;
 import java.sql.PreparedStatement;
@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import com.educacion.enums.alumno.TipoDocumentoEnumType;
 import org.hibernate.*;
 import org.hibernate.util.ReflectHelper;
 import org.hibernate.usertype.EnhancedUserType;
@@ -81,8 +82,10 @@ public class IntEnumUserType implements EnhancedUserType, ParameterizedType {
 
     public Object nullSafeGet(ResultSet rs, String[] names, Object owner)
             throws SQLException {
-        String name = rs.getString( names[0] );
-        return rs.wasNull() ? null : Enum.valueOf(enumClass, name);
+        Integer ordinal = rs.getInt( names[0] );
+        TipoDocumentoEnumType.values()
+        for
+        return rs.wasNull() ? null : Enum.get valueOf(enumClass, name);
     }
 
     public void nullSafeSet(PreparedStatement st, Object value, int index)

@@ -9,25 +9,31 @@ package com.educacion.enums.alumno;
  */
 public enum TipoDocumentoEnumType {
 
-    DNI(),
-    VISA("Visa"),
-    AMEX("American Express");
+    DNI(1),
+    CI(2),
+    LE(3),
+    LC(4),
+    PASAPORTE(5);
 
-    private final String debugName;
+    private final Integer value;
 
-    private TipoDocumentoEnumType(String debugName) {
-        this.debugName = debugName;
+    private TipoDocumentoEnumType(int debugName) {
+        this.value = debugName;
     }
 
     public String toString() {
-        return debugName;
+        return value.toString();
+    }
+    
+    public Integer getValue(){
+        return value;
     }
 
     // ********************** Business Methods ********************** //
 
-    public boolean isValid(CreditCard cc) {
+    /*public boolean isValid(CreditCard cc) {
         // TODO: Implement syntactical validation of credit card information.
         return true;
-    }
+    } */
 
 }

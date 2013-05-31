@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<!--
+Various Hibernate value types for CaveatEmptor.
+Make sure this mapping file is loaded before the others.
+
+@author Christian Bauer
+-->
+<hibernate-mapping>
+
+
+    <typedef class="com.educacion.persistence.IntEnumUserType" name="tipodocumento_enum">
+        <param name="enumClassname">com.educacion.enums.alumno.TipoDocumentoEnumType</param>
+    </typedef>
+
+</hibernate-mapping>
