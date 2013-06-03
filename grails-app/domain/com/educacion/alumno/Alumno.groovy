@@ -21,7 +21,7 @@ class Alumno {
         numeroDocumento column:'numerodocumento'
         apellido column: 'apellido'
         nombre column: 'nombre'
-
+        tipoDocumento column: 'tipodocumento'
 
 
 

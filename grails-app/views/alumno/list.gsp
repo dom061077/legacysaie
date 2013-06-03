@@ -1,5 +1,5 @@
 
-<%@ page import="com.alumno.alumno.Alumno" %>
+<%@ page import="com.educacion.alumno.Alumno" %>
 <!doctype html>
 <html>
 	<head>
@@ -24,11 +24,13 @@
 				<thead>
 					<tr>
 					
-						<g:sortableColumn property="numeroDocumento" title="${message(code: 'alumno.numeroDocumento.label', default: 'Numero Documento')}" />
-					
 						<g:sortableColumn property="apellido" title="${message(code: 'alumno.apellido.label', default: 'Apellido')}" />
 					
 						<g:sortableColumn property="nombre" title="${message(code: 'alumno.nombre.label', default: 'Nombre')}" />
+					
+						<g:sortableColumn property="numeroDocumento" title="${message(code: 'alumno.numeroDocumento.label', default: 'Numero Documento')}" />
+					
+						<th><g:message code="alumno.tipoDocumento.label" default="Tipo Documento" /></th>
 					
 					</tr>
 				</thead>
@@ -36,11 +38,13 @@
 				<g:each in="${alumnoInstanceList}" status="i" var="alumnoInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${alumnoInstance.id}">${fieldValue(bean: alumnoInstance, field: "numeroDocumento")}</g:link></td>
-					
-						<td>${fieldValue(bean: alumnoInstance, field: "apellido")}</td>
+						<td><g:link action="show" id="${alumnoInstance.id}">${fieldValue(bean: alumnoInstance, field: "apellido")}</g:link></td>
 					
 						<td>${fieldValue(bean: alumnoInstance, field: "nombre")}</td>
+					
+						<td>${fieldValue(bean: alumnoInstance, field: "numeroDocumento")}</td>
+					
+						<td>${fieldValue(bean: alumnoInstance, field: "tipoDocumento.descripcion")}</td>
 					
 					</tr>
 				</g:each>

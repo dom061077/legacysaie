@@ -1,5 +1,5 @@
 
-<%@ page import="com.alumno.alumno.Alumno" %>
+<%@ page import="com.educacion.alumno.Alumno" %>
 <!doctype html>
 <html>
 	<head>
@@ -23,15 +23,6 @@
 			</g:if>
 			<ol class="property-list alumno">
 			
-				<g:if test="${alumnoInstance?.numeroDocumento}">
-				<li class="fieldcontain">
-					<span id="numeroDocumento-label" class="property-label"><g:message code="alumno.numeroDocumento.label" default="Numero Documento" /></span>
-					
-						<span class="property-value" aria-labelledby="numeroDocumento-label"><g:fieldValue bean="${alumnoInstance}" field="numeroDocumento"/></span>
-					
-				</li>
-				</g:if>
-			
 				<g:if test="${alumnoInstance?.apellido}">
 				<li class="fieldcontain">
 					<span id="apellido-label" class="property-label"><g:message code="alumno.apellido.label" default="Apellido" /></span>
@@ -46,6 +37,24 @@
 					<span id="nombre-label" class="property-label"><g:message code="alumno.nombre.label" default="Nombre" /></span>
 					
 						<span class="property-value" aria-labelledby="nombre-label"><g:fieldValue bean="${alumnoInstance}" field="nombre"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${alumnoInstance?.numeroDocumento}">
+				<li class="fieldcontain">
+					<span id="numeroDocumento-label" class="property-label"><g:message code="alumno.numeroDocumento.label" default="Numero Documento" /></span>
+					
+						<span class="property-value" aria-labelledby="numeroDocumento-label"><g:fieldValue bean="${alumnoInstance}" field="numeroDocumento"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${alumnoInstance?.tipoDocumento}">
+				<li class="fieldcontain">
+					<span id="tipoDocumento-label" class="property-label"><g:message code="alumno.tipoDocumento.label" default="Tipo Documento" /></span>
+					
+						<span class="property-value" aria-labelledby="tipoDocumento-label"><g:link controller="tipoDocumentoIdentidad" action="show" id="${alumnoInstance?.tipoDocumento?.id}">${alumnoInstance?.tipoDocumento?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>
