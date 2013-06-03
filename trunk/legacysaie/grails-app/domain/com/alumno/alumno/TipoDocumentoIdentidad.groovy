@@ -5,4 +5,11 @@ class TipoDocumentoIdentidad {
     String descripcion
     static constraints = {
     }
+
+    static mapping = {
+        table 'tiposdocumentoidentidad'
+        version false
+        id column : 'tipodocumento',generator: 'increment'
+        descripcion column: 'descripcion'
+    }
 }

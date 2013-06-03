@@ -1,4 +1,4 @@
-<%@ page import="com.alumno.alumno.Alumno" %>
+<%@ page import="com.educacion.alumno.Alumno" %>
 <!doctype html>
 <html>
 	<head>
@@ -29,6 +29,7 @@
 			</g:hasErrors>
 			<g:form method="post" >
 				<g:hiddenField name="id" value="${alumnoInstance?.id}" />
+				<g:hiddenField name="version" value="${alumnoInstance?.version}" />
 				<fieldset class="form">
 					<g:render template="form"/>
 				</fieldset>
