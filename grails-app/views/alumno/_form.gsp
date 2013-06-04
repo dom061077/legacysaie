@@ -10,6 +10,14 @@
 	<g:textField name="apellido" value="${alumnoInstance?.apellido}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: alumnoInstance, field: 'fechaNacimiento', 'error')} required">
+	<label for="fechaNacimiento">
+		<g:message code="alumno.fechaNacimiento.label" default="Fecha Nacimiento" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:datePicker name="fechaNacimiento" precision="day"  value="${alumnoInstance?.fechaNacimiento}"  />
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: alumnoInstance, field: 'nombre', 'error')} ">
 	<label for="nombre">
 		<g:message code="alumno.nombre.label" default="Nombre" />
@@ -24,6 +32,14 @@
 		
 	</label>
 	<g:textField name="numeroDocumento" value="${alumnoInstance?.numeroDocumento}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: alumnoInstance, field: 'sexo', 'error')} required">
+	<label for="sexo">
+		<g:message code="alumno.sexo.label" default="Sexo" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:select name="sexo" from="${com.educacion.enums.SexoEnum?.values()}" keys="${com.educacion.enums.SexoEnum.values()*.name()}" required="" value="${alumnoInstance?.sexo?.name()}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: alumnoInstance, field: 'tipoDocumento', 'error')} required">

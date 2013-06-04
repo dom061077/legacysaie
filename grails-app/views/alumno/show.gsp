@@ -32,6 +32,15 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${alumnoInstance?.fechaNacimiento}">
+				<li class="fieldcontain">
+					<span id="fechaNacimiento-label" class="property-label"><g:message code="alumno.fechaNacimiento.label" default="Fecha Nacimiento" /></span>
+					
+						<span class="property-value" aria-labelledby="fechaNacimiento-label"><g:formatDate date="${alumnoInstance?.fechaNacimiento}" /></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${alumnoInstance?.nombre}">
 				<li class="fieldcontain">
 					<span id="nombre-label" class="property-label"><g:message code="alumno.nombre.label" default="Nombre" /></span>
@@ -46,6 +55,15 @@
 					<span id="numeroDocumento-label" class="property-label"><g:message code="alumno.numeroDocumento.label" default="Numero Documento" /></span>
 					
 						<span class="property-value" aria-labelledby="numeroDocumento-label"><g:fieldValue bean="${alumnoInstance}" field="numeroDocumento"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${alumnoInstance?.sexo}">
+				<li class="fieldcontain">
+					<span id="sexo-label" class="property-label"><g:message code="alumno.sexo.label" default="Sexo" /></span>
+					
+						<span class="property-value" aria-labelledby="sexo-label"><g:fieldValue bean="${alumnoInstance}" field="sexo"/></span>
 					
 				</li>
 				</g:if>
