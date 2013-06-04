@@ -11,6 +11,24 @@
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
 
+import org.apache.log4j.Level
+import org.apache.log4j.net.SMTPAppender
+import org.apache.log4j.RollingFileAppender
+import org.apache.log4j.DailyRollingFileAppender
+//import org.apache.log4j.
+//TimeBasedRollingPolicy
+
+mail.error.server = 'smtp.gmail.com'
+mail.error.port = 587
+mail.error.username = 'mi@mail.com'
+mail.error.password = 'mipassword'
+mail.error.to = 'mi@mail.com'
+mail.error.from = 'grails app test'
+mail.error.subject = '[Application Error]'
+mail.error.starttls = true
+//mail.error.debug = true
+
+
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format
 grails.mime.use.accept.header = false
@@ -75,12 +93,33 @@ environments {
 log4j = {
     // Example of changing the log pattern for the default console appender:
     //
-    //appenders {
-    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
+    System.setProperty 'mail.smtp.port', mail.error.port.toString()
+    System.setProperty 'mail.smtp.starttls.enable', mail.error.starttls.toString()
 
-    error  'org.codehaus.groovy.grails.web.servlet',        // controllers
-           'org.codehaus.groovy.grails.web.pages',          // GSP
+
+    def rollingFile = new RollingFileAppender(name: 'rollingFileAppender', layout: pattern(conversionPattern: "%d [%t] %-5p %c{2} %x - %m%n"))
+
+
+
+    appenders {
+        appender new DailyRollingFileAppender(
+                name: 'dailyAppender',
+                datePattern: "'.'yyyy-MM-dd",  // See the API for all patterns.
+                fileName: "logs/${appName}.log",
+                layout: pattern(conversionPattern:'%d [%t] %-5p %c{2} %x - %m%n')
+        )
+
+        console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
+        /*appender new SMTPAppender(name: 'smtp', to: mail.error.to, from: mail.error.from,
+                subject: mail.error.subject, threshold: Level.ERROR,
+                SMTPHost: mail.error.server, SMTPUsername: mail.error.username,
+                SMTPDebug: mail.error.debug.toString(), SMTPPassword: mail.error.password,
+                layout: pattern(conversionPattern:
+                        '%d{[ dd.MM.yyyy HH:mm:ss.SSS]} [%t] %n%-5p %n%c %n%C %n %x %n %m%n'
+                )) */
+    }
+
+    error  'org.codehaus.groovy.grails.web.pages',          // GSP
            'org.codehaus.groovy.grails.web.sitemesh',       // layouts
            'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
            'org.codehaus.groovy.grails.web.mapping',        // URL mapping
@@ -90,4 +129,16 @@ log4j = {
            'org.springframework',
            'org.hibernate',
            'net.sf.ehcache.hibernate'
+
+    //debug dailyAppender:['org.hibernate.SQL','grails.app.controllers']
+    //trace dailyAppender: ['org.hibernate.type']
+
+    //trace 'org.hibernate.type'
+    //debug 'org.hibernate.SQL'
+    debug   'grails.app.controllers.com'
+    root {
+        error 'stdout'/*, 'smtp'*/
+       // additivity = true
+        //debug 'stdout'
+    }
 }
