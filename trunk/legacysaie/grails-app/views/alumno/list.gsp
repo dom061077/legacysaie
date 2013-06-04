@@ -26,9 +26,13 @@
 					
 						<g:sortableColumn property="apellido" title="${message(code: 'alumno.apellido.label', default: 'Apellido')}" />
 					
+						<g:sortableColumn property="fechaNacimiento" title="${message(code: 'alumno.fechaNacimiento.label', default: 'Fecha Nacimiento')}" />
+					
 						<g:sortableColumn property="nombre" title="${message(code: 'alumno.nombre.label', default: 'Nombre')}" />
 					
 						<g:sortableColumn property="numeroDocumento" title="${message(code: 'alumno.numeroDocumento.label', default: 'Numero Documento')}" />
+					
+						<g:sortableColumn property="sexo" title="${message(code: 'alumno.sexo.label', default: 'Sexo')}" />
 					
 						<th><g:message code="alumno.tipoDocumento.label" default="Tipo Documento" /></th>
 					
@@ -40,9 +44,13 @@
 					
 						<td><g:link action="show" id="${alumnoInstance.id}">${fieldValue(bean: alumnoInstance, field: "apellido")}</g:link></td>
 					
+						<td><g:formatDate date="${alumnoInstance.fechaNacimiento}" /></td>
+					
 						<td>${fieldValue(bean: alumnoInstance, field: "nombre")}</td>
 					
 						<td>${fieldValue(bean: alumnoInstance, field: "numeroDocumento")}</td>
+					
+						<td>${fieldValue(bean: alumnoInstance, field: "sexo.name")}</td>
 					
 						<td>${fieldValue(bean: alumnoInstance, field: "tipoDocumento.descripcion")}</td>
 					
