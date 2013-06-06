@@ -55,6 +55,8 @@ grails.resources.adhoc.patterns = ['/images/*', '/css/*', '/js/*', '/plugins/*']
 //grails.resources.adhoc.includes = []
 //grails.resources.adhoc.excludes = ["*"]
 
+//grails.json.legacy.builder = true
+
 // The default codec used to encode data with ${}
 grails.views.default.codec = "none" // none, html, base64
 grails.views.gsp.encoding = "UTF-8"
@@ -72,6 +74,8 @@ grails.enable.native2ascii = true
 grails.spring.bean.packages = []
 // whether to disable processing of multi part requests
 grails.web.disable.multipart=false
+
+//grails.plugins.springsecurity.active = false
 
 // request parameters to mask when logging exceptions
 grails.exceptionresolver.params.exclude = ['password']

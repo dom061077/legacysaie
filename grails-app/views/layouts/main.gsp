@@ -18,6 +18,7 @@
         <script type="text/javascript" src="${resource(dir:'js/extjs/adapter/ext',file:'ext-base.js')}"></script>
 
         <script type="text/javascript" src="${resource(dir:'js/extjs',file:'ext-all.js')}"></script>
+        <script type="text/javascript" src="${resource(dir:'js',file:'initextjs.js')}"></script>
 		<g:layoutHead/>
         <style type="text/css">
             body {
