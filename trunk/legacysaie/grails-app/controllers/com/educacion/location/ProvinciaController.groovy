@@ -1,6 +1,8 @@
 package com.educacion.location
 
 import org.springframework.dao.DataIntegrityViolationException
+import grails.converters.JSON
+
 
 class ProvinciaController {
 
@@ -99,5 +101,19 @@ class ProvinciaController {
 			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'provincia.label', default: 'Provincia'), params.id])
             redirect(action: "show", id: params.id)
         }
+    }
+
+    def provinciasjson(){
+        def returnMap = [:]
+        def recordList = []
+        //returnMap.success = true
+
+        def provincias = Provincia.createCriteria().list(sort: 'descripcion',order: 'asc') {}
+        provincias.each{
+            recordList << [id:it.id, descripcion: it.descripcion]
+        }
+        returnMap.rows = recordList
+
+        render returnMap as JSON
     }
 }

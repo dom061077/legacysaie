@@ -6,4 +6,9 @@ class Provincia {
 
     static constraints = {
     }
+
+    static mapping = {
+        table 'provincias'
+        version false
+    }
 }
