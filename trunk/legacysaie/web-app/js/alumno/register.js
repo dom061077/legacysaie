@@ -41,6 +41,11 @@
 
 Ext.onReady(function(){
     Ext.QuickTips.init();
+    var provinciaStore = new Ext.data.JsonStore({
+        root:'rows',
+        url:'../location/provinciajson',
+        fields:['id','nombre']
+    });
     var wizard = new Ext.ux.Wiz({
         title:'Registro de Alumno'
         ,closable:false
@@ -119,13 +124,15 @@ Ext.onReady(function(){
                         width:80,
                         name:'fechanacimiento'
                     },{
-                        xtype:'x',
-                        id:'fechanacimientoId',
-                        fieldLabel:'Fecha Nacimiento',
+                        xtype:'combo',
+                        id:'provinciaId',
+                        fieldLabel:'Provincia',
                         allowBlank:false,
                         msgTarget:'under',
+                        store:provinciaStore,
+                        mode:'local',
                         width:80,
-                        name:'fechanacimiento'
+                        name:'provincia'
                     }
 
                 ]

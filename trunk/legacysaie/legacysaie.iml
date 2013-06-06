@@ -48,6 +48,11 @@
       <library name="Grails User Library (Helloworld)">
         <CLASSES>
           <root url="file://$MODULE_DIR$/lib" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.liquibase/liquibase-core/jars/liquibase-core-2.0.5.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.hibernate/jtidy/jars/jtidy-r8-20060801.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.hibernate/hibernate-tools/jars/hibernate-tools-3.6.0.CR1.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.hibernate/hibernate-core/jars/hibernate-core-3.6.10.Final.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/freemarker/freemarker/jars/freemarker-2.3.8.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -55,6 +60,8 @@
       </library>
     </orderEntry>
     <orderEntry type="library" exported="" name="grails-2.1.0" level="application" />
+    <orderEntry type="library" name="grails-2.0.1" level="application" />
+    <orderEntry type="module" module-name="legacysaie-grailsPlugins" />
   </component>
 </module>
 
