@@ -2,7 +2,7 @@ package com.educacion.alumno
 
 import com.alumno.alumno.TipoDocumentoIdentidad
 import com.educacion.enums.SexoEnum
-import com.educacion.academico.SituacionAcademica
+//import com.educacion.academico.SituacionAcademica
 import com.educacion.administrativo.SituacionAdministrativa
 
 
@@ -29,7 +29,7 @@ class Alumno {
     String establecimiento
     String titulo
     Integer anioEgreso
-    SituacionAcademica situacionAcademica
+    //SituacionAcademica situacionAcademica
     String legajo
     String lugarLaboral
     String telefonoLaboral
