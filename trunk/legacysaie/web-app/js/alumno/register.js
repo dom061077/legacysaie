@@ -39,43 +39,7 @@
 */
 
 
-Ext.form.ComboBox.doQuery = function(q, forceAll){
-    q = Ext.isEmpty(q) ? '' : q;
-    var qe = {
-        query: q,
-        forceAll: forceAll,
-        combo: this,
-        cancel:false
-    };
-    if(this.fireEvent('beforequery', qe)===false || qe.cancel){
-        return false;
-    }
-    q = qe.query;
-    forceAll = qe.forceAll;
-    if(forceAll === true || (q.length >= this.minChars)){
-        if(this.lastQuery !== q){
-            this.lastQuery = q;
-            if(this.mode == 'local'){
-                this.selectedIndex = -1;
-                if(forceAll){
-                    this.store.clearFilter();
-                }else{
-                    this.store.filter(this.displayField, q, true); // supply the anyMatch option
-                }
-                this.onLoad();
-            }else{
-                this.store.baseParams[this.queryParam] = q;
-                this.store.load({
-                    params: this.getParams(q)
-                });
-                this.expand();
-            }
-        }else{
-            this.selectedIndex = -1;
-            this.onLoad();
-        }
-    }
-};
+
 
 Ext.onReady(function(){
     Ext.QuickTips.init();
@@ -164,8 +128,8 @@ Ext.onReady(function(){
                         name:'fechanacimiento'
                     },{
                         xtype:'combo',
-                        id:'provinciaId',
-                        fieldLabel:'Provincia',
+                        id:'paisnacimientoId',
+                        fieldLabel:'País Nacimiento',
                         valueField:'id',
                         displayField:'descripcion',
                         allowBlank:false,
@@ -173,10 +137,104 @@ Ext.onReady(function(){
                         store:provinciaStore,
                         mode:'local',
                         width:200,
-                        name:'provincia'
+                        name:'paisnacimiento'
 
+
+                    },{
+                        xtype:'combo',
+                        id:'provincianacimientoId',
+                        fieldLabel:'Provincia Nacimiento',
+                        valueField:'id',
+                        displayField:'descripcion',
+                        allowBlank:false,
+                        msgTarget:'under',
+                        store:provinciaStore,
+                        mode:'local',
+                        width:200,
+                        name:'provincianacimiento'
+
+
+                    },{
+                        xtype:'combo',
+                        id:'localidadId',
+                        fieldLabel:'Localidad',
+                        valueField:'id',
+                        displayField:'descripcion',
+                        allowBlank:false,
+                        msgTarget:'under',
+                        store:provinciaStore,
+                        mode:'local',
+                        width:200,
+                        name:'localidadnacimiento'
+                    },{
+                        xtype:'textfield',
+                        id:'calledomicilioId',
+                        fieldLabel:'Calle Domicilio',
+                        allowBlank: false,
+                        width:260,
+                        msgTarget: 'under',
+                        name: 'calledomicilio'
+                    },{
+                        xtype:'textfield',
+                        id:'numerodomicilioId',
+                        fieldLabel:'Número Domicilio',
+                        allowBlank: false,
+                        width:260,
+                        msgTarget: 'under',
+                        name: 'numerodomicilio'
+                    },{
+                        xtype:'textfield',
+                        id:'barriodomicilioId',
+                        fieldLabel:'Barrio Domicilio',
+                        allowBlank: false,
+                        width:260,
+                        msgTarget: 'under',
+                        name: 'barriodomicilio'
+                    },{
+                        xtype:'combo',
+                        id:'paisdomicilioId',
+                        fieldLabel:'País Domicilio',
+                        valueField:'id',
+                        displayField:'descripcion',
+                        allowBlank:false,
+                        msgTarget:'under',
+                        store:provinciaStore,
+                        mode:'local',
+                        width:200,
+                        name:'paisdomicilio'
+
+
+                    },{
+                        xtype:'combo',
+                        id:'provinciadomicilioId',
+                        fieldLabel:'Provincia Domicilio',
+                        valueField:'id',
+                        displayField:'descripcion',
+                        allowBlank:false,
+                        msgTarget:'under',
+                        store:provinciaStore,
+                        mode:'local',
+                        width:200,
+                        name:'provinciadomicilio'
+
+
+                    },{
+                        xtype:'combo',
+                        id:'localidaddomicilioId',
+                        fieldLabel:'Localidad Domicilio',
+                        valueField:'id',
+                        displayField:'descripcion',
+                        allowBlank:false,
+                        msgTarget:'under',
+                        store:provinciaStore,
+                        mode:'local',
+                        width:200,
+                        name:'localidaddomicilio'
 
                     }
+
+
+
 
                 ]
             })
