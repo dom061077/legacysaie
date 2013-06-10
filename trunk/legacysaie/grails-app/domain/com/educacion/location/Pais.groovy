@@ -1,15 +1,14 @@
 package com.educacion.location
 
-class Provincia {
+class Pais {
     int id
     String descripcion
-    Pais pais
     static constraints = {
     }
 
     static mapping = {
-        table 'provincias'
+        table 'paises'
         version false
-        pais (column: 'id_pais')
+
     }
 }
