@@ -39,4 +39,23 @@ Ext.onReady(function(){
                     }
                 }
             };
+
+            /*var msgBox = Ext.MessageBox.show({
+                title: 'Sesión Inactiva',
+                msg: 'Por favor ingrese de nuevo.',
+                progressText: 'Exiting in 5...',
+                progress: true,
+                closable: false
+            });
+
+            Ext.TaskMgr.start({
+                run: function(count) {
+                    if(count == 5) {
+                        window.location = '';
+                    }
+                    msgBox.updateProgress(count/5,'Exiting in '+(5-count)+'...');
+                },
+                interval: 1000
+            });
+            */
 });
