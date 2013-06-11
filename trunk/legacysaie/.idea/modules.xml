@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/legacysaie.iml" filepath="$PROJECT_DIR$/legacysaie.iml" />
-      <module fileurl="file://$PROJECT_DIR$/legacysaie-grailsPlugins.iml" filepath="$PROJECT_DIR$/legacysaie-grailsPlugins.iml" />
     </modules>
   </component>
 </project>
