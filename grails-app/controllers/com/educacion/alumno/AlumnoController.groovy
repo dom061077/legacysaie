@@ -99,4 +99,15 @@ class AlumnoController {
             redirect(action: "show", id: id)
         }
     }
+    
+    def existenumdoc(){
+        
+        def alumnoInstance = Alumno.findByNumeroDocumento(params.numdoc)
+        def numeroDocumento
+        if (alumnoInstance)
+            numeroDocumento = alumnoInstance.numeroDocumento
+        render(contentType:'text/json'){
+            respuesta(numeroDocumento:numeroDocumento)
+        }
+    }
 }
