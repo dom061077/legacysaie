@@ -38,6 +38,55 @@
  http://www.sencha.com/forum/showthread.php?118733-ExtJs-Combo-should-look-for-the-entered-string-typeAhead-problem
 */
 
+Ext.apply(Ext.form.VTypes,{
+    //cuitVal: /^\d{2}\-\d{8}\-\d{1}$/,
+
+    numdocexistsText:'Número de documento ya existe',
+    numdocexists :		function CPcuitValido(numdoc) {
+        if (typeof(numdoc) == 'undefined')
+            return true;
+        if (numdoc == '')
+            return true;
+        var vec= new Array(10);
+        errorDoc=false;
+        Ext.Ajax.request(
+            {
+                url: '../alumno/existenumdoc',
+
+                params : {
+                    numdoc: numdoc
+                },  // end-params
+
+                success: function(response, opts) {
+                    var jsonData = Ext.decode(response.responseText);
+                    var numDoc = jsonData.respuesta;
+                    if (numDoc && numDoc.numeroDocumento) {
+                        errorDoc = true;
+
+                    } else {
+                        errorDoc = false;
+                    } // end-if
+                }, // end-function
+
+                failure: function (response, options) {
+                    Ext.Msg.show({
+                        title:'Error',
+                        msg:'Se produjo un error de comunicación',
+                        icon:Ext.MessageBox.ERROR,
+                        buttons:Ext.MessageBox.OK,
+                        fn:function(btn){
+                            //wizard.cardPanel.getLayout().setActiveItem(wizard.currentCard - 1);
+                        }
+                    });
+                }
+
+            } // end-ajax
+        );
+        return errorDoc;
+    }
+});
+
+
 
 
 
@@ -99,12 +148,12 @@ Ext.onReady(function(){
                 title:'Datos del Alumno'
                 ,id:'datosdelalumnocarId'
                 ,frame:false
-                ,monitorValid:true
-                ,autoScroll:false
+                ,monitorValid:false
+                ,autoScroll:true
                 ,labelWidth:140
                 ,items:[
                     {
-                        xtype:'textfield',
+                        xtype:'combo',
                         id:'tipodocumentoId',
                         hideLabel:false ,
                         fieldLabel:'Tipo de Documento',
@@ -112,16 +161,28 @@ Ext.onReady(function(){
                         name:'tipodocumento',
                         allowBlank:false,
                         layout:'form',
-                        hidden:false
+                        width:95,
+                        hidden:false,
+                        valueField:'id',
+                        hiddenName:'tipodocumento_id',
+                        displayField:'descripcion',
+                        mode:'local',
+                        store:new Ext.data.JsonStore({
+                            root:'rows',
+                            url:'../tipoDocumentoIdentidad/cmbjson',
+                            fields:['id','descripcion'],
+                            autoLoad:true
+                        })
                     },{
-                        xtype:'textfield',
+                        xtype:'numberfield',
                         id:'numerodocumentoId',
                         fieldLabel:'Número de Documento',
                         allowBlank:false,
                         msgTarget:'under',
                         width:95,
                         layout:'form',
-                        name:'numerodocumento'
+                        name:'numerodocumento',
+                        vtype:'numdocexists'
                     },{
                         xtype:'textfield',
                         id:'apellidoId',
@@ -142,21 +203,32 @@ Ext.onReady(function(){
                         name: 'nombre'
 
                     },{
-                        xtype:'textfield',
+                        xtype:'combo',
                         id:'sexoId',
                         fieldLabel:'Sexo',
+                        valueField:'id',
+                        hiddenName:'sexo_id',
+                        displayField:'descripcion',
                         allowBlank:false,
                         msgTarget:'under',
-                        width:260,
+                        width:95,
                         layout:'form',
-                        name:'sexo'
+                        name:'sexo',
+                        mode:'local',
+                        forceSelection:true,
+                        store:new Ext.data.JsonStore({
+                            root:'rows',
+                            url:'../enumsRendering/sexo',
+                            fields:['id','descripcion'],
+                            autoLoad:true
+                        })
                     },{
                         xtype:'datefield',
                         id:'fechanacimientoId',
                         fieldLabel:'Fecha Nacimiento',
                         allowBlank:false,
                         msgTarget:'under',
-                        width:80,
+                        width:95,
                         layout:'form',
                         name:'fechanacimiento'
                     },{
@@ -309,11 +381,19 @@ Ext.onReady(function(){
                         layout:'form',
                         name:'localidaddomicilio'
 
+                    },{
+                        xtype: 'fileuploadfield',
+                        id: 'fotoalumnoId',
+                        emptyText: 'Seleccione imagen',
+                        fieldLabel: 'Photo',
+                        name: 'photo-path',
+                        buttonText: '',
+                        layout:'form',
+                        anchor: '-20',
+                        buttonCfg: {
+                            iconCls: 'upload-icon'
+                        }
                     }
-
-
-
-
                 ]
             }),
             new Ext.ux.Wiz.Card({
@@ -772,20 +852,16 @@ Ext.onReady(function(){
                         name:'localidadgarante'
                     }
                 ]
-            }),
-            new Ext.ux.Wiz.Card({
-                title:'Otros Datos'
-                ,id:'otorsdatosId'
-                ,frame:false
             })
-
         ]
 
 
     });
 
     wizard.on('nextstep',function(wizard){
-        //var i<
+        if(this.currentCard==1){
+
+        }
 
     });
     wizard.show();

@@ -1,6 +1,8 @@
 package com.alumno.alumno
 
 import org.springframework.dao.DataIntegrityViolationException
+import com.educacion.location.Localidad
+import grails.converters.JSON
 
 class TipoDocumentoIdentidadController {
 
@@ -99,4 +101,16 @@ class TipoDocumentoIdentidadController {
             redirect(action: "show", id: id)
         }
     }
+
+    def cmbjson(){
+        def returnMap = [:]
+        def recordList = []
+        TipoDocumentoIdentidad.list(sort: 'descripcion',order: 'asc').each {
+            recordList << [id: it.id,descripcion: it.descripcion]
+        }
+        returnMap.rows = recordList
+        render returnMap as JSON
+
+    }
+
 }
