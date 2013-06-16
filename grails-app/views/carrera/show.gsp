@@ -1,5 +1,5 @@
 
-<%@ page import="com.educacion.academica.Carrera" %>
+<%@ page import="com.educacion.academico.carrera.Carrera" %>
 <!doctype html>
 <html>
 	<head>
@@ -23,11 +23,13 @@
 			</g:if>
 			<ol class="property-list carrera">
 			
-				<g:if test="${carreraInstance?.denominacion}">
+				<g:if test="${carreraInstance?.anioslectivos}">
 				<li class="fieldcontain">
-					<span id="denominacion-label" class="property-label"><g:message code="carrera.denominacion.label" default="Denominacion" /></span>
+					<span id="anioslectivos-label" class="property-label"><g:message code="carrera.anioslectivos.label" default="Anioslectivos" /></span>
 					
-						<span class="property-value" aria-labelledby="denominacion-label"><g:fieldValue bean="${carreraInstance}" field="denominacion"/></span>
+						<g:each in="${carreraInstance.anioslectivos}" var="a">
+						<span class="property-value" aria-labelledby="anioslectivos-label"><g:link controller="anioLectivo" action="show" id="${a.id}">${a?.encodeAsHTML()}</g:link></span>
+						</g:each>
 					
 				</li>
 				</g:if>
@@ -50,6 +52,35 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${carreraInstance?.niveles}">
+				<li class="fieldcontain">
+					<span id="niveles-label" class="property-label"><g:message code="carrera.niveles.label" default="Niveles" /></span>
+					
+						<g:each in="${carreraInstance.niveles}" var="n">
+						<span class="property-value" aria-labelledby="niveles-label"><g:link controller="nivel" action="show" id="${n.id}">${n?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${carreraInstance?.ocupacional}">
+				<li class="fieldcontain">
+					<span id="ocupacional-label" class="property-label"><g:message code="carrera.ocupacional.label" default="Ocupacional" /></span>
+					
+						<span class="property-value" aria-labelledby="ocupacional-label"><g:fieldValue bean="${carreraInstance}" field="ocupacional"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${carreraInstance?.perfilEgresado}">
+				<li class="fieldcontain">
+					<span id="perfilEgresado-label" class="property-label"><g:message code="carrera.perfilEgresado.label" default="Perfil Egresado" /></span>
+					
+						<span class="property-value" aria-labelledby="perfilEgresado-label"><g:fieldValue bean="${carreraInstance}" field="perfilEgresado"/></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${carreraInstance?.titulo}">
 				<li class="fieldcontain">
 					<span id="titulo-label" class="property-label"><g:message code="carrera.titulo.label" default="Titulo" /></span>
@@ -64,44 +95,6 @@
 					<span id="validez-label" class="property-label"><g:message code="carrera.validez.label" default="Validez" /></span>
 					
 						<span class="property-value" aria-labelledby="validez-label"><g:fieldValue bean="${carreraInstance}" field="validez"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${carreraInstance?.perfilegresado}">
-				<li class="fieldcontain">
-					<span id="perfilegresado-label" class="property-label"><g:message code="carrera.perfilegresado.label" default="Perfilegresado" /></span>
-					
-						<span class="property-value" aria-labelledby="perfilegresado-label"><g:fieldValue bean="${carreraInstance}" field="perfilegresado"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${carreraInstance?.ocupacional}">
-				<li class="fieldcontain">
-					<span id="ocupacional-label" class="property-label"><g:message code="carrera.ocupacional.label" default="Ocupacional" /></span>
-					
-						<span class="property-value" aria-labelledby="ocupacional-label"><g:fieldValue bean="${carreraInstance}" field="ocupacional"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${carreraInstance?.estado}">
-				<li class="fieldcontain">
-					<span id="estado-label" class="property-label"><g:message code="carrera.estado.label" default="Estado" /></span>
-					
-						<span class="property-value" aria-labelledby="estado-label"><g:fieldValue bean="${carreraInstance}" field="estado"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${carreraInstance?.aniosLectivos}">
-				<li class="fieldcontain">
-					<span id="aniosLectivos-label" class="property-label"><g:message code="carrera.aniosLectivos.label" default="Anios Lectivos" /></span>
-					
-						<g:each in="${carreraInstance.aniosLectivos}" var="a">
-						<span class="property-value" aria-labelledby="aniosLectivos-label"><g:link controller="anioLectivo" action="show" id="${a.id}">${a?.encodeAsHTML()}</g:link></span>
-						</g:each>
 					
 				</li>
 				</g:if>
