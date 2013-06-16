@@ -2,6 +2,9 @@ package com.educacion.academico.materia
 
 import org.springframework.dao.DataIntegrityViolationException
 import com.educacion.academico.materia.correlativa.MateriaAprobadaCursar
+import com.educacion.academico.materia.correlativa.MateriaRegularCursar
+import com.educacion.academico.materia.correlativa.MateriaRegularRendir
+import com.educacion.academico.materia.correlativa.MateriaAprobadaRendir
 
 class MateriaController {
 
@@ -15,11 +18,30 @@ class MateriaController {
         params.max = Math.min(max ?: 10, 100)
         def materias = Materia.list(params)
         def correl = MateriaAprobadaCursar.list()
-        
+        def correlRegCursar = MateriaRegularCursar.list()
+        def correlRegRendir = MateriaRegularRendir.list()
+        def correlAprobRendir = MateriaAprobadaRendir.list()
+
+        log.info "Ingresando al metodo list"
+
         correl.each{
             log.debug "DENOMINACION BATERIA BASE: "+it.materiaBase.denominacion
             log.debug "-----------DENOMINACION MATERIA CORREL: "+it.materiaCorrelativa.denominacion
         }
+
+        correlRegCursar.each{
+            log.debug "DENOMINACION BATERIA BASE: "+it.materiaBase.denominacion
+            log.debug "-----------DENOMINACION MATERIA CORREL: "+it.materiaCorrelativa.denominacion
+        }
+        correlRegRendir.each{
+            log.debug "DENOMINACION BATERIA BASE: "+it.materiaBase.denominacion
+            log.debug "-----------DENOMINACION MATERIA CORREL: "+it.materiaCorrelativa.denominacion
+        }
+        correlAprobRendir.each{
+            log.debug "DENOMINACION BATERIA BASE: "+it.materiaBase.denominacion
+            log.debug "-----------DENOMINACION MATERIA CORREL: "+it.materiaCorrelativa.denominacion
+        }
+
 
         [materiaInstanceList: materias, materiaInstanceTotal: Materia.count()]
     }
