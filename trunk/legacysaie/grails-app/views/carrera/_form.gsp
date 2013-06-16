@@ -1,21 +1,13 @@
-<%@ page import="com.educacion.academica.Carrera" %>
+<%@ page import="com.educacion.academico.carrera.Carrera" %>
 
 
 
-<div class="fieldcontain ${hasErrors(bean: carreraInstance, field: 'id', 'error')} ">
-	<label for="id">
-		<g:message code="carrera.id.label" default="Id" />
+<div class="fieldcontain ${hasErrors(bean: carreraInstance, field: 'anioslectivos', 'error')} ">
+	<label for="anioslectivos">
+		<g:message code="carrera.anioslectivos.label" default="Anioslectivos" />
 		
 	</label>
-	<g:textField name="id" value="${carreraInstance?.id}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: carreraInstance, field: 'denominacion', 'error')} ">
-	<label for="denominacion">
-		<g:message code="carrera.denominacion.label" default="Denominacion" />
-		
-	</label>
-	<g:textField name="denominacion" value="${carreraInstance?.denominacion}"/>
+	<g:select name="anioslectivos" from="${com.educacion.academico.carrera.AnioLectivo.list()}" multiple="multiple" optionKey="id" size="5" value="${carreraInstance?.anioslectivos*.id}" class="many-to-many"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: carreraInstance, field: 'duracion', 'error')} ">
@@ -34,6 +26,30 @@
 	<g:field name="modalidad" type="number" value="${carreraInstance.modalidad}" required=""/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: carreraInstance, field: 'niveles', 'error')} ">
+	<label for="niveles">
+		<g:message code="carrera.niveles.label" default="Niveles" />
+		
+	</label>
+	<g:select name="niveles" from="${com.educacion.academico.materia.Nivel.list()}" multiple="multiple" optionKey="id" size="5" value="${carreraInstance?.niveles*.id}" class="many-to-many"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: carreraInstance, field: 'ocupacional', 'error')} ">
+	<label for="ocupacional">
+		<g:message code="carrera.ocupacional.label" default="Ocupacional" />
+		
+	</label>
+	<g:textField name="ocupacional" value="${carreraInstance?.ocupacional}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: carreraInstance, field: 'perfilEgresado', 'error')} ">
+	<label for="perfilEgresado">
+		<g:message code="carrera.perfilEgresado.label" default="Perfil Egresado" />
+		
+	</label>
+	<g:textField name="perfilEgresado" value="${carreraInstance?.perfilEgresado}"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: carreraInstance, field: 'titulo', 'error')} ">
 	<label for="titulo">
 		<g:message code="carrera.titulo.label" default="Titulo" />
@@ -48,37 +64,5 @@
 		
 	</label>
 	<g:textField name="validez" value="${carreraInstance?.validez}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: carreraInstance, field: 'perfilegresado', 'error')} ">
-	<label for="perfilegresado">
-		<g:message code="carrera.perfilegresado.label" default="Perfilegresado" />
-		
-	</label>
-	<g:textField name="perfilegresado" value="${carreraInstance?.perfilegresado}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: carreraInstance, field: 'ocupacional', 'error')} ">
-	<label for="ocupacional">
-		<g:message code="carrera.ocupacional.label" default="Ocupacional" />
-		
-	</label>
-	<g:textField name="ocupacional" value="${carreraInstance?.ocupacional}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: carreraInstance, field: 'estado', 'error')} required">
-	<label for="estado">
-		<g:message code="carrera.estado.label" default="Estado" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:field name="estado" type="number" value="${carreraInstance.estado}" required=""/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: carreraInstance, field: 'aniosLectivos', 'error')} required">
-	<label for="aniosLectivos">
-		<g:message code="carrera.aniosLectivos.label" default="Anios Lectivos" />
-		<span class="required-indicator">*</span>
-	</label>
-	<!-- g:select name="aniosLectivos" from="${com.educacion.academica.AnioLectivo.list()}" multiple="multiple" optionKey="id" size="5" required="" value="${carreraInstance?.aniosLectivos*.id}" class="many-to-many"/ -->
 </div>
 
