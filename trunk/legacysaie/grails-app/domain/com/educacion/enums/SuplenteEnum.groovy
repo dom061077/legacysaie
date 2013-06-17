@@ -8,6 +8,8 @@ package com.educacion.enums
  * To change this template use File | Settings | File Templates.
  */
 public enum SuplenteEnum {
+    T("Titular"),
+    S("Suplente")
 
     String name
 
@@ -16,7 +18,7 @@ public enum SuplenteEnum {
     }
 
     static List(){
-        []
+        [T,S]
     }
 
 }

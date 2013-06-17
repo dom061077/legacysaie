@@ -14,4 +14,9 @@ class Inscripcion {
 
     static constraints = {
     }
+
+    static mapping = {
+        version false
+    }
+
 }

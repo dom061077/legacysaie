@@ -8,10 +8,16 @@ package com.educacion.enums
  * To change this template use File | Settings | File Templates.
  */
 public enum EstadoInscripcionDetalleEnum {
+    I("Iniciada"),
+    A("Aprobada"),
+    R("Regular"),
+    D("Desaprobada"),
+    S("Ausente"),
+    N("Anulada")
 
     String name
 
     static List(){
-        []
+        [I,A,R,D,S,N]
     }
 }

@@ -14,7 +14,8 @@ class AnioLectivo {
     }
 
     static mapping = {
+        version false
         table 'anioslectivos'
-        id columns:'aniolectivo'
+        id column:'aniolectivo'
     }
 }
