@@ -11,6 +11,7 @@ class CarreraController {
     }
 
     def list(Integer max) {
+        log.debug "listar carreras"
         params.max = Math.min(max ?: 10, 100)
         [carreraInstanceList: Carrera.list(params), carreraInstanceTotal: Carrera.count()]
     }
