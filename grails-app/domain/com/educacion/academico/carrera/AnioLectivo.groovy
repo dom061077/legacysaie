@@ -1,7 +1,7 @@
 package com.educacion.academico.carrera
 
 class AnioLectivo {
-    int ind
+    int id
     String descripcion
     int anio
     int estado
