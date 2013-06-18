@@ -24,6 +24,8 @@ class Matricula {
         version false
         id column:'matricula'
         carrera column:'carrera'
+        alumno column : 'alumno'
+        anioLectivo column: 'aniolectivo'
 
     }
 
