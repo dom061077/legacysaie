@@ -907,11 +907,12 @@ Ext.onReady(function(){
             },
             success: function(resp,opt){
                 var respuesta = Ext.decode(resp.responseText);
-                var mensaje = respuesta.respuesta.msg+'\n';
+                var mensaje = respuesta.respuesta.msg+'<br><br>';
+
 
                 if (respuesta.respuesta.success==false){
                     for(var i=0;i<respuesta.respuesta.errors.length;i++){
-                        mensaje = mensaje +respuesta.respuesta.errors[i].msg+'\n';
+                        mensaje = mensaje +'- '+respuesta.respuesta.errors[i].msg+'<br>';
                     }
 
                     Ext.Msg.show({
