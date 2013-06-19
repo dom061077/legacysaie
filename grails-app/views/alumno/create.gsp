@@ -9,7 +9,9 @@
         <script type="text/javascript" src="${resource(dir:'js/extjs/plugins/wizard',file:'Header.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/extjs/plugins/wizard',file:'Card.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/extjs/plugins/fileuploadfield',file:'FileUploadField.js')}"></script>
-        <!--script type="text/javascript" src="${resource(dir:'js/alumno',file: 'register.js')}"></script -->
+        <script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
+
+        <script type="text/javascript" src="${resource(dir:'js/alumno',file: 'register.js')}"></script>
 
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'alumno.label', default: 'Alumno')}" />
