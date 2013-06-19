@@ -16,6 +16,7 @@ class AlumnoController {
     }
 
     def create() {
+        log.error "Ingresando al create"
         [alumnoInstance: new Alumno(params)]
     }
 

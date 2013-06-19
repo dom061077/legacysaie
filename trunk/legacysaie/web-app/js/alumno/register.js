@@ -850,7 +850,23 @@ Ext.onReady(function(){
                         width:400,
                         layout:'form',
                         name:'localidadgarante'
-                    }
+                    },{
+                     xtype:'panel',
+                     itemId:'reCaptcha',
+                     border:false,
+                     html:'<div id="">sssss</div>',
+                     listeners:{
+                     afterRender:function(){
+                     Recaptcha.create("6LfTZcwSAAAAAISkWiE7aqtH3xa7vdmu7GL9O7bm",
+                     Ext.getDom(this.body),
+                     {
+                     theme: "clean",
+                     callback: Recaptcha.focus_response_field
+                     }
+                     );
+                     }
+                     }
+                     }
                 ]
             })
         ]
