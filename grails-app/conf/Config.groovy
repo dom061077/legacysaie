@@ -138,10 +138,10 @@ log4j = {
     //trace dailyAppender: ['org.hibernate.type']
 
     //trace 'org.hibernate.type'
-    debug 'org.hibernate.SQL'
-    debug  'grails.app.controllers'
+    //debug 'org.hibernate.SQL'
+    debug  'grails.app.controllers.com'
     root {
-        debug 'stdout'/*, 'smtp'*/
+        error 'stdout'/*, 'smtp'*/
        // additivity = true
         //debug 'stdout'
     }

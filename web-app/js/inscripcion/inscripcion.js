@@ -9,17 +9,53 @@ Ext.onReady(function(){
             items: [{
                 mainItem: 1,
                 items: [{
-                    title: 'Tickets',
+                    title: 'Inscribirme XXX',
                     layout: 'fit',
                     iconCls: 'x-icon-tickets',
-                    tabTip: 'Tickets tabtip',
-                    style: 'padding: 10px;'//,
-                    //items: [new SampleGrid([0,1,2,3,4])]
+                    tabTip: 'Registrar Inscripción',
+                    style: 'padding: 10px;',
+
+                    items: [
+                        {
+                            xtype:'panel',
+                            items:[
+                                {
+                                    xtype:'form'
+                                    ,items:[
+                                        {   xtype:'combo'
+                                            ,fieldLabel:'Año Lectivo'
+                                            ,store:new Ext.data.JsonStore({
+                                                root:'rows',
+                                                url:'../',
+                                                fields:['id','descripcion'],
+                                                autoLoad:true
+                                            })
+                                        }
+                                    ]
+                                }
+                            ]
+                        },{
+                            xtype:'panel',
+                            items:[
+                                {
+                                    layout:'column',
+                                    anchor:0,
+                                    items:[
+                                        {
+                                            xtype:'combo',
+                                            fieldLabel:'Año Lectivo'
+
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                     {
                         xtype: 'portal',
-                        title: 'Dashboard',
-                        tabTip: 'Dashboard tabtip',
+                        title: 'Inscripciones',
+                        tabTip: 'Inscripciones'/*,
                         items:[{
                             columnWidth:.33,
                             style:'padding:10px 0 10px 10px',
@@ -32,7 +68,21 @@ Ext.onReady(function(){
                                 title: 'Another Panel 1'//,
                                 //tools: tools//,
                                 //html: Ext.example.shortBogusMarkup
-                            }]
+                            },{
+                              xtype:'button',
+                              text:'SSSSSS',
+                              listeners:{
+                                  click:function(button,e){
+                                      Ext.Msg.show({
+                                          title:'Error',
+                                          msg:'Se produjo un error al recuperar los datos de la empresa',
+                                          icon:Ext.MessageBox.ERROR,
+                                          buttons:Ext.MessageBox.OK
+                                      });
+                                  }
+                              }
+                            }
+                            ]
                         },{
                             columnWidth:.33,
                             style:'padding:10px 0 10px 10px',
@@ -57,7 +107,7 @@ Ext.onReady(function(){
                                 //tools: tools//,
                                 //html: Ext.example.shortBogusMarkup
                             }]
-                        }]
+                        }]*/
                     }, {
                         title: 'Subscriptions',
                         iconCls: 'x-icon-subscriptions',

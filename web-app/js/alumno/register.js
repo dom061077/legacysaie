@@ -868,7 +868,23 @@ Ext.onReady(function(){
                      }
                      }
                 ]
-            })
+            })/*,{
+                xtype:'panel',
+                itemId:'reCaptcha',
+                border:false,
+                html:'<div id="">sssss</div>',
+                listeners:{
+                    afterRender:function(){
+                        Recaptcha.create("6LfTZcwSAAAAAISkWiE7aqtH3xa7vdmu7GL9O7bm",
+                            Ext.getDom(this.body),
+                            {
+                                theme: "clean",
+                                callback: Recaptcha.focus_response_field
+                            }
+                        );
+                    }
+                }
+            }  */
         ]
 
 
@@ -879,6 +895,44 @@ Ext.onReady(function(){
 
         }
 
+    });
+    wizard.on('finish',function(wiz,datos){
+        var conn = new Ext.data.Connection();
+        conn.request({
+            url:'../alumno/savejson',
+            method:'POST',
+            params:{
+                recaptcha_response_field : datos.datosdelgaranteId.recaptcha_response_field,
+                recaptcha_challenge_field: datos.datosdelgaranteId.recaptcha_challenge_field
+            },
+            success: function(resp,opt){
+                var respuesta = Ext.decode(resp.responseText);
+                var mensaje = respuesta.respuesta.msg+'\n';
+
+                if (respuesta.respuesta.success==false){
+                    for(var i=0;i<respuesta.respuesta.errors.length;i++){
+                        mensaje = mensaje +respuesta.respuesta.errors[i].msg+'\n';
+                    }
+
+                    Ext.Msg.show({
+                        title:'Mensajes',
+                        icon:Ext.MessageBox.ERROR,
+                        msg: mensaje,
+                        buttons: Ext.MessageBox.OK,
+                        fn: function(btn){}
+                    });
+                }else{
+                    Ext.Msg.show({
+                        title:'Mensajes',
+                        icon:Ext.MessageBox.INFO,
+                        msg: mensaje,
+                        buttons: Ext.MessageBox.OK,
+                        fn: function(btn){}
+                    });
+
+                }
+            }
+        });
     });
     wizard.show();
 });
