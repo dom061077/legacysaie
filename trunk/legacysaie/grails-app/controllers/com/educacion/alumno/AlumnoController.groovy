@@ -1,8 +1,11 @@
 package com.educacion.alumno
 
 import org.springframework.dao.DataIntegrityViolationException
+import com.megatome.grails.RecaptchaService
 
 class AlumnoController {
+
+    RecaptchaService recaptchaService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -16,7 +19,6 @@ class AlumnoController {
     }
 
     def create() {
-        log.error "Ingresando al create"
         [alumnoInstance: new Alumno(params)]
     }
 
@@ -111,4 +113,37 @@ class AlumnoController {
             respuesta(numeroDocumento:numeroDocumento)
         }
     }
+    
+    //--------json method---------
+    
+    def savejson(){
+        log.debug "Parámetros: $params"
+        def success = true
+        def errorList = []
+        def mensaje = ''
+        def alumnoInstance
+        if (!recaptchaService.verifyAnswer(session, request.getRemoteAddr(), params)) {
+            log.debug "CAPTCHA FALSE-------------"
+            mensaje = 'Error en el registro de datos'
+            errorList << [msg: 'El código de verificación no coincide']
+            success=false
+        }else{
+            if (!alumnoInstance.save(flush: true)) {
+                mensaje = 'Los datos se guardaron correctamente'
+            }else{
+                success=false
+                alumnoInstance.errors.allErrors.each{
+                    errorList << [msg:it]
+                }
+            }
+        }
+
+
+
+        render(contentType: 'text/json'){
+            respuesta success: success, msg :mensaje, errors: errorList
+        }
+
+    }
+    
 }
