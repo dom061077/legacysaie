@@ -128,13 +128,16 @@ class AlumnoController {
             errorList << [msg: 'El código de verificación no coincide']
             success=false
         }else{
+            alumnoInstance = new Alumno(params)
             if (!alumnoInstance.save(flush: true)) {
-                mensaje = 'Los datos se guardaron correctamente'
-            }else{
                 success=false
                 alumnoInstance.errors.allErrors.each{
-                    errorList << [msg:it]
+
+                    errorList << [msg:g.message(it)]
                 }
+            }else{
+                mensaje = 'Los datos se guardaron correctamente'
+
             }
         }
 
