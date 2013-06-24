@@ -2,10 +2,17 @@ package com.educacion.alumno
 
 import org.springframework.dao.DataIntegrityViolationException
 import com.megatome.grails.RecaptchaService
+import org.springframework.context.i18n.LocaleContextHolder as LCH
+import org.springframework.context.MessageSource
+import org.springframework.context.MessageSource
+
+
 
 class AlumnoController {
 
     RecaptchaService recaptchaService
+    MessageSource  messageSource
+
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -109,6 +116,8 @@ class AlumnoController {
         def numeroDocumento
         if (alumnoInstance)
             numeroDocumento = alumnoInstance.numeroDocumento
+        else
+            numeroDocumento= "undefined"
         render(contentType:'text/json'){
             respuesta(numeroDocumento:numeroDocumento)
         }
@@ -121,6 +130,7 @@ class AlumnoController {
         def success = true
         def errorList = []
         def mensaje = ''
+        def mensajeerror=''
         def alumnoInstance
         if (!recaptchaService.verifyAnswer(session, request.getRemoteAddr(), params)) {
             log.debug "CAPTCHA FALSE-------------"
@@ -132,16 +142,16 @@ class AlumnoController {
             if (!alumnoInstance.save(flush: true)) {
                 success=false
                 alumnoInstance.errors.allErrors.each{
-
-                    errorList << [msg:g.message(it)]
+                    errorList << [msg:messageSource.getMessage(it, LCH.locale)]
                 }
             }else{
                 mensaje = 'Los datos se guardaron correctamente'
 
             }
         }
-
-
+        recaptchaService.cleanUp(session)
+        log.debug "Recaptcha clean it"
+        log.debug errorList
 
         render(contentType: 'text/json'){
             respuesta success: success, msg :mensaje, errors: errorList

@@ -38,6 +38,8 @@
  http://www.sencha.com/forum/showthread.php?118733-ExtJs-Combo-should-look-for-the-entered-string-typeAhead-problem
 */
 
+
+var errorDoc=true
 Ext.apply(Ext.form.VTypes,{
     //cuitVal: /^\d{2}\-\d{8}\-\d{1}$/,
 
@@ -48,11 +50,10 @@ Ext.apply(Ext.form.VTypes,{
         if (numdoc == '')
             return true;
         var vec= new Array(10);
-        errorDoc=false;
         Ext.Ajax.request(
             {
                 url: '../alumno/existenumdoc',
-
+                async:false,
                 params : {
                     numdoc: numdoc
                 },  // end-params
@@ -60,11 +61,11 @@ Ext.apply(Ext.form.VTypes,{
                 success: function(response, opts) {
                     var jsonData = Ext.decode(response.responseText);
                     var numDoc = jsonData.respuesta;
-                    if (numDoc && numDoc.numeroDocumento) {
-                        errorDoc = true;
+                    if (numDoc.numeroDocumento !='undefined') {
+                        errorDoc = false;
 
                     } else {
-                        errorDoc = false;
+                        errorDoc = true;
                     } // end-if
                 }, // end-function
 
@@ -83,6 +84,7 @@ Ext.apply(Ext.form.VTypes,{
             } // end-ajax
         );
         return errorDoc;
+       // return true;//true determina que la validacion pase false indica error en la validacion
     }
 });
 
@@ -381,7 +383,7 @@ Ext.onReady(function(){
                         layout:'form',
                         name:'localidaddomicilio'
 
-                    },{
+                    }/*,{
                         xtype: 'fileuploadfield',
                         id: 'fotoalumnoId',
                         emptyText: 'Seleccione imagen',
@@ -393,7 +395,7 @@ Ext.onReady(function(){
                         buttonCfg: {
                             iconCls: 'upload-icon'
                         }
-                    }
+                    }*/
                 ]
             }),
             new Ext.ux.Wiz.Card({
@@ -854,18 +856,18 @@ Ext.onReady(function(){
                      xtype:'panel',
                      itemId:'reCaptcha',
                      border:false,
-                     html:'<div id="">sssss</div>',
                      listeners:{
-                     afterRender:function(){
-                     Recaptcha.create("6LfTZcwSAAAAAISkWiE7aqtH3xa7vdmu7GL9O7bm",
-                     Ext.getDom(this.body),
-                     {
-                     theme: "clean",
-                     callback: Recaptcha.focus_response_field
-                     }
-                     );
-                     }
-                     }
+                            afterRender:function(){
+                                Recaptcha.create("6LfTZcwSAAAAAISkWiE7aqtH3xa7vdmu7GL9O7bm",
+                                    Ext.getDom(this.body),
+                                    {
+                                        theme: "clean",
+                                        callback: Recaptcha.focus_response_field
+                                    }
+                                );
+                            }
+                        }
+
                      }
                 ]
             })/*,{
@@ -898,17 +900,38 @@ Ext.onReady(function(){
     });
     wizard.on('finish',function(wiz,datos){
         var conn = new Ext.data.Connection();
+        Ext.MessageBox.show({
+            msg: 'Saving your data, please wait...',
+            progressText: 'Saving...',
+            width:300,
+            wait:true,
+            waitConfig: {interval:200}
+        });
+
         conn.request({
             url:'../alumno/savejson',
             method:'POST',
+            isUpload:true,
             params:{
-                recaptcha_response_field : datos.datosdelgaranteId.recaptcha_response_field,
-                recaptcha_challenge_field: datos.datosdelgaranteId.recaptcha_challenge_field
+                recaptcha_response_field : datos.datosdelgaranteId.recaptcha_response_field
+                ,recaptcha_challenge_field: datos.datosdelgaranteId.recaptcha_challenge_field
+                ,apellido:datos.datosdelalumnocarId.apellido
+                ,nombre:datos.datosdelalumnocarId.nombre
+                ,sexo:datos.datosdelalumnocarId.sexo_id
+                ,numeroDocumento: datos.datosdelalumnocarId.numerodocumento
+                ,legajo: datos.datosdelalumnocarId.legajo
+
+
             },
             success: function(resp,opt){
+                Ext.MessageBox.hide();
+
                 var respuesta = Ext.decode(resp.responseText);
                 var mensaje = respuesta.respuesta.msg+'<br><br>';
-
+                $('#recaptcha_reload_btn').click(
+                        function(){
+                            return true;
+                        }).trigger("click");
 
                 if (respuesta.respuesta.success==false){
                     for(var i=0;i<respuesta.respuesta.errors.length;i++){
@@ -920,7 +943,9 @@ Ext.onReady(function(){
                         icon:Ext.MessageBox.ERROR,
                         msg: mensaje,
                         buttons: Ext.MessageBox.OK,
-                        fn: function(btn){}
+                        fn: function(btn){
+                            Recaptcha.reload();
+                        }
                     });
                 }else{
                     Ext.Msg.show({
@@ -932,6 +957,7 @@ Ext.onReady(function(){
                     });
 
                 }
+                ('recaptcha_reload_btn')
             }
         });
     });
