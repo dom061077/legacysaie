@@ -30,8 +30,12 @@
         </style>
 	</head>
 	<body>
-            <recaptcha:ifEnabled>
+            <%-- recaptcha:ifEnabled>
                 <recaptcha:recaptcha lang="es" theme="blackglass"/>
+            </recaptcha:ifEnabled --%>
+
+            <recaptcha:ifEnabled>
+                <recaptcha:recaptchaAjax lang="es"  theme="blackglass"/>
             </recaptcha:ifEnabled>
 
 	</body>
