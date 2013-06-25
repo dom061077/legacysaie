@@ -17,6 +17,10 @@ public enum EstadoInscripcionDetalleEnum {
 
     String name
 
+    public EstadoInscripcionDetalleEnum(String name){
+        this.name = name
+    }
+
     static List(){
         [I,A,R,D,S,N]
     }

@@ -58,14 +58,18 @@ Ext.onReady(function(){
                                                     })
                                                     },new Ext.grid.GridPanel({
                                                         store:new Ext.data.JsonStore({
-                                                            root:'rows'//,
-                                                            //url:'../materia/'
+                                                            root:'rows',
+                                                            url:'../panelControl/listcorrelcursar',
+                                                            autoLoad:true,
+                                                            baseParams:{
+                                                                alumnoId:12,
+                                                                anioLectivoId:2,
+                                                                carreraId:'ENFERMERIA'
+                                                            }
                                                         }),
                                                         columns: [
                                                             {header: "id",dataIndex:'id',hidden:true},
-                                                            {header: "Nombre",width:200,sortable:true,dataIndex:'nombre'},
-                                                            {header: "Representante", width:200,sortable:true,dataIndex:'nombreRepresentante'},
-                                                            {header: "telefono1",width:100}
+                                                            {header: "Denominación",width:200,sortable:true,dataIndex:'denominacion'}
                                                         ],
                                                         stripeRows: true,
                                                         height:250,

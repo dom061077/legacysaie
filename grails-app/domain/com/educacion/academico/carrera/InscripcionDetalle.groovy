@@ -26,6 +26,7 @@ class InscripcionDetalle {
         table 'inscripciondetalle'
         version false
         notaFinal column:'notafinal'
+        division column: 'division'
 
     }
 }
