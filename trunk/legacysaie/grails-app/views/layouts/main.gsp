@@ -20,6 +20,8 @@
         <script type="text/javascript" src="${resource(dir:'js/extjs',file:'ext-all.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js',file:'initextjs.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/extjs/locale',file:'ext-lang-es.js')}"></script>
+        <script type="text/javascript" src="${resource(dir:'js/extjs/ux',file:'CheckColumn.js')}"></script>
+
 
 		<g:layoutHead/>
         <style type="text/css">

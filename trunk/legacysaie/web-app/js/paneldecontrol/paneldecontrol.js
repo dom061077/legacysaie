@@ -32,7 +32,7 @@ Ext.onReady(function(){
                             mainItem: 1,
                             items: [
                                 {
-                                    title: 'Inscribirme en finales',
+                                    title: 'Inscribirme en cursado',
                                     layout: 'fit',
                                     iconCls: 'x-icon-tickets',
                                     tabTip: 'Registrar Inscripción',
@@ -99,7 +99,7 @@ Ext.onReady(function(){
                                         title: 'Inscripciones',
                                         tabTip: 'Inscripciones'
                                 }, {
-                                        title: 'Inscribirme en cursado',
+                                        title: 'Inscribirme en Finales',
                                         iconCls: 'x-icon-subscriptions',
                                         tabTip: 'Subscriptions tabtip',
                                         style: 'padding: 10px;',

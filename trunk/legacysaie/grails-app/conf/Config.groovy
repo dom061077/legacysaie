@@ -146,3 +146,14 @@ log4j = {
         //debug 'stdout'
     }
 }
+
+// Added by the Spring Security Core plugin:
+grails.plugins.springsecurity.userLookup.userDomainClassName = 'com.educacion.seguridad.User'
+grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'com.educacion.seguridad.UserRole'
+grails.plugins.springsecurity.authority.className = 'com.educacion.seguridad.Role'
+grails.plugins.springsecurity.requestMap.className = 'com.educacion.seguridad.RequestMap'
+grails.plugins.springsecurity.securityConfigType = 'Requestmap'
+
+grails.plugins.springsecurity.successHandler.defaultTargetUrl = '/login/authSucccessAjax'
+grails.plugins.springsecurity.successHandler.alwaysUseDefault = true
+grails.plugins.springsecurity.failureHandler.defaultFailureUrl = '/login/authFailExtJs?login_error=1'
