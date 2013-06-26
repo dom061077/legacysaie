@@ -148,10 +148,12 @@ class PanelControlController {
             flagValida=false
             flagValida = validarCorrelativa(it.id,params.alumnoId.toString().toInteger().intValue(),params.anioLectivoId.toString().toInteger().intValue(),params.carreraId,TipoInscripcionDetalleEnum.C)
             if(flagValida){
-                recordList << [id:it.id, denominacion: it.denominacion]
+                recordList << [id:it.id, denominacion: it.denominacion,seleccionda:false]
             }
         }
         returnMap.rows = recordList
+        returnMap.success = true
+        returnMap.total = recordList.size()
         render returnMap as JSON
     }
 
