@@ -17,6 +17,9 @@ class Inscripcion {
 
     static mapping = {
         version false
+        id column:'inscripcion'
+        matricula column: 'matricula'
+
     }
 
 }

@@ -60,6 +60,7 @@ Ext.onReady(function(){
                                                         store:new Ext.data.JsonStore({
                                                             root:'rows',
                                                             url:'../panelControl/listcorrelcursar',
+                                                            fields:[{name:'id'},{name:'denominacion'},{name:'seleccionada',type:'bool'}],
                                                             autoLoad:true,
                                                             baseParams:{
                                                                 alumnoId:12,
@@ -69,13 +70,22 @@ Ext.onReady(function(){
                                                         }),
                                                         columns: [
                                                             {header: "id",dataIndex:'id',hidden:true},
-                                                            {header: "Denominación",width:200,sortable:true,dataIndex:'denominacion'}
+                                                            {header: "Denominación",width:200,sortable:false,dataIndex:'denominacion'},
+                                                            {
+                                                                xtype: 'checkcolumn',
+                                                                header: 'Seleccionada',
+                                                                dataIndex: 'seleccionada',
+                                                                width: 55,
+                                                                editor:{
+                                                                    xtype:'checkbox'
+                                                                }
+                                                            }
                                                         ],
                                                         stripeRows: true,
                                                         height:250,
                                                         width:600,
                                                         loadMask:true,
-                                                        title:'Empresas',
+                                                        title:'Materias a Inscribir',
                                                         iconCls: 'icon-grid'
 
                                                     })

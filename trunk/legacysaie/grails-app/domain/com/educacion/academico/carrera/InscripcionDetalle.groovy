@@ -25,8 +25,12 @@ class InscripcionDetalle {
     static mapping = {
         table 'inscripciondetalle'
         version false
+        id column:'inscripciondetalle'
         notaFinal column:'notafinal'
         division column: 'division'
-
+        inscripcion column:'inscripcion'
+        materia column: 'materia'
+        nivel column:  'nivel'
+        tipoInscripcion column: 'tipoinscripcion'
     }
 }
