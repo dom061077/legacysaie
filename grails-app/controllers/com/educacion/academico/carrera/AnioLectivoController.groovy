@@ -10,7 +10,7 @@ class AnioLectivoController {
         def returnMap = [:]
         def recordList = []
         
-        def anios = AnioLectivo.list()
+        def anios = AnioLectivo.list(sort: 'anio',order:'desc')
         anios.each {
             recordList << [id:it.id,descripcion:it.descripcion]
         }

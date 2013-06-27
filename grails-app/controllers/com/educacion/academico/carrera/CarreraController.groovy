@@ -1,6 +1,7 @@
 package com.educacion.academico.carrera
 
 import org.springframework.dao.DataIntegrityViolationException
+import grails.converters.JSON
 
 class CarreraController {
 
@@ -100,4 +101,5 @@ class CarreraController {
             redirect(action: "show", id: id)
         }
     }
+
 }

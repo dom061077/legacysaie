@@ -13,15 +13,18 @@
     <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"PortalColumn.js")}"></script>
     <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"Portlet.js")}"></script>
     <script type="text/javascript">
-        var anioLectivoUrl='${createLink(uri:'/anioLectivo/listjson')}';
+        var anioLectivoUrl='${createLink(uri:'/matricula/listaniolectivoporalumnojson')}';
+        var carreraUrl = '${createLink(uri:'/matricula/listporalumnojson')}';
         var correlCursar='${createLink(uri:'/panelControl/listcorrelcursar')}';
         var correlFinal='${createLink(uri:'/panelControl/listcorrelrendir')}';
+        var username = '${userInstance.alumno.apellido} - ${userInstance.alumno.nombre}';
+        var alumnoId = '${userInstance.alumno.id}';
     </script>
     <script type="text/javascript" src="${resource(dir:"js/paneldecontrol",file:"paneldecontrol.js")}"></script>
     <title></title>
 
 </head>
 <body>
-
+         <div id="dummydiv"></div>
 </body>
 </html>
