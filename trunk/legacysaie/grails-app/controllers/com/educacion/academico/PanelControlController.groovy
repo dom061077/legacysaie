@@ -13,7 +13,9 @@ import grails.converters.JSON
 
 class PanelControlController {
 
-    def index() { }
+    def index() {
+
+    }
 
     
     private boolean validarCorrelativa(String materiaId,int alumnoId, int anioLectivoId,String carreraId,TipoInscripcionDetalleEnum tipoInsc ){

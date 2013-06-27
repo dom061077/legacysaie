@@ -44,6 +44,8 @@ Ext.onReady(function(){
                                             items:[
                                                 {
                                                     xtype:'form'
+                                                    ,frame:true
+                                                    ,width:400
                                                     ,items:[
                                                     {   xtype:'combo'
                                                         ,fieldLabel:'Año Lectivo'
@@ -52,14 +54,14 @@ Ext.onReady(function(){
                                                         ,displayField:'descripcion'
                                                         ,store:new Ext.data.JsonStore({
                                                         root:'rows',
-                                                        url:'../anioLectivo/listjson',
+                                                        url:anioLectivoUrl,
                                                         fields:['id','descripcion'],
                                                         autoLoad:true
                                                     })
                                                     },new Ext.grid.GridPanel({
                                                         store:new Ext.data.JsonStore({
                                                             root:'rows',
-                                                            url:'../panelControl/listcorrelcursar',
+                                                            url:correlCursar,
                                                             fields:[{name:'id'},{name:'denominacion'},{name:'seleccionada',type:'bool'}],
                                                             autoLoad:true,
                                                             baseParams:{
@@ -83,13 +85,21 @@ Ext.onReady(function(){
                                                         ],
                                                         stripeRows: true,
                                                         height:250,
-                                                        width:600,
+                                                        width:500,
                                                         loadMask:true,
                                                         title:'Materias a Inscribir',
                                                         iconCls: 'icon-grid'
 
-                                                    })
-                                                ]
+                                                        })
+                                                    ],
+                                                    buttons:[
+                                                        {
+                                                            text:'Inscribir',
+                                                            handler: function(){
+
+                                                            }
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }
@@ -110,6 +120,7 @@ Ext.onReady(function(){
                                             items:[
                                                 {
                                                     xtype:'form'
+                                                    ,frame:true
                                                     ,items:[
                                                     {   xtype:'combo'
                                                         ,fieldLabel:'Año Lectivo'
@@ -118,7 +129,7 @@ Ext.onReady(function(){
                                                         ,displayField:'descripcion'
                                                         ,store:new Ext.data.JsonStore({
                                                         root:'rows',
-                                                        url:'../anioLectivo/listjson',
+                                                        url:anioLectivoUrl,
                                                         fields:['id','descripcion'],
                                                         autoLoad:true
                                                     })

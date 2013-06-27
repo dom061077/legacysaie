@@ -1,7 +1,7 @@
 function loginform(form){
     form.getForm().submit({
         success:function(form,action){
-               alert(action);
+               window.location=homeUrl;
         },
         failure:function(form,action){
                alert(action.result.error);

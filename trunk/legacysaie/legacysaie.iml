@@ -60,8 +60,8 @@
       </library>
     </orderEntry>
     <orderEntry type="library" exported="" name="grails-2.1.0" level="application" />
-    <orderEntry type="library" name="grails-2.0.1" level="application" />
     <orderEntry type="module" module-name="legacysaie-grailsPlugins" />
+    <orderEntry type="library" name="grails-2.1.0" level="application" />
   </component>
 </module>
 
