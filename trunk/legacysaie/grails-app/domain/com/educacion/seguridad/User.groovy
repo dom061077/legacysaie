@@ -1,5 +1,7 @@
 package com.educacion.seguridad
 
+import com.educacion.alumno.Alumno
+
 class User {
 
 	transient springSecurityService
@@ -10,14 +12,19 @@ class User {
 	boolean accountExpired
 	boolean accountLocked
 	boolean passwordExpired
+    Alumno alumno
+    
 
 	static constraints = {
 		username blank: false, unique: true
 		password blank: false
+        alumno blank:false, nullable: false
 	}
 
 	static mapping = {
 		password column: '`password`'
+        alumno column: 'alumno',lazy: false
+
 	}
 
 	Set<Role> getAuthorities() {

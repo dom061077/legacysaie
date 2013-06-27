@@ -2,6 +2,7 @@ import com.educacion.seguridad.Role
 import com.educacion.seguridad.User
 import com.educacion.seguridad.RequestMap
 import com.educacion.seguridad.UserRole
+import com.educacion.alumno.Alumno
 
 class BootStrap {
 
@@ -13,11 +14,11 @@ class BootStrap {
 
 
     void createUsers(){
-        def user = User.findByUsername('admin')
+        def alumnoInstance = Alumno.get(12)
+        def user = User.findByUsername('user')
         if(!user){
             def adminRole = new Role(authority:'ADMIN').save()
-            new User(username:'user',password:'user',enabled:true).save(failOnError:true)
-            user=new User(username:'admin',password:'123',enabled:true).save(failOnError:true)
+            user=new User(username:'user',password:'user',enabled:true,alumno: alumnoInstance).save(failOnError:true)
             new RequestMap(url: '/js/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
             new RequestMap(url: '/css/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
             new RequestMap(url: '/images/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)

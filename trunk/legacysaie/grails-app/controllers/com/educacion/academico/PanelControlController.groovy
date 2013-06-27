@@ -12,9 +12,11 @@ import com.educacion.academico.carrera.Carrera
 import grails.converters.JSON
 
 class PanelControlController {
-
+    def springSecurityService
     def index() {
 
+        def userInstance = springSecurityService.currentUser
+        [userInstance:userInstance]
     }
 
     
