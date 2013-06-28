@@ -78,6 +78,8 @@ Ext.onReady(function(){
                                                                     combo.setValue(rowselected.get('denominacion'));
                                                                 },  */
                                                                 select:function(combo,record,index){
+                                                                    var rowselectedCarrera = Ext.getCmp('combocarreraId').getStore().getAt(0);
+                                                                    var rowselectedAnio = Ext.getCmp('comboaniolectivoId').getStore().getAt(0);
 
                                                                 }
                                                             }
@@ -148,11 +150,13 @@ Ext.onReady(function(){
                                                             iconCls: 'icon-grid',
                                                             listeners:{
                                                                 afterrender:function(component){
+                                                                    var rowselectedCarrera = Ext.getCmp('combocarreraId').getStore().getAt(0);
+                                                                    var rowselectedAnio = Ext.getCmp('comboaniolectivoId').getStore().getAt(0);
                                                                     Ext.getCmp('gridcorrelcurId').getStore().load({
                                                                         params:{
                                                                             alumnoId:alumnoId,
-                                                                            carreraId:Ext.getCmp('combocarreraId').hiddenField.value,
-                                                                            anioLectivoId:Ext.getCmp('comboaniolectivoId').hiddenField.value
+                                                                            carreraId:rowselectedCarrera.get("id"),
+                                                                            anioLectivoId:rowselectedAnio.get("id")
                                                                         }
                                                                     });
 

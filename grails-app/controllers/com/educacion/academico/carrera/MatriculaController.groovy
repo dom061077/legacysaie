@@ -27,12 +27,15 @@ class MatriculaController {
 
     }
     
-    def listaniolectivoporalumnojson(int alumnoId){
+    def listaniolectivoporalumnojson(int alumnoId,String carreraId){
         def returnMap = [:]
         def recordList = []
         def matriculas = Matricula.createCriteria().list (){
             alumno{
                 eq("id",alumnoId)
+            }
+            carrera{
+                eq("id",carreraId)
             }
             anioLectivo{
                 order("anio","asc")

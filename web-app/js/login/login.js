@@ -52,4 +52,5 @@ Ext.onReady(function(){
             }
         ]
     });
+    Ext.getCmp('usernameId').focus();
 });
