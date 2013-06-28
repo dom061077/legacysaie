@@ -10,6 +10,7 @@ import com.educacion.academico.materia.correlativa.MateriaRegularRendir
 import com.educacion.academico.materia.correlativa.MateriaAprobadaRendir
 import com.educacion.academico.carrera.Carrera
 import grails.converters.JSON
+import com.educacion.enums.EstadoInscripcionEnum
 
 class PanelControlController {
     def springSecurityService
@@ -79,6 +80,34 @@ class PanelControlController {
                 if (inscsDetalle.size()==0)
                     flagvalida = false
             }
+
+            inscsDetalle = InscripcionDetalle.createCriteria().list(){
+                inscripcion{
+                    ne("estado",EstadoInscripcionEnum.N)
+                    matricula{
+                        alumno{
+                            eq("id",alumnoId)
+                        }
+                        anioLectivo{
+                            eq("id",anioLectivoId)
+                        }
+                        carrera{
+                            eq("id",carreraId)
+                        }
+                    }
+                }
+                materia{
+                    eq("id",materiaId)
+                }
+                or{
+                    eq("estado",EstadoInscripcionDetalleEnum.I)
+                    eq("estado",EstadoInscripcionDetalleEnum.R)
+                }
+                eq("tipoInscripcion",TipoInscripcionDetalleEnum.C)
+            }
+            if (inscsDetalle.size()>0)
+               flagvalida = false
+
         }
         
         if (tipoInsc == TipoInscripcionDetalleEnum.L || tipoInsc == TipoInscripcionDetalleEnum.R){
@@ -92,7 +121,7 @@ class PanelControlController {
                             alumno{
                                 eq("id",alumnoId)
                             }
-                            anioLectivoId{
+                            anioLectivo{
                                 eq("id",anioLectivoId)
                             }
                             carrera{
@@ -134,7 +163,59 @@ class PanelControlController {
                 if (inscsDetalle.size()==0)
                     flagvalida = false
             }
+            inscsDetalle = InscripcionDetalle.createCriteria().list(){
+                inscripcion{
+                    ne("estado",EstadoInscripcionEnum.N)
+                    matricula{
+                        alumno{
+                            eq("id",alumnoId)
+                        }
+                        anioLectivo{
+                            eq("id",anioLectivoId)
+                        }
+                        carrera{
+                            eq("id",carreraId)
+                        }
+                    }
+                }
+                materia{
+                    eq("id",materiaId)
+                }
+                or{
+                    eq("estado",EstadoInscripcionDetalleEnum.I)
+                    eq("estado",EstadoInscripcionDetalleEnum.A)
+                }
+            }
+            if (inscsDetalle.size()>0)
+                    flagvalida=false
+
+            inscsDetalle = InscripcionDetalle.createCriteria().list {
+                inscripcion{
+                    ne("estado",EstadoInscripcionEnum.N)
+                    matricula{
+                        alumno{
+                            eq("id",alumnoId)
+                        }
+                        anioLectivo{
+                            eq("id",anioLectivoId)
+                        }
+                        carrera{
+                            eq("id",carreraId)
+                        }
+                    }
+                }
+                materia{
+                    eq("id",materiaId)
+                }
+                eq("estado",EstadoInscripcionDetalleEnum.R)
+            }
+            if(inscsDetalle.size()==0){
+                flagvalida = false
+            }
         }
+
+
+
         return flagvalida
     }
 
@@ -146,6 +227,7 @@ class PanelControlController {
             carrera{
                 eq("id",params.carreraId)
             }
+            order("denominacion","asc")
         }
         boolean flagValida
         materias.each {
@@ -162,6 +244,26 @@ class PanelControlController {
     }
 
     def listcorrelrendir(){
+        def returnMap = [:]
+        def recordList = []
 
+        def materias = Materia.createCriteria().list {
+            carrera{
+                eq("id",params.carreraId)
+            }
+            order("denominacion","asc")
+        }
+        boolean flagValida
+        materias.each {
+            flagValida=false
+            flagValida = validarCorrelativa(it.id,params.alumnoId.toString().toInteger().intValue(),params.anioLectivoId.toString().toInteger().intValue(),params.carreraId,TipoInscripcionDetalleEnum.R)
+            if(flagValida){
+                recordList << [id:it.id,nivel:it.nivel.descripcion, denominacion: it.denominacion,seleccionda:false]
+            }
+        }
+        returnMap.rows = recordList
+        returnMap.success = true
+        returnMap.total = recordList.size()
+        render returnMap as JSON
     }
 }
