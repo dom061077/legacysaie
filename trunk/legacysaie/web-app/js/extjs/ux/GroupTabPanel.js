@@ -5,6 +5,7 @@
  * http://www.sencha.com/license
  */
 Ext.ns('Ext.ux');
+var loadMask = new Ext.LoadMask(Ext.getBody(), {msg:'Cargando'});
 
 Ext.ux.GroupTabPanel = Ext.extend(Ext.TabPanel, {
     tabPosition: 'left',
@@ -133,6 +134,7 @@ Ext.ux.GroupTabPanel = Ext.extend(Ext.TabPanel, {
 
     // private
     onStripMouseDown: function(e){
+        Ext.getBody().mask('Cargando');
         if (e.button != 0) {
             return;
         }
@@ -149,6 +151,11 @@ Ext.ux.GroupTabPanel = Ext.extend(Ext.TabPanel, {
                 t.item.ownerCt.setActiveTab(t.item);
             }
         }
+        setTimeout(function (target) {
+            Ext.getBody().unmask();
+        }, 1500,Ext.getBody());
+
+
     },
 
     expandGroup: function(groupEl){

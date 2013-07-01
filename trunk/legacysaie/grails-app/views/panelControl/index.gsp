@@ -17,6 +17,7 @@
         var carreraUrl = '${createLink(uri:'/matricula/listporalumnojson')}';
         var correlCursar='${createLink(uri:'/panelControl/listcorrelcursar')}';
         var correlFinal='${createLink(uri:'/panelControl/listcorrelrendir')}';
+        var inscUrl = '${createLink(uri:'/inscripcion/listinscripciones')}';
         var username = '${userInstance.alumno.apellido} - ${userInstance.alumno.nombre}';
         var alumnoId = '${userInstance.alumno.id}';
     </script>
