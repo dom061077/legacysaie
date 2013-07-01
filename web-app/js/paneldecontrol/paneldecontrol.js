@@ -1,5 +1,11 @@
 Ext.onReady(function(){
     Ext.QuickTips.init();
+    var storelistadoinscripciones = new Ext.data.JsonStore({
+        root:'rows',
+        url:correlCursar,
+        fields:[{name:'id'},{name:'denominacion'},{name:'nivel'},{name:'seleccionada',type:'bool'}],
+        autoLoad:false
+    });
     var viewport = new Ext.Viewport({
         layout:'fit',
         items:[
@@ -47,7 +53,7 @@ Ext.onReady(function(){
                                                     ,id:'forminscfinalId'
                                                     ,frame:true
                                                     ,width:500
-                                                    ,title:'Inscripcio'
+                                                    ,title:'Inscripción de Finales'
                                                     ,listeners:{
                                                         afterrender: function(component){
                                                             /*var rowselected = Ext.getCmp('combocarreraId').getStore().getAt(0);
@@ -178,7 +184,7 @@ Ext.onReady(function(){
                                                     ],
                                                     buttons:[
                                                         {
-                                                            text:'Inscribir',
+                                                            text:'Inscribir en Final',
                                                             handler: function(){
 
                                                             }
@@ -292,6 +298,7 @@ Ext.onReady(function(){
 
                                                     ,new Ext.grid.GridPanel({
                                                         id:'gridcorrelcurId',
+                                                        stripeRows:true,
                                                         store:new Ext.data.JsonStore({
                                                             root:'rows',
                                                             url:correlCursar,
@@ -316,6 +323,7 @@ Ext.onReady(function(){
                                                         height:250,
                                                         width:500,
                                                         loadMask:true,
+
                                                         title:'Materias a Inscribir',
                                                         iconCls: 'icon-grid',
                                                         listeners:{
@@ -323,7 +331,7 @@ Ext.onReady(function(){
                                                     })
                                                 ],buttons:[
                                                         {
-                                                            text:'Inscribir',
+                                                            text:'Inscribir en Cursado',
                                                             handler: function(){
 
                                                             }
@@ -334,11 +342,45 @@ Ext.onReady(function(){
                                             ]
                                         }]
                                 }, {
-                                        title: 'Users',
+                                        title: 'Listado de Inscripciones',
                                         iconCls: 'x-icon-users',
                                         tabTip: 'Users tabtip',
-                                        style: 'padding: 10px;'//,
-                                        //html: Ext.example.shortBogusMarkup
+                                        style: 'padding: 10px;',
+                                        layout:'fit',
+                                        items:[
+                                            {
+                                              xtype:'panel',
+                                              items:[
+                                                  new Ext.grid.GridPanel({
+                                                      id:'gridlistadoInscripcionesId',
+                                                      stripeRows:true,
+                                                      store:storelistadoinscripciones,
+                                                      columns: [
+                                                          {header: "id",dataIndex:'id',hidden:true},
+                                                          {header: "Denominación",width:200,sortable:false,dataIndex:'denominacion'},
+                                                          {header: "Nivel",width:100,sortable:false,dataIndex:"nivel"}
+                                                      ],
+                                                      stripeRows: true,
+                                                      height:250,
+                                                      width:500,
+                                                      loadMask:true,
+
+                                                      title:'Mis Inscripciones',
+                                                      iconCls: 'icon-grid',
+                                                      listeners:{
+                                                      },
+                                                       bbar: new Ext.PagingToolbar({
+                                                           pageSize: 10,
+                                                           store: storelistadoinscripciones,
+                                                           displayInfo:true,
+                                                           displayMsg: 'Visualizando registros {0} - {1} de {2}',
+                                                           emptyMsg: 'No hay registros para visualizar'
+                                                       })
+                                                  })
+
+                                              ]
+                                            }
+                                        ]
                                 }
                             ]
                         }, {
