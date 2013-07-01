@@ -2,9 +2,12 @@ Ext.onReady(function(){
     Ext.QuickTips.init();
     var storelistadoinscripciones = new Ext.data.JsonStore({
         root:'rows',
-        url:correlCursar,
-        fields:[{name:'id'},{name:'denominacion'},{name:'nivel'},{name:'seleccionada',type:'bool'}],
-        autoLoad:false
+        url:inscUrl,
+        baseParams:{
+          alumnoId:alumnoId
+        },
+        fields:[{name:'id'},{name:'carrera'},{name:'aniolectivo'},{name:'fecha',type:'date'}],
+        autoLoad:true
     });
     var viewport = new Ext.Viewport({
         layout:'fit',
@@ -357,8 +360,9 @@ Ext.onReady(function(){
                                                       store:storelistadoinscripciones,
                                                       columns: [
                                                           {header: "id",dataIndex:'id',hidden:true},
-                                                          {header: "Denominación",width:200,sortable:false,dataIndex:'denominacion'},
-                                                          {header: "Nivel",width:100,sortable:false,dataIndex:"nivel"}
+                                                          {header: "Carrera",width:200,sortable:false,dataIndex:'carrera'},
+                                                          {header: "Año",width:150,sortable:false,dataIndex:"aniolectivo"},
+                                                          {header: "Fecha",width:100,sortable:false,dataIndex:"fecha",renderer: Ext.util.Format.dateRenderer('d/m/y')}
                                                       ],
                                                       stripeRows: true,
                                                       height:250,
@@ -386,13 +390,15 @@ Ext.onReady(function(){
                         }, {
                             expanded: true,
                             items: [{
-                                title: 'Configuration',
+                                title: 'Mis Cuotas',
+                                layout:'fit',
                                 iconCls: 'x-icon-configuration',
                                 tabTip: 'Configuration tabtip',
-                                style: 'padding: 10px;'//,
-                                //html: Ext.example.shortBogusMarkup
+                                style: 'padding: 10px;',//,
+                                items:[
+                                ]
                             }, {
-                                title: 'Email Templates',
+                                title: 'Impresión de Recibos',
                                 iconCls: 'x-icon-templates',
                                 tabTip: 'Templates tabtip',
                                 style: 'padding: 10px;'//,
