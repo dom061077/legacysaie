@@ -17,11 +17,12 @@ class InscripcionController {
              }
         }
         inscripciones.each{
-            recordList << [id:it.id,denominacion:it.materia.denominacion,nivel:it.materia.nivel.descripcion,estado:it.estado,notafinal:it.notaFinal]
+            recordList << [id:it.id,denominacion:it.materia.denominacion,nivel:it.materia.nivel.descripcion,estado:it.estado.name,notafinal:it.notaFinal]
         }
         returnMap.rows = recordList
         returnMap.success = true
         returnMap.total =inscripciones.size()
+        render returnMap as JSON
     }
 
     def listinscripciones(int alumnoId){
