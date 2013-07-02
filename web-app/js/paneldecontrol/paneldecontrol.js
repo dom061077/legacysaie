@@ -1,4 +1,67 @@
 Ext.onReady(function(){
+
+    var nestedRowGrid = new Ext.grid.RowExpander({
+        tpl: new Ext.XTemplate('<div class="detailData">','','</div>'),
+        listeners:
+        {
+            expand:function(ex,record,body,rowIndex){
+                processRowExpander(record,body,rowIndex);
+            },
+            collapse : function(ex,record,body,rowIndex){
+
+            }
+        }
+    });
+
+    var storelistadoinscdet = new Ext.data.JsonStore({
+        root:'rows',
+        url:inscDetUrl,
+        fields:[{name:'id'},{name:'denominacion'},{name:'nivel'},{name:'estado'},{name:'notafinal'}],
+        autoLoad:false
+    });
+
+    function processRowExpander(record, body, rowIndex){
+        if(Ext.DomQuery.select("div.x-panel-bwrap",body).length==0){
+            var innerRowDiv=Ext.DomQuery.select("div.detailData",body)[0];
+            var nestedGrid = new Ext.grid.GridPanel({
+                id:'gridlistadoInscDetalleId',
+                stripeRows:true,
+                store:storelistadoinscdet,
+                columns: [
+                    {header: "id",dataIndex:'id',hidden:true},
+                    {header: "Materia",width:200,sortable:false,dataIndex:'denominacion'},
+                    {header: "Nivel",width:100,sortable:false,dataIndex:"nivel"},
+                    {header: "Estado",width:100,sortable:false,dataIndex:"estado"},
+                    {header: "Nota Final", width:80,dataIndex:"notafinal"}
+                ],
+                stripeRows: true,
+                height:250,
+                width:500,
+                loadMask:true,
+
+                title:'Mis Inscripciones',
+                iconCls: 'icon-grid',
+                listeners:{
+                },
+                renderTo: innerRowDiv,
+                listeners: {
+                    cellclick: function(grid,rowIndex, columnIndex,e){
+                        e.stopEvent();
+                    },
+                    headerclick:function(grid,columnIndex,e){
+                        e.stopEvent();
+                    }
+                }
+            });
+            storelistadoinscdet.load({
+                params:{
+                    inscripcionId:record.data.id
+                }
+            });
+
+        }
+    }
+
     Ext.QuickTips.init();
     var storelistadoinscripciones = new Ext.data.JsonStore({
         root:'rows',
@@ -359,16 +422,18 @@ Ext.onReady(function(){
                                                       stripeRows:true,
                                                       store:storelistadoinscripciones,
                                                       columns: [
+                                                          nestedRowGrid,
+
                                                           {header: "id",dataIndex:'id',hidden:true},
                                                           {header: "Carrera",width:200,sortable:false,dataIndex:'carrera'},
                                                           {header: "Año",width:150,sortable:false,dataIndex:"aniolectivo"},
                                                           {header: "Fecha",width:100,sortable:false,dataIndex:"fecha",renderer: Ext.util.Format.dateRenderer('d/m/y')}
                                                       ],
                                                       stripeRows: true,
-                                                      height:250,
-                                                      width:500,
+                                                      height:400,
+                                                      width:650,
                                                       loadMask:true,
-
+                                                      plugins:nestedRowGrid,
                                                       title:'Mis Inscripciones',
                                                       iconCls: 'icon-grid',
                                                       listeners:{
