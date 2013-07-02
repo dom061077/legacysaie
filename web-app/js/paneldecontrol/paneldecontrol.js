@@ -1,5 +1,25 @@
 Ext.onReady(function(){
 
+    function getRowsDataFinal(){
+        var storeInscFinal = Ext.getCmp('gridcorrelfinId').getStore();
+       inscFinalArr=[];
+       storeInscFinal.data.each(function(rec){
+           inscFinalArr.push(rec.data);
+       });
+       return Ext.encode(inscFinalArr);
+    }
+
+    function getRowsDataCursar(){
+        var storeInscCursar = Ext.getCmp('gridcorrelcurId').getStore();
+        inscCurArr = [];
+        storeInscCursar.data.each(function(rec){
+            inscCurArr.push(rec.data);
+        });
+        return Ext.encode(inscCurArr);
+    }
+
+
+
     var nestedRowGrid = new Ext.grid.RowExpander({
         tpl: new Ext.XTemplate('<div class="detailData">','','</div>'),
         listeners:
@@ -13,10 +33,12 @@ Ext.onReady(function(){
         }
     });
 
+
+
     var storelistadoinscdet = new Ext.data.JsonStore({
         root:'rows',
         url:inscDetUrl,
-        fields:[{name:'id'},{name:'denominacion'},{name:'nivel'},{name:'estado'},{name:'notafinal'}],
+        fields:[{name:'id'},{name:'denominacion'},{name:'nivel'},{name:'estado'},{name:'notafinal',type:'float'}],
         autoLoad:false
     });
 
@@ -32,14 +54,14 @@ Ext.onReady(function(){
                     {header: "Materia",width:200,sortable:false,dataIndex:'denominacion'},
                     {header: "Nivel",width:100,sortable:false,dataIndex:"nivel"},
                     {header: "Estado",width:100,sortable:false,dataIndex:"estado"},
-                    {header: "Nota Final", width:80,dataIndex:"notafinal"}
+                    {header: "Nota Final", width:80,dataIndex:"notafinal",align:'right',renderer: Ext.util.Format.numberRenderer('00,00/i')}
                 ],
                 stripeRows: true,
                 height:250,
                 width:500,
                 loadMask:true,
 
-                title:'Mis Inscripciones',
+                title:'Detalle de Mis Inscripciones',
                 iconCls: 'icon-grid',
                 listeners:{
                 },
@@ -116,6 +138,7 @@ Ext.onReady(function(){
                                             items:[
                                                 {
                                                     xtype:'form'
+                                                    ,style: 'margin:0 auto;margin-top:100px;'
                                                     ,id:'forminscfinalId'
                                                     ,frame:true
                                                     ,width:500
@@ -135,6 +158,12 @@ Ext.onReady(function(){
                                                         }
                                                     }
                                                     ,items:[
+                                                        {
+                                                            xtype:'textfield'
+                                                            ,hidden:true
+                                                            ,name:'matriculacursado'
+                                                            ,id:'matriculacursadoId'
+                                                        },
                                                         {
                                                             xtype:'combo'
                                                             ,fieldLabel:'Carrera'
@@ -183,6 +212,12 @@ Ext.onReady(function(){
 
                                                                 }
                                                             }
+                                                        },
+                                                        {
+                                                            xtype:'textfield',
+                                                            id:'inscfinalesmateriasId',
+                                                            name:'inscfinalesmaterias',
+                                                            hidden:true
                                                         },
                                                         {   xtype:'combo'
                                                             ,fieldLabel:'Año Lectivo'
@@ -267,7 +302,7 @@ Ext.onReady(function(){
                                 }, {
                                         title: 'Inscribirme en Cursado',
                                         iconCls: 'x-icon-subscriptions',
-                                        tabTip: 'Subscriptions tabtip',
+                                        tabTip: 'Inscripciones para el cursado',
                                         style: 'padding: 10px;',
                                         layout: 'fit',
                                         items: [{
@@ -276,10 +311,23 @@ Ext.onReady(function(){
                                             items:[
                                                 {
                                                     xtype:'form'
+                                                    ,id:'formcursadoId'
+                                                    ,style: 'margin:0 auto;margin-top:100px;'
                                                     ,frame:true
                                                     ,width:500
                                                     ,title:'Inscripción de Cursado'
                                                     ,items:[
+                                                    {
+                                                        xtype:'textfield'
+                                                        ,hidden:true
+                                                        ,name:'matriculacursado'
+                                                        ,id:'matriculacursadoId'
+                                                    },
+                                                    {
+                                                        xtype:'textfield'
+                                                        ,hidden:true
+                                                        ,name:'insccursadomateriasId'
+                                                    },
                                                     {
                                                         xtype:'combo'
                                                         ,fieldLabel:'Carrera'
@@ -399,7 +447,31 @@ Ext.onReady(function(){
                                                         {
                                                             text:'Inscribir en Cursado',
                                                             handler: function(){
+                                                                Ext.getCmp('insccursadomateriasId').setValue(getRowsDataCursar());
+                                                                Ext.getCmp('formcursadoId').getForm().submit({
+                                                                    success: function(f,a){
+                                                                        Ext.MessageBox.show({
+                                                                            title:'Mensaje',
+                                                                            msg:'La Inscripción fue registrada',
+                                                                            icon:Ext.MessageBox.INFO,
+                                                                            buttons:Ext.MessageBox.OK,
+                                                                            fn:function(btn,text){
+                                                                                if(btn='ok'){
+                                                                                    Ext.getCmp('gridcorrelcurId').getStore().load({
+                                                                                        params:{
+                                                                                            alumnoId:alumnoId,
+                                                                                            anioLectivoId:Ext.getCmp('comboaniolectivocurId').hiddenField.value,
+                                                                                            carreraId:Ext.getCmp('combocarreracurId').hiddenField.value
+                                                                                        }
+                                                                                    });
+                                                                                }
+                                                                            }
+                                                                        });
+                                                                    },
+                                                                    failure: function(f,a){
 
+                                                                    }
+                                                                });
                                                             }
                                                         }
                                                     ]
@@ -418,6 +490,7 @@ Ext.onReady(function(){
                                               xtype:'panel',
                                               items:[
                                                   new Ext.grid.GridPanel({
+                                                      style: 'margin:0 auto;margin-top:100px;',
                                                       id:'gridlistadoInscripcionesId',
                                                       stripeRows:true,
                                                       store:storelistadoinscripciones,

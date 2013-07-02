@@ -38,12 +38,15 @@ class InscripcionController {
         inscripciones.each{
             recordList << [id: it.id,carrera:it.matricula.carrera.denominacion,aniolectivo:it.matricula.anioLectivo.descripcion,fecha:it.fecha]
         }
-
         returnMap.rows = recordList
         returnMap.success = true
         returnMap.total =inscripciones.size()
-
         render returnMap as JSON
+    }
+
+    def saveinscripcion(){
+        def inscInstance = new Inscripcion()
+        inscInstance
 
     }
 
