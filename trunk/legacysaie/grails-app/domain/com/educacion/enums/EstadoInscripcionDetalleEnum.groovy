@@ -13,7 +13,9 @@ public enum EstadoInscripcionDetalleEnum {
     R("Regular"),
     D("Desaprobada"),
     S("Ausente"),
-    N("Anulada")
+    N("Anulada"),
+    L("Libre"),
+    E("Espera de Reincorporación")
 
     String name
 
@@ -22,6 +24,6 @@ public enum EstadoInscripcionDetalleEnum {
     }
 
     static List(){
-        [I,A,R,D,S,N]
+        [I,A,R,D,S,N,L,E]
     }
 }
