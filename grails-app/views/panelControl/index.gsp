@@ -21,6 +21,8 @@
         var correlFinal='${createLink(uri:'/panelControl/listcorrelrendir')}';
         var inscUrl = '${createLink(uri:'/inscripcion/listinscripciones')}';
         var inscDetUrl = '${createLink(uri:'/inscripcion/listinscdet')}'
+        var submitCurUrl = '${createLink(uri:'/inscripcion/saveinscripcioncur')}';
+        var submitFinUrl = '${createLink(uri:'/inscripcion/saveinscripcionfin')}';
         var username = '${userInstance.alumno.apellido} - ${userInstance.alumno.nombre}';
         var alumnoId = '${userInstance.alumno.id}';
     </script>

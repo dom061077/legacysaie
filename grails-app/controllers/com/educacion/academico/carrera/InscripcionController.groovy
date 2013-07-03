@@ -1,9 +1,15 @@
 package com.educacion.academico.carrera
 
 import grails.converters.JSON
+import com.educacion.enums.EstadoInscripcionEnum
+import com.educacion.enums.EstadoInscripcionDetalleEnum
+import com.educacion.enums.TipoInscripcionDetalleEnum
+import org.springframework.context.i18n.LocaleContextHolder
+import com.educacion.academico.materia.Materia
+import org.springframework.context.MessageSource
 
 class InscripcionController {
-
+    MessageSource  messageSource
     def index() { }
     
     def listinscdet(int inscripcionId){
@@ -44,11 +50,46 @@ class InscripcionController {
         render returnMap as JSON
     }
 
-    def saveinscripcion(){
+    def saveinscripcioncur(){
+        log.debug "Parametros: $params"
         def inscInstance = new Inscripcion()
-        inscInstance
+        def matriculaInstance = Matricula.load(params.matriculacursado.toString().toInteger())
+        def materiaInstance
+        def success = true
+        def mensaje = ''
+        def errorList = []
+        inscInstance.matricula = matriculaInstance
+        matriculaInstance.fecha = new java.sql.Date((new Date()).getTime())
+        inscInstance.estado = EstadoInscripcionEnum.G
+        def detalleInscJson = JSON.parse(params.insccursadomaterias)
+        detalleInscJson.each{
+            if (it.seleccionada){
+                //EstadoInscripcionDetalleEnum estado
+                //TipoInscripcionDetalleEnum tipoInscripcion
+                materiaInstance = Materia.load(it.id.toString().toInteger())
+                inscInstance.addToDetalle(new InscripcionDetalle(materia: materiaInstance,estado: EstadoInscripcionDetalleEnum.I,tipoInscripcion:TipoInscripcionDetalleEnum.C,notaFinal:0))
+            }
+        }
+        if (!inscInstance.save(flush: true)){
+            success = false
+            mensaje = 'Error en el registro de datos'
+            inscInstance.errors.allErrors.each{
+                errorList << errorList << [msg:messageSource.getMessage(it, LocaleContextHolder.locale)]
+            }
+        }else{
+            mensaje = 'Los datos se guardaron correctamente'
+        }
+        render(contentType: 'text/json'){
+            respuesta success: success, msg :mensaje, errors: errorList
+        }
+    }
+
+    def saveinscripcionfin(){
+        def inscInstance = new Inscripcion()
+        log.debug "parametros: "+params
 
     }
+
 
 
 }

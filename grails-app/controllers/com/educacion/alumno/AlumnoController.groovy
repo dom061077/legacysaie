@@ -141,6 +141,7 @@ class AlumnoController {
             alumnoInstance = new Alumno(params)
             if (!alumnoInstance.save(flush: true)) {
                 success=false
+                mensaje = 'Error en el registro de datos'
                 alumnoInstance.errors.allErrors.each{
                     errorList << [msg:messageSource.getMessage(it, LCH.locale)]
                 }
