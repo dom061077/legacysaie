@@ -140,6 +140,7 @@ Ext.onReady(function(){
                                                     xtype:'form'
                                                     ,style: 'margin:0 auto;margin-top:100px;'
                                                     ,id:'forminscfinalId'
+                                                    ,url:submitFinUrl
                                                     ,frame:true
                                                     ,width:500
                                                     ,title:'Inscripción de Finales'
@@ -248,6 +249,8 @@ Ext.onReady(function(){
                                                                             carreraId:Ext.getCmp('combocarreraId').hiddenField.value
                                                                         }
                                                                     });
+                                                                    rowselectedAnioLectivo = Ext.getCmp('combocarreraId').getStore().getAt(0);
+                                                                    Ext.getCmp('matriculacursadoId').setValue(rowselectedAnioLectivo.get('matricula'));
                                                                 }
                                                             }
                                                         },new Ext.grid.GridPanel({
@@ -313,6 +316,7 @@ Ext.onReady(function(){
                                                     xtype:'form'
                                                     ,id:'formcursadoId'
                                                     ,style: 'margin:0 auto;margin-top:100px;'
+                                                    ,url:submitCurUrl
                                                     ,frame:true
                                                     ,width:500
                                                     ,title:'Inscripción de Cursado'
@@ -326,7 +330,8 @@ Ext.onReady(function(){
                                                     {
                                                         xtype:'textfield'
                                                         ,hidden:true
-                                                        ,name:'insccursadomateriasId'
+                                                        ,name:'insccursadomaterias'
+                                                        ,id:'insccursadomateriasId'
                                                     },
                                                     {
                                                         xtype:'combo'
@@ -387,7 +392,7 @@ Ext.onReady(function(){
                                                         ,store:new Ext.data.JsonStore({
                                                         root:'rows',
                                                         url:anioLectivoUrl,
-                                                        fields:['id','descripcion'],
+                                                        fields:['id','descripcion','matricula'],
                                                         baseParams:{
                                                             alumnoId:alumnoId
                                                         },
@@ -447,28 +452,38 @@ Ext.onReady(function(){
                                                         {
                                                             text:'Inscribir en Cursado',
                                                             handler: function(){
+                                                                var rowselectedMatricula = Ext.getCmp('comboaniolectivocurId').getStore().getAt(0);
+                                                                Ext.getCmp('matriculacursadoId').setValue(rowselectedMatricula.get('matricula'));
                                                                 Ext.getCmp('insccursadomateriasId').setValue(getRowsDataCursar());
                                                                 Ext.getCmp('formcursadoId').getForm().submit({
                                                                     success: function(f,a){
-                                                                        Ext.MessageBox.show({
-                                                                            title:'Mensaje',
-                                                                            msg:'La Inscripción fue registrada',
+                                                                        var respuesta = Ext.decode(resp.response.responseText);
+                                                                        mensaje = respuesta.respuesta.msg+'<br><br>';
+                                                                        Ext.Msg.show({
+                                                                            title:'Mensajes',
                                                                             icon:Ext.MessageBox.INFO,
-                                                                            buttons:Ext.MessageBox.OK,
-                                                                            fn:function(btn,text){
-                                                                                if(btn='ok'){
-                                                                                    Ext.getCmp('gridcorrelcurId').getStore().load({
-                                                                                        params:{
-                                                                                            alumnoId:alumnoId,
-                                                                                            anioLectivoId:Ext.getCmp('comboaniolectivocurId').hiddenField.value,
-                                                                                            carreraId:Ext.getCmp('combocarreracurId').hiddenField.value
-                                                                                        }
-                                                                                    });
-                                                                                }
-                                                                            }
+                                                                            msg: mensaje,
+                                                                            buttons: Ext.MessageBox.OK,
+                                                                            fn: function(btn){}
                                                                         });
+
                                                                     },
                                                                     failure: function(f,a){
+                                                                        var respuesta = Ext.decode(a.response.responseText);
+                                                                        mensaje = respuesta.respuesta.msg+'<br><br>';
+                                                                        for(var i=0;i<respuesta.respuesta.errors.length;i++){
+                                                                            mensaje = mensaje +'- '+respuesta.respuesta.errors[i].msg+'<br>';
+                                                                        }
+
+                                                                        Ext.Msg.show({
+                                                                            title:'Mensajes',
+                                                                            icon:Ext.MdessageBox.ERROR,
+                                                                            msg: mensaje,
+                                                                            buttons: Ext.MessageBox.OK,
+                                                                            fn: function(btn){
+                                                                                Recaptcha.reload();
+                                                                            }
+                                                                        });
 
                                                                     }
                                                                 });

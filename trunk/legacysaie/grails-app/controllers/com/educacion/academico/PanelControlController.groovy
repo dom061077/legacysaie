@@ -22,7 +22,6 @@ class PanelControlController {
 
     
     private boolean validarCorrelativa(String materiaId,int alumnoId, int anioLectivoId,String carreraId,TipoInscripcionDetalleEnum tipoInsc ){
-        log.info "obteniendo las correlativas de examen final"
         boolean flagvalida = true
         def listMateriasCorre
         def inscsDetalle
