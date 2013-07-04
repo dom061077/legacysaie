@@ -460,8 +460,8 @@ Ext.onReady(function(){
                                                                         var respuesta = Ext.decode(resp.response.responseText);
                                                                         mensaje = respuesta.respuesta.msg+'<br><br>';
                                                                         Ext.Msg.show({
-                                                                            title:'Mensajes',
-                                                                            icon:Ext.MessageBox.INFO,
+                                                                            title:'Mensajes xxxxxx',
+                                                                            //icon:Ext.MessageBox.INFO,
                                                                             msg: mensaje,
                                                                             buttons: Ext.MessageBox.OK,
                                                                             fn: function(btn){}
@@ -477,11 +477,10 @@ Ext.onReady(function(){
 
                                                                         Ext.Msg.show({
                                                                             title:'Mensajes',
-                                                                            icon:Ext.MdessageBox.ERROR,
+                                                                            icon:Ext.MessageBox.ERROR ,
                                                                             msg: mensaje,
                                                                             buttons: Ext.MessageBox.OK,
                                                                             fn: function(btn){
-                                                                                Recaptcha.reload();
                                                                             }
                                                                         });
 

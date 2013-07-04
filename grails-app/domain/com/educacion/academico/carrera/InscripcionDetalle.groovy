@@ -20,12 +20,14 @@ class InscripcionDetalle {
 
 
     static constraints = {
+        division(nullable: true,blank:true)
+        nivel(nullable: true,blank:true)
     }
 
     static mapping = {
         table 'inscripciondetalle'
         version false
-        id column:'inscripciondetalle'
+        id column:'inscripciondetalle',generator:'increment'
         notaFinal column:'notafinal'
         division column: 'division'
         inscripcion column:'inscripcion'

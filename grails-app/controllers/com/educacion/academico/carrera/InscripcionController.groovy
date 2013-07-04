@@ -7,6 +7,7 @@ import com.educacion.enums.TipoInscripcionDetalleEnum
 import org.springframework.context.i18n.LocaleContextHolder
 import com.educacion.academico.materia.Materia
 import org.springframework.context.MessageSource
+import com.educacion.enums.SuplenteEnum
 
 class InscripcionController {
     MessageSource  messageSource
@@ -59,15 +60,20 @@ class InscripcionController {
         def mensaje = ''
         def errorList = []
         inscInstance.matricula = matriculaInstance
-        matriculaInstance.fecha = new java.sql.Date((new Date()).getTime())
+        inscInstance.fecha = new java.sql.Date((new Date()).getTime())
         inscInstance.estado = EstadoInscripcionEnum.G
+        inscInstance.suplente = SuplenteEnum.T
         def detalleInscJson = JSON.parse(params.insccursadomaterias)
+        InscripcionDetalle inscDetInstance
         detalleInscJson.each{
             if (it.seleccionada){
                 //EstadoInscripcionDetalleEnum estado
                 //TipoInscripcionDetalleEnum tipoInscripcion
+                inscDetInstance = new InscripcionDetalle()
                 materiaInstance = Materia.load(it.id.toString().toInteger())
                 inscInstance.addToDetalle(new InscripcionDetalle(materia: materiaInstance,estado: EstadoInscripcionDetalleEnum.I,tipoInscripcion:TipoInscripcionDetalleEnum.C,notaFinal:0))
+                //inscInstance.addToDetalle(new Object())
+
             }
         }
         if (!inscInstance.save(flush: true)){
@@ -77,6 +83,7 @@ class InscripcionController {
                 errorList << errorList << [msg:messageSource.getMessage(it, LocaleContextHolder.locale)]
             }
         }else{
+            log.debug "SE GUARDO CORRECTAMENTE....."
             mensaje = 'Los datos se guardaron correctamente'
         }
         render(contentType: 'text/json'){
