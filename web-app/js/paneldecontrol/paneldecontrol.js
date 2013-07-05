@@ -456,23 +456,30 @@ Ext.onReady(function(){
                                                                 Ext.getCmp('matriculacursadoId').setValue(rowselectedMatricula.get('matricula'));
                                                                 Ext.getCmp('insccursadomateriasId').setValue(getRowsDataCursar());
                                                                 Ext.getCmp('formcursadoId').getForm().submit({
-                                                                    success: function(f,a){
+                                                                    success: function(f,resp){
                                                                         var respuesta = Ext.decode(resp.response.responseText);
-                                                                        mensaje = respuesta.respuesta.msg+'<br><br>';
+                                                                        mensaje = respuesta.msg+'<br><br>';
                                                                         Ext.Msg.show({
-                                                                            title:'Mensajes xxxxxx',
+                                                                            title:'Mensajes',
                                                                             //icon:Ext.MessageBox.INFO,
                                                                             msg: mensaje,
                                                                             buttons: Ext.MessageBox.OK,
-                                                                            fn: function(btn){}
+                                                                            fn: function(btn){
+                                                                                Ext.getCmp('gridcorrelcurId').getStore().load({
+                                                                                    alumnoId:alumnoId,
+                                                                                    anioLectivoId:Ext.getCmp('comboaniolectivocurId').hiddenField.value,
+                                                                                    carreraId:Ext.getCmp('combocarreracurId').hiddenField.value
+                                                                                })
+
+                                                                            }
                                                                         });
 
                                                                     },
-                                                                    failure: function(f,a){
-                                                                        var respuesta = Ext.decode(a.response.responseText);
-                                                                        mensaje = respuesta.respuesta.msg+'<br><br>';
-                                                                        for(var i=0;i<respuesta.respuesta.errors.length;i++){
-                                                                            mensaje = mensaje +'- '+respuesta.respuesta.errors[i].msg+'<br>';
+                                                                    failure: function(f,resp){
+                                                                        var respuesta = Ext.decode(resp.response.responseText);
+                                                                        mensaje = respuesta.msg+'<br><br>';
+                                                                        for(var i=0;i<respuesta.errors.length;i++){
+                                                                            mensaje = mensaje +'- '+respuesta.errors[i].msg+'<br>';
                                                                         }
 
                                                                         Ext.Msg.show({
@@ -549,13 +556,20 @@ Ext.onReady(function(){
                                 style: 'padding: 10px;',//,
                                 items:[
                                 ]
-                            }, {
-                                title: 'Impresión de Recibos',
+                                }, {
+                                    title: 'Impresión de Recibos',
+                                    iconCls: 'x-icon-templates',
+                                    tabTip: 'Templates tabtip',
+                                    style: 'padding: 10px;'//,
+                                    //html: Ext.example.shortBogusMarkup
+                                }, {
+                                title: 'Estado de Deudas',
                                 iconCls: 'x-icon-templates',
                                 tabTip: 'Templates tabtip',
                                 style: 'padding: 10px;'//,
                                 //html: Ext.example.shortBogusMarkup
-                            }]
+                                }
+                            ]
                         }
                 ]
             }

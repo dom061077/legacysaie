@@ -70,7 +70,7 @@ class InscripcionController {
                 //EstadoInscripcionDetalleEnum estado
                 //TipoInscripcionDetalleEnum tipoInscripcion
                 inscDetInstance = new InscripcionDetalle()
-                materiaInstance = Materia.load(it.id.toString().toInteger())
+                materiaInstance = Materia.load(it.id)
                 inscInstance.addToDetalle(new InscripcionDetalle(materia: materiaInstance,estado: EstadoInscripcionDetalleEnum.I,tipoInscripcion:TipoInscripcionDetalleEnum.C,notaFinal:0))
                 //inscInstance.addToDetalle(new Object())
 
@@ -86,9 +86,11 @@ class InscripcionController {
             log.debug "SE GUARDO CORRECTAMENTE....."
             mensaje = 'Los datos se guardaron correctamente'
         }
-        render(contentType: 'text/json'){
-            respuesta success: success, msg :mensaje, errors: errorList
-        }
+        def response = [:]
+        response.success = success
+        response.errors = errorList
+        response.msg = mensaje
+        render response as JSON
     }
 
     def saveinscripcionfin(){
