@@ -548,7 +548,9 @@ Ext.onReady(function(){
                             ]
                         }, {
                             expanded: true,
-                            items: [{
+                            items: [
+
+                                {
                                 title: 'Mis Cuotas',
                                 layout:'fit',
                                 iconCls: 'x-icon-configuration',
@@ -568,6 +570,87 @@ Ext.onReady(function(){
                                 tabTip: 'Templates tabtip',
                                 style: 'padding: 10px;'//,
                                 //html: Ext.example.shortBogusMarkup
+                                }
+                            ]
+                        },{
+                            expanded:true,
+                            items:[
+                                {
+                                    title:'Mi Estado Académico',
+                                    iconCls:'',
+                                    tabTip:'Detalle sobre mi estado academico',
+                                    style: 'padding: 10px;'//,
+                                },{
+                                    title:'Materias Aprobadas',
+                                    iconCls: 'x-icon-templates',
+                                    tabTip:'Finales Aprobados',
+                                    style: 'padding: 10px;',
+                                    items:[
+                                        {
+                                            xtype:'form',
+                                            id:'formmateriasaprobadasId',
+                                            style: 'margin:0 auto;margin-top:100px;',
+                                            frame:true,
+                                            width:500,
+                                            items:[
+                                                {
+                                                    layout:'column',
+                                                    border:false,
+                                                    items:[
+                                                        {
+                                                            layout:'form',
+                                                            border:false,
+                                                            items:[
+                                                                {
+                                                                    xtype : 'textfield',
+                                                                    fieldLabel : 'Filtrar por Materia',
+                                                                    id:'filtromateriaId',
+                                                                    width:200,
+                                                                    anchor:0
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            width:60,
+                                                            border:false,
+                                                            items:[
+                                                                {
+                                                                    xtype:'button',
+                                                                    text:'Buscar',
+                                                                    listeners:{
+
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },new Ext.grid.GridPanel({
+                                                    id:'gridmateriasaprobadasId',
+                                                    stripeRows:true,
+                                                    store:storelistadoinscripciones,
+                                                    columns: [
+                                                        nestedRowGrid,
+
+                                                        {header: "id",dataIndex:'id',hidden:true},
+                                                        {header: "Carrera",width:200,sortable:false,dataIndex:'carrera'},
+                                                        {header: "Año",width:150,sortable:false,dataIndex:"aniolectivo"},
+                                                        {header: "Fecha",width:100,sortable:false,dataIndex:"fecha",renderer: Ext.util.Format.dateRenderer('d/m/y')}
+                                                    ],
+                                                    stripeRows: true,
+                                                    height:400,
+                                                    width:650,
+                                                    loadMask:true,
+                                                    plugins:nestedRowGrid,
+                                                    title:'Mis Inscripciones'
+                                                })
+                                            ]
+                                        }
+                                    ]
+                                },{
+                                    title:'Materias Regulares',
+                                    iconCls: 'x-icon-templates',
+                                    tabTip:'Cursado Regular',
+                                    style: 'padding: 10px;'//,
                                 }
                             ]
                         }
