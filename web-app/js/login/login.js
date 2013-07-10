@@ -13,6 +13,7 @@ function loginform(form){
 Ext.onReady(function(){
     Ext.QuickTips.init();
     var loginForm = new Ext.FormPanel({
+        style: 'margin:0 auto;margin-top:100px;',
         url:postLoginUrl,
         title:'Ingreso al Panel de Control del Alumno',
         renderTo:'loginId',

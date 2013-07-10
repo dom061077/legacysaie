@@ -265,4 +265,57 @@ class PanelControlController {
         returnMap.total = recordList.size()
         render returnMap as JSON
     }
+
+    def listmateriasaprobadas(/*def carreraId,def alumnoId,def materiaDeno,int limit,int start*/){
+       def returnMap = [:]
+       def recordList = []
+       def pagingConfig = [max: params.limit as Integer ?:10 , offset: params.start as Integer ?:0]
+
+
+       def materiasAprobadas = InscripcionDetalle.createCriteria().list(pagingConfig){
+            inscripcion{
+                matricula{
+                    alumno{
+                        eq("id",params.alumnoId.toString().toInteger())
+                    }
+                    carrera{
+                        eq("id",params.carreraId)
+                    }
+                }
+                if(params.materiaDeno){
+                    materia{
+                        ilike("denominacion","%"+params.materiaDeno+"%")
+                    }
+                }
+            }
+            eq("estado",EstadoInscripcionDetalleEnum.A)
+       }
+
+       def totalRegistros = InscripcionDetalle.createCriteria().count{
+           inscripcion{
+               matricula{
+                   alumno{
+                       eq("id",params.alumnoId.toString().toInteger())
+                   }
+                   carrera{
+                       eq("id",params.carreraId)
+                   }
+               }
+               if(params.materiaDeno){
+                   materia{
+                       ilike("denominacion","%"+params.materiaDeno+"%")
+                   }
+               }
+           }
+           eq("estado",EstadoInscripcionDetalleEnum.A)
+       }
+
+       materiasAprobadas?.each {
+           recordList << [id:it.id,carrera:it.inscripcion.matricula.carrera.denominacion,nivel: it.materia.nivel.descripcion,notafinal:it.notaFinal]
+       }
+       returnMap.rows=recordList
+       returnMap.success = true
+       returnMap.total = totalRegistros
+       render returnMap as JSON
+    }
 }

@@ -42,6 +42,18 @@ Ext.onReady(function(){
         autoLoad:false
     });
 
+    var storemateriasaprobadas = new Ext.data.JsonStore({
+        root:'rows',
+        url:materiasAprobadas,
+        fields:[{name:'id'},{name:'carrera'},{name:'nivel'},{name:'materia'},{name:'notafinal'}],
+        baseParams:{
+            alumnoId:alumnoId,
+            carreraId:'',
+            materiaDeno:''
+        },
+        autoLoad:false
+    });
+
     function processRowExpander(record, body, rowIndex){
         if(Ext.DomQuery.select("div.x-panel-bwrap",body).length==0){
             var innerRowDiv=Ext.DomQuery.select("div.detailData",body)[0];
@@ -591,13 +603,43 @@ Ext.onReady(function(){
                                             id:'formmateriasaprobadasId',
                                             style: 'margin:0 auto;margin-top:100px;',
                                             frame:true,
+                                            title:'Materias Aprobados',
                                             width:500,
                                             items:[
+                                                {
+                                                    xtype:'combo'
+                                                    ,fieldLabel:'Carrera'
+                                                    ,id:'combocarreramataprobadasId'
+                                                    ,valueField:'id'
+                                                    ,mode:'local'
+                                                    ,displayField:'denominacion'
+                                                    ,hiddenName:'carrera_id'
+                                                    ,store:new Ext.data.JsonStore({
+                                                            root:'rows',
+                                                            url:carreraUrl,
+                                                            fields:['id','denominacion'],
+                                                            baseParams:{
+                                                                alumnoId: alumnoId
+                                                            },
+                                                            autoLoad:true
+                                                    }),
+                                                    listeners:{
+                                                        select:function(combobox,record,index){
+                                                            Ext.getCmp('gridmateriasaprobadasId').getStore().load({
+                                                                params:{
+                                                                    alumnoId:alumnoId,
+                                                                    carreraId:Ext.getCmp('combocarreramataprobadasId').hiddenField.value,
+                                                                    materiaDeno:Ext.getCmp('filtromateriaId').getValue()
+                                                                }
+                                                            });
+                                                        }
+                                                    }
+                                                },
                                                 {
                                                     layout:'column',
                                                     border:false,
                                                     items:[
-                                                        {
+                                                         {
                                                             layout:'form',
                                                             border:false,
                                                             items:[
@@ -626,22 +668,25 @@ Ext.onReady(function(){
                                                     ]
                                                 },new Ext.grid.GridPanel({
                                                     id:'gridmateriasaprobadasId',
-                                                    stripeRows:true,
-                                                    store:storelistadoinscripciones,
+                                                    store:storemateriasaprobadas,
                                                     columns: [
-                                                        nestedRowGrid,
-
                                                         {header: "id",dataIndex:'id',hidden:true},
-                                                        {header: "Carrera",width:200,sortable:false,dataIndex:'carrera'},
-                                                        {header: "Año",width:150,sortable:false,dataIndex:"aniolectivo"},
-                                                        {header: "Fecha",width:100,sortable:false,dataIndex:"fecha",renderer: Ext.util.Format.dateRenderer('d/m/y')}
+                                                        {header: "Carrera",width:150,sortable:false,dataIndex:'carrera'},
+                                                        {header: "Nivel",width:150,sortable:false,dataIndex:"nivel"},
+                                                        {header: "Materia",width:100,sortable:false,dataIndex:"materia"},
+                                                        {header: "Nota Final",width:50,sortable:false,dataIndex:"notafinal"}
                                                     ],
-                                                    stripeRows: true,
-                                                    height:400,
-                                                    width:650,
+                                                    height:350,
+                                                    width:470,
                                                     loadMask:true,
-                                                    plugins:nestedRowGrid,
-                                                    title:'Mis Inscripciones'
+                                                    bbar: new Ext.PagingToolbar({
+                                                        pageSize: 10,
+                                                        store: storemateriasaprobadas,
+                                                        displayInfo:true,
+                                                        displayMsg: 'Visualizando registros {0} - {1} de {2}',
+                                                        emptyMsg: 'No hay registros para visualizar'
+                                                    })
+
                                                 })
                                             ]
                                         }

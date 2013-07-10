@@ -25,16 +25,6 @@
 
 		<g:layoutHead/>
         <style type="text/css">
-            body {
-                background: #ffffff;
-                color: #333333;
-                margin: 0 auto;
-                /*max-width: 960px;*/
-                overflow-x: hidden; /* prevents box-shadow causing a horizontal scrollbar in firefox when viewport < 960px wide */
-                -moz-box-shadow: 0 0 0.3em #255b17;
-                -webkit-box-shadow: 0 0 0.3em #255b17;
-                box-shadow: 0 0 0.3em #255b17;
-            }
         </style>
 		<r:layoutResources />
 	</head>
