@@ -46,13 +46,33 @@ Ext.onReady(function(){
         root:'rows',
         url:materiasAprobadas,
         fields:[{name:'id'},{name:'carrera'},{name:'nivel'},{name:'materia'},{name:'notafinal'}],
-        baseParams:{
-            alumnoId:alumnoId,
-            carreraId:'',
-            materiaDeno:''
-        },
         autoLoad:false
     });
+
+    var storemateriasregulares = new Ext.data.JsonStore({
+        root:'rows',
+        url:materiasRegulares,
+        fields:[{name:'id'},{name:'carrera'},{name:'nivel'},{name:'materia'}],
+        autoLoad:false
+    });
+
+
+    storemateriasaprobadas.on('beforeload',function(){
+        storemateriasaprobadas.baseParams={
+            alumnoId:alumnoId,
+            carreraId:Ext.getCmp('combocarreramataprobadasId').hiddenField.value,
+            materiaDeno:Ext.getCmp('filtromateriaId').getValue()
+        }
+    });
+
+    storemateriasregulares.on('beforeload',function(){
+        storemateriasregulares.baseParams={
+            alumnoId:alumnoId,
+            carreraId:Ext.getCmp('combocarreramatregularesId').hiddenField.value,
+            materiaDeno:Ext.getCmp('filtromateriaregularId').getValue()
+        }
+    });
+
 
     function processRowExpander(record, body, rowIndex){
         if(Ext.DomQuery.select("div.x-panel-bwrap",body).length==0){
@@ -126,10 +146,16 @@ Ext.onReady(function(){
 
 
                                 },{
-                                    title:'Modificación',
-                                    iconCls: 'x-icon-templates',
-                                    tabTip: 'Templates tabtip',
-                                    style: 'padding: 10px;'//,
+                                    title:'Cerrar Sesión',
+                                    iconCls: 'x-icon-close-session',
+                                    tabTip: 'Cierra su sesión de Usuario',
+                                    style: 'padding: 10px;',
+                                    listeners:{
+                                        afterrender : function(component){
+                                            window.location = cerrarSesionUrl;
+
+                                        }
+                                    }
 
                                 }
                             ]
@@ -140,7 +166,7 @@ Ext.onReady(function(){
                                 {
                                     title: 'Inscribirme en Finales',
                                     layout: 'fit',
-                                    iconCls: 'x-icon-tickets',
+                                    iconCls: 'x-icon-insc-final',
                                     tabTip: 'Registrar Inscripción en examen final',
                                     style: 'padding: 10px;',
 
@@ -316,7 +342,7 @@ Ext.onReady(function(){
                                         tabTip: 'Inscripciones'
                                 }, {
                                         title: 'Inscribirme en Cursado',
-                                        iconCls: 'x-icon-subscriptions',
+                                        iconCls: 'x-icon-insc-regular',
                                         tabTip: 'Inscripciones para el cursado',
                                         style: 'padding: 10px;',
                                         layout: 'fit',
@@ -514,8 +540,8 @@ Ext.onReady(function(){
                                         }]
                                 }, {
                                         title: 'Listado de Inscripciones',
-                                        iconCls: 'x-icon-users',
-                                        tabTip: 'Users tabtip',
+                                        iconCls: 'x-icon-insc-listado',
+                                        tabTip: 'Lista todas tus inscripciones',
                                         style: 'padding: 10px;',
                                         layout:'fit',
                                         items:[
@@ -572,14 +598,14 @@ Ext.onReady(function(){
                                 ]
                                 }, {
                                     title: 'Impresión de Recibos',
-                                    iconCls: 'x-icon-templates',
-                                    tabTip: 'Templates tabtip',
+                                    iconCls: 'x-icon-impresion-recibos',
+                                    tabTip: 'Impresión de Recibo Rapipago',
                                     style: 'padding: 10px;'//,
                                     //html: Ext.example.shortBogusMarkup
                                 }, {
                                 title: 'Estado de Deudas',
-                                iconCls: 'x-icon-templates',
-                                tabTip: 'Templates tabtip',
+                                iconCls: 'x-icon-listado-deudas',
+                                tabTip: 'Listado de Deudas',
                                 style: 'padding: 10px;'//,
                                 //html: Ext.example.shortBogusMarkup
                                 }
@@ -594,7 +620,7 @@ Ext.onReady(function(){
                                     style: 'padding: 10px;'//,
                                 },{
                                     title:'Materias Aprobadas',
-                                    iconCls: 'x-icon-templates',
+                                    iconCls: 'x-icon-materias-aprobadas',
                                     tabTip:'Finales Aprobados',
                                     style: 'padding: 10px;',
                                     items:[
@@ -610,6 +636,7 @@ Ext.onReady(function(){
                                                     xtype:'combo'
                                                     ,fieldLabel:'Carrera'
                                                     ,id:'combocarreramataprobadasId'
+                                                    ,width:200
                                                     ,valueField:'id'
                                                     ,mode:'local'
                                                     ,displayField:'denominacion'
@@ -625,13 +652,7 @@ Ext.onReady(function(){
                                                     }),
                                                     listeners:{
                                                         select:function(combobox,record,index){
-                                                            Ext.getCmp('gridmateriasaprobadasId').getStore().load({
-                                                                params:{
-                                                                    alumnoId:alumnoId,
-                                                                    carreraId:Ext.getCmp('combocarreramataprobadasId').hiddenField.value,
-                                                                    materiaDeno:Ext.getCmp('filtromateriaId').getValue()
-                                                                }
-                                                            });
+                                                            Ext.getCmp('gridmateriasaprobadasId').getStore().load();
                                                         }
                                                     }
                                                 },
@@ -660,7 +681,9 @@ Ext.onReady(function(){
                                                                     xtype:'button',
                                                                     text:'Buscar',
                                                                     listeners:{
-
+                                                                        click: function(){
+                                                                            Ext.getCmp('gridmateriasaprobadasId').getStore().load();
+                                                                        }
                                                                     }
                                                                 }
                                                             ]
@@ -693,9 +716,102 @@ Ext.onReady(function(){
                                     ]
                                 },{
                                     title:'Materias Regulares',
-                                    iconCls: 'x-icon-templates',
+                                    iconCls: 'x-icon-materias-regulares',
                                     tabTip:'Cursado Regular',
-                                    style: 'padding: 10px;'//,
+                                    style: 'padding: 10px;',
+                                    //------------------------------
+                                    items:[
+                                        {
+                                            xtype:'form',
+                                            id:'formmateriasregularesId',
+                                            style: 'margin:0 auto;margin-top:100px;',
+                                            frame:true,
+                                            title:'Materias Regulares',
+                                            width:500,
+                                            items:[
+                                                {
+                                                    xtype:'combo'
+                                                    ,fieldLabel:'Carrera'
+                                                    ,id:'combocarreramatregularesId'
+                                                    ,width:200
+                                                    ,valueField:'id'
+                                                    ,mode:'local'
+                                                    ,displayField:'denominacion'
+                                                    ,hiddenName:'carrera_id'
+                                                    ,store:new Ext.data.JsonStore({
+                                                    root:'rows',
+                                                    url:carreraUrl,
+                                                    fields:['id','denominacion'],
+                                                    baseParams:{
+                                                        alumnoId: alumnoId
+                                                    },
+                                                    autoLoad:true
+                                                }),
+                                                    listeners:{
+                                                        select:function(combobox,record,index){
+                                                            Ext.getCmp('gridmateriasregularesId').getStore().load();
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    layout:'column',
+                                                    border:false,
+                                                    items:[
+                                                        {
+                                                            layout:'form',
+                                                            border:false,
+                                                            items:[
+                                                                {
+                                                                    xtype : 'textfield',
+                                                                    fieldLabel : 'Filtrar por Materia',
+                                                                    id:'filtromateriaregularId',
+                                                                    width:200,
+                                                                    anchor:0
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            width:60,
+                                                            border:false,
+                                                            items:[
+                                                                {
+                                                                    xtype:'button',
+                                                                    text:'Buscar',
+                                                                    listeners:{
+                                                                        click: function(){
+                                                                            Ext.getCmp('gridmateriasregularesId').getStore().load();
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },new Ext.grid.GridPanel({
+                                                    id:'gridmateriasregularesId',
+                                                    store:storemateriasregulares,
+                                                    columns: [
+                                                        {header: "id",dataIndex:'id',hidden:true},
+                                                        {header: "Carrera",width:150,sortable:false,dataIndex:'carrera'},
+                                                        {header: "Nivel",width:150,sortable:false,dataIndex:"nivel"},
+                                                        {header: "Materia",width:100,sortable:false,dataIndex:"materia"}
+                                                    ],
+                                                    height:350,
+                                                    width:470,
+                                                    loadMask:true,
+                                                    bbar: new Ext.PagingToolbar({
+                                                        pageSize: 10,
+                                                        store: storemateriasregulares,
+                                                        displayInfo:true,
+                                                        displayMsg: 'Visualizando registros {0} - {1} de {2}',
+                                                        emptyMsg: 'No hay registros para visualizar'
+                                                    })
+
+                                                })
+                                            ]
+                                        }
+                                    ]
+
+
                                 }
                             ]
                         }
