@@ -19,8 +19,9 @@
         var carreraUrl = '${createLink(uri:'/matricula/listporalumnojson')}';
         var correlCursar='${createLink(uri:'/panelControl/listcorrelcursar')}';
         var correlFinal='${createLink(uri:'/panelControl/listcorrelrendir')}';
+        var materiasAprobadas = '${createLink(uri:'/panelControl/listmateriasaprobadas')}';
         var inscUrl = '${createLink(uri:'/inscripcion/listinscripciones')}';
-        var inscDetUrl = '${createLink(uri:'/inscripcion/listinscdet')}'
+        var inscDetUrl = '${createLink(uri:'/inscripcion/listinscdet')}' ;
         var submitCurUrl = '${createLink(uri:'/inscripcion/saveinscripcioncur')}';
         var submitFinUrl = '${createLink(uri:'/inscripcion/saveinscripcionfin')}';
         var username = '${userInstance.alumno.apellido} - ${userInstance.alumno.nombre}';
