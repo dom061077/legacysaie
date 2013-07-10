@@ -282,12 +282,13 @@ class PanelControlController {
                         eq("id",params.carreraId)
                     }
                 }
-                if(params.materiaDeno){
-                    materia{
-                        ilike("denominacion","%"+params.materiaDeno+"%")
-                    }
-                }
             }
+            if(params.materiaDeno){
+               materia{
+                   ilike("denominacion","%"+params.materiaDeno+"%")
+               }
+            }
+
             eq("estado",EstadoInscripcionDetalleEnum.A)
        }
 
@@ -301,21 +302,78 @@ class PanelControlController {
                        eq("id",params.carreraId)
                    }
                }
-               if(params.materiaDeno){
-                   materia{
-                       ilike("denominacion","%"+params.materiaDeno+"%")
-                   }
-               }
            }
            eq("estado",EstadoInscripcionDetalleEnum.A)
+           if(params.materiaDeno){
+               materia{
+                   ilike("denominacion","%"+params.materiaDeno+"%")
+               }
+           }
+
        }
 
        materiasAprobadas?.each {
-           recordList << [id:it.id,carrera:it.inscripcion.matricula.carrera.denominacion,nivel: it.materia.nivel.descripcion,notafinal:it.notaFinal]
+           recordList << [id:it.id,carrera:it.inscripcion.matricula.carrera.denominacion,nivel: it.materia.nivel.descripcion,materia:it.materia.denominacion,notafinal:it.notaFinal]
        }
        returnMap.rows=recordList
        returnMap.success = true
        returnMap.total = totalRegistros
        render returnMap as JSON
     }
+
+    def listmateriasregulares() {
+        def returnMap = [:]
+        def recordList = []
+        def pagingConfig = [max: params.limit as Integer ?:10, offset: params.start as Integer ?:0]
+        
+        def materiasRegulares = InscripcionDetalle.createCriteria().list(pagingConfig){
+            inscripcion{
+                matricula{
+                    alumno{
+                        eq("id",params.alumnoId.toString().toInteger())
+                    }
+                    carrera{
+                        eq("id",params.carreraId)
+                    }
+                }
+            }
+            if(params.materiaDeno){
+                materia{
+                    ilike("denominacion","%"+params.materiaDeno+"%")
+                }
+            }
+
+            eq("estado",EstadoInscripcionDetalleEnum.R)
+        }
+
+        def totalRegistros = InscripcionDetalle.createCriteria().count(){
+            inscripcion{
+                matricula{
+                    alumno{
+                        eq("id",params.alumnoId.toString().toInteger())
+                    }
+                    carrera{
+                        eq("id",params.carreraId)
+                    }
+                }
+            }
+            if(params.materiaDeno){
+                materia{
+                    ilike("denominacion","%"+params.materiaDeno+"%")
+                }
+            }
+
+            eq("estado",EstadoInscripcionDetalleEnum.R)
+        }
+        materiasRegulares.each{
+            recordList << [id:it.id,carrera:it.inscripcion.matricula.carrera.denominacion,nivel: it.materia.nivel.descripcion,materia: it.materia.denominacion]
+        }
+        returnMap.rows=recordList
+        returnMap.success = true
+        returnMap.total = totalRegistros
+        render returnMap as JSON
+    }
+
+
+
 }

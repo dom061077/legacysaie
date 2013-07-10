@@ -898,6 +898,10 @@ Ext.onReady(function(){
         }
 
     });
+
+    wizard.on('cancel',function(wizard){
+        window.location='../';
+    });
     wizard.on('finish',function(wiz,datos){
         var conn = new Ext.data.Connection();
         Ext.MessageBox.show({
