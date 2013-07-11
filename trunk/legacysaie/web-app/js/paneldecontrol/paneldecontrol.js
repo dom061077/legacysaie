@@ -124,7 +124,7 @@ Ext.onReady(function(){
           alumnoId:alumnoId
         },
         fields:[{name:'id'},{name:'carrera'},{name:'aniolectivo'},{name:'fecha',type:'date'}],
-        autoLoad:true
+        autoLoad:false
     });
     var viewport = new Ext.Viewport({
         layout:'fit',
@@ -578,7 +578,7 @@ Ext.onReady(function(){
                                                                   change:function(combo,newValue,oldValue){
                                                                       if(newValue==''){
                                                                           Ext.getCmp('comboaniolectivolistadoinscId').getStore().removeAll();
-                                                                          Ext.getCmp('gridcorrelfinId').getStore().removeAll();
+                                                                          Ext.getCmp('gridlistadoinscripcionesId').getStore().removeAll();
                                                                           Ext.getCmp('comboaniolectivolistadoinscId').clearValue();
                                                                       }
                                                                   },
