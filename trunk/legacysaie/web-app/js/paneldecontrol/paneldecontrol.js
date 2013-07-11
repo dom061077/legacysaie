@@ -548,36 +548,114 @@ Ext.onReady(function(){
                                             {
                                               xtype:'panel',
                                               items:[
-                                                  new Ext.grid.GridPanel({
+                                                  {
+                                                      xtype:'form',
                                                       style: 'margin:0 auto;margin-top:100px;',
-                                                      id:'gridlistadoInscripcionesId',
-                                                      stripeRows:true,
-                                                      store:storelistadoinscripciones,
-                                                      columns: [
-                                                          nestedRowGrid,
-
-                                                          {header: "id",dataIndex:'id',hidden:true},
-                                                          {header: "Carrera",width:200,sortable:false,dataIndex:'carrera'},
-                                                          {header: "Año",width:150,sortable:false,dataIndex:"aniolectivo"},
-                                                          {header: "Fecha",width:100,sortable:false,dataIndex:"fecha",renderer: Ext.util.Format.dateRenderer('d/m/y')}
-                                                      ],
-                                                      stripeRows: true,
-                                                      height:400,
+                                                      id:'formlistadoinscId',
+                                                      frame:true,
                                                       width:650,
-                                                      loadMask:true,
-                                                      plugins:nestedRowGrid,
+                                                      height:450,
                                                       title:'Mis Inscripciones',
-                                                      iconCls: 'icon-grid',
-                                                      listeners:{
-                                                      },
-                                                       bbar: new Ext.PagingToolbar({
-                                                           pageSize: 10,
-                                                           store: storelistadoinscripciones,
-                                                           displayInfo:true,
-                                                           displayMsg: 'Visualizando registros {0} - {1} de {2}',
-                                                           emptyMsg: 'No hay registros para visualizar'
-                                                       })
-                                                  })
+                                                      items:[
+                                                          {
+                                                              xtype:'combo'
+                                                              ,fieldLabel:'Carrera'
+                                                              ,id:'combocarreralistadoinscId'
+                                                              ,valueField:'id'
+                                                              ,mode:'local'
+                                                              ,displayField:'denominacion'
+                                                              ,hiddenName:'carrera_id'
+                                                              ,store:new Ext.data.JsonStore({
+                                                              root:'rows',
+                                                              url:carreraUrl,
+                                                              fields:['id','denominacion'],
+                                                              baseParams:{
+                                                                  alumnoId: alumnoId
+                                                              },
+                                                              autoLoad:true
+                                                          }),
+                                                              listeners:{
+                                                                  change:function(combo,newValue,oldValue){
+                                                                      if(newValue==''){
+                                                                          Ext.getCmp('comboaniolectivolistadoinscId').getStore().removeAll();
+                                                                          Ext.getCmp('gridcorrelfinId').getStore().removeAll();
+                                                                          Ext.getCmp('comboaniolectivolistadoinscId').clearValue();
+                                                                      }
+                                                                  },
+                                                                  select:function(combo,record,index){
+                                                                      var rowselectedCarrera = Ext.getCmp('combocarreralistadoinscId').getStore().getAt(0);
+                                                                      Ext.getCmp('comboaniolectivolistadoinscId').getStore().load({
+                                                                          params:{
+                                                                              alumnoId:alumnoId,
+                                                                              carreraId:rowselectedCarrera.get('id')
+                                                                          }
+                                                                      });
+
+                                                                  }
+                                                              }
+                                                          },
+                                                          {   xtype:'combo'
+                                                              ,fieldLabel:'Año Lectivo'
+                                                              ,id:'comboaniolectivolistadoinscId'
+                                                              ,valueField:'id'
+                                                              ,mode:'local'
+                                                              ,displayField:'descripcion'
+                                                              ,hiddenName:'aniolectivo_id'
+                                                              ,store:new Ext.data.JsonStore({
+                                                              root:'rows',
+                                                              url:anioLectivoUrl,
+                                                              fields:['id','descripcion'],
+                                                              baseParams:{
+                                                                  alumnoId:alumnoId
+                                                              },
+                                                              autoLoad:false
+                                                          }),
+                                                              listeners:{
+                                                                  select:function(combobox,record,index){
+                                                                      Ext.getCmp('gridlistadoinscripcionesId').getStore().load({
+                                                                          params:{
+                                                                              alumnoId:alumnoId,
+                                                                              anioLectivoId:Ext.getCmp('comboaniolectivolistadoinscId').hiddenField.value,
+                                                                              carreraId:Ext.getCmp('combocarreralistadoinscId').hiddenField.value
+                                                                          }
+                                                                      });
+                                                                      rowselectedAnioLectivo = Ext.getCmp('combocarreralistadoinscId').getStore().getAt(0);
+                                                                  }
+                                                              }
+                                                          },
+
+
+                                                           new Ext.grid.GridPanel({
+                                                              id:'gridlistadoinscripcionesId',
+                                                              stripeRows:true,
+                                                              store:storelistadoinscripciones,
+                                                              columns: [
+                                                                  nestedRowGrid,
+
+                                                                  {header: "id",dataIndex:'id',hidden:true},
+                                                                  {header: "Carrera",width:200,sortable:false,dataIndex:'carrera'},
+                                                                  {header: "Año",width:150,sortable:false,dataIndex:"aniolectivo"},
+                                                                  {header: "Fecha",width:100,sortable:false,dataIndex:"fecha",renderer: Ext.util.Format.dateRenderer('d/m/y')}
+                                                              ],
+                                                              stripeRows: true,
+                                                              height:400,
+                                                              width:500,
+                                                              loadMask:true,
+                                                              plugins:nestedRowGrid,
+                                                              iconCls: 'icon-grid',
+                                                              listeners:{
+                                                              },
+                                                              bbar: new Ext.PagingToolbar({
+                                                                  pageSize: 10,
+                                                                  store: storelistadoinscripciones,
+                                                                  displayInfo:true,
+                                                                  displayMsg: 'Visualizando registros {0} - {1} de {2}',
+                                                                  emptyMsg: 'No hay registros para visualizar'
+                                                              })
+                                                          })
+
+                                                      ]
+                                                  }
 
                                               ]
                                             }
@@ -820,12 +898,22 @@ Ext.onReady(function(){
         ]
     });
 
-    /*Ext.getCmp('gridcorrelcurId').getStore().load({
-        params:{
-            alumnoId:alumnoid,
-            anioLectivoId:Ext.getCmp('comboaniolectivoId').hiddenField.value,
-            carreraId:Ext.getCmp('combocarreraId').hiddenField.value
+    storemateriasaprobadas.on('beforeload',function(){
+        storemateriasaprobadas.baseParams={
+            alumnoId:alumnoId,
+            carreraId:Ext.getCmp('combocarreramataprobadasId').hiddenField.value,
+            materiaDeno:Ext.getCmp('filtromateriaId').getValue()
         }
-    });*/
+    });
+
+
+
+    Ext.getCmp('gridlistadoinscripcionesId').getStore().on('beforeload',function(){
+        Ext.getCmp('gridlistadoinscripcionesId').baseParams={
+            alumnoId:alumnoId,
+            anioLectivoId:Ext.getCmp('comboaniolectivolistadoinscId').hiddenField.value,
+            carreraId:Ext.getCmp('combocarreralistadoinscId').hiddenField.value
+        }
+    });
 
 });
