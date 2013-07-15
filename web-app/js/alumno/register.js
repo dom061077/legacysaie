@@ -155,6 +155,33 @@ Ext.onReady(function(){
                 ,labelWidth:140
                 ,items:[
                     {
+                      xtype:'hidden',
+                      id:'aniolectivoId',
+                      name:'aniolectivo'
+                    },
+                    {
+                      xtype:'textfield',
+                      id:'aniolectivodescId',
+                      name:'aniolectivodesc',
+                      fieldLabel:'Año Lectivo Vigente'
+                    },
+                    {
+                      xtype:'combo'
+                      ,fieldLabel:'Carrera'
+                      ,id:'combocarreraId'
+                      ,valueField:'id'
+                      ,width:260
+                      ,mode:'local'
+                      ,displayField:'denominacion'
+                      ,hiddenName:'carrera_id'
+                      ,store:new Ext.data.JsonStore({
+                        root:'rows',
+                        url:carreraUrl,
+                        fields:['id','denominacion'],
+                        autoLoad:true
+                        })
+                    },
+                    {
                         xtype:'combo',
                         id:'tipodocumentoId',
                         hideLabel:false ,

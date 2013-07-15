@@ -11,7 +11,7 @@
         <script type="text/javascript" src="${resource(dir:'js/extjs/plugins/fileuploadfield',file:'FileUploadField.js')}"></script>
         <script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
 
-        <script type="text/javascript" src="${resource(dir:'js/alumno',file: 'register.js')}"></script>
+        <script type="text/javascript" src="${resource(dir:'js/alumno',file: 'register.js')+'?id='+randomlink}"></script>
 
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'alumno.label', default: 'Alumno')}" />
@@ -28,6 +28,9 @@
                 float: left;
             }
         </style>
+        <script type="text/javascript">
+            var carreraUrl = '${createLink(uri: '/carrera/listjson')}';
+        </script>
 	</head>
 	<body>
             <%-- recaptcha:ifEnabled>
