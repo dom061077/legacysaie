@@ -40,6 +40,9 @@
 
 
 var errorDoc=true
+
+//Ext.apply
+
 Ext.apply(Ext.form.VTypes,{
     //cuitVal: /^\d{2}\-\d{8}\-\d{1}$/,
 
@@ -157,13 +160,16 @@ Ext.onReady(function(){
                     {
                       xtype:'hidden',
                       id:'aniolectivoId',
-                      name:'aniolectivo'
+                      name:'aniolectivo',
+                      value:aniolectivoId
                     },
                     {
                       xtype:'textfield',
                       id:'aniolectivodescId',
                       name:'aniolectivodesc',
-                      fieldLabel:'Año Lectivo Vigente'
+                      fieldLabel:'Año Lectivo Vigente',
+                      value:aniolectivoDesc,
+                      disabled:true
                     },
                     {
                       xtype:'combo'
