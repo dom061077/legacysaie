@@ -115,4 +115,14 @@ class CarreraController {
 
     }
 
+    def cupocarrera(def carreraId,def anioLectivoId){
+        def returnMap=[:]
+        def carreraAnioLectivoInstance = CarreraAnioLectivo.get(carreraId,Integer.parseInt(anioLectivoId))
+        def cupo = carreraAnioLectivoInstance.cupo
+        def cupoSuplente = carreraAnioLectivoInstance.cupoSuplente
+        returnMap.cupo = cupo
+        returnMap.cupoSuplente = cupoSuplente
+        render returnMap as JSON
+    }
+
 }

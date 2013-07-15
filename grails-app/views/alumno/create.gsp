@@ -30,6 +30,9 @@
         </style>
         <script type="text/javascript">
             var carreraUrl = '${createLink(uri: '/carrera/listjson')}';
+            var cupoUrl = '${createLink(uri:'/carrera/cupocarrera')}';
+            var aniolectivoId = ${aniolectivoInstance?.id};
+            var aniolectivoDesc = '${aniolectivoInstance?.descripcion}';
         </script>
 	</head>
 	<body>

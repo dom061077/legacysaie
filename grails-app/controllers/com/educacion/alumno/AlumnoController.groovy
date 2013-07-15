@@ -5,6 +5,7 @@ import com.megatome.grails.RecaptchaService
 import org.springframework.context.i18n.LocaleContextHolder as LCH
 import org.springframework.context.MessageSource
 import org.springframework.context.MessageSource
+import com.educacion.academico.carrera.AnioLectivo
 
 
 
@@ -27,8 +28,12 @@ class AlumnoController {
 
     def create() {
         Random randomLink = new Random()
-
-        [alumnoInstance: new Alumno(params),randomlink:randomLink.nextInt(100000)]
+        def aniosLectivos = AnioLectivo.createCriteria().list{
+            eq("estado",1)
+            order("anio","desc")
+        }
+        def anioLectivoInstance = aniosLectivos.get(0)
+        [alumnoInstance: new Alumno(params),randomlink:randomLink.nextInt(100000),aniolectivoInstance:anioLectivoInstance]
     }
 
     def save() {
