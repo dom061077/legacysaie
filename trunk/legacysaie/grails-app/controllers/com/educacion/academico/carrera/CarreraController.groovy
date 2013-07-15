@@ -101,5 +101,18 @@ class CarreraController {
             redirect(action: "show", id: id)
         }
     }
+    
+    def listjson(){
+        def returnMap = [:]
+        def recordList = []
+        def carreras = Carrera.list()
+        carreras?.each{
+            recordList << [id:it.id,denominacion:it.denominacion]
+        }
+        returnMap.rows = recordList
+        log.debug "JSON de carrera retornado: "+returnMap
+        render returnMap as JSON
+
+    }
 
 }

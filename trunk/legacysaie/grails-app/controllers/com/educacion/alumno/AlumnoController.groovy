@@ -26,7 +26,9 @@ class AlumnoController {
     }
 
     def create() {
-        [alumnoInstance: new Alumno(params)]
+        Random randomLink = new Random()
+
+        [alumnoInstance: new Alumno(params),randomlink:randomLink.nextInt(100000)]
     }
 
     def save() {
