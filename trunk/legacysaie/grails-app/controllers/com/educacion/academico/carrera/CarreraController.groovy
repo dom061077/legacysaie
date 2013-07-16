@@ -115,15 +115,34 @@ class CarreraController {
 
     }
 
-    def cupocarrera(def carreraId,def anioLectivoId){
+    def cupocarrera(String carreraId,int anioLectivoId){
         def returnMap=[:]
-        def carreraAnioLectivoInstance = CarreraAnioLectivo.get(carreraId,Integer.parseInt(anioLectivoId))
-        def cupo = carreraAnioLectivoInstance.cupo
-        def cupoSuplente = carreraAnioLectivoInstance.cupoSuplente
-        returnMap.cupo = cupo
-        returnMap.cupoSuplente = cupoSuplente
+        returnMap.success = true;
+        def carrerasanios = CarreraAnioLectivo.createCriteria().list{
+            eq("id.carrera.id",carreraId)
+            eq("id.anioLectivo.id",anioLectivoId)
+        }
+        log.debug "Carreras anios size: "+carrerasanios.size()
+        if (carrerasanios.size()>0){
 
+            def carreraAnioLectivoInstance = carrerasanios.get(0)
+            def cupo = carreraAnioLectivoInstance.cupo
+            def cupoSuplente = carreraAnioLectivoInstance.cupoSuplente
+            def cantMatriculas = Matricula.createCriteria().count{
+                carrera{
+                    eq("id",carreraId)
+                }
+                anioLectivo{
+                    eq("id",anioLectivoId)
+                }
+                eq("ingresante",Short.valueOf("1"))
+            }
+            log.debug "CANTIDAD DE MATRICULAS DE INGRESANTES: "+ cantMatriculas
+            if (cantMatriculas>=cupo+cupoSuplente)
+                returnMap.success = false;
+        }
 
+        log.debug "JSON: "+returnMap
         render returnMap as JSON
     }
 

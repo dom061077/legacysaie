@@ -143,7 +143,16 @@ Ext.onReady(function(){
                                     iconCls: 'x-icon-templates',
                                     tabTip: 'Templates tabtip',
                                     style: 'padding: 10px;'//,
-
+                                    ,items:[
+                                        {
+                                            xtype:'panel'
+                                            ,items:[
+                                                {
+                                                    xtype:''
+                                                }
+                                            ]
+                                        }
+                                    ]
 
                                 },{
                                     title:'Cerrar Sesión',
@@ -639,7 +648,7 @@ Ext.onReady(function(){
                                                               ],
                                                               stripeRows: true,
                                                               height:400,
-                                                              width:500,
+                                                              width:600,
                                                               loadMask:true,
                                                               plugins:nestedRowGrid,
                                                               iconCls: 'icon-grid',
