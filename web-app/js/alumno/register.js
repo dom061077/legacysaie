@@ -40,8 +40,44 @@
 
 
 var errorDoc=true
+var errorCupo=true
 
-//Ext.apply
+Ext.apply(Ext.form.VTypes,{
+    cupolimiteText:'No hay cupo disponible para esta carrera',
+    cupolimite: function cupoLimite(carrera){
+        if (typeof(carrera) == 'undefined')
+            return true;
+        if (carrera=='')
+            return true;
+        Ext.Ajax.request(
+            {
+                url: cupoUrl,
+                async:false,
+                params : {
+                    carreraId:Ext.getCmp('combocarreraId').hiddenField.value,
+                    anioLectivoId:Ext.getCmp('aniolectivoId').value
+                },
+                success: function(response, options){
+                    jsonData = Ext.decode(response.responseText);
+                    errorCupo = jsonData.success;
+
+                },
+                failure: function(response, options){
+                    Ext.Msg.show({
+                        title:'Error',
+                        msg:'Se produjo un error de comunicación',
+                        icon:Ext.MessageBox.ERROR,
+                        buttons:Ext.MessageBox.OK,
+                        fn:function(btn){
+                            errorCupo = true;
+                        }
+                    });
+                }
+            }
+        );
+        return errorCupo;
+    }
+});
 
 Ext.apply(Ext.form.VTypes,{
     //cuitVal: /^\d{2}\-\d{8}\-\d{1}$/,
@@ -175,7 +211,9 @@ Ext.onReady(function(){
                       xtype:'combo'
                       ,fieldLabel:'Carrera'
                       ,id:'combocarreraId'
+                      ,msgTarget:'under'
                       ,valueField:'id'
+                      ,name:'carrera'
                       ,width:260
                       ,mode:'local'
                       ,displayField:'denominacion'
@@ -186,6 +224,7 @@ Ext.onReady(function(){
                         fields:['id','denominacion'],
                         autoLoad:true
                         })
+                      ,vtype:'cupolimite'
                     },
                     {
                         xtype:'combo',
