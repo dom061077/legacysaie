@@ -122,6 +122,8 @@ class CarreraController {
         def cupoSuplente = carreraAnioLectivoInstance.cupoSuplente
         returnMap.cupo = cupo
         returnMap.cupoSuplente = cupoSuplente
+
+
         render returnMap as JSON
     }
 
