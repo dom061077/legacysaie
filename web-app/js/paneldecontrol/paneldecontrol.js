@@ -145,10 +145,101 @@ Ext.onReady(function(){
                                     style: 'padding: 10px;'//,
                                     ,items:[
                                         {
-                                            xtype:'panel'
+                                            xtype:'form'
+                                            ,frame:true
+                                            ,style: 'margin:0 auto;margin-top:100px;'
+                                            ,height:400
+                                            ,width:400
                                             ,items:[
                                                 {
-                                                    xtype:''
+                                                    xtype:'tabpanel'
+                                                    ,activeItem:0
+                                                    ,autoScroll:true
+                                                    ,border:false
+                                                    ,defaults:{
+                                                        layout:'form'
+                                                        ,labelWidth:80
+                                                        ,autoHeight:true
+                                                        ,anchor:'100% 100%'
+                                                        ,defaultType:'textfield'
+                                                        ,bodyStyle:'padding:5px'
+                                                        ,border:true
+                                                        ,frame:true
+                                                }
+                                                    ,items:[
+                                                        {
+                                                            title:'Datos Personales'
+                                                            ,items:[
+                                                                {
+                                                                    xtype:'textfield'
+                                                                    ,fieldLabel:'Tipo de Documento'
+                                                                    ,name:'tipodocumento'
+                                                                    ,id:'tipodocumentoId'
+                                                                },{
+                                                                    xtype:'textfield'
+                                                                    ,fieldLabel:'Número de Documento'
+                                                                    ,name:'numerodocumento'
+                                                                    ,id:'numerodocumentoId'
+                                                                },{
+                                                                    xtype:'textfield'
+                                                                    ,fieldLabel:'Apellido'
+                                                                    ,name:'apellido'
+                                                                    ,id:'apellidoId'
+                                                                },{
+                                                                    xtype:'textfield'
+                                                                    ,fieldLabel:'Nombre'
+                                                                    ,name:'nombre'
+                                                                    ,id:'nombreId'
+                                                                },{
+                                                                    xtype:'textfield',
+                                                                    fieldLabel:'Tipo de Documento',
+                                                                    name:'tipodocumento',
+                                                                    id:'tipodocumentoId'
+                                                                },{
+                                                                    xtype:'textfield',
+                                                                    fieldLabel:'Sexo',
+                                                                    name:'sexo',
+                                                                    id:'sexoId'
+                                                                },{
+                                                                    xtype:'textfield',
+                                                                    fieldLabel:'Fecha Nacimiento',
+                                                                    name:'fechanacimiento',
+                                                                    id:'fechanacimientoId'
+                                                                },{
+                                                                    xtype:'textfield',
+                                                                    fieldLabel:'País Nacimiento',
+                                                                    name:'paisnacimiento',
+                                                                    id:'paisnacimientoId'
+                                                                },{
+                                                                    xtype:'textfield',
+                                                                    fieldLabel:'Provincia Nacimiento',
+                                                                    name:'provincianacimiento',
+                                                                    id:'provincianacimientoId'
+                                                                },{
+                                                                    xtype:'textfield',
+                                                                    fieldLabel:'Localidad Nacimiento',
+                                                                    name:'localidadnacimiento',
+                                                                    id:'localidadnacimientoId'
+                                                                },{
+                                                                    xtype:'box',
+                                                                    autoEl: {tag: 'img', src: 'images/grails_logo.png', width: 100, height:80}
+
+                                                                }
+                                                            ]
+                                                        }
+                                                        ,{
+                                                            title:'Domicilio'
+                                                        }
+                                                        ,{
+                                                            title:'Contacto'
+                                                        }
+                                                        ,{
+                                                            title:'Datos Laborales'
+                                                        }
+                                                        ,{
+                                                            title:''
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }
