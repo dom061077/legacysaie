@@ -6,6 +6,7 @@ import org.springframework.context.i18n.LocaleContextHolder as LCH
 import org.springframework.context.MessageSource
 import org.springframework.context.MessageSource
 import com.educacion.academico.carrera.AnioLectivo
+import grails.converters.JSON
 
 
 
@@ -165,6 +166,32 @@ class AlumnoController {
             respuesta success: success, msg :mensaje, errors: errorList
         }
 
+    }
+
+    def renderimage(int id){
+        def alumnoInstance = Alumno.get(id)
+        byte[] image = alumnoInstance?.imagen
+        response.outputStream << image
+    }
+    
+    def showjson(int id){
+        def returnMap=[:]
+        def alumnoInstance = Alumno.get(id)
+        returnMap.data = [:]
+        returnMap.success = true
+        returnMap.data.id = alumnoInstance?.id
+        returnMap.data.tipodocumento = alumnoInstance.tipoDocumento.descripcion
+        returnMap.data.numerodocumento = alumnoInstance.numeroDocumento
+        returnMap.data.apellido = alumnoInstance.apellido
+        returnMap.data.nombre = alumnoInstance.nombre
+        returnMap.data.sexo = alumnoInstance.sexo.name
+        returnMap.data.fechanacimiento = alumnoInstance.fechaNacimiento
+        returnMap.data.paisnacimiento = alumnoInstance.paisNacimiento
+        returnMap.data.provincianacimiento = alumnoInstance.provinciaNacimiento
+        returnMap.data.localidadnacimiento = alumnoInstance.localidadNacimiento
+
+
+        render returnMap as JSON
     }
     
 }

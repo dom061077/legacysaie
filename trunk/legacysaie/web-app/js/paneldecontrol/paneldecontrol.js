@@ -147,9 +147,10 @@ Ext.onReady(function(){
                                         {
                                             xtype:'form'
                                             ,frame:true
+                                            ,id:'formalumnoId'
                                             ,style: 'margin:0 auto;margin-top:100px;'
-                                            ,height:400
-                                            ,width:400
+                                            ,height:450
+                                            ,width:450
                                             ,items:[
                                                 {
                                                     xtype:'tabpanel'
@@ -158,7 +159,7 @@ Ext.onReady(function(){
                                                     ,border:false
                                                     ,defaults:{
                                                         layout:'form'
-                                                        ,labelWidth:80
+                                                        ,labelWidth:150
                                                         ,autoHeight:true
                                                         ,anchor:'100% 100%'
                                                         ,defaultType:'textfield'
@@ -175,69 +176,182 @@ Ext.onReady(function(){
                                                                     ,fieldLabel:'Tipo de Documento'
                                                                     ,name:'tipodocumento'
                                                                     ,id:'tipodocumentoId'
+                                                                    ,disabled:true
                                                                 },{
                                                                     xtype:'textfield'
                                                                     ,fieldLabel:'Número de Documento'
                                                                     ,name:'numerodocumento'
                                                                     ,id:'numerodocumentoId'
+                                                                    ,disabled:true
                                                                 },{
                                                                     xtype:'textfield'
                                                                     ,fieldLabel:'Apellido'
                                                                     ,name:'apellido'
                                                                     ,id:'apellidoId'
+                                                                    ,disabled:true
                                                                 },{
                                                                     xtype:'textfield'
                                                                     ,fieldLabel:'Nombre'
                                                                     ,name:'nombre'
                                                                     ,id:'nombreId'
-                                                                },{
-                                                                    xtype:'textfield',
-                                                                    fieldLabel:'Tipo de Documento',
-                                                                    name:'tipodocumento',
-                                                                    id:'tipodocumentoId'
+                                                                    ,disabled:true
                                                                 },{
                                                                     xtype:'textfield',
                                                                     fieldLabel:'Sexo',
                                                                     name:'sexo',
                                                                     id:'sexoId'
+                                                                    ,disabled:true
                                                                 },{
                                                                     xtype:'textfield',
                                                                     fieldLabel:'Fecha Nacimiento',
                                                                     name:'fechanacimiento',
                                                                     id:'fechanacimientoId'
+                                                                    ,disabled:true
                                                                 },{
                                                                     xtype:'textfield',
                                                                     fieldLabel:'País Nacimiento',
                                                                     name:'paisnacimiento',
                                                                     id:'paisnacimientoId'
+                                                                    ,disabled:true
                                                                 },{
                                                                     xtype:'textfield',
                                                                     fieldLabel:'Provincia Nacimiento',
                                                                     name:'provincianacimiento',
                                                                     id:'provincianacimientoId'
+                                                                    ,disabled:true
                                                                 },{
                                                                     xtype:'textfield',
                                                                     fieldLabel:'Localidad Nacimiento',
                                                                     name:'localidadnacimiento',
                                                                     id:'localidadnacimientoId'
+                                                                    ,disabled:true
                                                                 },{
                                                                     xtype:'box',
-                                                                    autoEl: {tag: 'img', src: 'images/grails_logo.png', width: 100, height:80}
+                                                                    fieldLabel:'Foto',
+                                                                    autoEl: {tag: 'img', src: alumnoimageUrl, width: 100, height:80}
 
+                                                                },{
+                                                                    xtype: 'fileuploadfield',
+                                                                    id: 'imagenId',
+                                                                    emptyText: 'Seleccione imagen',
+                                                                    fieldLabel: 'Foto',
+                                                                    name: 'imagen',
+                                                                    buttonText: '',
+                                                                    layout:'form',
+                                                                    anchor: '-20',
+                                                                    buttonCfg: {
+                                                                        iconCls: 'upload-icon'
+                                                                    }
                                                                 }
                                                             ]
                                                         }
                                                         ,{
                                                             title:'Domicilio'
+                                                            ,items:[
+                                                                {
+                                                                    xtype:'textfield'
+                                                                    ,fieldLabel:'Calle'
+                                                                    ,name:'calledomicilio'
+                                                                    ,id:'calledomicilioId'
+                                                                },{
+                                                                    xtype:'textfield'
+                                                                    ,fieldLabel:'Nro.Documento'
+                                                                    ,name:'numerodomiclio'
+                                                                    ,id:'numerodomicilioId'
+                                                                },{
+                                                                    xtype:'textfield'
+                                                                    ,fieldLabel:'Barrio'
+                                                                    ,name:'barriodomicilio'
+                                                                    ,id:'barriodomicilioId'
+                                                                },{
+                                                                    xtype:'textfield'
+                                                                    ,fieldLabel:'País Domicilio'
+                                                                    ,name:'paisdomicilio'
+                                                                    ,id:'paisdomicilioId'
+                                                                },{
+                                                                    xtype:'textfield'
+                                                                    ,fieldLabel:'Provincia Domicilio'
+                                                                    ,name:'provinciadomicilio'
+                                                                    ,id:'provinciadomicilioId'
+                                                                },{
+                                                                    xtype:'textfield'
+                                                                    ,fieldLabel:'Localidad Domicilio'
+                                                                    ,name:'localidaddomicilio'
+                                                                    ,id:'localidaddomicilioId'
+                                                                }
+                                                            ]
                                                         }
                                                         ,{
                                                             title:'Contacto'
+                                                            ,items:[
+                                                                {
+                                                                    xtype:'textfield'
+                                                                    ,fieldLaabel:'Teléfono Particular'
+                                                                    ,name:'telefonoparticular'
+                                                                    ,id:'telefonoparticularId'
+                                                                },{
+                                                                    xtype:'textfield'
+                                                                    ,fieldLabel:'Teléfono Celular'
+                                                                    ,name:'telefonocelular'
+                                                                    ,id:'telefonocelularId'
+                                                                },{
+                                                                    xtype:'textfield'
+                                                                    ,fieldLabel:'Teléfono Alternativo'
+                                                                    ,name:'telefonoalternativo'
+                                                                    ,id:'telefonoalternativoId'
+                                                                },{
+                                                                    xtype:'textfield'
+                                                                    ,fieldLabel:'E-mail'
+                                                                    ,name:'email'
+                                                                    ,id:'emailId'
+                                                                }
+                                                            ]
                                                         }
                                                         ,{
                                                             title:'Datos Laborales'
-                                                        }
-                                                        ,{
-                                                            title:''
+                                                            ,items:[
+                                                                {
+                                                                    xtype:'textfield'
+                                                                    ,fieldLabel:'Lugar Laboral'
+                                                                    ,name:'lugarlaboral'
+                                                                    ,id:'lugarlaboralId'
+                                                                },{
+                                                                    xtype:'textfield'
+                                                                    ,fieldLabel:'Teléfono Laboral'
+                                                                    ,name:'telefonolaboral'
+                                                                    ,id:'telefonolaboralId'
+                                                                },{
+                                                                    xtype:'textfield'
+                                                                    ,fieldLabel:'Calle'
+                                                                    ,name:'callelaboral'
+                                                                    ,id:'callelaboralId'
+                                                                },{
+                                                                    xtype:'textfield'
+                                                                    ,fieldLabel:'Número'
+                                                                    ,name:'numerolaboral'
+                                                                    ,id:'numerolaboralId'
+                                                                },{
+                                                                    xtype:'textfield'
+                                                                    ,fieldLabel:'Barrio Laboral'
+                                                                    ,name:'barriolaboral'
+                                                                    ,id:'barrriolaboralId'
+                                                                },{
+                                                                    xtype:'textfield'
+                                                                    ,fieldLabel:'País Laboral'
+                                                                    ,name:'paislaboral'
+                                                                    ,id:'paislaboralId'
+                                                                },{
+                                                                    xtype:'textfield'
+                                                                    ,fieldLabel:'Provincia Laboral'
+                                                                    ,name:'provincialaboral'
+                                                                    ,id:'provinncialaboralId'
+                                                                },{
+                                                                    xtype:'textfield'
+                                                                    ,fieldLabel:'Localidad Laboral'
+                                                                    ,name:'localidadlaboral'
+                                                                    ,id:'localidadlaboralId'
+                                                                }
+                                                            ]
                                                         }
                                                     ]
                                                 }
@@ -1006,7 +1120,9 @@ Ext.onReady(function(){
         }
     });
 
-
+    Ext.getCmp('formalumnoId').getForm().load({
+        url:alumnodataUrl
+    });
 
     Ext.getCmp('gridlistadoinscripcionesId').getStore().on('beforeload',function(){
         Ext.getCmp('gridlistadoinscripcionesId').baseParams={
