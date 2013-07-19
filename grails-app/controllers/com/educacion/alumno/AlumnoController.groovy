@@ -180,15 +180,26 @@ class AlumnoController {
         returnMap.data = [:]
         returnMap.success = true
         returnMap.data.id = alumnoInstance?.id
-        returnMap.data.tipodocumento = alumnoInstance.tipoDocumento.descripcion
-        returnMap.data.numerodocumento = alumnoInstance.numeroDocumento
+        returnMap.data.tipoDocumento = alumnoInstance.tipoDocumento.descripcion
+        returnMap.data.numeroDocumento = alumnoInstance.numeroDocumento
         returnMap.data.apellido = alumnoInstance.apellido
         returnMap.data.nombre = alumnoInstance.nombre
         returnMap.data.sexo = alumnoInstance.sexo.name
-        returnMap.data.fechanacimiento = alumnoInstance.fechaNacimiento
-        returnMap.data.paisnacimiento = alumnoInstance.paisNacimiento
-        returnMap.data.provincianacimiento = alumnoInstance.provinciaNacimiento
-        returnMap.data.localidadnacimiento = alumnoInstance.localidadNacimiento
+        returnMap.data.fechaNacimiento = g.formatDate(format: "dd/MM/yyyy",date:alumnoInstance.fechaNacimiento)
+        returnMap.data.paisNacimiento = alumnoInstance.paisNacimiento
+        returnMap.data.provinciaNacimiento = alumnoInstance.provinciaNacimiento
+        returnMap.data.localidadNacimiento = alumnoInstance.localidadNacimiento
+
+        returnMap.data.calleDomicilio = alumnoInstance.calleDomicilio
+        returnMap.data.numeroDomicilio = alumnoInstance.numeroDomicilio
+        returnMap.data.barrioDomicilio = alumnoInstance.barrioDomicilio
+        returnMap.data.paisDomicilio = alumnoInstance.paisDomicilio
+        returnMap.data.provinciaDomicilio = alumnoInstance.provinciaDomicilio
+        returnMap.data.localidadDomicilio = alumnoInstance.localidadDomicilio
+        returnMap.data.celularParticular = alumnoInstance.celularParticular
+        returnMap.data.telefonoParticular = alumnoInstance.telefonoParticular
+
+
 
 
         render returnMap as JSON

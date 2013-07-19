@@ -1,4 +1,32 @@
 Ext.onReady(function(){
+    Ext.QuickTips.init();
+    var provinciaStore = new Ext.data.JsonStore({
+        root:'rows',
+        url:provinciaUrl,
+        fields:['id','descripcion'],
+        autoLoad:true
+    });
+
+    var localidadStore = new Ext.data.JsonStore({
+        root:'rows',
+        url:localidadUrl,
+        fields:['id','descripcion'],
+        autoLoad:true
+    });
+
+    var paisesStore = new Ext.data.JsonStore({
+        root:'rows',
+        url:paisUrl,
+        fields:['id','descripcion'],
+        autoLoad:true
+    });
+
+    function habilitaUpdateAlumno(){
+        Ext.getCmp('boxfotoId').hide();
+        Ext.getCmp('imagenId').show();
+        Ext.getCmp('imagenId').setWidth(200);
+        //Ext.getCmp('').
+    }
 
     function getRowsDataFinal(){
         var storeInscFinal = Ext.getCmp('gridcorrelfinId').getStore();
@@ -147,6 +175,7 @@ Ext.onReady(function(){
                                         {
                                             xtype:'form'
                                             ,frame:true
+                                            ,title:'Datos del Alumno    '
                                             ,id:'formalumnoId'
                                             ,style: 'margin:0 auto;margin-top:100px;'
                                             ,height:450
@@ -174,13 +203,13 @@ Ext.onReady(function(){
                                                                 {
                                                                     xtype:'textfield'
                                                                     ,fieldLabel:'Tipo de Documento'
-                                                                    ,name:'tipodocumento'
+                                                                    ,name:'tipoDocumento'
                                                                     ,id:'tipodocumentoId'
                                                                     ,disabled:true
                                                                 },{
                                                                     xtype:'textfield'
                                                                     ,fieldLabel:'Número de Documento'
-                                                                    ,name:'numerodocumento'
+                                                                    ,name:'numeroDocumento'
                                                                     ,id:'numerodocumentoId'
                                                                     ,disabled:true
                                                                 },{
@@ -204,41 +233,49 @@ Ext.onReady(function(){
                                                                 },{
                                                                     xtype:'textfield',
                                                                     fieldLabel:'Fecha Nacimiento',
-                                                                    name:'fechanacimiento',
+                                                                    name:'fechaNacimiento',
                                                                     id:'fechanacimientoId'
                                                                     ,disabled:true
                                                                 },{
                                                                     xtype:'textfield',
                                                                     fieldLabel:'País Nacimiento',
-                                                                    name:'paisnacimiento',
+                                                                    store:paisesStore,
+                                                                    width:200,
+                                                                    allowBlank:false,
+                                                                    name:'paisNacimiento',
                                                                     id:'paisnacimientoId'
                                                                     ,disabled:true
                                                                 },{
                                                                     xtype:'textfield',
                                                                     fieldLabel:'Provincia Nacimiento',
-                                                                    name:'provincianacimiento',
-                                                                    id:'provincianacimientoId'
+                                                                    msgTarget:'under',
+                                                                    width:200,
+                                                                    name:'provinciaNacimiento',
+                                                                    id:'provincianacimiento_id'
                                                                     ,disabled:true
                                                                 },{
                                                                     xtype:'textfield',
                                                                     fieldLabel:'Localidad Nacimiento',
-                                                                    name:'localidadnacimiento',
-                                                                    id:'localidadnacimientoId'
+                                                                    name:'localidadNacimiento',
+                                                                    width:200,
+                                                                    id:'localidadnacimiento_id'
                                                                     ,disabled:true
                                                                 },{
                                                                     xtype:'box',
+                                                                    id:'boxfotoId',
                                                                     fieldLabel:'Foto',
                                                                     autoEl: {tag: 'img', src: alumnoimageUrl, width: 100, height:80}
 
                                                                 },{
                                                                     xtype: 'fileuploadfield',
                                                                     id: 'imagenId',
+                                                                    hidden:true,
                                                                     emptyText: 'Seleccione imagen',
                                                                     fieldLabel: 'Foto',
                                                                     name: 'imagen',
                                                                     buttonText: '',
                                                                     layout:'form',
-                                                                    anchor: '-20',
+                                                                    anchor: '0',
                                                                     buttonCfg: {
                                                                         iconCls: 'upload-icon'
                                                                     }
@@ -251,33 +288,70 @@ Ext.onReady(function(){
                                                                 {
                                                                     xtype:'textfield'
                                                                     ,fieldLabel:'Calle'
-                                                                    ,name:'calledomicilio'
+                                                                    ,name:'calleDomicilio'
                                                                     ,id:'calledomicilioId'
                                                                 },{
                                                                     xtype:'textfield'
-                                                                    ,fieldLabel:'Nro.Documento'
-                                                                    ,name:'numerodomiclio'
+                                                                    ,fieldLabel:'Nro.Domicilio'
+                                                                    ,name:'numeroDomiclio'
                                                                     ,id:'numerodomicilioId'
                                                                 },{
                                                                     xtype:'textfield'
                                                                     ,fieldLabel:'Barrio'
-                                                                    ,name:'barriodomicilio'
+                                                                    ,name:'barrioDomicilio'
                                                                     ,id:'barriodomicilioId'
                                                                 },{
-                                                                    xtype:'textfield'
+                                                                    xtype:'combo'
                                                                     ,fieldLabel:'País Domicilio'
+                                                                    ,mode:'local'
+                                                                    ,valueField:'id'
+                                                                    ,displayField:'descripcion'
+                                                                    ,hiddenName:'paisdomicilio_id'
+                                                                    ,store:paisesStore
                                                                     ,name:'paisdomicilio'
                                                                     ,id:'paisdomicilioId'
+                                                                    ,listeners:{
+                                                                        'select':function(cmd,rec,idx){
+                                                                            var provinciaCmb = Ext.getCmp('provinciadomicilioId');
+                                                                            provinciaCmb.clearValue();
+                                                                            provinciaCmb.store.load({
+                                                                                params:{'pais_id':Ext.getCmp('paisdomicilioId').hiddenField.value}
+                                                                            });
+                                                                            var localidadCmb = Ext.getCmp('localidaddomicilioId');
+                                                                            localidadCmb.clearValue();
+                                                                        }
+                                                                    }
+
                                                                 },{
-                                                                    xtype:'textfield'
+                                                                    xtype:'combo'
                                                                     ,fieldLabel:'Provincia Domicilio'
+                                                                    ,mode:'local'
+                                                                    ,valueField:'id'
+                                                                    ,displayField:'descripcion'
+                                                                    ,store:provinciaStore
+                                                                    ,hiddenName:'provinciadomicilio_id'
                                                                     ,name:'provinciadomicilio'
                                                                     ,id:'provinciadomicilioId'
+                                                                    ,listeners:{
+                                                                        'select':function(cmd,rec,idx){
+                                                                            var localidadCmb = Ext.getCmp('localidaddomicilioId');
+                                                                            localidadCmb.clearValue();
+                                                                            localidadCmb.store.load({
+                                                                                params:{'provincia_id':Ext.getCmp('provinciadomicilioId').hiddenField.value}
+                                                                            });
+                                                                        }
+                                                                    }
+
                                                                 },{
-                                                                    xtype:'textfield'
+                                                                    xtype:'combo'
                                                                     ,fieldLabel:'Localidad Domicilio'
                                                                     ,name:'localidaddomicilio'
                                                                     ,id:'localidaddomicilioId'
+                                                                    ,valueField:'id'
+                                                                    ,displayField:'descripcion'
+                                                                    ,hiddenName:'localidaddomicilio_id'
+                                                                    ,mode:'local'
+                                                                    ,store:localidadStore
                                                                 }
                                                             ]
                                                         }
@@ -286,18 +360,18 @@ Ext.onReady(function(){
                                                             ,items:[
                                                                 {
                                                                     xtype:'textfield'
-                                                                    ,fieldLaabel:'Teléfono Particular'
-                                                                    ,name:'telefonoparticular'
+                                                                    ,fieldLabel:'Teléfono Particular'
+                                                                    ,name:'telefonoParticular'
                                                                     ,id:'telefonoparticularId'
                                                                 },{
                                                                     xtype:'textfield'
                                                                     ,fieldLabel:'Teléfono Celular'
-                                                                    ,name:'telefonocelular'
+                                                                    ,name:'celularParticular'
                                                                     ,id:'telefonocelularId'
                                                                 },{
                                                                     xtype:'textfield'
                                                                     ,fieldLabel:'Teléfono Alternativo'
-                                                                    ,name:'telefonoalternativo'
+                                                                    ,name:'telefonoAlternativo'
                                                                     ,id:'telefonoalternativoId'
                                                                 },{
                                                                     xtype:'textfield'
@@ -318,47 +392,104 @@ Ext.onReady(function(){
                                                                 },{
                                                                     xtype:'textfield'
                                                                     ,fieldLabel:'Teléfono Laboral'
-                                                                    ,name:'telefonolaboral'
+                                                                    ,name:'telefonoLaboral'
                                                                     ,id:'telefonolaboralId'
                                                                 },{
                                                                     xtype:'textfield'
                                                                     ,fieldLabel:'Calle'
-                                                                    ,name:'callelaboral'
+                                                                    ,name:'calleLaboral'
                                                                     ,id:'callelaboralId'
                                                                 },{
                                                                     xtype:'textfield'
                                                                     ,fieldLabel:'Número'
-                                                                    ,name:'numerolaboral'
+                                                                    ,name:'numeroLaboral'
                                                                     ,id:'numerolaboralId'
                                                                 },{
                                                                     xtype:'textfield'
                                                                     ,fieldLabel:'Barrio Laboral'
-                                                                    ,name:'barriolaboral'
+                                                                    ,name:'barrioLaboral'
                                                                     ,id:'barrriolaboralId'
                                                                 },{
-                                                                    xtype:'textfield'
+                                                                    xtype:'combo'
                                                                     ,fieldLabel:'País Laboral'
+                                                                    ,valueField:'id'
+                                                                    ,displayField:'descripcion'
+                                                                    ,hiddenName:'paislaboral_id'
+                                                                    ,mode:'local'
+                                                                    ,store:paisesStore
                                                                     ,name:'paislaboral'
                                                                     ,id:'paislaboralId'
+                                                                    ,listeners:{
+                                                                        'select':function(cmd,rec,idx){
+                                                                            var provinciaCmb = Ext.getCmp('provincialaboralId');
+                                                                            provinciaCmb.clearValue();
+                                                                            provinciaCmb.store.load({
+                                                                                params:{'pais_id':Ext.getCmp('paislaboralId').hiddenField.value}
+                                                                            });
+                                                                        }
+                                                                    }
+
                                                                 },{
-                                                                    xtype:'textfield'
+                                                                    xtype:'combo'
                                                                     ,fieldLabel:'Provincia Laboral'
+                                                                    ,valueField:'id'
+                                                                    ,displayField:'descripcion'
+                                                                    ,mode:'local'
+                                                                    ,hiddenName:'provincialaboral_id'
+                                                                    ,store:provinciaStore
                                                                     ,name:'provincialaboral'
                                                                     ,id:'provinncialaboralId'
+                                                                    ,listeners:{
+                                                                        'select':function(cmd,rec,idx){
+                                                                            var localidadCmb = Ext.getCmp('localidadlaboralId');
+                                                                            localidadCmb.clearValue();
+                                                                            localidadCmb.store.load({
+                                                                                params:{'provincia_id':Ext.getCmp('provincialaboralId').hiddenField.value}
+                                                                            });
+                                                                        }
+                                                                    }
+
                                                                 },{
-                                                                    xtype:'textfield'
+                                                                    xtype:'combo'
                                                                     ,fieldLabel:'Localidad Laboral'
                                                                     ,name:'localidadlaboral'
                                                                     ,id:'localidadlaboralId'
+                                                                    ,valueField:'id'
+                                                                    ,displayField:'descripcion'
+                                                                    ,mode:'local'
+                                                                    ,store:localidadStore
+                                                                    ,hiddenName:'localidadlaboral_id'
                                                                 }
                                                             ]
                                                         }
                                                     ]
                                                 }
+                                            ],
+                                            buttons:[
+                                                {
+                                                    text:'Modificar'
+                                                    ,id:'modificarbtnId'
+                                                    ,handler:function(){
+                                                        Ext.getCmp('boxfotoId').hide();
+                                                        Ext.getCmp('imagenId').show();
+                                                        Ext.getCmp('imagenId').setWidth(200);
+                                                        habilitaUpdateAlumno();
+                                                    }
+                                                },{
+                                                    text:'Guardar Cambios'
+                                                    ,id:'guararbtnId'
+                                                    ,handler:function(){
+                                                        Ext.getCmp('boxfotoId').show();
+                                                        Ext.getCmp('imagenId').hide();
+                                                        //Ext.getCmp('imagenId').setWidth(200);
+                                                    }
+                                                },{
+                                                    text:'Cancelar'
+                                                }
                                             ]
+
                                         }
                                     ]
-
                                 },{
                                     title:'Cerrar Sesión',
                                     iconCls: 'x-icon-close-session',
