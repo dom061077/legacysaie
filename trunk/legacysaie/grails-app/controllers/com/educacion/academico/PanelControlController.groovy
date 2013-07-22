@@ -15,9 +15,9 @@ import com.educacion.enums.EstadoInscripcionEnum
 class PanelControlController {
     def springSecurityService
     def index() {
-
+        Random randomLink = new Random()
         def userInstance = springSecurityService.currentUser
-        [userInstance:userInstance]
+        [userInstance:userInstance,randomlink: randomLink.nextInt(100000)]
     }
 
     
@@ -25,6 +25,7 @@ class PanelControlController {
         boolean flagvalida = true
         def listMateriasCorre
         def inscsDetalle
+
 
         if(tipoInsc == TipoInscripcionDetalleEnum.C ){
             listMateriasCorre = MateriaAprobadaCursar.createCriteria().list{

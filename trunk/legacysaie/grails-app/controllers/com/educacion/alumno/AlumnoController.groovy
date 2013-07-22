@@ -132,6 +132,37 @@ class AlumnoController {
     }
     
     //--------json method---------
+    def updatejsonpc(){
+        log.debug "Parametros: $params"
+        def success = true
+        def mensaje = ''
+        def returnMap = [:]
+        def errorList = []
+        
+        def alumnoInstance = Alumno.get(params.id)
+        if (alumnoInstance){
+            alumnoInstance.properties = params
+            if (!alumnoInstance.save(flush: true)){
+                success = false
+                mensaje = 'Error en el registro de datos'
+                alumnoInstance.errors.allErrors.each{
+                    errorList << [msg:messageSource.getMessage(it,LCH.locale)]
+                }
+            }else{
+                mensaje = 'Los datos se guardaron correctamente'
+            }
+        }else{
+            success = false
+            mensaje='No se encontró el registro a modificar'
+        }
+        returnMap.success = success
+        returnMap.mensaje = mensaje
+        returnMap.errors = errorList
+        //render returnMap as JSON
+        def json = new JSON(returnMap)
+        //render //"""{success:false,mensaje:'error',errors:[]}"""
+        render json.toString()
+    }
     
     def savejson(){
         log.debug "Parámetros: $params"
