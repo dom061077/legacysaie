@@ -25,7 +25,87 @@ Ext.onReady(function(){
         Ext.getCmp('boxfotoId').hide();
         Ext.getCmp('imagenId').show();
         Ext.getCmp('imagenId').setWidth(200);
-        //Ext.getCmp('').
+        /*calledomicilioId
+        numerodomicilioId
+        barriodomicilioId
+        paisdomicilioId
+        provinciadomicilioId
+        localidaddomicilioId*/
+        Ext.getCmp('calledomicilioId').enable();
+        Ext.getCmp('numerodomicilioId').enable();
+        Ext.getCmp('barriodomicilioId').enable();
+        Ext.getCmp('paisdomicilioId').enable();
+        Ext.getCmp('provinciadomicilioId').enable();
+        Ext.getCmp('localidaddomicilioId').enable();
+        //---
+        Ext.getCmp('modificarbtnId').disable();
+        Ext.getCmp('guardarbtnId').enable();
+        Ext.getCmp('cancelarbtnId').enable();
+    }
+
+    function disableAlumnoData(){
+        Ext.getCmp('boxfotoId').show();
+        Ext.getCmp('imagenId').hide();
+        Ext.getCmp('calledomicilioId').disable();
+        Ext.getCmp('numerodomicilioId').disable();
+        Ext.getCmp('barriodomicilioId').disable();
+        Ext.getCmp('paisdomicilioId').disable();
+        Ext.getCmp('provinciadomicilioId').disable();
+        Ext.getCmp('localidaddomicilioId').disable();
+        //---
+        Ext.getCmp('modificarbtnId').enable();
+        Ext.getCmp('guardarbtnId').disable();
+        Ext.getCmp('cancelarbtnId').disable();
+
+    }
+
+    function updateAlumno(){
+        var formAlumno = Ext.getCmp('formalumnoId');
+        if(formAlumno.getForm().isValid()){
+            formAlumno.getForm().submit({
+                success: function(f,a){
+                    Ext.Msg.show({
+                        title:'Mensaje'
+                        , icon:Ext.MessageBox.INFO
+                        , msg:a.result.mensaje
+                        , buttons:Ext.MessageBox.OK
+                        , fn: function(btn){
+                            disableAlumnoData();
+                            Ext.getCmp('formalumnoId').getForm().load({
+                                url:alumnodataUrl
+                            });
+                            Ext.getCmp('boxfotoId').setSrc(alumnoimageUrl);
+                        }
+                    });
+                },
+                failure: function(f,a){
+                    var mensaje = a.result.mensaje+'<br><br>';
+                    for(var i=0;i<a.result.errors.length;i++){
+                        mensaje = mensaje +'- '+a.result.errors[i].msg+'<br>';
+                    }
+
+                    Ext.Msg.show({
+                        title: 'Error'
+                        ,icon:Ext.MessageBox.ERROR
+                        ,msg: mensaje,
+                        buttons: Ext.MessageBox.OK,
+                        fn: function(btn){
+
+                        }
+
+                    });
+                }
+            });
+        }
+
+
+    }
+
+    function cancelarUpdateAlumno(){
+        disableAlumnoData();
+        Ext.getCmp('formalumnoId').getForm().load({
+            url:alumnodataUrl
+        });
     }
 
     function getRowsDataFinal(){
@@ -180,7 +260,15 @@ Ext.onReady(function(){
                                             ,style: 'margin:0 auto;margin-top:100px;'
                                             ,height:450
                                             ,width:450
+                                            ,url:savealumnoUrl
+                                            ,fileUpload:true
                                             ,items:[
+                                                {
+                                                    xtype:'hidden'
+                                                    ,id:'alumnoId'
+                                                    ,name:'id'
+                                                    ,value:alumnoId
+                                                },
                                                 {
                                                     xtype:'tabpanel'
                                                     ,activeItem:0
@@ -224,82 +312,26 @@ Ext.onReady(function(){
                                                                     ,name:'nombre'
                                                                     ,id:'nombreId'
                                                                     ,disabled:true
-                                                                },{
-                                                                    xtype:'textfield',
-                                                                    fieldLabel:'Sexo',
-                                                                    name:'sexo',
-                                                                    id:'sexoId'
-                                                                    ,disabled:true
-                                                                },{
-                                                                    xtype:'textfield',
-                                                                    fieldLabel:'Fecha Nacimiento',
-                                                                    name:'fechaNacimiento',
-                                                                    id:'fechanacimientoId'
-                                                                    ,disabled:true
-                                                                },{
-                                                                    xtype:'textfield',
-                                                                    fieldLabel:'País Nacimiento',
-                                                                    store:paisesStore,
-                                                                    width:200,
-                                                                    allowBlank:false,
-                                                                    name:'paisNacimiento',
-                                                                    id:'paisnacimientoId'
-                                                                    ,disabled:true
-                                                                },{
-                                                                    xtype:'textfield',
-                                                                    fieldLabel:'Provincia Nacimiento',
-                                                                    msgTarget:'under',
-                                                                    width:200,
-                                                                    name:'provinciaNacimiento',
-                                                                    id:'provincianacimiento_id'
-                                                                    ,disabled:true
-                                                                },{
-                                                                    xtype:'textfield',
-                                                                    fieldLabel:'Localidad Nacimiento',
-                                                                    name:'localidadNacimiento',
-                                                                    width:200,
-                                                                    id:'localidadnacimiento_id'
-                                                                    ,disabled:true
-                                                                },{
-                                                                    xtype:'box',
-                                                                    id:'boxfotoId',
-                                                                    fieldLabel:'Foto',
-                                                                    autoEl: {tag: 'img', src: alumnoimageUrl, width: 100, height:80}
+
 
                                                                 },{
-                                                                    xtype: 'fileuploadfield',
-                                                                    id: 'imagenId',
-                                                                    hidden:true,
-                                                                    emptyText: 'Seleccione imagen',
-                                                                    fieldLabel: 'Foto',
-                                                                    name: 'imagen',
-                                                                    buttonText: '',
-                                                                    layout:'form',
-                                                                    anchor: '0',
-                                                                    buttonCfg: {
-                                                                        iconCls: 'upload-icon'
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }
-                                                        ,{
-                                                            title:'Domicilio'
-                                                            ,items:[
-                                                                {
                                                                     xtype:'textfield'
                                                                     ,fieldLabel:'Calle'
                                                                     ,name:'calleDomicilio'
                                                                     ,id:'calledomicilioId'
+                                                                    ,disabled:true
                                                                 },{
                                                                     xtype:'textfield'
                                                                     ,fieldLabel:'Nro.Domicilio'
                                                                     ,name:'numeroDomiclio'
                                                                     ,id:'numerodomicilioId'
+                                                                    ,disabled:true
                                                                 },{
                                                                     xtype:'textfield'
                                                                     ,fieldLabel:'Barrio'
                                                                     ,name:'barrioDomicilio'
                                                                     ,id:'barriodomicilioId'
+                                                                    ,disabled:true
                                                                 },{
                                                                     xtype:'combo'
                                                                     ,fieldLabel:'País Domicilio'
@@ -310,6 +342,7 @@ Ext.onReady(function(){
                                                                     ,store:paisesStore
                                                                     ,name:'paisdomicilio'
                                                                     ,id:'paisdomicilioId'
+                                                                    ,disabled:true
                                                                     ,listeners:{
                                                                         'select':function(cmd,rec,idx){
                                                                             var provinciaCmb = Ext.getCmp('provinciadomicilioId');
@@ -332,6 +365,7 @@ Ext.onReady(function(){
                                                                     ,hiddenName:'provinciadomicilio_id'
                                                                     ,name:'provinciadomicilio'
                                                                     ,id:'provinciadomicilioId'
+                                                                    ,disabled:true
                                                                     ,listeners:{
                                                                         'select':function(cmd,rec,idx){
                                                                             var localidadCmb = Ext.getCmp('localidaddomicilioId');
@@ -352,10 +386,29 @@ Ext.onReady(function(){
                                                                     ,hiddenName:'localidaddomicilio_id'
                                                                     ,mode:'local'
                                                                     ,store:localidadStore
+                                                                    ,disabled:true
+                                                                },{
+                                                                    xtype:'box',
+                                                                    id:'boxfotoId',
+                                                                    fieldLabel:'Foto',
+                                                                    autoEl: {tag: 'img', src: alumnoimageUrl, width: 100, height:80}
+
+                                                                },{
+                                                                    xtype: 'fileuploadfield',
+                                                                    id: 'imagenId',
+                                                                    hidden:true,
+                                                                    emptyText: 'Seleccione imagen',
+                                                                    fieldLabel: 'Foto',
+                                                                    name: 'imagen',
+                                                                    buttonText: '',
+                                                                    layout:'form',
+                                                                    anchor: '0',
+                                                                    buttonCfg: {
+                                                                        iconCls: 'upload-icon'
+                                                                    }
                                                                 }
                                                             ]
-                                                        }
-                                                        ,{
+                                                        },{
                                                             title:'Contacto'
                                                             ,items:[
                                                                 {
@@ -363,21 +416,25 @@ Ext.onReady(function(){
                                                                     ,fieldLabel:'Teléfono Particular'
                                                                     ,name:'telefonoParticular'
                                                                     ,id:'telefonoparticularId'
+                                                                    ,disabled:true
                                                                 },{
                                                                     xtype:'textfield'
                                                                     ,fieldLabel:'Teléfono Celular'
                                                                     ,name:'celularParticular'
                                                                     ,id:'telefonocelularId'
+                                                                    ,disabled:true
                                                                 },{
                                                                     xtype:'textfield'
                                                                     ,fieldLabel:'Teléfono Alternativo'
                                                                     ,name:'telefonoAlternativo'
                                                                     ,id:'telefonoalternativoId'
+                                                                    ,disabled:true
                                                                 },{
                                                                     xtype:'textfield'
                                                                     ,fieldLabel:'E-mail'
                                                                     ,name:'email'
                                                                     ,id:'emailId'
+                                                                    ,disabled:true
                                                                 }
                                                             ]
                                                         }
@@ -389,26 +446,31 @@ Ext.onReady(function(){
                                                                     ,fieldLabel:'Lugar Laboral'
                                                                     ,name:'lugarlaboral'
                                                                     ,id:'lugarlaboralId'
+                                                                    ,disabled:true
                                                                 },{
                                                                     xtype:'textfield'
                                                                     ,fieldLabel:'Teléfono Laboral'
                                                                     ,name:'telefonoLaboral'
                                                                     ,id:'telefonolaboralId'
+                                                                    ,disabled:true
                                                                 },{
                                                                     xtype:'textfield'
                                                                     ,fieldLabel:'Calle'
                                                                     ,name:'calleLaboral'
                                                                     ,id:'callelaboralId'
+                                                                    ,disabled:true
                                                                 },{
                                                                     xtype:'textfield'
                                                                     ,fieldLabel:'Número'
                                                                     ,name:'numeroLaboral'
                                                                     ,id:'numerolaboralId'
+                                                                    ,disabled:true
                                                                 },{
                                                                     xtype:'textfield'
                                                                     ,fieldLabel:'Barrio Laboral'
                                                                     ,name:'barrioLaboral'
                                                                     ,id:'barrriolaboralId'
+                                                                    ,disabled:true
                                                                 },{
                                                                     xtype:'combo'
                                                                     ,fieldLabel:'País Laboral'
@@ -419,6 +481,7 @@ Ext.onReady(function(){
                                                                     ,store:paisesStore
                                                                     ,name:'paislaboral'
                                                                     ,id:'paislaboralId'
+                                                                    ,disabled:true
                                                                     ,listeners:{
                                                                         'select':function(cmd,rec,idx){
                                                                             var provinciaCmb = Ext.getCmp('provincialaboralId');
@@ -439,6 +502,7 @@ Ext.onReady(function(){
                                                                     ,store:provinciaStore
                                                                     ,name:'provincialaboral'
                                                                     ,id:'provinncialaboralId'
+                                                                    ,disabled:true
                                                                     ,listeners:{
                                                                         'select':function(cmd,rec,idx){
                                                                             var localidadCmb = Ext.getCmp('localidadlaboralId');
@@ -458,6 +522,7 @@ Ext.onReady(function(){
                                                                     ,displayField:'descripcion'
                                                                     ,mode:'local'
                                                                     ,store:localidadStore
+                                                                    ,disabled:true
                                                                     ,hiddenName:'localidadlaboral_id'
                                                                 }
                                                             ]
@@ -477,14 +542,17 @@ Ext.onReady(function(){
                                                     }
                                                 },{
                                                     text:'Guardar Cambios'
-                                                    ,id:'guararbtnId'
+                                                    ,id:'guardarbtnId'
+                                                    ,disabled:true
                                                     ,handler:function(){
-                                                        Ext.getCmp('boxfotoId').show();
-                                                        Ext.getCmp('imagenId').hide();
-                                                        //Ext.getCmp('imagenId').setWidth(200);
-                                                    }
+                                                        updateAlumno();                                                    }
                                                 },{
                                                     text:'Cancelar'
+                                                    ,id:'cancelarbtnId'
+                                                    ,disabled:true
+                                                    ,handler:function(){
+                                                        cancelarUpdateAlumno();
+                                                    }
                                                 }
                                             ]
 

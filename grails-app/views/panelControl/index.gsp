@@ -74,14 +74,15 @@
         var submitFinUrl = '${createLink(uri:'/inscripcion/saveinscripcionfin')}';
         var username = '${userInstance.alumno.apellido} - ${userInstance.alumno.nombre}';
         var alumnoId = '${userInstance.alumno.id}';
-        var alumnoimageUrl = '${createLink(uri:'/alumno/renderimage/'+userInstance.alumno.id)}';
+        var alumnoimageUrl = '${createLink(uri:'/alumno/renderimage/'+userInstance.alumno.id)+"?id="+ramdomlink}';
         var alumnodataUrl = '${createLink(uri:'/alumno/showjson/')+userInstance.alumno.id}';
         var paisUrl = '${createLink(uri:'/location/paisesjson')}';
         var provinciaUrl = '${createLink(uri:'/location/provinciasjson')}';
         var localidadUrl = '${createLink(uri:'/location/localidadesjson')}';
+        var savealumnoUrl = '${createLink(uri:'/alumno/updatejsonpc')}';
     </script>
     <script type="text/javascript" src="${resource(dir:"js/paneldecontrol",file:"paneldecontrol.js")}"></script>
-    <title></title>
+    <title>Panel de Control</title>
 
 </head>
 <body>
