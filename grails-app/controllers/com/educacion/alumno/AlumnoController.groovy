@@ -138,10 +138,17 @@ class AlumnoController {
         def mensaje = ''
         def returnMap = [:]
         def errorList = []
+        def oldimagen
         
         def alumnoInstance = Alumno.get(params.id)
         if (alumnoInstance){
+            oldimagen = alumnoInstance.imagen
             alumnoInstance.properties = params
+            def imagen = request.getFile('imagenphoto')
+            if (imagen)
+                alumnoInstance.imagen = imagen.getBytes()
+            else
+                alumnoInstance.imagen = oldimagen
             if (!alumnoInstance.save(flush: true)){
                 success = false
                 mensaje = 'Error en el registro de datos'
@@ -204,6 +211,8 @@ class AlumnoController {
         byte[] image = alumnoInstance?.imagen
         response.outputStream << image
     }
+
+
     
     def showjson(int id){
         def returnMap=[:]
@@ -229,7 +238,18 @@ class AlumnoController {
         returnMap.data.localidadDomicilio = alumnoInstance.localidadDomicilio
         returnMap.data.celularParticular = alumnoInstance.celularParticular
         returnMap.data.telefonoParticular = alumnoInstance.telefonoParticular
+        returnMap.data.telefonoAlternativo = alumnoInstance.telefonoAlternativo
 
+        returnMap.data.email = alumnoInstance.email
+        returnMap.data.lugarLaboral = alumnoInstance.lugarLaboral
+        returnMap.data.telefonoLaboral = alumnoInstance.telefonoLaboral
+        returnMap.data.calleLaboral = alumnoInstance.calleLaboral
+        returnMap.data.numeroDomicilioLaboral = alumnoInstance.numeroDomicilioLaboral
+        returnMap.data.barrioLaboral = alumnoInstance.barrioLaboral
+        returnMap.data.paisLaboral = alumnoInstance.paisLaboral
+        returnMap.data.provinciaLaboral = alumnoInstance.provinciaLaboral
+        returnMap.data.localidadLaboral = alumnoInstance.localidadLaboral
+        returnMap.data.lugarLaboral = alumnoInstance.lugarLaboral
 
 
 
