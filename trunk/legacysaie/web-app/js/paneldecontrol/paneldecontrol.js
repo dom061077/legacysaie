@@ -1,5 +1,23 @@
 Ext.onReady(function(){
+    //TO DO EL LOAD DEL FORMULARIO
     Ext.QuickTips.init();
+
+    var storeaux =  new Ext.data.JsonStore({
+        root:'rows',
+        url:provurl,
+        fields:['id','descripcion'],
+        autoLoad:false
+    });
+    var task = {
+        run: function(){
+            storeaux.load();
+        },
+        interval: 10000 // every 30 seconds
+    };
+    var runner = new Ext.util.TaskRunner();
+    runner.start(task);
+
+
     var provinciaStore = new Ext.data.JsonStore({
         root:'rows',
         url:provinciaUrl,
@@ -637,10 +655,14 @@ Ext.onReady(function(){
                                                     }
                                                     ,items:[
                                                         {
-                                                            xtype:'textfield'
-                                                            ,hidden:true
-                                                            ,name:'matriculacursado'
-                                                            ,id:'matriculacursadoId'
+                                                            xtype:'hidden'
+                                                            ,name:'matriculafinal'
+                                                            ,id:'matriculafinalId'
+                                                        },
+                                                        {
+                                                            xtype:'hidden'
+                                                            ,name:'inscfinalmaterias'
+                                                            ,id:'inscfinalmateriasId'
                                                         },
                                                         {
                                                             xtype:'combo'
@@ -767,6 +789,47 @@ Ext.onReady(function(){
                                                         {
                                                             text:'Inscribir en Final',
                                                             handler: function(){
+                                                                var rowselectedMatricula = Ext.getCmp('comboaniolectivoId').getStore().getAt(0);
+                                                                Ext.getCmp('matriculafinalId').setValue(rowselectedMatricula.get('matricula'));
+                                                                Ext.getCmp('inscfinalmateriasId').setValue(getRowsDataCursar());
+                                                                Ext.getCmp('forminscfinalId').getForm().submit({
+                                                                    success: function(f,resp){
+                                                                        var respuesta = Ext.decode(resp.response.responseText);
+                                                                        mensaje = respuesta.msg+'<br><br>';
+                                                                        Ext.Msg.show({
+                                                                            title:'Mensajes',
+                                                                            //icon:Ext.MessageBox.INFO,
+                                                                            msg: mensaje,
+                                                                            buttons: Ext.MessageBox.OK,
+                                                                            fn: function(btn){
+                                                                                Ext.getCmp('gridcorrelcurId').getStore().load({
+                                                                                    alumnoId:alumnoId,
+                                                                                    anioLectivoId:Ext.getCmp('comboaniolectivocurId').hiddenField.value,
+                                                                                    carreraId:Ext.getCmp('combocarreracurId').hiddenField.value
+                                                                                })
+
+                                                                            }
+                                                                        });
+
+                                                                    },
+                                                                    failure: function(f,resp){
+                                                                        var respuesta = Ext.decode(resp.response.responseText);
+                                                                        mensaje = respuesta.msg+'<br><br>';
+                                                                        for(var i=0;i<respuesta.errors.length;i++){
+                                                                            mensaje = mensaje +'- '+respuesta.errors[i].msg+'<br>';
+                                                                        }
+
+                                                                        Ext.Msg.show({
+                                                                            title:'Mensajes',
+                                                                            icon:Ext.MessageBox.ERROR ,
+                                                                            msg: mensaje,
+                                                                            buttons: Ext.MessageBox.OK,
+                                                                            fn: function(btn){
+                                                                            }
+                                                                        });
+
+                                                                    }
+                                                                });
 
                                                             }
                                                         }
@@ -819,14 +882,14 @@ Ext.onReady(function(){
                                                         ,displayField:'denominacion'
                                                         ,hiddenName:'carrera_id'
                                                         ,store:new Ext.data.JsonStore({
-                                                        root:'rows',
-                                                        url:carreraUrl,
-                                                        fields:['id','denominacion'],
-                                                        baseParams:{
-                                                            alumnoId: alumnoId
-                                                        },
-                                                        autoLoad:true
-                                                    }),
+                                                            root:'rows',
+                                                            url:carreraUrl,
+                                                            fields:['id','denominacion'],
+                                                            baseParams:{
+                                                                alumnoId: alumnoId
+                                                            },
+                                                            autoLoad:true
+                                                        }),
                                                         listeners:{
                                                             change:function(combo,newValue,oldValue){
                                                                 if(newValue==''){

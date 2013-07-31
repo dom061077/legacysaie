@@ -21,7 +21,10 @@
         <script type="text/javascript" src="${resource(dir:'js',file:'initextjs.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/extjs/locale',file:'ext-lang-es.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/extjs/ux',file:'CheckColumn.js')}"></script>
-
+        <script type="text/javascript">
+            var loginurl = '${createLink(uri:'/login')}';
+            var provurl = '${createLink(uri:'/location/provinciasjson')}';
+        </script>
 
 		<g:layoutHead/>
         <style type="text/css">
