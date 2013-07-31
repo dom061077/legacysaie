@@ -74,7 +74,8 @@
         var submitFinUrl = '${createLink(uri:'/inscripcion/saveinscripcionfin')}';
         var username = '${userInstance.alumno.apellido} - ${userInstance.alumno.nombre}';
         var alumnoId = '${userInstance.alumno.id}';
-        var alumnoimageUrl = '${createLink(uri:'/alumno/renderimage/'+userInstance.alumno.id)+"?id="+ramdomlink}';
+        var alumnoimageUrl = '${createLink(uri:'/alumno/renderimage/'+userInstance.alumno.id)+"?parm="+ramdomlink}';
+        var alumnoreldimageUrl = '${createLink(uri:'/alumno/renderimage/')+userInstance.alumno.id}';
         var alumnodataUrl = '${createLink(uri:'/alumno/showjson/')+userInstance.alumno.id}';
         var paisUrl = '${createLink(uri:'/location/paisesjson')}';
         var provinciaUrl = '${createLink(uri:'/location/provinciasjson')}';

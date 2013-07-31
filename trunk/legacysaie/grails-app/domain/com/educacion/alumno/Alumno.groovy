@@ -24,6 +24,7 @@ class Alumno {
     String localidadDomicilio
     String telefonoParticular
     String celularParticular
+
     String email
     String telefonoAlternativo
     String establecimiento
@@ -31,6 +32,7 @@ class Alumno {
     Integer anioEgreso
     //SituacionAcademica situacionAcademica
     String legajo
+
     String lugarLaboral
     String telefonoLaboral
     String calleLaboral
@@ -39,6 +41,7 @@ class Alumno {
     String paisLaboral
     String provinciaLaboral
     String localidadLaboral
+
     String apellidoNombreTutor
     String profesion
     String parentescoTutor

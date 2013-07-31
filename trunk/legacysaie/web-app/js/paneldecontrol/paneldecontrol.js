@@ -37,6 +37,18 @@ Ext.onReady(function(){
         Ext.getCmp('paisdomicilioId').enable();
         Ext.getCmp('provinciadomicilioId').enable();
         Ext.getCmp('localidaddomicilioId').enable();
+        Ext.getCmp('telefonoparticularId').enable();
+        Ext.getCmp('telefonocelularId').enable();
+        Ext.getCmp('telefonoalternativoId').enable();
+        Ext.getCmp('emailId').enable();
+        Ext.getCmp('lugarlaboralId').enable();
+        Ext.getCmp('telefonolaboralId').enable();
+        Ext.getCmp('callelaboralId').enable();
+        Ext.getCmp('numerolaboralId').enable();
+        Ext.getCmp('barrriolaboralId').enable();
+        Ext.getCmp('paislaboralId').enable();
+        Ext.getCmp('provincialaboralId').enable();
+        Ext.getCmp('localidadlaboralId').enable();
         //---
         Ext.getCmp('modificarbtnId').disable();
         Ext.getCmp('guardarbtnId').enable();
@@ -52,6 +64,19 @@ Ext.onReady(function(){
         Ext.getCmp('paisdomicilioId').disable();
         Ext.getCmp('provinciadomicilioId').disable();
         Ext.getCmp('localidaddomicilioId').disable();
+        Ext.getCmp('telefonoparticularId').disable();
+        Ext.getCmp('telefonocelularId').disable();
+        Ext.getCmp('telefonoalternativoId').disable();
+        Ext.getCmp('emailId').disable();
+        Ext.getCmp('lugarlaboralId').disable();
+        Ext.getCmp('telefonolaboralId').disable();
+        Ext.getCmp('callelaboralId').disable();
+        Ext.getCmp('numerolaboralId').disable();
+        Ext.getCmp('barrriolaboralId').disable();
+        Ext.getCmp('paislaboralId').disable();
+        Ext.getCmp('provincialaboralId').disable();
+        Ext.getCmp('localidadlaboralId').disable();
+
         //---
         Ext.getCmp('modificarbtnId').enable();
         Ext.getCmp('guardarbtnId').disable();
@@ -74,7 +99,8 @@ Ext.onReady(function(){
                             Ext.getCmp('formalumnoId').getForm().load({
                                 url:alumnodataUrl
                             });
-                            Ext.getCmp('boxfotoId').setSrc(alumnoimageUrl);
+                            Ext.getCmp('boxfotoId').getEl().dom.src=alumnoreldimageUrl+'?parm='
+                                +(new Date()).getDate();
                         }
                     });
                 },
@@ -323,7 +349,7 @@ Ext.onReady(function(){
                                                                 },{
                                                                     xtype:'textfield'
                                                                     ,fieldLabel:'Nro.Domicilio'
-                                                                    ,name:'numeroDomiclio'
+                                                                    ,name:'numeroDomicilio'
                                                                     ,id:'numerodomicilioId'
                                                                     ,disabled:true
                                                                 },{
@@ -340,7 +366,7 @@ Ext.onReady(function(){
                                                                     ,displayField:'descripcion'
                                                                     ,hiddenName:'paisdomicilio_id'
                                                                     ,store:paisesStore
-                                                                    ,name:'paisdomicilio'
+                                                                    ,name:'paisDomicilio'
                                                                     ,id:'paisdomicilioId'
                                                                     ,disabled:true
                                                                     ,listeners:{
@@ -363,7 +389,7 @@ Ext.onReady(function(){
                                                                     ,displayField:'descripcion'
                                                                     ,store:provinciaStore
                                                                     ,hiddenName:'provinciadomicilio_id'
-                                                                    ,name:'provinciadomicilio'
+                                                                    ,name:'provinciaDomicilio'
                                                                     ,id:'provinciadomicilioId'
                                                                     ,disabled:true
                                                                     ,listeners:{
@@ -379,7 +405,7 @@ Ext.onReady(function(){
                                                                 },{
                                                                     xtype:'combo'
                                                                     ,fieldLabel:'Localidad Domicilio'
-                                                                    ,name:'localidaddomicilio'
+                                                                    ,name:'localidadDomicilio'
                                                                     ,id:'localidaddomicilioId'
                                                                     ,valueField:'id'
                                                                     ,displayField:'descripcion'
@@ -399,7 +425,7 @@ Ext.onReady(function(){
                                                                     hidden:true,
                                                                     emptyText: 'Seleccione imagen',
                                                                     fieldLabel: 'Foto',
-                                                                    name: 'imagen',
+                                                                    name: 'imagenphoto',
                                                                     buttonText: '',
                                                                     layout:'form',
                                                                     anchor: '0',
@@ -444,7 +470,7 @@ Ext.onReady(function(){
                                                                 {
                                                                     xtype:'textfield'
                                                                     ,fieldLabel:'Lugar Laboral'
-                                                                    ,name:'lugarlaboral'
+                                                                    ,name:'lugarLaboral'
                                                                     ,id:'lugarlaboralId'
                                                                     ,disabled:true
                                                                 },{
@@ -462,7 +488,7 @@ Ext.onReady(function(){
                                                                 },{
                                                                     xtype:'textfield'
                                                                     ,fieldLabel:'Número'
-                                                                    ,name:'numeroLaboral'
+                                                                    ,name:'numeroDomicilioLaboral'
                                                                     ,id:'numerolaboralId'
                                                                     ,disabled:true
                                                                 },{
@@ -479,7 +505,7 @@ Ext.onReady(function(){
                                                                     ,hiddenName:'paislaboral_id'
                                                                     ,mode:'local'
                                                                     ,store:paisesStore
-                                                                    ,name:'paislaboral'
+                                                                    ,name:'paisLaboral'
                                                                     ,id:'paislaboralId'
                                                                     ,disabled:true
                                                                     ,listeners:{
@@ -500,8 +526,8 @@ Ext.onReady(function(){
                                                                     ,mode:'local'
                                                                     ,hiddenName:'provincialaboral_id'
                                                                     ,store:provinciaStore
-                                                                    ,name:'provincialaboral'
-                                                                    ,id:'provinncialaboralId'
+                                                                    ,name:'provinciaLaboral'
+                                                                    ,id:'provincialaboralId'
                                                                     ,disabled:true
                                                                     ,listeners:{
                                                                         'select':function(cmd,rec,idx){
@@ -516,7 +542,7 @@ Ext.onReady(function(){
                                                                 },{
                                                                     xtype:'combo'
                                                                     ,fieldLabel:'Localidad Laboral'
-                                                                    ,name:'localidadlaboral'
+                                                                    ,name:'localidadLaboral'
                                                                     ,id:'localidadlaboralId'
                                                                     ,valueField:'id'
                                                                     ,displayField:'descripcion'
