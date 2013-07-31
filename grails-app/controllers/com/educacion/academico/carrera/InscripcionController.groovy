@@ -95,8 +95,45 @@ class InscripcionController {
     }
 
     def saveinscripcionfin(){
+        log.debug "Parametros: $params"
         def inscInstance = new Inscripcion()
-        log.debug "parametros: "+params
+        def matriculaInstance = Matricula.load(params.matriculafinal.toString().toInteger())
+        def materiaInstance
+        def success = true
+        def mensaje = ''
+        def errorList = []
+        inscInstance.matricula = matriculaInstance
+        inscInstance.fecha = new java.sql.Date((new Date()).getTime())
+        inscInstance.estado = EstadoInscripcionEnum.G
+        inscInstance.suplente = SuplenteEnum.T
+        def detalleInscJson = JSON.parse(params.inscfinalmaterias)
+        InscripcionDetalle inscDetInstance
+        detalleInscJson.each{
+            if (it.seleccionada){
+                //EstadoInscripcionDetalleEnum estado
+                //TipoInscripcionDetalleEnum tipoInscripcion
+                inscDetInstance = new InscripcionDetalle()
+                materiaInstance = Materia.load(it.id)
+                inscInstance.addToDetalle(new InscripcionDetalle(materia: materiaInstance,estado: EstadoInscripcionDetalleEnum.I,tipoInscripcion:TipoInscripcionDetalleEnum.R,notaFinal:0))
+                //inscInstance.addToDetalle(new Object())
+
+            }
+        }
+        if (!inscInstance.save(flush: true)){
+            success = false
+            mensaje = 'Error en el registro de datos'
+            inscInstance.errors.allErrors.each{
+                errorList << errorList << [msg:messageSource.getMessage(it, LocaleContextHolder.locale)]
+            }
+        }else{
+            log.debug "SE GUARDO CORRECTAMENTE....."
+            mensaje = 'Los datos se guardaron correctamente'
+        }
+        def response = [:]
+        response.success = success
+        response.errors = errorList
+        response.msg = mensaje
+        render response as JSON
 
     }
 
