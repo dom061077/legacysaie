@@ -41,7 +41,10 @@ class InscripcionController {
                     eq("id",alumnoId)
                 }
             }
-            order("fecha","desc")
+            if (params.dir)
+                order("fecha",params.dir.toLowerCase())
+            else
+                order("fecha","asc")
         }
         inscripciones.each{
             recordList << [id: it.id,carrera:it.matricula.carrera.denominacion,aniolectivo:it.matricula.anioLectivo.descripcion,fecha:it.fecha]

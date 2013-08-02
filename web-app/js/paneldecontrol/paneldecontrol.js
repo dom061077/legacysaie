@@ -149,6 +149,24 @@ Ext.onReady(function(){
         disableAlumnoData();
         Ext.getCmp('formalumnoId').getForm().load({
             url:alumnodataUrl
+            ,success:function(f,a){
+                Ext.getCmp('paisdomicilioId').setValue(a.result.data.paisDomicilio);
+                Ext.getCmp('paisdomicilioId').hiddenField.value = a.result.data.paisdomicilio_id;
+                Ext.getCmp('provinciadomicilioId').setValue(a.result.data.provinciaDomicilio);
+                Ext.getCmp('provinciadomicilioId').hiddenField.value = a.result.data.provinciadomicilio_id ;
+                Ext.getCmp('localidaddomicilioId').setValue(a.result.data.localidadDomicilio);
+                Ext.getCmp('localidaddomicilioId').hiddenField.value = a.result.data.localidaddomicilio_id;
+                Ext.getCmp('provinciadomicilioId').getStore().load({
+                    params:{'pais_id':Ext.getCmp('paisdomicilioId').hiddenField.value}
+                });
+                Ext.getCmp('localidaddomicilioId').getStore().load({
+                    params:{'provincia_id':Ext.getCmp('provinciadomicilioId').hiddenField.value}
+                });
+
+            },
+            failure:function(f,a){
+
+            }
         });
     }
 
@@ -169,6 +187,7 @@ Ext.onReady(function(){
         });
         return Ext.encode(inscCurArr);
     }
+
 
 
 
@@ -272,6 +291,7 @@ Ext.onReady(function(){
     var storelistadoinscripciones = new Ext.data.JsonStore({
         root:'rows',
         url:inscUrl,
+        remoteSort:true,
         baseParams:{
           alumnoId:alumnoId
         },
@@ -729,7 +749,7 @@ Ext.onReady(function(){
                                                             ,store:new Ext.data.JsonStore({
                                                                     root:'rows',
                                                                     url:anioLectivoUrl,
-                                                                    fields:['id','descripcion'],
+                                                                    fields:['id','descripcion','matricula'],
                                                                     baseParams:{
                                                                         alumnoId:alumnoId
                                                                     },
@@ -791,7 +811,7 @@ Ext.onReady(function(){
                                                             handler: function(){
                                                                 var rowselectedMatricula = Ext.getCmp('comboaniolectivoId').getStore().getAt(0);
                                                                 Ext.getCmp('matriculafinalId').setValue(rowselectedMatricula.get('matricula'));
-                                                                Ext.getCmp('inscfinalmateriasId').setValue(getRowsDataCursar());
+                                                                Ext.getCmp('inscfinalmateriasId').setValue(getRowsDataFinal());
                                                                 Ext.getCmp('forminscfinalId').getForm().submit({
                                                                     success: function(f,resp){
                                                                         var respuesta = Ext.decode(resp.response.responseText);
@@ -802,11 +822,12 @@ Ext.onReady(function(){
                                                                             msg: mensaje,
                                                                             buttons: Ext.MessageBox.OK,
                                                                             fn: function(btn){
-                                                                                Ext.getCmp('gridcorrelcurId').getStore().load({
+                                                                                Ext.getCmp('gridcorrelfinId').getStore().load({
+                                                                                    params:{
                                                                                     alumnoId:alumnoId,
-                                                                                    anioLectivoId:Ext.getCmp('comboaniolectivocurId').hiddenField.value,
-                                                                                    carreraId:Ext.getCmp('combocarreracurId').hiddenField.value
-                                                                                })
+                                                                                    anioLectivoId:Ext.getCmp('comboaniolectivoId').hiddenField.value,
+                                                                                    carreraId:Ext.getCmp('combocarreraId').hiddenField.value
+                                                                                }});
 
                                                                             }
                                                                         });
@@ -1068,14 +1089,14 @@ Ext.onReady(function(){
                                                               ,displayField:'denominacion'
                                                               ,hiddenName:'carrera_id'
                                                               ,store:new Ext.data.JsonStore({
-                                                              root:'rows',
-                                                              url:carreraUrl,
-                                                              fields:['id','denominacion'],
-                                                              baseParams:{
-                                                                  alumnoId: alumnoId
-                                                              },
-                                                              autoLoad:true
-                                                          }),
+                                                                  root:'rows',
+                                                                  url:carreraUrl,
+                                                                  fields:['id','denominacion'],
+                                                                  baseParams:{
+                                                                      alumnoId: alumnoId
+                                                                  },
+                                                                  autoLoad:true
+                                                              }),
                                                               listeners:{
                                                                   change:function(combo,newValue,oldValue){
                                                                       if(newValue==''){
@@ -1137,8 +1158,8 @@ Ext.onReady(function(){
                                                                   {header: "id",dataIndex:'id',hidden:true},
                                                                   {header: "Carrera",width:200,sortable:false,dataIndex:'carrera'},
                                                                   {header: "Año",width:150,sortable:false,dataIndex:"aniolectivo"},
-                                                                  {header: "Fecha",width:100,sortable:false,dataIndex:"fecha",renderer: Ext.util.Format.dateRenderer('d/m/y')}
-                                                              ],
+                                                                  {header: "Fecha",width:100,sortable:true,dataIndex:"fecha",renderer: Ext.util.Format.dateRenderer('d/m/y')}
+                                                      ],
                                                               stripeRows: true,
                                                               height:400,
                                                               width:600,
@@ -1410,6 +1431,25 @@ Ext.onReady(function(){
 
     Ext.getCmp('formalumnoId').getForm().load({
         url:alumnodataUrl
+        ,success: function(f,a){
+            Ext.getCmp('paisdomicilioId').setValue(a.result.data.paisDomicilio);
+            Ext.getCmp('paisdomicilioId').hiddenField.value = a.result.data.paisdomicilio_id;
+            Ext.getCmp('provinciadomicilioId').setValue(a.result.data.provinciaDomicilio);
+            Ext.getCmp('provinciadomicilioId').hiddenField.value = a.result.data.provinciadomicilio_id ;
+            Ext.getCmp('localidaddomicilioId').setValue(a.result.data.localidadDomicilio);
+            Ext.getCmp('localidaddomicilioId').hiddenField.value = a.result.data.localidaddomicilio_id;
+            Ext.getCmp('provinciadomicilioId').getStore().load({
+                params:{'pais_id':Ext.getCmp('paisdomicilioId').hiddenField.value}
+            });
+            Ext.getCmp('localidaddomicilioId').getStore().load({
+                params:{'provincia_id':Ext.getCmp('provinciadomicilioId').hiddenField.value}
+            });
+
+
+        }
+        ,failure : function(f,a){
+
+        }
     });
 
     Ext.getCmp('gridlistadoinscripcionesId').getStore().on('beforeload',function(){
