@@ -7,6 +7,10 @@ import org.springframework.context.MessageSource
 import org.springframework.context.MessageSource
 import com.educacion.academico.carrera.AnioLectivo
 import grails.converters.JSON
+import com.educacion.location.Pais
+import com.educacion.location.Provincia
+import com.educacion.location.Localidad
+import org.springframework.transaction.TransactionStatus
 
 
 
@@ -185,15 +189,17 @@ class AlumnoController {
             success=false
         }else{
             alumnoInstance = new Alumno(params)
-            if (!alumnoInstance.save(flush: true)) {
-                success=false
-                mensaje = 'Error en el registro de datos'
-                alumnoInstance.errors.allErrors.each{
-                    errorList << [msg:messageSource.getMessage(it, LCH.locale)]
+            Alumno.withTransaction {TransactionStatus status ->
+                if (!alumnoInstance.save(flush: true)) {
+                    status.setRollbackOnly()
+                    success=false
+                    mensaje = 'Error en el registro de datos'
+                    alumnoInstance.errors.allErrors.each{
+                        errorList << [msg:messageSource.getMessage(it, LCH.locale)]
+                    }
+                }else{
+                    mensaje = 'Los datos se guardaron correctamente'
                 }
-            }else{
-                mensaje = 'Los datos se guardaron correctamente'
-
             }
         }
         recaptchaService.cleanUp(session)
@@ -217,6 +223,7 @@ class AlumnoController {
     def showjson(int id){
         def returnMap=[:]
         def alumnoInstance = Alumno.get(id)
+        
         returnMap.data = [:]
         returnMap.success = true
         returnMap.data.id = alumnoInstance?.id
@@ -234,8 +241,11 @@ class AlumnoController {
         returnMap.data.numeroDomicilio = alumnoInstance.numeroDomicilio
         returnMap.data.barrioDomicilio = alumnoInstance.barrioDomicilio
         returnMap.data.paisDomicilio = alumnoInstance.paisDomicilio
+        returnMap.data.paisdomicilio_id = Pais.findByDescripcion(alumnoInstance.paisDomicilio).id
         returnMap.data.provinciaDomicilio = alumnoInstance.provinciaDomicilio
+        returnMap.data.provinciadomicilio_id = Provincia.findByDescripcion(alumnoInstance.provinciaDomicilio).id
         returnMap.data.localidadDomicilio = alumnoInstance.localidadDomicilio
+        returnMap.data.localidaddomicilio_id = Localidad.findByDescripcion(alumnoInstance.localidadDomicilio).id
         returnMap.data.celularParticular = alumnoInstance.celularParticular
         returnMap.data.telefonoParticular = alumnoInstance.telefonoParticular
         returnMap.data.telefonoAlternativo = alumnoInstance.telefonoAlternativo
@@ -247,8 +257,11 @@ class AlumnoController {
         returnMap.data.numeroDomicilioLaboral = alumnoInstance.numeroDomicilioLaboral
         returnMap.data.barrioLaboral = alumnoInstance.barrioLaboral
         returnMap.data.paisLaboral = alumnoInstance.paisLaboral
+        returnMap.data.paislaboral_id = Pais.findByDescripcion(alumnoInstance.paisLaboral).id
         returnMap.data.provinciaLaboral = alumnoInstance.provinciaLaboral
+        returnMap.data.provincialaboral_id = Provincia.findByDescripcion(alumnoInstance.provinciaLaboral).id
         returnMap.data.localidadLaboral = alumnoInstance.localidadLaboral
+        returnMap.data.localidadlaboral_id = Localidad.findByDescripcion(alumnoInstance.localidadLaboral).id
         returnMap.data.lugarLaboral = alumnoInstance.lugarLaboral
 
 
