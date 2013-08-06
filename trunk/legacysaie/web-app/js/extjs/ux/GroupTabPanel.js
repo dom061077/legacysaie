@@ -5,7 +5,7 @@
  * http://www.sencha.com/license
  */
 Ext.ns('Ext.ux');
-var loadMask = new Ext.LoadMask(Ext.getBody(), {msg:'Cargando'});
+//var loadMask = new Ext.LoadMask(Ext.getBody(), {msg:'Cargando'});
 
 Ext.ux.GroupTabPanel = Ext.extend(Ext.TabPanel, {
     tabPosition: 'left',

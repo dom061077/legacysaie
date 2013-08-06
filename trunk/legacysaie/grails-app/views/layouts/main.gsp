@@ -15,6 +15,7 @@
 		<!-- link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css" -->
 		<!-- link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css" -->
         <link rel="stylesheet" href="${resource(dir:'js/extjs/resources/css',file:'ext-all.css')}"/>
+        <link rel="stylesheet" href="${resource(dir:'js/extjs/resources/css',file:'xtheme-gray.css')}"/>
         <script type="text/javascript" src="${resource(dir:'js/jquery/jquery-1.6.2.min.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/extjs/adapter/jquery',file:'ext-jquery-adapter.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/extjs',file:'ext-all.js')}"></script>
@@ -24,6 +25,11 @@
         <script type="text/javascript">
             var loginurl = '${createLink(uri:'/login')}';
             var provurl = '${createLink(uri:'/location/provinciasjson')}';
+            <%
+				out << "var blankimagePath='"+"${resource(dir:'js')}';";
+
+			%>
+            Ext.BLANK_IMAGE_URL =blankimagePath+ '/extjs/resources/images/default/s.gif';
         </script>
 
 		<g:layoutHead/>

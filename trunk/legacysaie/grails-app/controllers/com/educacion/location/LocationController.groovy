@@ -22,7 +22,6 @@ class LocationController {
         def returnMap = [:]
         def recordList = []
         //returnMap.success = true
-        log.debug('parametros de ingreso '+params)
         def provincias = null
         if (params.pais_id){
             provincias = Provincia.createCriteria().list(sort: 'descripcion',order: 'asc') {
