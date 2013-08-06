@@ -1,7 +1,7 @@
 Ext.onReady(function(){
     //TO DO EL LOAD DEL FORMULARIO
     Ext.QuickTips.init();
-
+    var loadMask = new Ext.LoadMask(Ext.getBody(), {msg:'Enviando Información'});
     var storeaux =  new Ext.data.JsonStore({
         root:'rows',
         url:provurl,
@@ -104,9 +104,12 @@ Ext.onReady(function(){
 
     function updateAlumno(){
         var formAlumno = Ext.getCmp('formalumnoId');
+
         if(formAlumno.getForm().isValid()){
+            loadMask.show();
             formAlumno.getForm().submit({
                 success: function(f,a){
+                    loadMask.hide();
                     Ext.Msg.show({
                         title:'Mensaje'
                         , icon:Ext.MessageBox.INFO
@@ -118,7 +121,8 @@ Ext.onReady(function(){
                                 url:alumnodataUrl
                             });
                             Ext.getCmp('boxfotoId').getEl().dom.src=alumnoreldimageUrl+'?parm='
-                                +(new Date()).getDate();
+                                +Math.floor(Math.random()*11);
+
                         }
                     });
                 },
@@ -147,6 +151,7 @@ Ext.onReady(function(){
 
     function cancelarUpdateAlumno(){
         disableAlumnoData();
+        Ext.getCmp('imagenId').setRawValue('Seleccione imagen');
         Ext.getCmp('formalumnoId').getForm().load({
             url:alumnodataUrl
             ,success:function(f,a){
@@ -812,8 +817,10 @@ Ext.onReady(function(){
                                                                 var rowselectedMatricula = Ext.getCmp('comboaniolectivoId').getStore().getAt(0);
                                                                 Ext.getCmp('matriculafinalId').setValue(rowselectedMatricula.get('matricula'));
                                                                 Ext.getCmp('inscfinalmateriasId').setValue(getRowsDataFinal());
+                                                                loadMask.show();
                                                                 Ext.getCmp('forminscfinalId').getForm().submit({
                                                                     success: function(f,resp){
+                                                                        loadMask.hide();
                                                                         var respuesta = Ext.decode(resp.response.responseText);
                                                                         mensaje = respuesta.msg+'<br><br>';
                                                                         Ext.Msg.show({
@@ -1016,8 +1023,10 @@ Ext.onReady(function(){
                                                                 var rowselectedMatricula = Ext.getCmp('comboaniolectivocurId').getStore().getAt(0);
                                                                 Ext.getCmp('matriculacursadoId').setValue(rowselectedMatricula.get('matricula'));
                                                                 Ext.getCmp('insccursadomateriasId').setValue(getRowsDataCursar());
+                                                                loadMask.show();
                                                                 Ext.getCmp('formcursadoId').getForm().submit({
                                                                     success: function(f,resp){
+                                                                        loadMask.hide();
                                                                         var respuesta = Ext.decode(resp.response.responseText);
                                                                         mensaje = respuesta.msg+'<br><br>';
                                                                         Ext.Msg.show({

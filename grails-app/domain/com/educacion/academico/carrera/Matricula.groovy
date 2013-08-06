@@ -6,7 +6,7 @@ import com.educacion.alumno.Alumno
 
 class Matricula {
     int id
-    java.sql.Date fecha
+    java.sql.Date fecha = new java.sql.Date((new Date()).getTime())
     EstadoMatriculaEnum estado
     String comprobante
     short ingresante
@@ -18,6 +18,7 @@ class Matricula {
 
 
     static constraints = {
+        comprobante nullable: true, blank: true
     }
 
     static mapping = {
@@ -26,6 +27,7 @@ class Matricula {
         carrera column:'carrera'
         alumno column : 'alumno'
         anioLectivo column: 'aniolectivo'
+        
 
     }
 

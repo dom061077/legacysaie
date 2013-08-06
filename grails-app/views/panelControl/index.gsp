@@ -7,12 +7,11 @@
     <link rel="stylesheet" href="${resource(dir:'js/extjs/ux/css',file:'GroupTab.css')}"/>
     <link rel="stylesheet" href="${resource(dir: 'js/extjs/plugins/fileuploadfield/css',file:'fileuploadfield.css')}"/>
 
-    <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"GroupTab.js")}"></script>
-    <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"GroupTabPanel.js")}"></script>
-    <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"Portal.js")}"></script>
-    <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"PortalColumn.js")}"></script>
-    <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"Portlet.js")}"></script>
-    <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"Portlet.js")}"></script>
+    <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"GroupTab.js")+'?id='+randomlink}"></script>
+    <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"GroupTabPanel.js")+'?id='+randomlink}"></script>
+    <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"Portal.js")+'?id='+randomlink}"></script>
+    <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"PortalColumn.js")+'?id='+randomlink}"></script>
+    <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"Portlet.js")+'?id='+randomlink}"></script>
     <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"RowExpander.js")}"></script>
     <script type="text/javascript" src="${resource(dir:'js/extjs/plugins/fileuploadfield',file:'FileUploadField.js')}"></script>
     <style type="text/css">
@@ -82,7 +81,7 @@
         var localidadUrl = '${createLink(uri:'/location/localidadesjson')}';
         var savealumnoUrl = '${createLink(uri:'/alumno/updatejsonpc')}';
     </script>
-    <script type="text/javascript" src="${resource(dir:"js/paneldecontrol",file:"paneldecontrol.js")}"></script>
+    <script type="text/javascript" src="${resource(dir:"js/paneldecontrol",file:"paneldecontrol.js")+'?id='+randomlink}"></script>
     <title>Panel de Control</title>
 
 </head>

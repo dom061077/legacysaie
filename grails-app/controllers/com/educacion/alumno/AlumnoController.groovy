@@ -11,6 +11,11 @@ import com.educacion.location.Pais
 import com.educacion.location.Provincia
 import com.educacion.location.Localidad
 import org.springframework.transaction.TransactionStatus
+import com.educacion.academico.carrera.Matricula
+import com.educacion.enums.EstadoMatriculaEnum
+import com.educacion.enums.SuplenteEnum
+import com.educacion.academico.carrera.CarreraAnioLectivo
+import com.educacion.academico.carrera.Carrera
 
 
 
@@ -149,9 +154,10 @@ class AlumnoController {
             oldimagen = alumnoInstance.imagen
             alumnoInstance.properties = params
             def imagen = request.getFile('imagenphoto')
-            if (imagen)
+            if (!imagen.isEmpty()){
+                log.debug "HAY IMAGEN SELECCIONADA, clase del archivo: "+imagen.class
                 alumnoInstance.imagen = imagen.getBytes()
-            else
+            }else
                 alumnoInstance.imagen = oldimagen
             if (!alumnoInstance.save(flush: true)){
                 success = false
@@ -191,6 +197,7 @@ class AlumnoController {
             alumnoInstance = new Alumno(params)
             Alumno.withTransaction {TransactionStatus status ->
                 if (!alumnoInstance.save(flush: true)) {
+
                     status.setRollbackOnly()
                     success=false
                     mensaje = 'Error en el registro de datos'
@@ -198,6 +205,47 @@ class AlumnoController {
                         errorList << [msg:messageSource.getMessage(it, LCH.locale)]
                     }
                 }else{
+                    def carrerasanios = CarreraAnioLectivo.createCriteria().list{
+                        eq("id.carrera.id",carreraId)
+                        eq("id.anioLectivo.id",anioLectivoId)
+                    }
+                    def carreraAnioLectivoInstance = carrerasanios.get(0)
+
+                    def cantMatriculas = Matricula.createCriteria().count{
+                        carrera{
+                            eq("id",params.carrera_id)
+                        }
+                        anioLectivo{
+                            eq("id",params.aniolectivo)
+                        }
+                        eq("ingresante",Short.valueOf("1"))
+                    }
+                    if (carreraAnioLectivoInstance.cupo+carreraAnioLectivoInstance.cupoSuplente<cantMatriculas+1){
+                        status.setRollbackOnly()
+                        success = false
+                        mensaje = 'Error en el registro de datos'
+                        errorList << [msg: "No hay cupo disponible para la carrera"]
+                    }else{
+                        def anioLectivoInstance = AnioLectivo.load(params.aniolectivo.toString().toInteger())
+                        def carreraInstance = Carrera.load(params.carrera)
+                        def matriculaInstance = new Matricula(anioLectivo: anioLectivoInstance,carrera:carreraInstance,alumno: alumnoInstance)
+                        matriculaInstance.estado = EstadoMatriculaEnum.I
+                        if (cantMatriculas+1 > carreraAnioLectivoInstance.cupo)
+                            matriculaInstance.suplente = 1
+                        else
+                            matriculaInstance.suplente = 0
+                        if (!matriculaInstance.save(flush: true)){
+                            status.setRollbackOnly()
+                            success=false
+                            mensaje = 'Error en el registro de datos'
+                            matriculaInstance.errors.allErrors.each{
+                                errorList << [msg:messageSource.getMessage(it, LCH.locale)]
+                            }
+                        }//else{
+                        //    def inscripcion
+                        //}
+                    }
+
                     mensaje = 'Los datos se guardaron correctamente'
                 }
             }
