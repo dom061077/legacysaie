@@ -157,3 +157,16 @@ grails.plugins.springsecurity.securityConfigType = 'Requestmap'
 grails.plugins.springsecurity.successHandler.defaultTargetUrl = '/login/authSucccessAjax'
 grails.plugins.springsecurity.successHandler.alwaysUseDefault = true
 grails.plugins.springsecurity.failureHandler.defaultFailureUrl = '/login/authFailExtJs?login_error=1'
+
+grails {
+    mail {
+        host = "smtp.correo.yahoo.es"
+        port = 465
+        username = "dom061077"
+        password = "xxxxx"
+        props = [ "mail.smtp.auth":"true",
+                "mail.smtp.socketFactory.port":"465",
+                "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+                "mail.smtp.socketFactory.fallback":"false"  ]
+    }
+}

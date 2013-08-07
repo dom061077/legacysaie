@@ -82,7 +82,7 @@
         var savealumnoUrl = '${createLink(uri:'/alumno/updatejsonpc')}';
     </script>
     <script type="text/javascript" src="${resource(dir:"js/paneldecontrol",file:"paneldecontrol.js")+'?id='+randomlink}"></script>
-    <title>Panel de Control</title>
+    <title>Panel de control</title>
 
 </head>
 <body>
