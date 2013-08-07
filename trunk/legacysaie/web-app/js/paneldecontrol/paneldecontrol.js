@@ -268,7 +268,6 @@ Ext.onReady(function(){
                 height:250,
                 width:500,
                 loadMask:true,
-
                 title:'Detalle de Mis Inscripciones',
                 iconCls: 'icon-grid',
                 listeners:{
@@ -303,6 +302,10 @@ Ext.onReady(function(){
         fields:[{name:'id'},{name:'carrera'},{name:'aniolectivo'},{name:'fecha',type:'date'}],
         autoLoad:false
     });
+
+
+
+
     var viewport = new Ext.Viewport({
         layout:'fit',
         items:[
@@ -1134,14 +1137,14 @@ Ext.onReady(function(){
                                                               ,displayField:'descripcion'
                                                               ,hiddenName:'aniolectivo_id'
                                                               ,store:new Ext.data.JsonStore({
-                                                              root:'rows',
-                                                              url:anioLectivoUrl,
-                                                              fields:['id','descripcion'],
-                                                              baseParams:{
-                                                                  alumnoId:alumnoId
-                                                              },
-                                                              autoLoad:false
-                                                          }),
+                                                                  root:'rows',
+                                                                  url:anioLectivoUrl,
+                                                                  fields:['id','descripcion'],
+                                                                  baseParams:{
+                                                                      alumnoId:alumnoId
+                                                                  },
+                                                                  autoLoad:false
+                                                              }),
                                                               listeners:{
                                                                   select:function(combobox,record,index){
                                                                       Ext.getCmp('gridlistadoinscripcionesId').getStore().load({
@@ -1163,27 +1166,26 @@ Ext.onReady(function(){
                                                               store:storelistadoinscripciones,
                                                               columns: [
                                                                   nestedRowGrid,
-
                                                                   {header: "id",dataIndex:'id',hidden:true},
                                                                   {header: "Carrera",width:200,sortable:false,dataIndex:'carrera'},
                                                                   {header: "Año",width:150,sortable:false,dataIndex:"aniolectivo"},
                                                                   {header: "Fecha",width:100,sortable:true,dataIndex:"fecha",renderer: Ext.util.Format.dateRenderer('d/m/y')}
-                                                      ],
+                                                              ],
                                                               stripeRows: true,
-                                                              height:400,
+                                                              height:350,
                                                               width:600,
                                                               loadMask:true,
+                                                              bbar: new Ext.PagingToolbar({
+                                                                   pageSize: 10,
+                                                                   store: storelistadoinscripciones,
+                                                                   displayInfo:true,
+                                                                   displayMsg: 'Visualizando registros {0} - {1} de {2}',
+                                                                   emptyMsg: 'No hay registros para visualizar'
+                                                               }),
                                                               plugins:nestedRowGrid,
                                                               iconCls: 'icon-grid',
                                                               listeners:{
-                                                              },
-                                                              bbar: new Ext.PagingToolbar({
-                                                                  pageSize: 10,
-                                                                  store: storelistadoinscripciones,
-                                                                  displayInfo:true,
-                                                                  displayMsg: 'Visualizando registros {0} - {1} de {2}',
-                                                                  emptyMsg: 'No hay registros para visualizar'
-                                                              })
+                                                              }
                                                           })
 
                                                       ]
