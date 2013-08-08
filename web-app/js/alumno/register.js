@@ -471,8 +471,8 @@ Ext.onReady(function(){
                 ]
             }),
             new Ext.ux.Wiz.Card({
-                title:'Datos del Domicilio y Académicos'
-                ,id:'datosdeldomiciliocarId'
+                title:'Datos de Contacto y Académicos'
+                ,id:'datoscontactoacademicoscarId'
                 ,frame:false
                 ,allowBlank:false
                 ,monitorValid:false
@@ -977,8 +977,8 @@ Ext.onReady(function(){
     wizard.on('finish',function(wiz,datos){
         var conn = new Ext.data.Connection();
         Ext.MessageBox.show({
-            msg: 'Saving your data, please wait...',
-            progressText: 'Saving...',
+            msg: 'Guardando datos. Por favor espere...',
+            progressText: 'Guardando...',
             width:300,
             wait:true,
             waitConfig: {interval:200}
@@ -996,6 +996,7 @@ Ext.onReady(function(){
                 ,sexo:datos.datosdelalumnocarId.sexo_id
                 ,numeroDocumento: datos.datosdelalumnocarId.numerodocumento
                 ,legajo: datos.datosdelalumnocarId.legajo
+                ,email: datos.datoscontactoacademicoscarId.email
 
 
             },

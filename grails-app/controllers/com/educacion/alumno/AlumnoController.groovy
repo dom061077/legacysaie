@@ -1,7 +1,7 @@
 package com.educacion.alumno
 
 import org.springframework.dao.DataIntegrityViolationException
-import com.megatome.grails.RecaptchaService
+//import com.megatome.grails.RecaptchaService
 import org.springframework.context.i18n.LocaleContextHolder as LCH
 import org.springframework.context.MessageSource
 import org.springframework.context.MessageSource
@@ -18,10 +18,10 @@ import com.educacion.academico.carrera.CarreraAnioLectivo
 import com.educacion.academico.carrera.Carrera
 
 
-
 class AlumnoController {
 
-    RecaptchaService recaptchaService
+    def recaptchaService
+    def springSecurityService
     MessageSource  messageSource
 
 
@@ -195,59 +195,70 @@ class AlumnoController {
             success=false
         }else{
             alumnoInstance = new Alumno(params)
-            Alumno.withTransaction {TransactionStatus status ->
-                if (!alumnoInstance.save(flush: true)) {
+            if (!alumnoInstance.save(flush: true)) {
 
-                    status.setRollbackOnly()
-                    success=false
-                    mensaje = 'Error en el registro de datos'
-                    alumnoInstance.errors.allErrors.each{
-                        errorList << [msg:messageSource.getMessage(it, LCH.locale)]
-                    }
-                }else{
-                    def carrerasanios = CarreraAnioLectivo.createCriteria().list{
-                        eq("id.carrera.id",carreraId)
-                        eq("id.anioLectivo.id",anioLectivoId)
-                    }
-                    def carreraAnioLectivoInstance = carrerasanios.get(0)
-
-                    def cantMatriculas = Matricula.createCriteria().count{
-                        carrera{
-                            eq("id",params.carrera_id)
-                        }
-                        anioLectivo{
-                            eq("id",params.aniolectivo)
-                        }
-                        eq("ingresante",Short.valueOf("1"))
-                    }
-                    if (carreraAnioLectivoInstance.cupo+carreraAnioLectivoInstance.cupoSuplente<cantMatriculas+1){
-                        status.setRollbackOnly()
-                        success = false
-                        mensaje = 'Error en el registro de datos'
-                        errorList << [msg: "No hay cupo disponible para la carrera"]
-                    }else{
-                        def anioLectivoInstance = AnioLectivo.load(params.aniolectivo.toString().toInteger())
-                        def carreraInstance = Carrera.load(params.carrera)
-                        def matriculaInstance = new Matricula(anioLectivo: anioLectivoInstance,carrera:carreraInstance,alumno: alumnoInstance)
-                        matriculaInstance.estado = EstadoMatriculaEnum.I
-                        if (cantMatriculas+1 > carreraAnioLectivoInstance.cupo)
-                            matriculaInstance.suplente = 1
-                        else
-                            matriculaInstance.suplente = 0
-                        if (!matriculaInstance.save(flush: true)){
-                            status.setRollbackOnly()
-                            success=false
-                            mensaje = 'Error en el registro de datos'
-                            matriculaInstance.errors.allErrors.each{
-                                errorList << [msg:messageSource.getMessage(it, LCH.locale)]
-                            }
-                        }//else{
-                        //    def inscripcion
-                        //}
-                    }
-
-                    mensaje = 'Los datos se guardaron correctamente'
+                success=false
+                mensaje = 'Error en el registro de datos'
+                alumnoInstance.errors.allErrors.each{
+                    errorList << [msg:messageSource.getMessage(it, LCH.locale)]
                 }
+            }else{
+                /*def carrerasanios = CarreraAnioLectivo.createCriteria().list{
+                    eq("id.carrera.id",carreraId)
+                    eq("id.anioLectivo.id",anioLectivoId)
+                }
+                def carreraAnioLectivoInstance = carrerasanios.get(0)
+
+                def cantMatriculas = Matricula.createCriteria().count{
+                    carrera{
+                        eq("id",params.carrera_id)
+                    }
+                    anioLectivo{
+                        eq("id",params.aniolectivo)
+                    }
+                    eq("ingresante",Short.valueOf("1"))
+                }
+                if (carreraAnioLectivoInstance.cupo+carreraAnioLectivoInstance.cupoSuplente<cantMatriculas+1){
+                    status.setRollbackOnly()
+                    success = false
+                    mensaje = 'Error en el registro de datos'
+                    errorList << [msg: "No hay cupo disponible para la carrera"]
+                }else{
+                    def anioLectivoInstance = AnioLectivo.load(params.aniolectivo.toString().toInteger())
+                    def carreraInstance = Carrera.load(params.carrera)
+                    def matriculaInstance = new Matricula(anioLectivo: anioLectivoInstance,carrera:carreraInstance,alumno: alumnoInstance)
+                    matriculaInstance.estado = EstadoMatriculaEnum.I
+                    if (cantMatriculas+1 > carreraAnioLectivoInstance.cupo)
+                        matriculaInstance.suplente = 1
+                    else
+                        matriculaInstance.suplente = 0
+                    if (!matriculaInstance.save(flush: true)){
+                        status.setRollbackOnly()
+                        success=false
+                        mensaje = 'Error en el registro de datos'
+                        matriculaInstance.errors.allErrors.each{
+                            errorList << [msg:messageSource.getMessage(it, LCH.locale)]
+                        }
+                    }
+                }   */
+                //alumnoInstance.
+                log.debug "Datos del alumno, id: ${alumnoInstance.id}, apellido: ${alumnoInstance.apellido}, nombre: ${alumnoInstance.nombre}"
+                log.debug "EMAIL: ${alumnoInstance.email}"
+                alumnoInstance.registerconfirm = springSecurityService.encodePassword(alumnoInstance.id.toString()+alumnoInstance.numeroDocumento)
+                alumnoInstance.save(flush: true)
+                String emailContent = """
+                    Usted se ha registrado en la base de datos del colegio Cruz Roja con Nro de Documento: ${alumnoInstance.numeroDocumento}
+                    ,apellido: ${alumnoInstance.apellido}, nombre: ${alumnoInstance.nombre}. Para continuar con la inscripción haga click en el siguiente link
+                    ${request.scheme}://${request.serverName}:${request.serverPort}${request.contextPath}/alumno/confirm/${alumnoInstance.registerconfirm}
+                """
+
+                sendMail{
+                    to alumnoInstance.email.toString()
+                    subject "Respuesta de Colegio Cruz Roja"
+                    body emailContent
+                }
+
+                mensaje = 'Los datos se guardaron correctamente'
             }
         }
         recaptchaService.cleanUp(session)
@@ -316,5 +327,16 @@ class AlumnoController {
 
         render returnMap as JSON
     }
+    
+    def confirm(){
+        render "este es el id ${params.id}"
+        def alumnoInstance = Alumno.findByRegisterconfirm(params.id)
+        if (alumnoInstance){
+            Alumno.withTransaction(
+
+            )
+        }
+    }
+
     
 }

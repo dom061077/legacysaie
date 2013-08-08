@@ -62,14 +62,10 @@ class Alumno {
     String paisGarante
     String provincia
     String localidadGarante
+    String registerconfirm
     //falta mapear el campo sitacademica
     SituacionAdministrativa situacionAdministrativa
     byte[] imagen
-
-
-
-
-
 
     TipoDocumentoIdentidad tipoDocumento
 
@@ -130,7 +126,8 @@ class Alumno {
         localidadGarante blank:true, nullable: true
         //falta mapear el campo sitacademica
         situacionAdministrativa blank:true, nullable: true
-        
+        registerconfirm blank: true, nullable:  true
+        anioEgreso blank: true, nullable: true
     }
 
     static mapping = {
@@ -191,8 +188,5 @@ class Alumno {
         localidadGarante(column: 'localidadgarante')
         //falta mapear el campo sitacademica
         situacionAdministrativa (column: 'sitadministrativa')
-
-
-
     }
 }

@@ -160,13 +160,14 @@ grails.plugins.springsecurity.failureHandler.defaultFailureUrl = '/login/authFai
 
 grails {
     mail {
-        host = "smtp.correo.yahoo.es"
+        host = "smtp.gmail.com"
         port = 465
-        username = "dom061077"
-        password = "xxxxx"
-        props = [ "mail.smtp.auth":"true",
+        username = "dom061077@gmail.com"
+        password = "******"
+        props = ["mail.smtp.auth":"true",
                 "mail.smtp.socketFactory.port":"465",
                 "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
-                "mail.smtp.socketFactory.fallback":"false"  ]
+                "mail.smtp.socketFactory.fallback":"false"]
+
     }
 }
