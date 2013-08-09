@@ -24,8 +24,20 @@ class BootStrap {
             new RequestMap(url: '/images/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
             new RequestMap(url: '/login/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
             new RequestMap(url: '/logout/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
-            new RequestMap(url: '/**', configAttribute:'IS_AUTHENTICATED_REMEMBERED').save(failOnError:true)
+            new RequestMap(url: '/alumno/create', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
+            new RequestMap(url: '/location/provinciasjson', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
+            new RequestMap(url: '/location/paisesjson', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
+            new RequestMap(url: '/location/localidadesjson', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
+            new RequestMap(url: '/carrera/listjson', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
+            new RequestMap(url: '/carrera/confirm', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
+            new RequestMap(url: '/carrera/cupocarrera', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
+            new RequestMap(url: '/alumno/existenumdoc',configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
+            new RequestMap(url: '/tipoDocumentoIdentidad/cmbjson',configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
+            new RequestMap(url: '/alumno/cmbjson',configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
+            //new RequestMap(url: '/alumno/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
             new RequestMap(url: '/j_spring_security_switch_user',configAttribute: 'ROLE_SWITCH_USER,IS_AUTHENTICATED_FULLY').save(failOnError:true)
+            new RequestMap(url: '/**', configAttribute:'IS_AUTHENTICATED_REMEMBERED').save(failOnError:true)
+
             if (!user.authorities.contains(adminRole)) {
                 UserRole.create(user, adminRole)
             }
