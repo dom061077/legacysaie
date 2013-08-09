@@ -329,12 +329,54 @@ class AlumnoController {
     }
     
     def confirm(){
-        render "este es el id ${params.id}"
+        def matriculaInstance
+        def anioLectivoInstance
+        def carreraInstance
+        def inscripcionInstance
+        def inscdetInstance
+
         def alumnoInstance = Alumno.findByRegisterconfirm(params.id)
         if (alumnoInstance){
-            Alumno.withTransaction(
+            def carrerasanios = CarreraAnioLectivo.createCriteria().list{
+             eq("id.carrera.id",carreraId)
+             eq("id.anioLectivo.id",anioLectivoId)
+             }
+             def carreraAnioLectivoInstance = carrerasanios.get(0)
 
-            )
+             def cantMatriculas = Matricula.createCriteria().count{
+                 carrera{
+                     eq("id",params.carrera_id)
+                 }
+                 anioLectivo{
+                     eq("id",params.aniolectivo)
+                 }
+                 eq("ingresante",Short.valueOf("1"))
+             }
+             if (carreraAnioLectivoInstance.cupo+carreraAnioLectivoInstance.cupoSuplente<cantMatriculas+1){
+                 status.setRollbackOnly()
+                 success = false
+                 mensaje = 'Error en el registro de datos'
+                 errorList << [msg: "No hay cupo disponible para la carrera"]
+             }else{
+                 anioLectivoInstance = AnioLectivo.load(params.aniolectivo.toString().toInteger())
+                 carreraInstance = Carrera.load(params.carrera)
+                 matriculaInstance = new Matricula(anioLectivo: anioLectivoInstance,carrera:carreraInstance,alumno: alumnoInstance)
+                 matriculaInstance.estado = EstadoMatriculaEnum.I
+                 if (cantMatriculas+1 > carreraAnioLectivoInstance.cupo)
+                     matriculaInstance.suplente = 1
+                 else
+                     matriculaInstance.suplente = 0
+                 if (!matriculaInstance.save(flush: true)){
+                     status.setRollbackOnly()
+                     success=false
+                     mensaje = 'Error en el registro de datos'
+                     matriculaInstance.errors.allErrors.each{
+                         errorList << [msg:messageSource.getMessage(it, LCH.locale)]
+                     }
+                 }else{
+
+                 }
+             }
         }
     }
 

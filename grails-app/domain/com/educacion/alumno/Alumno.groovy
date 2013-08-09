@@ -63,6 +63,7 @@ class Alumno {
     String provincia
     String localidadGarante
     String registerconfirm
+    boolean confirmado
     //falta mapear el campo sitacademica
     SituacionAdministrativa situacionAdministrativa
     byte[] imagen
