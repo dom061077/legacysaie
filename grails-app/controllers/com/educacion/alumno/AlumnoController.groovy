@@ -203,7 +203,7 @@ class AlumnoController {
                     errorList << [msg:messageSource.getMessage(it, LCH.locale)]
                 }
             }else{
-                /*def carrerasanios = CarreraAnioLectivo.createCriteria().list{
+                def carrerasanios = CarreraAnioLectivo.createCriteria().list{
                     eq("id.carrera.id",carreraId)
                     eq("id.anioLectivo.id",anioLectivoId)
                 }
@@ -240,7 +240,7 @@ class AlumnoController {
                             errorList << [msg:messageSource.getMessage(it, LCH.locale)]
                         }
                     }
-                }   */
+                }
                 //alumnoInstance.
                 log.debug "Datos del alumno, id: ${alumnoInstance.id}, apellido: ${alumnoInstance.apellido}, nombre: ${alumnoInstance.nombre}"
                 log.debug "EMAIL: ${alumnoInstance.email}"
@@ -328,7 +328,7 @@ class AlumnoController {
         render returnMap as JSON
     }
     
-    def confirm(){
+    /*def confirm(){
         def matriculaInstance
         def anioLectivoInstance
         def carreraInstance
@@ -378,7 +378,22 @@ class AlumnoController {
                  }
              }
         }
-    }
+    }*/
 
+    def confirm(){
+        def alumnoInstance = Alumno.findByRegisterconfirm(params.id)
+        Random randomLink = new Random()
+        def anioLectivoInstance
+        if(alumnoInstance){
+            def aniosLectivos = AnioLectivo.createCriteria().list{
+                eq("estado",1)
+                order("anio","desc")
+            }
+            anioLectivoInstance = aniosLectivos.get(0)
+        }else{
+            render(view: 'confirmproblem',model: [mensaje:mensaje])
+        }
+        return[alumnoInstance:alumnoInstance,anioLectivoInstance: anioLectivoInstance,randomlink: randomLink]
+    }
     
 }
