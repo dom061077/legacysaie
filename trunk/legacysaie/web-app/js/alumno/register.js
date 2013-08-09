@@ -199,7 +199,7 @@ Ext.onReady(function(){
                       name:'aniolectivo',
                       value:aniolectivoId
                     },
-                    {
+                    /*{
                       xtype:'textfield',
                       id:'aniolectivodescId',
                       name:'aniolectivodesc',
@@ -225,7 +225,7 @@ Ext.onReady(function(){
                         autoLoad:true
                         })
                       ,vtype:'cupolimite'
-                    },
+                    }, */
                     {
                         xtype:'combo',
                         id:'tipodocumentoId',
