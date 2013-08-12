@@ -244,21 +244,33 @@ class AlumnoController {
                 //alumnoInstance.
                 log.debug "Datos del alumno, id: ${alumnoInstance.id}, apellido: ${alumnoInstance.apellido}, nombre: ${alumnoInstance.nombre}"
                 log.debug "EMAIL: ${alumnoInstance.email}"
-                alumnoInstance.registerconfirm = springSecurityService.encodePassword(alumnoInstance.id.toString()+alumnoInstance.numeroDocumento)
-                alumnoInstance.save(flush: true)
-                String emailContent = """
-                    Usted se ha registrado en la base de datos del colegio Cruz Roja con Nro de Documento: ${alumnoInstance.numeroDocumento}, apellido: ${alumnoInstance.apellido}, nombre: ${alumnoInstance.nombre}.
-                    Para continuar con la inscripción haga click en el siguiente link
-                    ${request.scheme}://${request.serverName}:${request.serverPort}${request.contextPath}/alumno/confirm/${alumnoInstance.registerconfirm}
-                """
-
-                sendMail{
-                    to alumnoInstance.email.toString()
-                    subject "Respuesta de Colegio Cruz Roja"
-                    body emailContent
+                Alumno.withTransaction {TransactionStatus status->
+                    alumnoInstance.registerconfirm = springSecurityService.encodePassword(alumnoInstance.id.toString()+alumnoInstance.numeroDocumento)
+                    alumnoInstance.save(flush: true)
+                    String emailContent = """
+                        Usted se ha registrado en la base de datos del colegio Cruz Roja con Nro de Documento: ${alumnoInstance.numeroDocumento}, apellido:<h1> ${alumnoInstance.apellido}, nombre: ${alumnoInstance.nombre}</h1>.<br>
+                        Para continuar con la inscripción haga click en el siguiente link: <br>
+                        ${request.scheme}://${request.serverName}:${request.serverPort}${request.contextPath}/alumno/confirm/${alumnoInstance.registerconfirm}
+                    """
+                    try{
+                        sendMail{
+                            to alumnoInstance.email.toString()
+                            subject "Respuesta de Colegio Cruz Roja"
+                            html emailContent
+                        }
+                        mensaje = 'Los datos se guardaron correctamente'
+                    }catch(javax.mail.AuthenticationFailedException e){
+                        status.rollbackOnly()
+                        success = false
+                        mensaje = 'Error al enviar el E-mail. El servicio de correo no está funcionando correctamente'
+                    }catch(com.sun.mail.smtp.SMTPAddressFailedException e){
+                        status.rollbackOnly()
+                        success = false
+                        mensaje = 'Error al enviar el E-mail. La dirección de correo electrónico ingresada ( ${alumnoInstance.email} ) no es válida'
+                    }
                 }
 
-                mensaje = 'Los datos se guardaron correctamente'
+                
             }
         }
         recaptchaService.cleanUp(session)
@@ -400,6 +412,36 @@ class AlumnoController {
             render(view: 'confirmproblem',model: [mensaje:"<h4>El link no corresponde a un alumno preinscripto</h4>"])
         }
         return[alumnoInstance:alumnoInstance,anioLectivoInstance: anioLectivoInstance,randomlink: randomLink]
+    }
+
+    def loadconfirm(){
+        def returnMap = [:]
+        def alumnoInstance = Alumno.findByRegisterconfirm(params.id)
+        if(alumnoInstance){
+            if (!alumnoInstance.confirmado){
+                returnMap.success = true
+                def aniosLectivos = AnioLectivo.createCriteria().list{
+                    eq("estado",1)
+                    order("anio","desc")
+                }
+                def anioLectivoInstance = aniosLectivos.get(0)
+                returnMap.data = [:]
+                returnMap.data.alumno = alumnoInstance.id
+                returnMap.data.aniolectivo = anioLectivoInstance.id
+                returnMap.data.numerodocumento = alumnoInstance.numeroDocumento
+                returnMap.data.apellido = alumnoInstance.apellido
+                returnMap.data.nombre = alumnoInstance.nombre
+                returnMap.data.aniolectivodesc = anioLectivoInstance.descripcion
+            }else{
+                returnMap.success = false
+                returnMap.mensaje = "La preinscripcion del alumno ya está confirmada"
+            }
+
+        }else{
+            returnMap.success = false
+            returnMap.mensaje = "La clave de confirmación no corresponde a un registro de alumno válido"
+        }
+        render returnMap as JSON
     }
     
 }

@@ -11,6 +11,8 @@
             var aniolectivoId = ${anioLectivoInstance?.id};
             var aniolectivoDesc = '${anioLectivoInstance?.descripcion}';
             var confirmUrl = '${createLink(controller:'alumno',action:'')}';
+            var loadUrl = '${createLink(controller:'alumno',action:'loadconfirm')+'/'+alumnoInstance.registerconfirm}';
+            var materiasUrl = '${createLink(controller:'')}';
   </script>
 </head>
 <body>
