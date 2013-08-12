@@ -203,9 +203,9 @@ class AlumnoController {
                     errorList << [msg:messageSource.getMessage(it, LCH.locale)]
                 }
             }else{
-                def carrerasanios = CarreraAnioLectivo.createCriteria().list{
-                    eq("id.carrera.id",carreraId)
-                    eq("id.anioLectivo.id",anioLectivoId)
+                /*def carrerasanios = CarreraAnioLectivo.createCriteria().list{
+                    eq("id.carrera.id",params.carreraId)
+                    eq("id.anioLectivo.id",params.anioLectivoId.toString().toInteger())
                 }
                 def carreraAnioLectivoInstance = carrerasanios.get(0)
 
@@ -240,15 +240,15 @@ class AlumnoController {
                             errorList << [msg:messageSource.getMessage(it, LCH.locale)]
                         }
                     }
-                }
+                }*/
                 //alumnoInstance.
                 log.debug "Datos del alumno, id: ${alumnoInstance.id}, apellido: ${alumnoInstance.apellido}, nombre: ${alumnoInstance.nombre}"
                 log.debug "EMAIL: ${alumnoInstance.email}"
                 alumnoInstance.registerconfirm = springSecurityService.encodePassword(alumnoInstance.id.toString()+alumnoInstance.numeroDocumento)
                 alumnoInstance.save(flush: true)
                 String emailContent = """
-                    Usted se ha registrado en la base de datos del colegio Cruz Roja con Nro de Documento: ${alumnoInstance.numeroDocumento}
-                    ,apellido: ${alumnoInstance.apellido}, nombre: ${alumnoInstance.nombre}. Para continuar con la inscripción haga click en el siguiente link
+                    Usted se ha registrado en la base de datos del colegio Cruz Roja con Nro de Documento: ${alumnoInstance.numeroDocumento}, apellido: ${alumnoInstance.apellido}, nombre: ${alumnoInstance.nombre}.
+                    Para continuar con la inscripción haga click en el siguiente link
                     ${request.scheme}://${request.serverName}:${request.serverPort}${request.contextPath}/alumno/confirm/${alumnoInstance.registerconfirm}
                 """
 
@@ -354,7 +354,7 @@ class AlumnoController {
              }
              if (carreraAnioLectivoInstance.cupo+carreraAnioLectivoInstance.cupoSuplente<cantMatriculas+1){
                  status.setRollbackOnly()
-                 success = false
+                 success = false                                 ´ç
                  mensaje = 'Error en el registro de datos'
                  errorList << [msg: "No hay cupo disponible para la carrera"]
              }else{
@@ -381,17 +381,23 @@ class AlumnoController {
     }*/
 
     def confirm(){
+        log.debug "ingresando al metodo confirm"
         def alumnoInstance = Alumno.findByRegisterconfirm(params.id)
         Random randomLink = new Random()
         def anioLectivoInstance
         if(alumnoInstance){
+            if (alumnoInstance.confirmado){
+                render(view: "confirmproblem",model: [mensaje: "El alumno ya tiene confirmada la preinscripcion. Por favor, comuniquese con el colegio"])
+                return
+            }
             def aniosLectivos = AnioLectivo.createCriteria().list{
                 eq("estado",1)
                 order("anio","desc")
             }
             anioLectivoInstance = aniosLectivos.get(0)
         }else{
-            render(view: 'confirmproblem',model: [mensaje:mensaje])
+            log.debug("confirmacion no encontrada")
+            render(view: 'confirmproblem',model: [mensaje:"<h4>El link no corresponde a un alumno preinscripto</h4>"])
         }
         return[alumnoInstance:alumnoInstance,anioLectivoInstance: anioLectivoInstance,randomlink: randomLink]
     }
