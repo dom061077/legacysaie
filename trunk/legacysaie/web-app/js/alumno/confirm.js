@@ -47,7 +47,8 @@ Ext.onReady(function(){
         ,renderTo:'formId'
         ,height:450
         ,id:'formconfirmId'
-        ,width:450
+        ,width:520
+        ,labelWidth:140
         ,frame:true
         ,items:[
             {
@@ -60,19 +61,24 @@ Ext.onReady(function(){
                 ,value:aniolectivoId
                 ,id:'aniolectivoId'
             },{
-                xtype:'textfield'
+                xtype:'numberfield'
                 ,name:'numerodocumento'
                 ,id:'numerodocumentoId'
+                ,disabled:true
                 ,fieldLabel:'Nº de documento'
             },{
                 xtype:'textfield'
                 ,name:'apellido'
                 ,id:'apellidoId'
+                ,width:260
+                ,disabled:true
                 ,fieldLabel:'Apellido'
             },{
                 xtype:'textfield'
                 ,name:'nombre'
                 ,id:'nombeId'
+                ,width:260
+                ,disabled:true
                 ,fieldLabel:'Nombre'
             },{
                  xtype:'textfield',
@@ -100,7 +106,45 @@ Ext.onReady(function(){
                  autoLoad:true
                  })
                  ,vtype:'cupolimite'
-             }
+             },new Ext.grid.GridPanel({
+                id:'gridmaterias'
+                ,store: new Ext.data.JsonStore({
+                    root:'rows'
+                    ,url:materiasUrl
+                    ,fields:[{name:'id'},{name:'denominacion'},{name:'nivel'},{name:'seleccionada',type:'bool'}],
+                    autoLoad:false
+                })
+                ,columns:[
+                    {header:'Id',dataIndex:'id',hidden:true}
+                    ,{header:'Materia',dataIndex:'denominacion',width:200,sortable:false}
+                    ,{header: "Nivel",width:100,sortable:false,dataIndex:"nivel"},
+                    {
+                        xtype: 'checkcolumn',
+                        header: 'Seleccionada',
+                        dataIndex: 'seleccionada',
+                        width: 70,
+                        editor:{
+                            xtype:'checkbox'
+                        }
+                    }
+                ],
+                stripeRows: true,
+                height:250,
+                width:500,
+                loadMask:true,
+                title:'Materias a Inscribir',
+
+            })
         ]
     });
+   Ext.getCmp('formconfirmId').getForm().load({
+       url:loadUrl
+       ,success:function(f,a){
+
+        }
+       ,failure:function(f,a){
+
+       }
+   });
+
 });

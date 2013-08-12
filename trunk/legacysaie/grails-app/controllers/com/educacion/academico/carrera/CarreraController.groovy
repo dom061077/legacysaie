@@ -146,4 +146,8 @@ class CarreraController {
         render returnMap as JSON
     }
 
+    def materiaspreinscripcion(def carrera){
+
+    }
+
 }
