@@ -33,7 +33,7 @@ Ext.onReady(function(){
                 }
             });
 
-
+            /*
             Ext.form.ComboBox.prototype.doQuery = function(q, forceAll){
                 q = Ext.isEmpty(q) ? '' : q;
                 var qe = {
@@ -70,7 +70,7 @@ Ext.onReady(function(){
                         this.onLoad();
                     }
                 }
-            };
+            };   */
 
             /*var msgBox = Ext.MessageBox.show({
                 title: 'Sesión Inactiva',

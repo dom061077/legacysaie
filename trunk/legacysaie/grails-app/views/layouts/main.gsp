@@ -8,6 +8,9 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<title><g:layoutTitle default="Grails"/></title>
+        <%Random randomLink = new Random();
+          randomLink.nextInt(100000)
+        %>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="shortcut icon" href="${resource(dir: 'images', file: 'Alien.ico')}" type="image/x-icon">
 		<link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'apple-touch-icon.png')}">
@@ -19,7 +22,7 @@
         <script type="text/javascript" src="${resource(dir:'js/jquery/jquery-1.6.2.min.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/extjs/adapter/jquery',file:'ext-jquery-adapter.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/extjs',file:'ext-all.js')}"></script>
-        <script type="text/javascript" src="${resource(dir:'js',file:'initextjs.js')}"></script>
+        <script type="text/javascript" src="${resource(dir:'js',file:'initextjs.js')+'?id='+randomLink}"></script>
         <script type="text/javascript" src="${resource(dir:'js/extjs/locale',file:'ext-lang-es.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/extjs/ux',file:'CheckColumn.js')}"></script>
         <script type="text/javascript">

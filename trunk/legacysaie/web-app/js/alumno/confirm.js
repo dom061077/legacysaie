@@ -40,7 +40,7 @@ Ext.apply(Ext.form.VTypes,{
 Ext.onReady(function(){
     Ext.QuickTips.init();
     function getRowsMaterias(){
-        var storeMateria = Ext.getCmp('gridcorrelcurId').getStore();
+        var storeMateria = Ext.getCmp('gridmaterias').getStore();
         materiaArr = [];
         storeMateria.data.each(function(rec){
             materiaArr.push(rec.data);
@@ -163,8 +163,9 @@ Ext.onReady(function(){
                 text:'Confirmar'
                 ,handler:function(){
                     var formpreinsc = Ext.getCmp('formconfirmId');
+                  Ext.getCmp('materiasId').setValue(getRowsMaterias);
                     if(formpreinsc.getForm().isValid()){
-                        Ext.getCmp('materiasId').value=getRowsMaterias();
+
                         loadMask.show();
                         formpreinsc.getForm().submit({
                             success: function(f,a){
@@ -180,6 +181,7 @@ Ext.onReady(function(){
                                 });
                             },
                             failure: function(f,a){
+                                loadMask.hide()
                                 var mensaje = a.result.msg+'<br><br>';
                                 for(var i=0;i<a.result.errors.length;i++){
                                     mensaje = mensaje +'- '+a.result.errors[i].msg+'<br>';
