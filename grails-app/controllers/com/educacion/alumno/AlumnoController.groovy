@@ -417,12 +417,16 @@ class AlumnoController {
             log.debug("confirmacion no encontrada")
             render(view: 'confirmproblem',model: [mensaje:"<h4>El link no corresponde a un alumno preinscripto</h4>"])
         }
-        return[alumnoInstance:alumnoInstance,anioLectivoInstance: anioLectivoInstance,randomlink: randomLink]
+        return[alumnoInstance:alumnoInstance,anioLectivoInstance: anioLectivoInstance,randomlink: randomLink.nextInt(100000)]
     }
 
     def loadconfirm(){
         def returnMap = [:]
         def alumnoInstance = Alumno.findByRegisterconfirm(params.id)
+        def anioLectivoInstance
+        def carreraanios
+        def carreraAnioLectivoInstance
+        log.debug "PARAMETROS: $params"
         if(alumnoInstance){
             if (!alumnoInstance.confirmado){
                 returnMap.success = true
@@ -430,14 +434,14 @@ class AlumnoController {
                     eq("estado",1)
                     order("anio","desc")
                 }
-                def anioLectivoInstance = aniosLectivos.get(0)
+                anioLectivoInstance = aniosLectivos.get(0)
                 returnMap.data = [:]
                 returnMap.data.keyconfirm = alumnoInstance.registerconfirm
-                returnMap.data.aniolectivo = anioLectivoInstance.id
+                returnMap.data.aniolectivo = anioLectivoInstance?.id
                 returnMap.data.numerodocumento = alumnoInstance.numeroDocumento
                 returnMap.data.apellido = alumnoInstance.apellido
                 returnMap.data.nombre = alumnoInstance.nombre
-                returnMap.data.aniolectivodesc = anioLectivoInstance.descripcion
+                returnMap.data.aniolectivodesc = anioLectivoInstance?.descripcion
             }else{
                 returnMap.success = false
                 returnMap.mensaje = "La preinscripcion del alumno ya está confirmada"
@@ -472,7 +476,8 @@ class AlumnoController {
     }
 
     def confirmpreinscripcion(){
-        def alumnoInstance = Alumno.findByConfirmado(params.keyconfirm)
+        log.debug "PARAMETROS: $params"
+        def alumnoInstance = Alumno.findByRegisterconfirm(params.keyconfirm)
         def returnMap = [:]
         def success=true
         def errorList = []
@@ -480,9 +485,18 @@ class AlumnoController {
         if(alumnoInstance){
             Inscripcion.withTransaction{ TransactionStatus status ->
                 def carrerasanios = CarreraAnioLectivo.createCriteria().list{
-                    eq("id.carrera.id",params.carreraId)
-                    eq("id.anioLectivo.id",params.anioLectivoId.toString().toInteger())
+                    eq("id.carrera.id",params.carrera_id)
+                    eq("id.anioLectivo.id",params.aniolectivo.toString().toInteger())
                 }
+                
+                if(carrerasanios.size()<=0){
+                    status.setRollbackOnly()
+                    success = false
+                    mensaje = "Error en el registro de datos"
+                    errorList << [msg: "El año lectivo de la carrera no está activado. Comuníquese con el colegio"]
+                    return
+                }
+                
                 def carreraAnioLectivoInstance = carrerasanios.get(0)
 
                 def cantMatriculas = Matricula.createCriteria().count{
@@ -490,7 +504,7 @@ class AlumnoController {
                         eq("id",params.carrera_id)
                     }
                     anioLectivo{
-                        eq("id",params.aniolectivo)
+                        eq("id",params.aniolectivo.toString().toInteger())
                     }
                     eq("ingresante",Short.valueOf("1"))
                 }
@@ -500,14 +514,14 @@ class AlumnoController {
                     mensaje = 'Error en el registro de datos'
                     errorList << [msg: "No hay cupo disponible para la carrera"]
                 }else{
-                    def anioLectivoInstance = AnioLectivo.load(params.aniolectivo.toString().toInteger())
-                    def carreraInstance = Carrera.load(params.carrera)
-                    def matriculaInstance = new Matricula(anioLectivo: anioLectivoInstance,carrera:carreraInstance,alumno: alumnoInstance)
+                    //def anioLectivoInstance = AnioLectivo.load(params.aniolectivo.toString().toInteger())
+                    //def carreraInstance = Carrera.load(params.carrera)
+                    def matriculaInstance = new Matricula(anioLectivo: carreraAnioLectivoInstance.anioLectivo,carrera:carreraAnioLectivoInstance.carrera,alumno: alumnoInstance)
                     matriculaInstance.estado = EstadoMatriculaEnum.I
                     if (cantMatriculas+1 > carreraAnioLectivoInstance.cupo)
-                        matriculaInstance.suplente = 1
+                        matriculaInstance.suplente = SuplenteEnum.S
                     else
-                        matriculaInstance.suplente = 0
+                        matriculaInstance.suplente = SuplenteEnum.T
                     if (!matriculaInstance.save(flush: true)){
                         status.setRollbackOnly()
                         success=false
@@ -517,7 +531,7 @@ class AlumnoController {
                         }
                     } else{
                         def inscripcionInstance = new Inscripcion(matricula: matriculaInstance)
-                        if(matriculaInstance.suplente==1){
+                        if(matriculaInstance.suplente.equals(SuplenteEnum.S)){
                             inscripcionInstance.estado = EstadoInscripcionEnum.S
                             inscripcionInstance.suplente = SuplenteEnum.S
                         }else{
@@ -544,8 +558,9 @@ class AlumnoController {
                             matriculaInstance.errors.allErrors.each{
                                 errorList << [msg:messageSource.getMessage(it, LCH.locale)]
                             }
+                        }else{
+                            mensaje = 'La preinscripción se confirmó correctamente';
                         }
-
                     }
                 }
             }

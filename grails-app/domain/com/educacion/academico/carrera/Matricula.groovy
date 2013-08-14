@@ -23,7 +23,7 @@ class Matricula {
 
     static mapping = {
         version false
-        id column:'matricula'
+        id column:'matricula',generator:'increment'
         carrera column:'carrera'
         alumno column : 'alumno'
         anioLectivo column: 'aniolectivo'
