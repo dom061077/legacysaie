@@ -16,6 +16,12 @@ import com.educacion.enums.EstadoMatriculaEnum
 import com.educacion.enums.SuplenteEnum
 import com.educacion.academico.carrera.CarreraAnioLectivo
 import com.educacion.academico.carrera.Carrera
+import com.educacion.academico.materia.Materia
+import com.educacion.academico.carrera.Inscripcion
+import com.educacion.enums.EstadoInscripcionEnum
+import com.educacion.academico.carrera.InscripcionDetalle
+import com.educacion.enums.EstadoInscripcionDetalleEnum
+import com.educacion.enums.TipoInscripcionDetalleEnum
 
 
 class AlumnoController {
@@ -426,7 +432,7 @@ class AlumnoController {
                 }
                 def anioLectivoInstance = aniosLectivos.get(0)
                 returnMap.data = [:]
-                returnMap.data.alumno = alumnoInstance.id
+                returnMap.data.keyconfirm = alumnoInstance.registerconfirm
                 returnMap.data.aniolectivo = anioLectivoInstance.id
                 returnMap.data.numerodocumento = alumnoInstance.numeroDocumento
                 returnMap.data.apellido = alumnoInstance.apellido
@@ -443,5 +449,114 @@ class AlumnoController {
         }
         render returnMap as JSON
     }
-    
+
+    def materiaspreinscribir(String carreraId){
+        def materias = Materia.createCriteria().list{
+            tipoMateria{
+                eq("id","00002")
+            }
+            carrera{
+                eq("id",carreraId)
+            }
+        }
+        def returnMap = [:]
+        def recordList=[]
+        materias.each{
+            recordList << [id:it.id,denominacion:it.denominacion,seleccionada:false]
+        }
+
+        returnMap.rows=recordList
+        returnMap.success = true
+        returnMap.total = materias.size()
+        render returnMap as JSON
+    }
+
+    def confirmpreinscripcion(){
+        def alumnoInstance = Alumno.findByConfirmado(params.keyconfirm)
+        def returnMap = [:]
+        def success=true
+        def errorList = []
+        def mensaje
+        if(alumnoInstance){
+            Inscripcion.withTransaction{ TransactionStatus status ->
+                def carrerasanios = CarreraAnioLectivo.createCriteria().list{
+                    eq("id.carrera.id",params.carreraId)
+                    eq("id.anioLectivo.id",params.anioLectivoId.toString().toInteger())
+                }
+                def carreraAnioLectivoInstance = carrerasanios.get(0)
+
+                def cantMatriculas = Matricula.createCriteria().count{
+                    carrera{
+                        eq("id",params.carrera_id)
+                    }
+                    anioLectivo{
+                        eq("id",params.aniolectivo)
+                    }
+                    eq("ingresante",Short.valueOf("1"))
+                }
+                if (carreraAnioLectivoInstance.cupo+carreraAnioLectivoInstance.cupoSuplente<cantMatriculas+1){
+                    status.setRollbackOnly()
+                    success = false
+                    mensaje = 'Error en el registro de datos'
+                    errorList << [msg: "No hay cupo disponible para la carrera"]
+                }else{
+                    def anioLectivoInstance = AnioLectivo.load(params.aniolectivo.toString().toInteger())
+                    def carreraInstance = Carrera.load(params.carrera)
+                    def matriculaInstance = new Matricula(anioLectivo: anioLectivoInstance,carrera:carreraInstance,alumno: alumnoInstance)
+                    matriculaInstance.estado = EstadoMatriculaEnum.I
+                    if (cantMatriculas+1 > carreraAnioLectivoInstance.cupo)
+                        matriculaInstance.suplente = 1
+                    else
+                        matriculaInstance.suplente = 0
+                    if (!matriculaInstance.save(flush: true)){
+                        status.setRollbackOnly()
+                        success=false
+                        mensaje = 'Error en el registro de datos'
+                        matriculaInstance.errors.allErrors.each{
+                            errorList << [msg:messageSource.getMessage(it, LCH.locale)]
+                        }
+                    } else{
+                        def inscripcionInstance = new Inscripcion(matricula: matriculaInstance)
+                        if(matriculaInstance.suplente==1){
+                            inscripcionInstance.estado = EstadoInscripcionEnum.S
+                            inscripcionInstance.suplente = SuplenteEnum.S
+                        }else{
+                            inscripcionInstance.estado = EstadoInscripcionEnum.A
+                            inscripcionInstance.suplente = SuplenteEnum.T
+                        }
+                        def detalleInscJson = JSON.parse(params.materias)
+                        def materiaInstance
+                        InscripcionDetalle inscDetInstance
+                        detalleInscJson.each{
+                            if (it.seleccionada){
+                                //EstadoInscripcionDetalleEnum estado
+                                //TipoInscripcionDetalleEnum tipoInscripcion
+                                inscDetInstance = new InscripcionDetalle()
+                                materiaInstance = Materia.load(it.id)
+                                inscripcionInstance.addToDetalle(new InscripcionDetalle(materia: materiaInstance,estado: EstadoInscripcionDetalleEnum.I,tipoInscripcion:TipoInscripcionDetalleEnum.C,notaFinal:0))
+                                //inscInstance.addToDetalle(new Object())
+                            }
+                        }
+                        if(!inscripcionInstance.save(flush:true)){
+                            status.setRollbackOnly()
+                            success=false
+                            mensaje = 'Error en el registro de datos'
+                            matriculaInstance.errors.allErrors.each{
+                                errorList << [msg:messageSource.getMessage(it, LCH.locale)]
+                            }
+                        }
+
+                    }
+                }
+            }
+        }else{
+           success=false
+           mensaje='Error en el registro de datos'
+            errorList << [msg: 'La confirmación de correo electrónico no corresponde a ningún alumno preinscripto']
+        }
+        returnMap.success = success
+        returnMap.errors = errorList
+        returnMap.msg = mensaje
+        render returnMap as JSON
+    }
 }

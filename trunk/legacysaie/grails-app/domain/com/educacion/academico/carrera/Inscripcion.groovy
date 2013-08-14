@@ -6,7 +6,7 @@ import com.educacion.enums.SuplenteEnum
 class Inscripcion {
     int id
     Matricula matricula
-    java.sql.Date fecha
+    java.sql.Date fecha = new java.sql.Date((new Date()).getTime())
     EstadoInscripcionEnum estado
     SuplenteEnum suplente
 
