@@ -10,9 +10,10 @@
             var cupoUrl = '${createLink(uri:'/carrera/cupocarrera')}';
             var aniolectivoId = ${anioLectivoInstance?.id};
             var aniolectivoDesc = '${anioLectivoInstance?.descripcion}';
-            var confirmUrl = '${createLink(controller:'alumno',action:'')}';
+            var confirmUrl = '${createLink(controller:'alumno',action:'confirmpreinscripcion')}';
             var loadUrl = '${createLink(controller:'alumno',action:'loadconfirm')+'/'+alumnoInstance.registerconfirm}';
-            var materiasUrl = '${createLink(controller:'')}';
+            var materiasUrl = '${createLink(controller:'alumno',action:'materiaspreinscribir')}';
+            var homeUrl = 'http://www.iscrafcordoba.edu.ar/'
   </script>
 </head>
 <body>

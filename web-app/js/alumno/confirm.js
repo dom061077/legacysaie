@@ -39,7 +39,16 @@ Ext.apply(Ext.form.VTypes,{
 
 Ext.onReady(function(){
     Ext.QuickTips.init();
+    function getRowsMaterias(){
+        var storeMateria = Ext.getCmp('gridcorrelcurId').getStore();
+        materiaArr = [];
+        storeMateria.data.each(function(rec){
+            materiaArr.push(rec.data);
+        });
+        return Ext.encode(materiaArr);
+    }
 
+    var loadMask = new Ext.LoadMask(Ext.getBody(), {msg:'Enviando Información'});
     new Ext.FormPanel({
         url:confirmUrl
         ,title:'Confirmación de Preinscripción'
@@ -53,8 +62,8 @@ Ext.onReady(function(){
         ,items:[
             {
                 xtype:'hidden'
-                ,name:'alumno'
-                ,id:'alumnoId'
+                ,name:'keyconfirm'
+                ,id:'keyconfirmId'
             },{
                 xtype:'hidden'
                 ,name:'aniolectivo'
@@ -90,11 +99,12 @@ Ext.onReady(function(){
              },
              {
                  xtype:'combo'
-                 ,fieldLabel:'Carrera'
+                 ,fieldLabel:'Seleccione Carrera'
                  ,id:'combocarreraId'
                  ,msgTarget:'under'
                  ,valueField:'id'
                  ,name:'carrera'
+                 ,allowBlank:false
                  ,width:260
                  ,mode:'local'
                  ,displayField:'denominacion'
@@ -106,19 +116,32 @@ Ext.onReady(function(){
                  autoLoad:true
                  })
                  ,vtype:'cupolimite'
+                 ,listeners:{
+                     select:function(combobox,record,index){
+                         Ext.getCmp('gridmaterias').getStore().load({
+                             params:{
+                                 carreraId:Ext.getCmp('combocarreraId').hiddenField.value
+                             }
+                         });
+                     }
+                 }
+             },{
+                xtype:'hidden'
+                ,id:'materiasId'
+                ,name:'materias'
              },new Ext.grid.GridPanel({
                 id:'gridmaterias'
                 ,store: new Ext.data.JsonStore({
                     root:'rows'
                     ,url:materiasUrl
-                    ,fields:[{name:'id'},{name:'denominacion'},{name:'nivel'},{name:'seleccionada',type:'bool'}],
+                    ,fields:[{name:'id'},{name:'denominacion'},{name:'seleccionada',type:'bool'}],
                     autoLoad:false
                 })
+
                 ,columns:[
                     {header:'Id',dataIndex:'id',hidden:true}
                     ,{header:'Materia',dataIndex:'denominacion',width:200,sortable:false}
-                    ,{header: "Nivel",width:100,sortable:false,dataIndex:"nivel"},
-                    {
+                    ,{
                         xtype: 'checkcolumn',
                         header: 'Seleccionada',
                         dataIndex: 'seleccionada',
@@ -132,9 +155,58 @@ Ext.onReady(function(){
                 height:250,
                 width:500,
                 loadMask:true,
-                title:'Materias a Inscribir',
+                title:'Materias a Inscribir'
 
             })
+        ],buttons:[
+            {
+                text:'Confirmar'
+                ,handler:function(){
+                    var formpreinsc = Ext.getCmp('formconfirmId');
+                    if(formpreinsc.getForm().isValid()){
+                        Ext.getCmp('materiasId').value=getRowsMaterias();
+                        loadMask.show();
+                        formpreinsc.getForm().submit({
+                            success: function(f,a){
+                                loadMask.hide();
+                                Ext.Msg.show({
+                                    title:'Mensaje'
+                                    ,icon:Ext.MessageBox.INFO
+                                    ,msg:a.result.mensaje
+                                    ,buttons:Ext.MessageBox.OK
+                                    ,fn:function(btn){
+                                        window.location=homeUrl
+                                    }
+                                });
+                            },
+                            failure: function(f,a){
+                                var mensaje = a.result.msg+'<br><br>';
+                                for(var i=0;i<a.result.errors.length;i++){
+                                    mensaje = mensaje +'- '+a.result.errors[i].msg+'<br>';
+                                }
+
+                                Ext.Msg.show({
+                                    title: 'Error'
+                                    ,icon:Ext.MessageBox.ERROR
+                                    ,msg: mensaje,
+                                    buttons: Ext.MessageBox.OK,
+                                    fn: function(btn){
+
+                                    }
+
+                                });
+                            }
+
+                        });
+                    }
+
+                }
+            },{
+                text:'Cancelar'
+                ,handler:function(){
+                    window.location=homeUrl;
+                }
+            }
         ]
     });
    Ext.getCmp('formconfirmId').getForm().load({
