@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comprobantematricula" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="21"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="802" splitType="Stretch">
+			<line>
+				<reportElement x="1" y="268" width="594" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="535" width="595" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<image>
+				<reportElement x="1" y="0" width="133" height="29"/>
+				<imageExpression class="java.lang.String"><![CDATA["D:\\DOM\\Grails\\Grails 2.0 Samples\\legacysaie\\web-app\\reports\\images\\imagecomprobante.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="1" y="269" width="133" height="29"/>
+				<imageExpression class="java.lang.String"><![CDATA["D:\\DOM\\Grails\\Grails 2.0 Samples\\legacysaie\\web-app\\reports\\images\\imagecomprobante.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="1" y="536" width="133" height="29"/>
+				<imageExpression class="java.lang.String"><![CDATA["D:\\DOM\\Grails\\Grails 2.0 Samples\\legacysaie\\web-app\\reports\\images\\imagecomprobante.png"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="11" y="29" width="100" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="22" y="30" width="89" height="15"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quien Suscribe:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="45" width="298" height="15"/>
+				<textElement>
+					<font fontName="Arial" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Solicita Matriculación en las siguientes materias de la carrera]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="60" width="594" height="1"/>
+			</line>
+			<line>
+				<reportElement x="1" y="328" width="594" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="22" y="313" width="298" height="15"/>
+				<textElement>
+					<font fontName="Arial" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Solicita Matriculación en las siguientes materias de la carrera]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="298" width="89" height="15"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quien Suscribe:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="565" width="89" height="15"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quien Suscribe:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="580" width="298" height="15"/>
+				<textElement>
+					<font fontName="Arial" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Solicita Matriculación en las siguientes materias de la carrera]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="595" width="594" height="1"/>
+			</line>
+			<rectangle>
+				<reportElement x="11" y="195" width="566" height="65"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="16" y="200" width="544" height="14"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Para modificación de la presente solicitud deberá comunicarse con la preseptoría antes del 31 de marzo del corriente año.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="214" width="544" height="14"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Caso contrario esta información será tomada como válida para el cobro de aranceles]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="228" width="544" height="14"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[RECIBI CONFORME COPIA DE REGLAMENTO INTERNO DE ALUMNOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="445" y="240" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Firma del Solicitante]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>
