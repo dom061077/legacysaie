@@ -574,4 +574,29 @@ class AlumnoController {
         returnMap.msg = mensaje
         render returnMap as JSON
     }
+
+    def reportecomprobantematricula(int id){
+        def inscripciones = Inscripcion.createCriteria().list {
+            matricula{
+               eq("id",id)
+            }
+            order("id","asc")
+        }
+        def inscripcionInstance = inscripciones.get(0)
+        def matriculaInstance
+        if (inscripcionInstance){
+            log.debug inscripcionInstance.matricula.alumno.apellido
+            log.debug inscripcionInstance.matricula.carrera.denominacion
+            inscripcionInstance.detalle.each{
+                log.debug it.materia.denominacion
+            }
+        }
+        String reportsDirPath = servletContext.getRealPath("/reports/");
+        params.put("SUBREPORT_DIR", reportsDirPath);
+        log.debug("Parametros: $params")
+        def list = new ArrayList()
+        list.add(inscripcionInstance)
+        chain(controller:'jasper',action:'index',model:[data:list],params:params)
+
+    }
 }
