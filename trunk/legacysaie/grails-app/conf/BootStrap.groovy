@@ -41,6 +41,7 @@ class BootStrap {
             new RequestMap(url: '/alumno/savejson',configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
             new RequestMap(url: '/alumno/materiaspreinscribir',configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
             new RequestMap(url: '/alumno/confirmpreinscripcion',configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
+            new RequestMap(url: '/alumno/reportecomprobantematricula/**',configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
             //new RequestMap(url: '/alumno/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
             new RequestMap(url: '/j_spring_security_switch_user',configAttribute: 'ROLE_SWITCH_USER,IS_AUTHENTICATED_FULLY').save(failOnError:true)
             new RequestMap(url: '/**', configAttribute:'IS_AUTHENTICATED_REMEMBERED').save(failOnError:true)
