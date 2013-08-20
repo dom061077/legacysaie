@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comprobantematricula" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="240"/>
+	<property name="ireport.y" value="46"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\DOM\\Grails\\Grails 2.0 Samples\\legacysaie\\web-app\\reports\\"]]></defaultValueExpression>
 	</parameter>
@@ -10,6 +10,9 @@
 	<field name="matricula.carrera.denominacion" class="java.lang.String"/>
 	<field name="matricula.alumno.apellido" class="java.lang.String"/>
 	<field name="matricula.alumno.nombre" class="java.lang.String"/>
+	<field name="detalle" class="java.util.Collection"/>
+	<field name="detalle1" class="java.util.Collection"/>
+	<field name="detalle2" class="java.util.Collection"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -68,7 +71,7 @@
 				</graphicElement>
 			</line>
 			<image>
-				<reportElement x="1" y="0" width="133" height="29"/>
+				<reportElement x="1" y="1" width="133" height="29"/>
 				<imageExpression class="java.io.File"><![CDATA[new File($P{SUBREPORT_DIR}+"/images/","imagecomprobante.png")]]></imageExpression>
 			</image>
 			<image>
@@ -79,9 +82,6 @@
 				<reportElement x="1" y="536" width="133" height="29"/>
 				<imageExpression class="java.io.File"><![CDATA[new File($P{SUBREPORT_DIR}+"/images/","imagecomprobante.png")]]></imageExpression>
 			</image>
-			<line>
-				<reportElement x="11" y="29" width="100" height="1"/>
-			</line>
 			<staticText>
 				<reportElement x="22" y="30" width="89" height="16"/>
 				<textElement>
@@ -208,96 +208,96 @@
 			</staticText>
 			<subreport>
 				<reportElement x="16" y="66" width="236" height="117"/>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{detalle1})]]></dataSourceExpression>
 				<subreportExpression class="java.io.File"><![CDATA[new File($P{SUBREPORT_DIR},"comprobantematricfula_detalle1.jasper")]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement x="341" y="66" width="236" height="117"/>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.io.File"><![CDATA[$P{SUBREPORT_DIR} + "comprobantematricula_detalle2.jasper"]]></subreportExpression>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{detalle2})]]></dataSourceExpression>
+				<subreportExpression class="java.io.File"><![CDATA[new File($P{SUBREPORT_DIR},"comprobantematricula_detalle2.jasper")]]></subreportExpression>
 			</subreport>
 			<textField>
 				<reportElement x="117" y="30" width="100" height="16"/>
 				<textElement>
-					<font fontName="Arial"/>
+					<font fontName="Arial Black" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{matricula.alumno.apellido}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{matricula.alumno.apellido}+", "+$F{matricula.alumno.nombre}]]></textFieldExpression>
 			</textField>
 			<subreport>
 				<reportElement x="16" y="335" width="236" height="117"/>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.io.File"><![CDATA[$P{SUBREPORT_DIR} + "comprobantematricfula_detalle1.jasper"]]></subreportExpression>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{detalle1})]]></dataSourceExpression>
+				<subreportExpression class="java.io.File"><![CDATA[new File($P{SUBREPORT_DIR},"comprobantematricfula_detalle1.jasper")]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement x="341" y="335" width="236" height="117"/>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.io.File"><![CDATA[$P{SUBREPORT_DIR} + "comprobantematricula_detalle2.jasper"]]></subreportExpression>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{detalle2})]]></dataSourceExpression>
+				<subreportExpression class="java.io.File"><![CDATA[new File($P{SUBREPORT_DIR},"comprobantematricula_detalle2.jasper")]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement x="16" y="603" width="236" height="117"/>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.io.File"><![CDATA[$P{SUBREPORT_DIR} + "comprobantematricfula_detalle1.jasper"]]></subreportExpression>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{detalle1})]]></dataSourceExpression>
+				<subreportExpression class="java.io.File"><![CDATA[new File($P{SUBREPORT_DIR},"comprobantematricfula_detalle1.jasper")]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement x="336" y="603" width="236" height="117"/>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.io.File"><![CDATA[$P{SUBREPORT_DIR} + "comprobantematricula_detalle2.jasper"]]></subreportExpression>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{detalle2})]]></dataSourceExpression>
+				<subreportExpression class="java.io.File"><![CDATA[new File($P{SUBREPORT_DIR},"comprobantematricula_detalle2.jasper")]]></subreportExpression>
 			</subreport>
 			<textField>
 				<reportElement x="325" y="45" width="100" height="16"/>
 				<textElement>
-					<font fontName="Arial"/>
+					<font fontName="Arial Black" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{matricula.carrera.denominacion}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="325" y="312" width="100" height="16"/>
 				<textElement>
-					<font fontName="Arial"/>
+					<font fontName="Arial Black" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{matricula.carrera.denominacion}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="117" y="297" width="100" height="16"/>
 				<textElement>
-					<font fontName="Arial"/>
+					<font fontName="Arial Black" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{matricula.alumno.apellido}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{matricula.alumno.apellido}+", "+$F{matricula.alumno.nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="320" y="579" width="100" height="16"/>
 				<textElement>
-					<font fontName="Arial"/>
+					<font fontName="Arial Black" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{matricula.carrera.denominacion}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="112" y="564" width="100" height="16"/>
 				<textElement>
-					<font fontName="Arial"/>
+					<font fontName="Arial Black" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{matricula.alumno.apellido}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{matricula.alumno.apellido}+", "+$F{matricula.alumno.nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="440" y="10" width="132" height="20"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="11" isBold="true"/>
+					<font fontName="Arial Black" size="11" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Integer"><![CDATA[Nº: ($F{id}+100000000).toString().substring(1,9)]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Nº: "+ ($F{id}+100000000).toString().substring(1,9)]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="440" y="269" width="132" height="20"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="11" isBold="true"/>
+					<font fontName="Arial Black" size="11" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Integer"><![CDATA[Nº: ($F{id}+100000000).toString().substring(1,9)]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Nº: "+($F{id}+100000000).toString().substring(1,9)]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="440" y="536" width="132" height="20"/>
+				<reportElement x="443" y="536" width="132" height="20"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="11" isBold="true"/>
+					<font fontName="Arial Black" size="11" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Integer"><![CDATA[Nº: ($F{id}+100000000).toString().substring(1,9)]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Nº: "+($F{id}+100000000).toString().substring(1,9)]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
