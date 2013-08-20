@@ -180,7 +180,7 @@ Ext.onReady(function(){
                 text:'Confirmar'
                 ,handler:function(){
                     var formpreinsc = Ext.getCmp('formconfirmId');
-                  Ext.getCmp('materiasId').setValue(getRowsMaterias);
+                  Ext.getCmp('materiasId').setValue(getRowsMaterias());
                     if(formpreinsc.getForm().isValid()){
 
                         loadMask.show();

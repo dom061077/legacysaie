@@ -33,6 +33,7 @@
             var cupoUrl = '${createLink(uri:'/carrera/cupocarrera')}';
             var aniolectivoId = ${aniolectivoInstance?.id};
             var aniolectivoDesc = '${aniolectivoInstance?.descripcion}';
+            var homeUrl = 'http://www.iscrafcordoba.edu.ar/'
         </script>
 	</head>
 	<body>
