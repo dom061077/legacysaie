@@ -189,7 +189,7 @@ Ext.onReady(function(){
                 title:'Datos del Alumno'
                 ,id:'datosdelalumnocarId'
                 ,frame:false
-                ,monitorValid:false
+                ,monitorValid:true
                 ,autoScroll:true
                 ,labelWidth:140
                 ,items:[
@@ -312,7 +312,7 @@ Ext.onReady(function(){
                         valueField:'id',
                         hiddenName:'paisnacimiento_id',
                         displayField:'descripcion',
-                        allowBlank:false,
+                        allowBlank:true,
                         msgTarget:'under',
                         store:paisesStore,
                         mode:'local',
@@ -337,7 +337,7 @@ Ext.onReady(function(){
                         valueField:'id',
                         hiddenName:'provincianacimiento_id',
                         displayField:'descripcion',
-                        allowBlank:false,
+                        allowBlank:true,
                         msgTarget:'under',
                         store:provinciaStore,
                         mode:'local',
@@ -361,7 +361,7 @@ Ext.onReady(function(){
                         valueField:'id',
                         hiddenName:'localidadnacimiento_id',
                         displayField:'descripcion',
-                        allowBlank:false,
+                        allowBlank:true,
                         msgTarget:'under',
                         store:localidadStore,
                         mode:'local',
@@ -375,13 +375,14 @@ Ext.onReady(function(){
                         ,id:'calledomicilioId'
                         ,fieldLabel:'Calle del Domicilio'
                         ,msgTarget:'under'
+                        ,allowBlank:true
                         ,name:'calledomicilio'
                         ,layout:'form'
-                        ,allowBlank:false
                     },{
                         xtype:'textfield'
                         ,id:'numerodomicilioId'
                         ,fieldLabel:'Número del Domicilio'
+                        ,allowBlank:true
                         ,msgTarget:'under'
                         ,layout:'form'
                         ,name:'numerodomicilio'
@@ -390,9 +391,9 @@ Ext.onReady(function(){
                         ,id:'barriodomicilioId'
                         ,fieldLabel:'Barrio Domicilio'
                         ,msgTarget:'under'
+                        ,allowBlank:true
                         ,name:'barriodomicilio'
                         ,layout:'form'
-                        ,allowBlank:false
                     },{
                         xtype:'combo',
                         id:'paisdomicilioId',
@@ -400,7 +401,7 @@ Ext.onReady(function(){
                         valueField:'id',
                         hiddenName:'paisdomicilio_id',
                         displayField:'descripcion',
-                        allowBlank:false,
+                        allowBlank:true,
                         msgTarget:'under',
                         store:paisesStore,
                         mode:'local',
@@ -423,7 +424,7 @@ Ext.onReady(function(){
                         valueField:'id',
                         hiddenName:'provinciadomicilio_id',
                         displayField:'descripcion',
-                        allowBlank:false,
+                        allowBlank:true,
                         msgTarget:'under',
                         store:provinciaStore,
                         mode:'local',
@@ -447,7 +448,7 @@ Ext.onReady(function(){
                         valueField:'id',
                         hiddenName:'localidaddomicilio_id',
                         displayField:'descripcion',
-                        allowBlank:false,
+                        allowBlank:true,
                         msgTarget:'under',
                         store:localidadStore,
                         mode:'local',
@@ -475,7 +476,7 @@ Ext.onReady(function(){
                 ,id:'datoscontactoacademicoscarId'
                 ,frame:false
                 ,allowBlank:false
-                ,monitorValid:false
+                ,monitorValid:true
                 ,autoScroll:true
                 ,labelWidth:130
 
@@ -490,7 +491,7 @@ Ext.onReady(function(){
                                 fieldLabel:'Teléfono Particular',
                                 msgTarget:'under',
                                 name:'telefonoparticular',
-                                allowBlank:false
+                                allowBlank:true
                             }
                             ,{
                                 xtype:'textfield',
@@ -498,12 +499,13 @@ Ext.onReady(function(){
                                 fieldLabel:'Teléfono Celular',
                                 msgTarget:'under',
                                 name:'telefonocelular',
-                                allowBlank:false
+                                allowBlank:true
                             },{
                                 xtype:'textfield',
                                 id:'telefonoalternativoId',
                                 fieldLabel:'Teléfono Alternativo',
                                 msgTarget:'under',
+                                allowBlank:true,
                                 name:'telefonoalternativo'
                             },{
                                 xtype:'textfield',
@@ -525,14 +527,14 @@ Ext.onReady(function(){
                                 fieldLabel:'Establecimineot de Procedencia',
                                 msgTarget:'under',
                                 name:'establecimientoprocedencia',
-                                allowBlank:false
+                                allowBlank:true
                             },{
                                 xtype:'textfield',
                                 id:'tituloobtenidoId',
                                 fieldLabel:'Título Obtenido',
                                 msgTarget:'under',
                                 name:'tituloobtenido',
-                                allowBlank:false
+                                allowBlank:true
                             },{
                                 xtype:'numberfield',
                                 id:'anioegresoId',
@@ -541,21 +543,21 @@ Ext.onReady(function(){
                                 name:'anioegreso',
                                 allowNegative:false,
                                 maxLength:4,
-                                allowBlank:false
+                                allowBlank:true
                             },{
                                 xtype:'textfield',
                                 id:'situacionacademica',
                                 fieldLabel:'Situación Académica',
                                 msgTarget:'under',
                                 name:'situacionacademica',
-                                allowBlank:false
+                                allowBlank:true
                             },{
                                 xtype:'textfield',
                                 id:'legajoId',
                                 fieldLabel:'Legajo',
                                 msgTarget:'under',
                                 name:'legajo',
-                                allowBlank:false
+                                allowBlank:true
                             }
                         ]
                     }
@@ -575,12 +577,13 @@ Ext.onReady(function(){
                         ,fieldLabel:'Lugar Laboral'
                         ,msgTarget:'under'
                         ,name:'lugarlaboral'
-                        ,allowBlank:false
+                        ,allowBlank:true
                     },{
                         xtype:'textfield'
                         ,id:'telefonolaboralId'
                         ,fieldLabel:'Teléfono Laboral'
                         ,msgTarget:'under'
+                        ,allowBlank:true
                         ,name:'telefonolaboral'
                     },{
                         xtype:'textfield'
@@ -588,18 +591,21 @@ Ext.onReady(function(){
                         ,fieldLabel:'Calle'
                         ,msgTarget:'under'
                         ,name:'callelaboral'
+                        ,allowBlank:true
                     },{
                         xtype:'textfield'
                         ,id:'numerocallelaboralId'
                         ,fieldLabel:'Número'
                         ,msgTarget:'under'
                         ,name:'numerocallelaboral'
+                        ,allowBlank:true
                     },{
                         xtype:'textfield'
                         ,id:'barriolaboralId'
                         ,fieldLabel:'Barrio Laboral'
                         ,msgTarget:'under'
                         ,name:'barriolaboral'
+                        ,allowBlank:true
                     },{
                         xtype:'combo',
                         id:'paislaboralId',
@@ -607,7 +613,7 @@ Ext.onReady(function(){
                         valueField:'id',
                         hiddenName:'paislaboral_id',
                         displayField:'descripcion',
-                        allowBlank:false,
+                        allowBlank:true,
                         msgTarget:'under',
                         store:paisesStore,
                         mode:'local',
@@ -632,7 +638,7 @@ Ext.onReady(function(){
                         valueField:'id',
                         hiddenName:'provincialaboral_id',
                         displayField:'descripcion',
-                        allowBlank:false,
+                        allowBlank:true,
                         msgTarget:'under',
                         store:provinciaStore,
                         mode:'local',
@@ -656,7 +662,7 @@ Ext.onReady(function(){
                         valueField:'id',
                         hiddenName:'localidadlaboral_id',
                         displayField:'descripcion',
-                        allowBlank:false,
+                        allowBlank:true,
                         msgTarget:'under',
                         store:localidadStore,
                         mode:'local',
@@ -684,7 +690,7 @@ Ext.onReady(function(){
                         ,msgTarget:'under'
                         ,layout:'form'
                         ,name:'apellidonombretutor'
-                        ,allowBlank:false
+                        ,allowBlank:true
                     },{
                         xtype:'textfield'
                         ,id:'profesiontutorId'
@@ -692,7 +698,7 @@ Ext.onReady(function(){
                         ,msgTarget:'under'
                         ,layout:'form'
                         ,name:'profesiontutor'
-                        ,allowBlank:false
+                        ,allowBlank:true
                     },{
                         xtype:'textfield'
                         ,id:'parentescotutorId'
@@ -700,7 +706,7 @@ Ext.onReady(function(){
                         ,msgTarget:'under'
                         ,layout:'form'
                         ,name:'parentescotutor'
-                        ,allowBlank:false
+                        ,allowBlank:true
                     },{
                         xtype:'textfield'
                         ,id:'telefonotutorId'
@@ -708,7 +714,7 @@ Ext.onReady(function(){
                         ,msgTarget:'under'
                         ,layout:'form'
                         ,name:'telefonotutor'
-                        ,allowBlank:false
+                        ,allowBlank:true
                     },{
                         xtype:'textfield'
                         ,id:'calletutorId'
@@ -716,7 +722,7 @@ Ext.onReady(function(){
                         ,msgTarget:'under'
                         ,layout:'form'
                         ,name:'calletutor'
-                        ,allowBlank:false
+                        ,allowBlank:true
                     },{
                         xtype:'textfield'
                         ,id:'numerocalletutorId'
@@ -724,7 +730,7 @@ Ext.onReady(function(){
                         ,msgTarget:'under'
                         ,layout:'form'
                         ,name:'numerocalletutor'
-                        ,allowBlank:false
+                        ,allowBlank:true
                     },{
                         xtype:'textfield'
                         ,id:'barriotutorId'
@@ -732,7 +738,7 @@ Ext.onReady(function(){
                         ,msgTarget:'under'
                         ,layout:'form'
                         ,name:'barriotutor'
-                        ,allowBlank:false
+                        ,allowBlank:true
                     },{
                         xtype:'combo',
                         id:'paistutorId',
@@ -740,7 +746,7 @@ Ext.onReady(function(){
                         valueField:'id',
                         hiddenName:'paistutor_id',
                         displayField:'descripcion',
-                        allowBlank:false,
+                        allowBlank:true,
                         msgTarget:'under',
                         store:paisesStore,
                         mode:'local',
@@ -765,7 +771,7 @@ Ext.onReady(function(){
                         valueField:'id',
                         hiddenName:'provinciatutor_id',
                         displayField:'descripcion',
-                        allowBlank:false,
+                        allowBlank:true,
                         msgTarget:'under',
                         store:provinciaStore,
                         mode:'local',
@@ -788,7 +794,7 @@ Ext.onReady(function(){
                         valueField:'id',
                         hiddenName:'localidadtutor_id',
                         displayField:'descripcion',
-                        allowBlank:false,
+                        allowBlank:true,
                         msgTarget:'under',
                         store:localidadStore,
                         mode:'local',
@@ -813,7 +819,7 @@ Ext.onReady(function(){
                         ,msgTarget:'under'
                         ,layout:'form'
                         ,name:'apellidonombregarante'
-                        ,allowBlank:false
+                        ,allowBlank:true
                     },{
                         xtype:'textfield'
                         ,id:'profesiongaranteId'
@@ -821,7 +827,7 @@ Ext.onReady(function(){
                         ,msgTarget:'under'
                         ,layout:'form'
                         ,name:'profesiongarante'
-                        ,allowBlank:false
+                        ,allowBlank:true
                     },{
                         xtype:'textfield'
                         ,id:'parentescogaranteId'
@@ -829,7 +835,7 @@ Ext.onReady(function(){
                         ,msgTarget:'under'
                         ,layout:'form'
                         ,name:'parentescogarante'
-                        ,allowBlank:false
+                        ,allowBlank:true
                     },{
                         xtype:'textfield'
                         ,id:'telefonogaranteId'
@@ -837,7 +843,7 @@ Ext.onReady(function(){
                         ,msgTarget:'under'
                         ,layout:'form'
                         ,name:'telefonogarante'
-                        ,allowBlank:false
+                        ,allowBlank:true
                     },{
                         xtype:'textfield'
                         ,id:'callegaranteId'
@@ -845,7 +851,7 @@ Ext.onReady(function(){
                         ,msgTarget:'under'
                         ,layout:'form'
                         ,name:'callegarante'
-                        ,allowBlank:false
+                        ,allowBlank:true
                     },{
                         xtype:'textfield'
                         ,id:'numerocallegaranteId'
@@ -853,7 +859,7 @@ Ext.onReady(function(){
                         ,msgTarget:'under'
                         ,layout:'form'
                         ,name:'numerocallegarante'
-                        ,allowBlank:false
+                        ,allowBlank:true
                     },{
                         xtype:'textfield'
                         ,id:'barriogaranteId'
@@ -861,7 +867,7 @@ Ext.onReady(function(){
                         ,msgTarget:'under'
                         ,layout:'form'
                         ,name:'barriogarante'
-                        ,allowBlank:false
+                        ,allowBlank:true
                     },{
                         xtype:'combo',
                         id:'paisgaranteId',
@@ -869,7 +875,7 @@ Ext.onReady(function(){
                         valueField:'id',
                         hiddenName:'paisgarante_id',
                         displayField:'descripcion',
-                        allowBlank:false,
+                        allowBlank:true,
                         msgTarget:'under',
                         store:paisesStore,
                         mode:'local',
@@ -894,7 +900,7 @@ Ext.onReady(function(){
                         valueField:'id',
                         hiddenName:'provinciagarante_id',
                         displayField:'descripcion',
-                        allowBlank:false,
+                        allowBlank:true,
                         msgTarget:'under',
                         store:provinciaStore,
                         mode:'local',
@@ -917,7 +923,7 @@ Ext.onReady(function(){
                         valueField:'id',
                         hiddenName:'localidadgarante_id',
                         displayField:'descripcion',
-                        allowBlank:false,
+                        allowBlank:true,
                         msgTarget:'under',
                         store:localidadStore,
                         mode:'local',

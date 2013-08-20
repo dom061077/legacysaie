@@ -3,6 +3,8 @@
 <html>
 <head>
   <meta name="layout" content="main">
+    <script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
+
   <script src="${resource(dir:"js/alumno",file:"confirm.js")+'?id'+randomlink}"></script>
   <title>Confirmación de la Preinscripción</title>
   <script type="text/javascript">
@@ -18,5 +20,9 @@
 </head>
 <body>
   <div id="formId"></div>
+<recaptcha:ifEnabled>
+    <recaptcha:recaptchaAjax lang="es"  theme="blackglass"/>
+</recaptcha:ifEnabled>
+
 </body>
 </html>

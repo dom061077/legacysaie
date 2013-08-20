@@ -54,7 +54,7 @@ Ext.onReady(function(){
         ,title:'Confirmación de Preinscripción'
         ,style: 'margin:0 auto;margin-top:100px;'
         ,renderTo:'formId'
-        ,height:450
+        ,height:600
         ,id:'formconfirmId'
         ,width:520
         ,labelWidth:140
@@ -157,7 +157,24 @@ Ext.onReady(function(){
                 loadMask:true,
                 title:'Materias a Inscribir'
 
-            })
+            }),{
+                xtype:'panel',
+                itemId:'reCaptcha',
+                border:false,
+                listeners:{
+                    afterRender:function(){
+                        Recaptcha.create("6LfTZcwSAAAAAISkWiE7aqtH3xa7vdmu7GL9O7bm",
+                            Ext.getDom(this.body),
+                            {
+                                theme: "clean",
+                                callback: Recaptcha.focus_response_field
+                            }
+                        );
+                    }
+                }
+
+            }
+
         ],buttons:[
             {
                 text:'Confirmar'
@@ -170,10 +187,11 @@ Ext.onReady(function(){
                         formpreinsc.getForm().submit({
                             success: function(f,a){
                                 loadMask.hide();
+                                var mensaje = a.result.msg;
                                 Ext.Msg.show({
                                     title:'Mensaje'
                                     ,icon:Ext.MessageBox.INFO
-                                    ,msg:a.result.mensaje
+                                    ,msg:mensaje
                                     ,buttons:Ext.MessageBox.OK
                                     ,fn:function(btn){
                                         window.location=homeUrl
@@ -182,7 +200,7 @@ Ext.onReady(function(){
                             },
                             failure: function(f,a){
                                 loadMask.hide()
-                                var mensaje = a.result.msg+'<br><br>';
+                                var mensaje = a.result. msg+'<br><br>';
                                 for(var i=0;i<a.result.errors.length;i++){
                                     mensaje = mensaje +'- '+a.result.errors[i].msg+'<br>';
                                 }
@@ -193,7 +211,7 @@ Ext.onReady(function(){
                                     ,msg: mensaje,
                                     buttons: Ext.MessageBox.OK,
                                     fn: function(btn){
-
+                                        Recaptcha.reload();
                                     }
 
                                 });
@@ -214,9 +232,18 @@ Ext.onReady(function(){
    Ext.getCmp('formconfirmId').getForm().load({
        url:loadUrl
        ,success:function(f,a){
-
         }
        ,failure:function(f,a){
+           Ext.Msg.show({
+               title:'Mensaje'
+               ,icon:Ext.MessageBox.ERROR
+               ,msg:a.result.mensaje
+               ,buttons:Ext.MessageBox.OK
+               ,fn:function(btn){
+                    Ext.getCmp('formconfirmId').disable();
+                    window.location=homeUrl;
+               }
+           });
 
        }
    });
