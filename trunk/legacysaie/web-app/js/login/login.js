@@ -48,7 +48,7 @@ Ext.onReady(function(){
                 id:'cancelbuttonId',
                 text:'Salir',
                 handler: function(){
-
+                    window.location = homeUrl;
                 }
             }
         ]

@@ -978,7 +978,7 @@ Ext.onReady(function(){
     });
 
     wizard.on('cancel',function(wizard){
-        window.location='../';
+        window.location=homeUrl;
     });
     wizard.on('finish',function(wiz,datos){
         var conn = new Ext.data.Connection();
@@ -1037,11 +1037,13 @@ Ext.onReady(function(){
                         icon:Ext.MessageBox.INFO,
                         msg: mensaje,
                         buttons: Ext.MessageBox.OK,
-                        fn: function(btn){}
+                        fn: function(btn){
+                            window.location = homeUrl
+                        }
                     });
 
                 }
-                ('recaptcha_reload_btn')
+                //('recaptcha_reload_btn')
             }
         });
     });
