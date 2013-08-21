@@ -24,7 +24,19 @@ Ext.onReady(function(){
                 xtype : 'textfield',
                 id : 'usernameId',
                 name:'j_username',
-                fieldLabel:'Usuario'
+                fieldLabel:'Usuario',
+                //enableKeyEvents:true,
+                listeners        : {
+                    /*focus : function(tb, e) {
+                        Ext.QuickTips.register({
+                            target: Ext.getCmp('usernameId'),
+                            title: 'QT Title',
+                            text: 'QT Text'
+                        });
+                    },*/
+                    //keydown:function(componente,e){
+                    //}
+                }
             },{
                 xtype: 'textfield',
                 inputType: 'password',
@@ -54,4 +66,17 @@ Ext.onReady(function(){
         ]
     });
     Ext.getCmp('usernameId').focus();
+
+
+    /*toolTip = new Ext.ToolTip({
+        anchor: 'bottom',
+        anchorToTarget: false,
+        targetXY: [Ext.getCmp('usernameId').pageX, Ext.getCmp('usernameId').pageY],
+        title: 'Tip',
+        html: 'Hello world',
+        hideDelay: 15000,
+        closable: true
+    });
+    toolTip.show();*/
+
 });

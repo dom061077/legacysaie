@@ -258,7 +258,7 @@ Ext.onReady(function(){
                 stripeRows:true,
                 store:storelistadoinscdet,
                 columns: [
-                    {header: "id",dataIndex:'id',hidden:true},
+                    {header: "id",dataIndex:'id',hidden:false},
                     {header: "Materia",width:200,sortable:false,dataIndex:'denominacion'},
                     {header: "Nivel",width:100,sortable:false,dataIndex:"nivel"},
                     {header: "Estado",width:100,sortable:false,dataIndex:"estado"},
@@ -789,7 +789,8 @@ Ext.onReady(function(){
                                                                 autoLoad:false
                                                             }),
                                                             columns: [
-                                                                {header: "id",dataIndex:'id',hidden:true},
+                                                                {header: "id",dataIndex:'id',hidden:true
+                                                                },
                                                                 {header: "Denominación",width:200,sortable:false,dataIndex:'denominacion'},
                                                                 {header: "Nivel",width:100,sortable:false,dataIndex:"nivel"},
                                                                 {
@@ -1166,10 +1167,14 @@ Ext.onReady(function(){
                                                               store:storelistadoinscripciones,
                                                               columns: [
                                                                   nestedRowGrid,
-                                                                  {header: "id",dataIndex:'id',hidden:true},
                                                                   {header: "Carrera",width:200,sortable:false,dataIndex:'carrera'},
                                                                   {header: "Año",width:150,sortable:false,dataIndex:"aniolectivo"},
-                                                                  {header: "Fecha",width:100,sortable:true,dataIndex:"fecha",renderer: Ext.util.Format.dateRenderer('d/m/y')}
+                                                                  {header: "Fecha",width:100,sortable:true,dataIndex:"fecha",renderer: Ext.util.Format.dateRenderer('d/m/y')},
+                                                                  {header: "Comprobante",dataIndex:'id',hidden:false
+                                                                      ,renderer: function (val, meta, record) {
+                                                                            return '<a href="' + record.data.id + '"><img src="'+alumnoimageUrl+'"></a>';
+                                                                        }
+                                                                  }
                                                               ],
                                                               stripeRows: true,
                                                               height:350,
