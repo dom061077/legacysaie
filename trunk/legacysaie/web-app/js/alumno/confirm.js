@@ -54,7 +54,7 @@ Ext.onReady(function(){
         ,title:'Confirmación de Preinscripción'
         ,style: 'margin:0 auto;margin-top:100px;'
         ,renderTo:'formId'
-        ,height:600
+        ,height:550
         ,id:'formconfirmId'
         ,width:520
         ,labelWidth:140

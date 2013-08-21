@@ -201,58 +201,18 @@ class AlumnoController {
             success=false
         }else{
             alumnoInstance = new Alumno(params)
-            if (!alumnoInstance.save(flush: true)) {
-
-                success=false
-                mensaje = 'Error en el registro de datos'
-                alumnoInstance.errors.allErrors.each{
-                    errorList << [msg:messageSource.getMessage(it, LCH.locale)]
-                }
-            }else{
-                /*def carrerasanios = CarreraAnioLectivo.createCriteria().list{
-                    eq("id.carrera.id",params.carreraId)
-                    eq("id.anioLectivo.id",params.anioLectivoId.toString().toInteger())
-                }
-                def carreraAnioLectivoInstance = carrerasanios.get(0)
-
-                def cantMatriculas = Matricula.createCriteria().count{
-                    carrera{
-                        eq("id",params.carrera_id)
-                    }
-                    anioLectivo{
-                        eq("id",params.aniolectivo)
-                    }
-                    eq("ingresante",Short.valueOf("1"))
-                }
-                if (carreraAnioLectivoInstance.cupo+carreraAnioLectivoInstance.cupoSuplente<cantMatriculas+1){
+            log.debug "Datos del alumno, id: ${alumnoInstance.id}, apellido: ${alumnoInstance.apellido}, nombre: ${alumnoInstance.nombre}"
+            log.debug "EMAIL: ${alumnoInstance.email}"
+            Alumno.withTransaction {TransactionStatus status->
+                alumnoInstance.registerconfirm = springSecurityService.encodePassword(alumnoInstance.id.toString()+alumnoInstance.numeroDocumento)
+                if (!alumnoInstance.save(flush: true)) {
                     status.setRollbackOnly()
-                    success = false
+                    success=false
                     mensaje = 'Error en el registro de datos'
-                    errorList << [msg: "No hay cupo disponible para la carrera"]
-                }else{
-                    def anioLectivoInstance = AnioLectivo.load(params.aniolectivo.toString().toInteger())
-                    def carreraInstance = Carrera.load(params.carrera)
-                    def matriculaInstance = new Matricula(anioLectivo: anioLectivoInstance,carrera:carreraInstance,alumno: alumnoInstance)
-                    matriculaInstance.estado = EstadoMatriculaEnum.I
-                    if (cantMatriculas+1 > carreraAnioLectivoInstance.cupo)
-                        matriculaInstance.suplente = 1
-                    else
-                        matriculaInstance.suplente = 0
-                    if (!matriculaInstance.save(flush: true)){
-                        status.setRollbackOnly()
-                        success=false
-                        mensaje = 'Error en el registro de datos'
-                        matriculaInstance.errors.allErrors.each{
-                            errorList << [msg:messageSource.getMessage(it, LCH.locale)]
-                        }
+                    alumnoInstance.errors.allErrors.each{
+                        errorList << [msg:messageSource.getMessage(it, LCH.locale)]
                     }
-                }*/
-                //alumnoInstance.
-                log.debug "Datos del alumno, id: ${alumnoInstance.id}, apellido: ${alumnoInstance.apellido}, nombre: ${alumnoInstance.nombre}"
-                log.debug "EMAIL: ${alumnoInstance.email}"
-                Alumno.withTransaction {TransactionStatus status->
-                    alumnoInstance.registerconfirm = springSecurityService.encodePassword(alumnoInstance.id.toString()+alumnoInstance.numeroDocumento)
-                    alumnoInstance.save(flush: true)
+                }else{
                     String emailContent = """
                         Usted se ha registrado en la base de datos del colegio Cruz Roja con Nro de Documento: ${alumnoInstance.numeroDocumento}, apellido:<h1> ${alumnoInstance.apellido}, nombre: ${alumnoInstance.nombre}</h1>.<br>
                         Para continuar con la inscripción haga click en el siguiente link: <br>
@@ -266,18 +226,12 @@ class AlumnoController {
                             html emailContent
                         }
                         mensaje = 'Los datos se guardaron correctamente. <br> Revise el correo electrónico que ingresó y siga los pasos indicados alli para completar la preinscripción <br> Si no recibe ningún correo dirijase al colegio'
-                    }catch(javax.mail.AuthenticationFailedException e){
-                        status.rollbackOnly()
+                    }catch(Exception e){
+                        status.setRollbackOnly()
                         success = false
                         mensaje = 'Error al enviar el E-mail. El servicio de correo no está funcionando correctamente'
-                    }catch(com.sun.mail.smtp.SMTPAddressFailedException e){
-                        status.rollbackOnly()
-                        success = false
-                        mensaje = 'Error al enviar el E-mail. La dirección de correo electrónico ingresada ( ${alumnoInstance.email} ) no es válida'
                     }
                 }
-
-                
             }
         }
         recaptchaService.cleanUp(session)
@@ -592,19 +546,15 @@ class AlumnoController {
                                                             subject "Respuesta de Colegio Cruz Roja"
                                                             html emailContent
                                                         }
-                                                        mensaje = 'Los datos se guardaron correctamente'
-                                                    }catch(javax.mail.AuthenticationFailedException e){
-                                                        status.rollbackOnly()
+                                                        mensaje = 'La preinscripción se confirmó correctamente.<br>Revise su correo electrónico para obtener el comprobante de preinscripción';
+                                                    }catch(Exception e){
+                                                        status.setRollbackOnly()
                                                         success = false
-                                                        mensaje = 'Error al enviar el E-mail. El servicio de correo no está funcionando correctamente'
-                                                    }catch(com.sun.mail.smtp.SMTPAddressFailedException e){
-                                                        status.rollbackOnly()
-                                                        success = false
-                                                        mensaje = 'Error al enviar el E-mail. La dirección de correo electrónico ingresada ( ${alumnoInstance.email} ) no es válida'
+                                                        mensaje = 'Error al enviar el E-mail. La preinscripción no pudo confirmarse'
                                                     }
 
                                                 }
-                                                mensaje = 'La preinscripción se confirmó correctamente.<br>Revise su correo electrónico para obtener su comprobante de preinscripción';
+
                                             }
                                         }
                                     }
@@ -657,6 +607,8 @@ class AlumnoController {
         params.put("_format","PDF")
         params.put("_file","comprobantematricula")
         params.put("_name","comprobantematricula")
+        params.put("tipoinscripcion_param","Solicita Matriculación en las siguientes materias de la carrera")
+        params.put("titulo","PREINSCRIPCION "+inscripcionInstance.matricula.anioLectivo.anio)
         def list = new ArrayList()
         list.add(inscripcionInstance)
         chain(controller:'jasper',action:'index',model:[data:list],params:params)

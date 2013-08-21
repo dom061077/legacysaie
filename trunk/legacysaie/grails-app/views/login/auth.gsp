@@ -7,9 +7,6 @@
         var homeUrl = '${createLink(uri:'/panelControl')}';
     </script>
     <script type="text/javascript" src="${resource(dir:'js/login',file:'login.js')}"></script>
-    <script type="text/javascript">
-        var homeUrl = '';
-    </script>
 </head>
 
 <body>
