@@ -614,4 +614,37 @@ class AlumnoController {
         chain(controller:'jasper',action:'index',model:[data:list],params:params)
 
     }
+
+    def comprobanteinsc(){
+        def inscripcionInstance = Inscripcion.get(params.id)
+        inscripcionInstance?.matricula?.anioLectivo.descripcion
+        inscripcionInstance?.matricula?.alumno?.apellido
+        inscripcionInstance?.matricula?.carrera?.denominacion
+        def list = new ArrayList()
+        list.add(inscripcionInstance)
+        params.put("_format","PDF")
+        params.put("_file","comprobantematricula")
+        params.put("_name","comprobante")
+        def tipoInscripcion_param
+        def titulo
+        inscripcionInstance.detalle.each {
+            if(it.tipoInscripcion.equals(TipoInscripcionDetalleEnum.C)){
+                tipoInscripcion_param = "Solicita Inscripción para Cursar en las siguientes materias de la carrera "
+                titulo = "Inscripción de Cursado"
+            }
+            if(it.tipoInscripcion.equals(TipoInscripcionDetalleEnum.R)){
+                tipoInscripcion_param = "Solicita Inscripción para Rendir en las siguientes materias de la carrera "
+                titulo = "Inscripción para Rendir Final"
+            }
+            if(it.tipoInscripcion.equals(TipoInscripcionDetalleEnum.L)){
+                tipoInscripcion_param = "Solicita Inscripción para Rendir Libre en las siguientes materias de la carrera "
+                titulo = "Inscripción para Rendir Libre"
+            }
+            it.materia.denominacion
+
+        }
+        params.put("tipoinscripcion_param",tipoInscripcion_param)
+        params.put("titulo",titulo)
+        chain(controller:'jasper',action:'index',model:[data:list],params:params)
+    }
 }
