@@ -80,7 +80,8 @@
         var provinciaUrl = '${createLink(uri:'/location/provinciasjson')}';
         var localidadUrl = '${createLink(uri:'/location/localidadesjson')}';
         var savealumnoUrl = '${createLink(uri:'/alumno/updatejsonpc')}';
-        var pdf = '}';
+        var pdfUrl = '${resource(dir:'/images',file:'pdf.png')}';
+        var comprobanteUrl = '${createLink(uri:'/alumno/comprobanteinsc')}';
     </script>
     <script type="text/javascript" src="${resource(dir:"js/paneldecontrol",file:"paneldecontrol.js")+'?id='+randomlink}"></script>
     <title>Panel de control</title>

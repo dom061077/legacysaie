@@ -134,7 +134,7 @@ Ext.ux.GroupTabPanel = Ext.extend(Ext.TabPanel, {
 
     // private
     onStripMouseDown: function(e){
-        Ext.getBody().mask('Cargando');
+        //Ext.getBody().mask('Cargando');
         if (e.button != 0) {
             return;
         }
@@ -151,9 +151,9 @@ Ext.ux.GroupTabPanel = Ext.extend(Ext.TabPanel, {
                 t.item.ownerCt.setActiveTab(t.item);
             }
         }
-        setTimeout(function (target) {
-            Ext.getBody().unmask();
-        }, 1500,Ext.getBody());
+        //setTimeout(function (target) {
+        //    Ext.getBody().unmask();
+        //}, 1500,Ext.getBody());
 
 
     },

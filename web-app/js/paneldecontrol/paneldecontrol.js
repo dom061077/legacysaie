@@ -1172,7 +1172,7 @@ Ext.onReady(function(){
                                                                   {header: "Fecha",width:100,sortable:true,dataIndex:"fecha",renderer: Ext.util.Format.dateRenderer('d/m/y')},
                                                                   {header: "Comprobante",dataIndex:'id',hidden:false
                                                                       ,renderer: function (val, meta, record) {
-                                                                            return '<a href="' + record.data.id + '"><img src="'+alumnoimageUrl+'"></a>';
+                                                                            return '<a target="_blank"  href="'+comprobanteUrl+'/?id='+record.data.id+'"><img style="margin-left:15px " src="'+pdfUrl+'"></a>';
                                                                         }
                                                                   }
                                                               ],

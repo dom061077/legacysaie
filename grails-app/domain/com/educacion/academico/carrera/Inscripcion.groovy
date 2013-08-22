@@ -35,6 +35,7 @@ class Inscripcion {
 
 
 
+
     static transients = ['detalle1','detalle2']
 
     static hasMany = [detalle:InscripcionDetalle]

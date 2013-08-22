@@ -5,8 +5,10 @@
  * http://www.sencha.com/license
  */
 .x-grouptabs-panel {
-    background-color: #b9baa0;
-    border: solid 15px #4E78B1;
+    background-color: #cbcfcc;
+    /*border: solid 15px #4E78B1;*/
+    border: solid 15px #DDDDDD;
+
 }
 .x-tab-panel-left .x-grouptabs-panel-header,
 .x-tab-panel-right .x-grouptabs-panel-header {
@@ -69,7 +71,7 @@
     overflow: hidden;
     white-space: nowrap;
 	display: block;
-    color: #DFE8F6;
+    color: #2c2e30;
     font-family: tahoma, arial, sans-serif;
     font-weight: bold;
     text-decoration: none;
@@ -79,7 +81,8 @@
 }
 
 .x-grouptabs-panel .x-grouptabs-strip-active a.x-grouptabs-text {
-    color: #395B8E;
+    color: #f7432b;
+
 }
 
 .x-grouptabs-panel ul.x-grouptabs-sub a.x-grouptabs-text {
@@ -131,7 +134,7 @@
 
 /* Tab corners */
 .x-grouptabs-panel .x-grouptabs-corner {
-    background-image: url('../../resources/images/x-grouptabs-corners.gif');
+    /*background-image: url('../../resources/images/x-grouptabs-corners.gif');*/
     display: none;
     width: 11px;
     height: 11px;
