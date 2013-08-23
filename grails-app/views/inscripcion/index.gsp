@@ -12,7 +12,7 @@
   <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"Portal.js")}"></script>
   <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"PortalColumn.js")}"></script>
   <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"Portlet.js")}"></script>
-  <script type="text/javascript" src="${resource(dir:"js/inscripcion",file:"inscripcion.js")}"></script>
+  <script type="text/javascript" src="${resource(dir:"js/inscripcion",file:"examen.js")}"></script>
   <title></title>
 
 </head>
