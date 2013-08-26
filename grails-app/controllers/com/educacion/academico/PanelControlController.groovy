@@ -17,7 +17,8 @@ class PanelControlController {
     def index() {
         Random randomLink = new Random()
         def userInstance = springSecurityService.currentUser
-        [userInstance:userInstance,randomlink: randomLink.nextInt(100000)]
+        def docenteInstance = userInstance.docente
+        [docenteInstance:docenteInstance,randomlink: randomLink.nextInt(100000)]
     }
 
     

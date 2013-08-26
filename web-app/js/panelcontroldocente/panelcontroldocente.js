@@ -1,6 +1,66 @@
 Ext.onReady(function(){
+        Ext.QuickTips.init();
+        function processRowExpander(record, body, rowIndex){
+                if(Ext.DomQuery.select("div.x-panel-bwrap",body).length==0){
+                    var innerRowDiv=Ext.DomQuery.select("div.detailData",body)[0];
+                    var nestedGrid = new Ext.grid.GridPanel({
+                        id:'griddetalleexamenId',
+                        stripeRows:true,
+                        store:storeplanillaexamen,
+                        columns: [
+                            {header: "id",dataIndex:'id',hidden:false},
+                            {header: "Alumno",width:200,sortable:false,dataIndex:'nombrealumno'},
+                            {header: "Nota", width:80,dataIndex:"nota",align:'right',renderer: Ext.util.Format.numberRenderer('00,00/i')}
+                        ],
+                        stripeRows: true,
+                        height:250,
+                        width:500,
+                        loadMask:true,
+                        title:'Planilla de Alumnos',
+                        iconCls: 'icon-grid',
+                        listeners:{
+                        },
+                        renderTo: innerRowDiv,
+                        listeners: {
+                            cellclick: function(grid,rowIndex, columnIndex,e){
+                                e.stopEvent();
+                            },
+                            headerclick:function(grid,columnIndex,e){
+                                e.stopEvent();
+                            }
+                        }
+                    });
+                    storeplanillaexamen.load({
+                        params:{
+                            cargaexamen_id:record.data.id
+                        }
+                    });
 
-        var viewport = new Ext.Viewport({
+                }
+        }
+
+        var nestedRowGrid = new Ext.grid.RowExpander({
+            tpl: new Ext.XTemplate('<div class="detailData">','','</div>'),
+            listeners:
+            {
+                expand:function(ex,record,body,rowIndex){
+                    processRowExpander(record,body,rowIndex);
+                },
+                collapse : function(ex,record,body,rowIndex){
+
+                }
+            }
+        });
+
+
+
+        var viewport = new Ext.Viewport(
+            /*{
+              id:'logopanelId'
+              ,layout:'fit'
+              ,autoEl:{tag:'img',src:logoUrl,width:100,height:100}
+            }, */
+            {
             layout:'fit',
             items:[
                 {
@@ -8,18 +68,17 @@ Ext.onReady(function(){
                     tabWidth: 200,
                     activeGroup: 0,
                     items: [
-
                         {
                             expanded:true,
                             items:[
                                 {
-                                    title:'Docente: Medina',
+                                    title:docente,
                                     iconCls: 'x-icon-templates',
                                     tabTip: 'Templates tabtip',
                                     style: 'padding: 10px;'//,
                                     ,items:[
 
-                                ]
+                                    ]
                                 },{
                                     title:'Cerrar Sesión',
                                     iconCls: 'x-icon-close-session',
@@ -39,7 +98,7 @@ Ext.onReady(function(){
                             mainItem: 1,
                             items: [
                                 {
-                                    title: 'Exámenes',
+                                    title: 'Fecha de Exámenes',
                                     layout: 'fit',
                                     iconCls: 'x-icon-insc-final',
                                     tabTip: 'Registrar Inscripción en examen final',
@@ -55,10 +114,10 @@ Ext.onReady(function(){
                                     ]
                                 },{
                                     xtype: 'portal',
-                                    title: 'Inscripciones',
-                                    tabTip: 'Inscripciones'
+                                    title: 'Exámenes',
+                                    tabTip: 'Fechas de Exámenes Exámenes'
                                 }, {
-                                    title: 'Inscribirme en Cursado',
+                                    title: 'Carga de Notas',
                                     iconCls: 'x-icon-insc-regular',
                                     tabTip: 'Inscripciones para el cursado',
                                     style: 'padding: 10px;',
@@ -67,80 +126,47 @@ Ext.onReady(function(){
                                         xtype: 'panel',
                                         activeTab: 1,
                                         items:[
+                                            new Ext.grid.GridPanel({
+                                                id:'gridfechasdeexamenId',
+                                                stripeRows:true,
+                                                store:new Ext.data.JsonStore({
+                                                    root:'rows',
+                                                    url:storefechaexamen,
+                                                    fields:['id','carrera','aniolectivo','materia','nivel']
+                                                    ,autoLoad:true
+                                                }),
+                                                columns: [
+                                                    nestedRowGrid,
+                                                    {header: "Id",width:200,sortable:false,dataIndex:'cargaexamen'},
+                                                    {header: "Carrera",width:200,sortable:false,dataIndex:'carrera'},
+                                                    {header: "Año Lectivo",width:150,sortable:false,dataIndex:"aniolectivo"},
+                                                    {header: "Materia",width:150,sortable:false,dataIndex:"materia"},
+                                                    {header: "Nivel",width:150,sortable:false,dataIndex:"nivel"}
+                                                    //,{header: "Fecha Examen",width:100,sortable:true,dataIndex:"fechaexamen",renderer: Ext.util.Format.dateRenderer('d/m/y')}
+                                                ],
+                                                stripeRows: true,
+                                                height:350,
+                                                width:600,
+                                                loadMask:true,
+                                                /*bbar: new Ext.PagingToolbar({
+                                                    pageSize: 10,
+                                                    store: storefechaexamen,
+                                                    displayInfo:true,
+                                                    displayMsg: 'Visualizando registros {0} - {1} de {2}',
+                                                    emptyMsg: 'No hay registros para visualizar'
+                                                }),*/
+                                                plugins:nestedRowGrid,
+                                                iconCls: 'icon-grid',
+                                                listeners:{
+                                                }
+                                            })
                                         ]
                                     }]
-                                }, {
-                                    title: 'Listado de Inscripciones',
-                                    iconCls: 'x-icon-insc-listado',
-                                    tabTip: 'Lista todas tus inscripciones',
-                                    style: 'padding: 10px;',
-                                    layout:'fit',
-                                    items:[
-                                        {
-                                            xtype:'panel',
-                                            items:[
-
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        }, {
-                            expanded: true,
-                            items: [
-
-                                {
-                                    title: 'Mis Cuotas',
-                                    layout:'fit',
-                                    iconCls: 'x-icon-configuration',
-                                    tabTip: 'Configuration tabtip',
-                                    style: 'padding: 10px;',//,
-                                    items:[
-                                    ]
-                                }, {
-                                    title: 'Impresión de Recibos',
-                                    iconCls: 'x-icon-impresion-recibos',
-                                    tabTip: 'Impresión de Recibo Rapipago',
-                                    style: 'padding: 10px;'//,
-                                    //html: Ext.example.shortBogusMarkup
-                                }, {
-                                    title: 'Estado de Deudas',
-                                    iconCls: 'x-icon-listado-deudas',
-                                    tabTip: 'Listado de Deudas',
-                                    style: 'padding: 10px;'//,
-                                    //html: Ext.example.shortBogusMarkup
-                                }
-                            ]
-                        },{
-                            expanded:true,
-                            items:[
-                                {
-                                    title:'Mi Estado Académico',
-                                    iconCls:'',
-                                    tabTip:'Detalle sobre mi estado academico',
-                                    style: 'padding: 10px;'//,
-                                },{
-                                    title:'Materias Aprobadas',
-                                    iconCls: 'x-icon-materias-aprobadas',
-                                    tabTip:'Finales Aprobados',
-                                    style: 'padding: 10px;',
-                                    items:[
-
-                                    ]
-                                },{
-                                    title:'Materias Regulares',
-                                    iconCls: 'x-icon-materias-regulares',
-                                    tabTip:'Cursado Regular',
-                                    style: 'padding: 10px;',
-                                    //------------------------------
-                                    items:[
-
-                                    ]
-
-
                                 }
                             ]
                         }
+
+
                     ]
                 }
             ]

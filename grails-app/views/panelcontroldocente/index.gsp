@@ -26,8 +26,13 @@
         float: left;
     }
     </style>
+    <script type="text/javascript">
+        var docente = '${docenteInstance.apellido+', '+docenteInstance.nombre}';
+        var logoUrl = '${resource(dir:'reports/images',file:'imagecomprobante.png')}';
+        var storefechaexamen = '${createLink(uri:'/panelControlDocente/fechasexamen')+"/"+docenteInstance.id}';
+    </script>
 
-    <title></title>
+    <title>Panel de control de Docente</title>
 </head>
 <body>
 <div id="dummydiv"></div>
