@@ -1,6 +1,7 @@
 package com.educacion.seguridad
 
 import com.educacion.alumno.Alumno
+import com.educacion.academico.Docente
 
 class User {
 
@@ -13,17 +14,20 @@ class User {
 	boolean accountLocked
 	boolean passwordExpired
     Alumno alumno
-    
+    Docente docente
+
 
 	static constraints = {
 		username blank: false, unique: true
 		password blank: false
-        alumno blank:false, nullable: false
+        alumno blank:true, nullable: true
+        docente blank: true,nullable: true
 	}
 
 	static mapping = {
 		password column: '`password`'
         alumno column: 'alumno',lazy: false
+        docente column: 'docente',lazy: false
 
 	}
 

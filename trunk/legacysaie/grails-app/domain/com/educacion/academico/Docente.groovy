@@ -29,7 +29,7 @@ class Docente {
     static mapping ={
         table 'docentes'
         version false
-        id columns:'docentes'
+        id column:'docente'
         numeroDomicilio column:'numerodomicilio'
         codigoPostal column: 'codigoPostal'
         fechaNacimiento column : 'fechanacimiento'

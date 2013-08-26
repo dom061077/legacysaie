@@ -3,6 +3,7 @@ import com.educacion.seguridad.User
 import com.educacion.seguridad.RequestMap
 import com.educacion.seguridad.UserRole
 import com.educacion.alumno.Alumno
+import com.educacion.academico.Docente
 
 class BootStrap {
 
@@ -15,10 +16,27 @@ class BootStrap {
 
     void createUsers(){
         def alumnoInstance = Alumno.get(12)
+        def docenteInstance = Docente.get(2)
+        def userDocente = User.findByUsername('userdocente')
+        if(!userDocente){
+            def docenteRole = new Role(authority: 'ROLE_DOCENTE').save(failOnError: true)
+            userDocente = new User(username: 'userdocente',password: 'userdocente',enabled: true,docente: docenteInstance).save(failOnError: true)
+            if (!userDocente.authorities.contains(docenteRole)) {
+                UserRole.create(userDocente, docenteRole)
+            }
+        }
         def user = User.findByUsername('user')
         if(!user){
-            def adminRole = new Role(authority:'ADMIN').save()
+            if(docenteInstance)
+                log.debug("EXISTE EN DOCENTE")
+
+            def adminRole = new Role(authority:'ROLE_ALUMNO').save()
             user=new User(username:'user',password:'user',enabled:true,alumno: alumnoInstance).save(failOnError:true)
+
+            new RequestMap(url: '/panelControl/**', configAttribute:'ROLE_ALUMNO').save(failOnError: true)
+            new RequestMap(url: '/panelControlDocente/**',configAttribute:'ROLE_DOCENTE').save(failOnError: true)
+
+            
             new RequestMap(url: '/js/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
             new RequestMap(url: '/css/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
             new RequestMap(url: '/images/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
@@ -32,6 +50,8 @@ class BootStrap {
             new RequestMap(url: '/alumno/confirm/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
             new RequestMap(url: '/alumno/confirmproblem', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
             new RequestMap(url: '/alumno/loadconfirm/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
+            
+
 
             new RequestMap(url: '/carrera/cupocarrera', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
             new RequestMap(url: '/alumno/existenumdoc',configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(failOnError:true)
