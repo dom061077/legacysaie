@@ -12,7 +12,8 @@
     <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"PortalColumn.js")+'?id='+randomlink}"></script>
     <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"Portlet.js")+'?id='+randomlink}"></script>
     <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"RowExpander.js")}"></script>
-    <script type="text/javascript" src="${resource(dir:"js/panelcontroldocente",file:"panelcontroldocente.js")+'?id='+randomlink}"></script>
+    <%--script type="text/javascript" src="${resource(dir:"js/panelcontroldocente",file:"panelcontroldocente.js")+'?id='+randomlink}"></script --%>
+    <script type="text/javascript" src="${resource(dir:"js/panelcontroldocente",file:"panelcontroldocente.js")}"></script >
 
     <style type="text/css">
     .upload-icon {
@@ -28,8 +29,11 @@
     </style>
     <script type="text/javascript">
         var docente = '${docenteInstance.apellido+', '+docenteInstance.nombre}';
+        var docenteId = '${docenteInstance.id}';
         var logoUrl = '${resource(dir:'reports/images',file:'imagecomprobante.png')}';
-        var storefechaexamen = '${createLink(uri:'/panelControlDocente/fechasexamen')+"/"+docenteInstance.id}';
+        var storefechaexamen = '${createLink(uri:'/panelControlDocente/cargaexamenlist/')+docenteInstance.id}';
+        var docentemateriaUrl = '${createLink(uri:'/panelControlDocente/cargaexamenlist/')+docenteInstance.id}';
+        var aniolectivoUrl = '${createLink(uri:'/panelControlDocente/aniolectivonotas')}';
     </script>
 
     <title>Panel de control de Docente</title>

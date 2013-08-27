@@ -1,5 +1,21 @@
 Ext.onReady(function(){
         Ext.QuickTips.init();
+        var conn = new Ext.data.Connection();
+        var anios = [];
+        conn.request({
+            url:aniolectivoUrl
+            ,async:false
+            ,method:'POST'
+            ,success: function(resp,opt){
+                var respuesta=Ext.decode(resp.responseText);
+                $.each(respuesta.rows,function(key,value){
+                    anios.push([value.id,value.descripcion]);
+                });
+
+            }
+        });
+
+
         function processRowExpander(record, body, rowIndex){
                 if(Ext.DomQuery.select("div.x-panel-bwrap",body).length==0){
                     var innerRowDiv=Ext.DomQuery.select("div.detailData",body)[0];
@@ -126,40 +142,79 @@ Ext.onReady(function(){
                                         xtype: 'panel',
                                         activeTab: 1,
                                         items:[
-                                            new Ext.grid.GridPanel({
-                                                id:'gridfechasdeexamenId',
-                                                stripeRows:true,
-                                                store:new Ext.data.JsonStore({
-                                                    root:'rows',
-                                                    url:storefechaexamen,
-                                                    fields:['id','carrera','aniolectivo','materia','nivel']
-                                                    ,autoLoad:true
-                                                }),
-                                                columns: [
-                                                    nestedRowGrid,
-                                                    {header: "Id",width:200,sortable:false,dataIndex:'cargaexamen'},
-                                                    {header: "Carrera",width:200,sortable:false,dataIndex:'carrera'},
-                                                    {header: "Año Lectivo",width:150,sortable:false,dataIndex:"aniolectivo"},
-                                                    {header: "Materia",width:150,sortable:false,dataIndex:"materia"},
-                                                    {header: "Nivel",width:150,sortable:false,dataIndex:"nivel"}
-                                                    //,{header: "Fecha Examen",width:100,sortable:true,dataIndex:"fechaexamen",renderer: Ext.util.Format.dateRenderer('d/m/y')}
-                                                ],
-                                                stripeRows: true,
-                                                height:350,
-                                                width:600,
-                                                loadMask:true,
-                                                /*bbar: new Ext.PagingToolbar({
-                                                    pageSize: 10,
-                                                    store: storefechaexamen,
-                                                    displayInfo:true,
-                                                    displayMsg: 'Visualizando registros {0} - {1} de {2}',
-                                                    emptyMsg: 'No hay registros para visualizar'
-                                                }),*/
-                                                plugins:nestedRowGrid,
-                                                iconCls: 'icon-grid',
-                                                listeners:{
-                                                }
-                                            })
+                                            {
+                                                xtype:'form',
+                                                style: 'margin:0 auto;margin-top:100px;',
+                                                title:'Carga de Notas',
+                                                id:'formcargadenotasId',
+                                                frame:true,
+                                                width:650,
+                                                height:450,
+                                                items:[
+                                                        {
+                                                            xtype:'combo',
+                                                            fieldLabel:'Año Lectivo',
+                                                            id:'comboaniolectivonotasId',
+                                                            mode:'local',
+                                                            displayField:'descripcion',
+                                                            valueField:'id',
+                                                            hiddenName:'aniolectivo_id',
+                                                            store: new Ext.data.ArrayStore({
+                                                                fields:['id','descripcion']
+                                                                ,data:anios
+                                                            })
+                                                        },
+                                                        {
+                                                              xtype:'combo',
+                                                              fieldLabel:'Materia',
+                                                              id:'combomaterianotasId',
+                                                              mode:'local',
+                                                              displayField:'denominacion',
+                                                              valueField:'id',
+                                                              hiddenName:'materia_id',
+                                                              store: new Ext.data.JsonStore({
+                                                                root:'rows',
+                                                                url:docentemateriaUrl,
+                                                                fields:['id','denominacion'],
+                                                                autoLoad:true
+                                                              })
+                                                        },
+                                                        new Ext.grid.GridPanel({
+                                                                id:'gridfechasdeexamenId',
+                                                                stripeRows:true,
+                                                                store:new Ext.data.JsonStore({
+                                                                    root:'rows',
+                                                                    url:storefechaexamen,
+                                                                    fields:['id','carrera','aniolectivo','materia','nivel']
+                                                                    ,autoLoad:true
+                                                                }),
+                                                                columns: [
+                                                                    nestedRowGrid,
+                                                                    {header: "Id",width:200,sortable:false,dataIndex:'cargaexamen'},
+                                                                    {header: "Carrera",width:200,sortable:false,dataIndex:'carrera'},
+                                                                    {header: "Año Lectivo",width:150,sortable:false,dataIndex:"aniolectivo"},
+                                                                    {header: "Materia",width:150,sortable:false,dataIndex:"materia"},
+                                                                    {header: "Nivel",width:150,sortable:false,dataIndex:"nivel"}
+                                                                    //,{header: "Fecha Examen",width:100,sortable:true,dataIndex:"fechaexamen",renderer: Ext.util.Format.dateRenderer('d/m/y')}
+                                                                ],
+                                                                stripeRows: true,
+                                                                height:350,
+                                                                width:600,
+                                                                loadMask:true,
+                                                                /*bbar: new Ext.PagingToolbar({
+                                                                    pageSize: 10,
+                                                                    store: storefechaexamen,
+                                                                    displayInfo:true,
+                                                                    displayMsg: 'Visualizando registros {0} - {1} de {2}',
+                                                                    emptyMsg: 'No hay registros para visualizar'
+                                                                }),*/
+                                                                plugins:nestedRowGrid,
+                                                                iconCls: 'icon-grid',
+                                                                listeners:{
+                                                                }
+                                                        })
+                                                ]
+                                            }
                                         ]
                                     }]
                                 }
