@@ -36,22 +36,22 @@ class PanelControlDocenteController {
 
     }
 
-    def cargaexamenlist(){
+    def docentematerias(){
         def returnMap = [:]
         def recordList = [:]
 
-        /*def cargasexamenes = CargaExamen.createCriteria().list(){
+        def materias = CargaExamen.createCriteria().list(){
             docente{
-                eq("id",params.id.toString().toInteger())
+                eq("id",params.docente_id.toString().toInteger())
             }
             anioLectivo{
-                eq("id",parmas.aniolectivo_id.toString().toInteger())
+                eq("id",params.aniolectivo_id.toString().toInteger())
             }
         }
-        cargaexamenes.each {
-            recordList << [id: it.id,denominacion:it.den]
+        materias.each {
+            recordList << [id: it.id,denominacion:it.materia.denominacion]
             
-        } */
+        }
         returnMap.success = true
         returnMap.rows=recordList
         render returnMap as JSON
@@ -68,8 +68,32 @@ class PanelControlDocenteController {
         }
         returnMap.rows=recordList
         render returnMap as JSON
-
     }
 
+    def carganotaslist(){
+        def returnMap = [:]
+        def recordList = []
+        def cargas = CargaExamen.createCriteria().list{
+            docente{
+                eq("id",params.docente_id.toString().toInteger())
+            }
+            anioLectivo{
+                eq("id",params.aniolectivo_id.toString().toInteger())
+            }
+        }
+        cargas.each{
+            recordList << [id: it.id,descripcion: it.id+" - "+formatDate(format: "dd/MM/yyyy",date: it.fechaAlta)]
+        }
+        
+        returnMap.rows=recordList
+        render returnMap as JSON
+    }
+
+    def cargaexamenlist(){
+        def returnMap = [:]
+
+        returnMap.rows = []
+        render returnMap as JSON
+    }
 
 }

@@ -1,19 +1,6 @@
 Ext.onReady(function(){
         Ext.QuickTips.init();
-        var conn = new Ext.data.Connection();
-        var anios = [];
-        conn.request({
-            url:aniolectivoUrl
-            ,async:false
-            ,method:'POST'
-            ,success: function(resp,opt){
-                var respuesta=Ext.decode(resp.responseText);
-                $.each(respuesta.rows,function(key,value){
-                    anios.push([value.id,value.descripcion]);
-                });
 
-            }
-        });
 
 
         function processRowExpander(record, body, rowIndex){
@@ -102,7 +89,7 @@ Ext.onReady(function(){
                                     style: 'padding: 10px;',
                                     listeners:{
                                         afterrender : function(component){
-                                            //window.location = cerrarSesionUrl;
+                                            window.location = cerrarSesionUrl;
 
                                         }
                                     }
@@ -158,11 +145,25 @@ Ext.onReady(function(){
                                                             mode:'local',
                                                             displayField:'descripcion',
                                                             valueField:'id',
+                                                            triggerAction:'all',
                                                             hiddenName:'aniolectivo_id',
-                                                            store: new Ext.data.ArrayStore({
-                                                                fields:['id','descripcion']
-                                                                ,data:anios
-                                                            })
+                                                            store: new Ext.data.JsonStore({
+                                                                root:'rows',
+                                                                url:aniolectivoUrl,
+                                                                fields:['id','descripcion'],
+                                                                autoLoad:true
+                                                            }),
+                                                            listeners:{
+                                                                select:function(combobox,record,index){
+                                                                    Ext.getCmp('combomaterianotasId').getStore().load({
+                                                                        params:{
+                                                                            docente_id:docenteId,
+                                                                            aniolectivo_id:Ext.getCmp('comboaniolectivonotasId').hiddenField.value
+                                                                        }
+                                                                    });
+                                                                }
+                                                            }
+
                                                         },
                                                         {
                                                               xtype:'combo',
@@ -170,45 +171,72 @@ Ext.onReady(function(){
                                                               id:'combomaterianotasId',
                                                               mode:'local',
                                                               displayField:'denominacion',
+                                                              triggerAction:'all',
                                                               valueField:'id',
                                                               hiddenName:'materia_id',
                                                               store: new Ext.data.JsonStore({
                                                                 root:'rows',
                                                                 url:docentemateriaUrl,
                                                                 fields:['id','denominacion'],
-                                                                autoLoad:true
-                                                              })
+                                                                autoLoad:false
+                                                              }),
+                                                              listeners:{
+                                                                    select:function(combobox,record,index){
+                                                                        Ext.getCmp('comboexamencargadoId').getStore().load({
+                                                                            params:{
+                                                                                docente_id:docenteId,
+                                                                                aniolectivo_id:Ext.getCmp('comboaniolectivonotasId').hiddenField.value,
+                                                                                materia_id:Ext.getCmp('combomaterianotasId').hiddenField.value
+                                                                            }
+                                                                        });
+                                                                    }
+                                                              }
                                                         },
+                                                        {
+                                                              xtype:'combo',
+                                                              fieldLabel:'Examen Cargado',
+                                                              id:'comboexamencargadoId',
+                                                              mode:'local',
+                                                              displayField:'descripcion',
+                                                              triggerAction:'all',
+                                                              valueField:'id',
+                                                              hiddenName:'examencargado_id',
+                                                              store: new Ext.data.JsonStore({
+                                                                  root:'rows',
+                                                                  url:fechaexamenesnotasUrl,
+                                                                  fields:['id','descripcion'],
+                                                                  autoLoad:false
+                                                              }),
+                                                                listeners:{
+                                                                    select:function(combobox,record,index){
+                                                                        var rowselected = Ext.getCmp('comboexamencargadoId').getStore().getAt(0);
+                                                                        Ext.getCmp('gridfechasdeexamenId').getStore().load({
+                                                                            params:{
+                                                                                cargaexamen_id:rowselected.id
+                                                                            }
+                                                                        });
+                                                                    }
+                                                                }
+                                                        },
+
                                                         new Ext.grid.GridPanel({
                                                                 id:'gridfechasdeexamenId',
                                                                 stripeRows:true,
                                                                 store:new Ext.data.JsonStore({
                                                                     root:'rows',
-                                                                    url:storefechaexamen,
+                                                                    url:fechaexamenesnotasUrl,
                                                                     fields:['id','carrera','aniolectivo','materia','nivel']
-                                                                    ,autoLoad:true
+                                                                    ,autoLoad:false
                                                                 }),
                                                                 columns: [
-                                                                    nestedRowGrid,
-                                                                    {header: "Id",width:200,sortable:false,dataIndex:'cargaexamen'},
-                                                                    {header: "Carrera",width:200,sortable:false,dataIndex:'carrera'},
-                                                                    {header: "Año Lectivo",width:150,sortable:false,dataIndex:"aniolectivo"},
-                                                                    {header: "Materia",width:150,sortable:false,dataIndex:"materia"},
-                                                                    {header: "Nivel",width:150,sortable:false,dataIndex:"nivel"}
-                                                                    //,{header: "Fecha Examen",width:100,sortable:true,dataIndex:"fechaexamen",renderer: Ext.util.Format.dateRenderer('d/m/y')}
+                                                                    {header: "Id",width:200,sortable:false,dataIndex:'id'},
+                                                                    {header: "Alumno",width:200,sortable:false,dataIndex:'alumnonombre'},
+                                                                    {header: "Nota",width:150,sortable:false,dataIndex:"nota"}
                                                                 ],
                                                                 stripeRows: true,
                                                                 height:350,
                                                                 width:600,
                                                                 loadMask:true,
-                                                                /*bbar: new Ext.PagingToolbar({
-                                                                    pageSize: 10,
-                                                                    store: storefechaexamen,
-                                                                    displayInfo:true,
-                                                                    displayMsg: 'Visualizando registros {0} - {1} de {2}',
-                                                                    emptyMsg: 'No hay registros para visualizar'
-                                                                }),*/
-                                                                plugins:nestedRowGrid,
                                                                 iconCls: 'icon-grid',
                                                                 listeners:{
                                                                 }

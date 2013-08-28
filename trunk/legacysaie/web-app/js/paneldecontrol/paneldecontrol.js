@@ -754,6 +754,7 @@ Ext.onReady(function(){
                                                             ,mode:'local'
                                                             ,displayField:'descripcion'
                                                             ,hiddenName:'aniolectivo_id'
+                                                            ,triggerAction:'all'
                                                             ,store:new Ext.data.JsonStore({
                                                                     root:'rows',
                                                                     url:anioLectivoUrl,
