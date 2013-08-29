@@ -31,11 +31,13 @@
         var docente = '${docenteInstance.apellido+', '+docenteInstance.nombre}';
         var docenteId = '${docenteInstance.id}';
         var logoUrl = '${resource(dir:'reports/images',file:'imagecomprobante.png')}';
-        var fechaexamenUrl = '${createLink(uri:'/panelControlDocente/cargaexamenlist')}';
+        var fechaexamenUrl = '${createLink(uri:'/panelControlDocente/cargaexamenfechaslist')}';
         var docentemateriaUrl = '${createLink(uri:'/panelControlDocente/docentematerias')}';
         var aniolectivoUrl = '${createLink(uri:'/panelControlDocente/aniolectivonotas')}';
         var cerrarSesionUrl = '${createLink(uri:'/logout')}';
-        var fechaexamenesnotasUrl = '${createLink(uri:'/panelControlDocente/carganotaslist')}';
+        var fechaexamenesnotasUrl = '${createLink(uri:'/panelControlDocente/cargaexamenfechas')}';
+        var notasexamenesUrl = '${createLink(uri:'/panelControlDocente/notasexamen')}';
+
     </script>
 
     <title>Panel de control de Docente</title>

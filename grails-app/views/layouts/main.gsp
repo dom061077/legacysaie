@@ -42,10 +42,10 @@
 	</head>
 	<body>
         <header>
-		    <div id="grailsLogo" role="banner"><a href=""><!-- img src="${resource(dir: 'images', file: 'grails_logo.png')}" alt="Grails"/ --></a></div>
+		    <div id="grailsLogo" role="banner"><a href=""><img src="${resource(dir: 'reports/images', file: 'imagecomprobante.png')}" alt="Cruz Roja"/></a></div>
         </header>
         <section>
-		    <g:layoutBody/>
+	        <g:layoutBody/>
         </section>
         <footer>
             <div class="footer" role="contentinfo"></div>

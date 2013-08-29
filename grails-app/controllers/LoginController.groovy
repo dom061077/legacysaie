@@ -138,4 +138,12 @@ class LoginController {
     def ajaxDenied = {
         render([error: 'access denied'] as JSON)
     }
+    
+    def loginredirect(){
+        def userInstance = springSecurityService.currentUser
+        if (userInstance.alumno)
+            redirect(controller: 'panelControl',action:'index')
+        if (userInstance.docente)
+            redirect(controller: 'panelControlDocente',action: 'index')
+    }
 }

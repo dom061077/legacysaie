@@ -55,7 +55,15 @@ Ext.onReady(function(){
             }
         });
 
-
+        var FechaExamenStore = new Ext.data.JsonStore({
+            root:'rows',
+            url:fechaexamenUrl,
+            fields:['id','fecha','aniolectivo','carrera','materia','titulo','tipo','modalidad'],
+            baseParams:{
+                docente_id:docenteId
+            },
+            autoLoad:true
+        });
 
         var viewport = new Ext.Viewport(
             /*{
@@ -64,9 +72,18 @@ Ext.onReady(function(){
               ,autoEl:{tag:'img',src:logoUrl,width:100,height:100}
             }, */
             {
-            layout:'fit',
+            layout:'border',
             items:[
+                new Ext.BoxComponent({
+                    region:'north',
+                    height:50
+                    /*autoEl:{
+                        tag:'div',
+                        html:'<p>SUPRA PEZON</p>'
+                    } */
+                }),
                 {
+                    region:'center',
                     xtype: 'grouptabpanel',
                     tabWidth: 200,
                     activeGroup: 0,
@@ -111,6 +128,40 @@ Ext.onReady(function(){
                                         {
                                             xtype:'panel',
                                             items:[
+                                                {
+                                                    xtype:'form',
+                                                    width:700,
+                                                    title:'Listado de Exámenes',
+                                                    height:450,
+                                                    style: 'margin:0 auto;margin-top:50px;',
+                                                    items:[
+                                                        new Ext.grid.GridPanel({
+                                                            id:'gridfechaexamenesId',
+                                                            store:FechaExamenStore,
+                                                            width:700,
+                                                            height:450,
+                                                            columns: [
+                                                                {header: "id",dataIndex:'id',hidden:true},
+                                                                {header: "Fecha",width:80,sortable:false,dataIndex:'fecha'},
+                                                                {header: "Año Lectivo",width:120,sortable:false,dataIndex:'aniolectivo'},
+                                                                {header: "Carrera",width:270,sortable:false,dataIndex:"carrera"},
+                                                                {header: "Materia",width:270,sortable:false,dataIndex:"materia"},
+                                                                {header: "Título",width:270,sortable:false,dataIndex:"titulo"},
+                                                                {header: "Tipo",width:100,sortable:false,dataIndex:"tipo"},
+                                                                {header: "Modalidad",width:100,sortable:false,dataIndex:"modalidad"}
+                                                            ],
+                                                            loadMask:true,
+                                                            bbar: new Ext.PagingToolbar({
+                                                                pageSize: 10,
+                                                                store: FechaExamenStore,
+                                                                displayInfo:true,
+                                                                displayMsg: 'Visualizando registros {0} - {1} de {2}',
+                                                                emptyMsg: 'No hay registros para visualizar'
+                                                            })
+
+                                                        })
+                                                    ]
+                                                }
 
                                             ]
                                         }
@@ -131,7 +182,7 @@ Ext.onReady(function(){
                                         items:[
                                             {
                                                 xtype:'form',
-                                                style: 'margin:0 auto;margin-top:100px;',
+                                                style: 'margin:0 auto;margin-top:50px;',
                                                 title:'Carga de Notas',
                                                 id:'formcargadenotasId',
                                                 frame:true,
@@ -173,6 +224,7 @@ Ext.onReady(function(){
                                                               displayField:'denominacion',
                                                               triggerAction:'all',
                                                               valueField:'id',
+                                                              width:350,
                                                               hiddenName:'materia_id',
                                                               store: new Ext.data.JsonStore({
                                                                 root:'rows',
@@ -200,6 +252,7 @@ Ext.onReady(function(){
                                                               displayField:'descripcion',
                                                               triggerAction:'all',
                                                               valueField:'id',
+                                                              width:350,
                                                               hiddenName:'examencargado_id',
                                                               store: new Ext.data.JsonStore({
                                                                   root:'rows',
@@ -224,13 +277,13 @@ Ext.onReady(function(){
                                                                 stripeRows:true,
                                                                 store:new Ext.data.JsonStore({
                                                                     root:'rows',
-                                                                    url:fechaexamenesnotasUrl,
+                                                                    url:notasexamenesUrl,
                                                                     fields:['id','carrera','aniolectivo','materia','nivel']
                                                                     ,autoLoad:false
                                                                 }),
                                                                 columns: [
-                                                                    {header: "Id",width:200,sortable:false,dataIndex:'id'},
-                                                                    {header: "Alumno",width:200,sortable:false,dataIndex:'alumnonombre'},
+                                                                    {header: "Id",width:100,sortable:false,dataIndex:'id',hidden:true},
+                                                                    {header: "Alumno",width:350,sortable:false,dataIndex:'alumnonombre'},
                                                                     {header: "Nota",width:150,sortable:false,dataIndex:"nota"}
                                                                 ],
                                                                 stripeRows: true,
