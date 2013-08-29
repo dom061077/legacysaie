@@ -4,7 +4,7 @@
 	<title><g:message code="springSecurity.login.title"/></title>
     <script type="text/javascript">
         var postLoginUrl = '${postUrl}';
-        var homeUrl = '${createLink(uri:'/panelControl')}';
+        var homeUrl = '${createLink(uri:'/login/loginredirect')}';
     </script>
     <%
         Random randomLink = new Random()

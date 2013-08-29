@@ -5,7 +5,8 @@ public enum EstadoExamen {
     //A(APROBADO),D(DESAPROBADO),S(AUSENTE)
     A("APROBADO"),
     D("DESAPROBADO"),
-    S("AUSENTE")
+    S("AUSENTE"),
+    I("SIN NOTA")
     
     String name
     

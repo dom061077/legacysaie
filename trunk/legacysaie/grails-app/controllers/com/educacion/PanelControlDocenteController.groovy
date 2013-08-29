@@ -3,6 +3,7 @@ package com.educacion
 import com.educacion.academico.examen.CargaExamen
 import grails.converters.JSON
 import com.educacion.academico.carrera.AnioLectivo
+import com.educacion.academico.examen.Examen
 
 class PanelControlDocenteController {
     def springSecurityService
@@ -70,7 +71,26 @@ class PanelControlDocenteController {
         render returnMap as JSON
     }
 
-    def carganotaslist(){
+    def cargaexamenfechaslist(){
+        def returnMap = [:]
+        def recordList = []
+        def cargas = CargaExamen.createCriteria().list{
+            docente{
+                eq("id",params.docente_id.toString().toInteger())
+            }
+            /*anioLectivo{
+                eq("id",params.aniolectivo_id.toString().toInteger())
+            }*/
+        }
+        cargas.each{
+            recordList << [id: it.id,fecha: formatDate(format: "dd/MM/yyyy",date: it.fechaExamen),carrera:it.carrera.denominacion,aniolectivo:it.anioLectivo.descripcion,materia:it.materia.denominacion, titulo: it.titulo, tipo:it.tipo.name, modalidad:it.modalidad.name]
+        }
+
+        returnMap.rows=recordList
+        render returnMap as JSON
+    }
+
+    def cargaexamenfechas(){
         def returnMap = [:]
         def recordList = []
         def cargas = CargaExamen.createCriteria().list{
@@ -82,17 +102,26 @@ class PanelControlDocenteController {
             }
         }
         cargas.each{
-            recordList << [id: it.id,descripcion: it.id+" - "+formatDate(format: "dd/MM/yyyy",date: it.fechaAlta)]
+            recordList << [id: it.id,descripcion: formatDate(format: "dd/MM/yyyy",date: it.fechaExamen)+', '+it.tipo.name+', '+it.modalidad.name]
         }
         
         returnMap.rows=recordList
         render returnMap as JSON
     }
 
-    def cargaexamenlist(){
+    def notasexamen(){
         def returnMap = [:]
-
-        returnMap.rows = []
+        def recordList=[]
+        
+        def list = Examen.createCriteria().list {
+            cargaExamen{
+                eq("id",params.cargaexamen_id.toString().toLong())
+            }
+        }
+        list?.each{
+            recordList << [id: it.id,nombrealumno:it.materia.denominacion,nota:it.nota]
+        }
+        returnMap.rows = recordList
         render returnMap as JSON
     }
 

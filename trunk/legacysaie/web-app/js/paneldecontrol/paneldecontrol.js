@@ -307,11 +307,20 @@ Ext.onReady(function(){
 
 
     var viewport = new Ext.Viewport({
-        layout:'fit',
+        layout:'border',
         items:[
+            new Ext.BoxComponent({
+                region:'north',
+                height:50
+                /*autoEl:{
+                 tag:'div',
+                 html:'<p>SUPRA PEZON</p>'
+                 } */
+            }),
             {
                 xtype: 'grouptabpanel',
                 tabWidth: 200,
+                region:'center',
                 activeGroup: 0,
                 items: [
 
@@ -329,7 +338,7 @@ Ext.onReady(function(){
                                             ,frame:true
                                             ,title:'Datos del Alumno    '
                                             ,id:'formalumnoId'
-                                            ,style: 'margin:0 auto;margin-top:100px;'
+                                            ,style: 'margin:0 auto;margin-top:50px;'
                                             ,height:450
                                             ,width:450
                                             ,url:savealumnoUrl
@@ -661,7 +670,7 @@ Ext.onReady(function(){
                                             items:[
                                                 {
                                                     xtype:'form'
-                                                    ,style: 'margin:0 auto;margin-top:100px;'
+                                                    ,style: 'margin:0 auto;margin-top:50px;'
                                                     ,id:'forminscfinalId'
                                                     ,url:submitFinUrl
                                                     ,frame:true
@@ -888,7 +897,7 @@ Ext.onReady(function(){
                                                 {
                                                     xtype:'form'
                                                     ,id:'formcursadoId'
-                                                    ,style: 'margin:0 auto;margin-top:100px;'
+                                                    ,style: 'margin:0 auto;margin-top:50px;'
                                                     ,url:submitCurUrl
                                                     ,frame:true
                                                     ,width:500
@@ -1087,7 +1096,7 @@ Ext.onReady(function(){
                                               items:[
                                                   {
                                                       xtype:'form',
-                                                      style: 'margin:0 auto;margin-top:100px;',
+                                                      style: 'margin:0 auto;margin-top:50px;',
                                                       id:'formlistadoinscId',
                                                       frame:true,
                                                       width:650,
@@ -1245,7 +1254,7 @@ Ext.onReady(function(){
                                         {
                                             xtype:'form',
                                             id:'formmateriasaprobadasId',
-                                            style: 'margin:0 auto;margin-top:100px;',
+                                            style: 'margin:0 auto;margin-top:50px;',
                                             frame:true,
                                             title:'Materias Aprobados',
                                             width:500,
@@ -1342,7 +1351,7 @@ Ext.onReady(function(){
                                         {
                                             xtype:'form',
                                             id:'formmateriasregularesId',
-                                            style: 'margin:0 auto;margin-top:100px;',
+                                            style: 'margin:0 auto;margin-top:50px;',
                                             frame:true,
                                             title:'Materias Regulares',
                                             width:500,
