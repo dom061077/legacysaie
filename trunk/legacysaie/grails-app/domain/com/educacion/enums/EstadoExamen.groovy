@@ -10,11 +10,11 @@ public enum EstadoExamen {
     
     String name
     
-    public EsatdoExamen(String name){
+    public EstadoExamen(String name){
         this.name = name
     }
     
     static list(){
-        [A,D,S]
+        [A,D,S,I]
     }
 }

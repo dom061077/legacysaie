@@ -1,7 +1,25 @@
 Ext.onReady(function(){
         Ext.QuickTips.init();
 
+        var RecordNotas = Ext.data.Record.create([
+            {
+                name:'id',
+                type:'integer'
+            },{
+                name:'nombrealumno',
+                type:'string'
+            },{
+                name:'nota',
+                type:'float'
+            }
+        ]);
 
+        var editor = new Ext.ux.grid.RowEditor({
+            saveText:'Guardar',
+            cancelText:'Cancelar',
+            commitChangesText:'Es necesario que confirme o cancele los cambios',
+            errorText:'Errores'
+        });
 
         function processRowExpander(record, body, rowIndex){
                 if(Ext.DomQuery.select("div.x-panel-bwrap",body).length==0){
@@ -194,6 +212,7 @@ Ext.onReady(function(){
                                                             fieldLabel:'Año Lectivo',
                                                             id:'comboaniolectivonotasId',
                                                             mode:'local',
+                                                            editable:false,
                                                             displayField:'descripcion',
                                                             valueField:'id',
                                                             triggerAction:'all',
@@ -206,6 +225,8 @@ Ext.onReady(function(){
                                                             }),
                                                             listeners:{
                                                                 select:function(combobox,record,index){
+                                                                    Ext.getCmp('combomaterianotasId').clearValue();
+                                                                    Ext.getCmp('comboexamencargadoId').clearValue();
                                                                     Ext.getCmp('combomaterianotasId').getStore().load({
                                                                         params:{
                                                                             docente_id:docenteId,
@@ -222,6 +243,7 @@ Ext.onReady(function(){
                                                               id:'combomaterianotasId',
                                                               mode:'local',
                                                               displayField:'denominacion',
+                                                              editable:false,
                                                               triggerAction:'all',
                                                               valueField:'id',
                                                               width:350,
@@ -234,6 +256,7 @@ Ext.onReady(function(){
                                                               }),
                                                               listeners:{
                                                                     select:function(combobox,record,index){
+                                                                        Ext.getCmp('comboexamencargadoId').clearValue();
                                                                         Ext.getCmp('comboexamencargadoId').getStore().load({
                                                                             params:{
                                                                                 docente_id:docenteId,
@@ -249,6 +272,7 @@ Ext.onReady(function(){
                                                               fieldLabel:'Examen Cargado',
                                                               id:'comboexamencargadoId',
                                                               mode:'local',
+                                                              editable:false,
                                                               displayField:'descripcion',
                                                               triggerAction:'all',
                                                               valueField:'id',
@@ -262,10 +286,14 @@ Ext.onReady(function(){
                                                               }),
                                                                 listeners:{
                                                                     select:function(combobox,record,index){
-                                                                        var rowselected = Ext.getCmp('comboexamencargadoId').getStore().getAt(0);
+                                                                        Ext.getCmp('gridfechasdeexamenId').setTitle(
+                                                                            Ext.getCmp('comboaniolectivonotasId').getRawValue()+', '
+                                                                                +Ext.getCmp('combomaterianotasId').getRawValue()+', '
+                                                                                +Ext.getCmp('comboexamencargadoId').getRawValue()
+                                                                        );
                                                                         Ext.getCmp('gridfechasdeexamenId').getStore().load({
                                                                             params:{
-                                                                                cargaexamen_id:rowselected.id
+                                                                                cargaexamen_id:Ext.getCmp('comboexamencargadoId').hiddenField.value
                                                                             }
                                                                         });
                                                                     }
@@ -274,17 +302,42 @@ Ext.onReady(function(){
 
                                                         new Ext.grid.GridPanel({
                                                                 id:'gridfechasdeexamenId',
+                                                                title:' ',
                                                                 stripeRows:true,
                                                                 store:new Ext.data.JsonStore({
+                                                                    reader:new Ext.data.JsonReader({root:'rows',id:'id',fields: RecordNotas}),
                                                                     root:'rows',
                                                                     url:notasexamenesUrl,
-                                                                    fields:['id','carrera','aniolectivo','materia','nivel']
+                                                                    fields:['id','nombrealumno','nota']
                                                                     ,autoLoad:false
+                                                                    ,listeners:{
+                                                                        update:function(thisstore,record,operacion){
+                                                                            var conn = new Ext.data.Connection();
+                                                                            conn.request({
+                                                                                url:updatenotaUrl
+                                                                                ,method:'GET'
+                                                                                ,params:{
+                                                                                    id:record.data.id
+                                                                                    ,nota:record.data.nota
+                                                                                },
+                                                                                success: function(resp,opt){
+                                                                                },
+                                                                                failure: function(resp,opt){
+
+                                                                                }
+                                                                            });
+                                                                        }
+                                                                    }
                                                                 }),
+                                                                plugins: [editor],
                                                                 columns: [
                                                                     {header: "Id",width:100,sortable:false,dataIndex:'id',hidden:true},
-                                                                    {header: "Alumno",width:350,sortable:false,dataIndex:'alumnonombre'},
-                                                                    {header: "Nota",width:150,sortable:false,dataIndex:"nota"}
+                                                                    {header: "Alumno",width:350,sortable:false,dataIndex:'nombrealumno'},
+                                                                    {header: "Nota",width:150,sortable:false,dataIndex:"nota"
+                                                                            ,xtype:'numbercolumn'
+                                                                            ,align:'right',renderer: Ext.util.Format.numberRenderer('00,00/i')
+                                                                            ,editor:{xtype:'numberfield',allowBlank:false,decimalPrecision:2
+                                                                                ,decimalSeparator:',',maxValue:10,minValue:0}}
                                                                 ],
                                                                 stripeRows: true,
                                                                 height:350,

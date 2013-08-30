@@ -417,6 +417,8 @@ Ext.onReady(function(){
                                                                     xtype:'combo'
                                                                     ,fieldLabel:'País Domicilio'
                                                                     ,mode:'local'
+                                                                    ,triggerAction:'all'
+                                                                    ,editable:false
                                                                     ,valueField:'id'
                                                                     ,displayField:'descripcion'
                                                                     ,hiddenName:'paisdomicilio_id'
@@ -440,6 +442,8 @@ Ext.onReady(function(){
                                                                     xtype:'combo'
                                                                     ,fieldLabel:'Provincia Domicilio'
                                                                     ,mode:'local'
+                                                                    ,editable:false
+                                                                    ,triggerAction:'all'
                                                                     ,valueField:'id'
                                                                     ,displayField:'descripcion'
                                                                     ,store:provinciaStore
@@ -462,6 +466,9 @@ Ext.onReady(function(){
                                                                     ,fieldLabel:'Localidad Domicilio'
                                                                     ,name:'localidadDomicilio'
                                                                     ,id:'localidaddomicilioId'
+                                                                    ,editable:false
+                                                                    ,mode:'local'
+                                                                    ,triggerAction:'all'
                                                                     ,valueField:'id'
                                                                     ,displayField:'descripcion'
                                                                     ,hiddenName:'localidaddomicilio_id'
@@ -556,6 +563,9 @@ Ext.onReady(function(){
                                                                     xtype:'combo'
                                                                     ,fieldLabel:'País Laboral'
                                                                     ,valueField:'id'
+                                                                    ,mode:'local'
+                                                                    ,editable:false
+                                                                    ,triggerAction:'all'
                                                                     ,displayField:'descripcion'
                                                                     ,hiddenName:'paislaboral_id'
                                                                     ,mode:'local'
@@ -579,6 +589,8 @@ Ext.onReady(function(){
                                                                     ,valueField:'id'
                                                                     ,displayField:'descripcion'
                                                                     ,mode:'local'
+                                                                    ,editable:false
+                                                                    ,triggerAction:'all'
                                                                     ,hiddenName:'provincialaboral_id'
                                                                     ,store:provinciaStore
                                                                     ,name:'provinciaLaboral'
@@ -602,6 +614,8 @@ Ext.onReady(function(){
                                                                     ,valueField:'id'
                                                                     ,displayField:'descripcion'
                                                                     ,mode:'local'
+                                                                    ,editable:false
+                                                                    ,triggerAction:'all'
                                                                     ,store:localidadStore
                                                                     ,disabled:true
                                                                     ,hiddenName:'localidadlaboral_id'
@@ -707,6 +721,8 @@ Ext.onReady(function(){
                                                             ,id:'combocarreraId'
                                                             ,valueField:'id'
                                                             ,mode:'local'
+                                                            ,editable:false
+                                                            ,triggerAction:'all'
                                                             ,displayField:'denominacion'
                                                             ,hiddenName:'carrera_id'
                                                             ,store:new Ext.data.JsonStore({
@@ -761,6 +777,8 @@ Ext.onReady(function(){
                                                             ,id:'comboaniolectivoId'
                                                             ,valueField:'id'
                                                             ,mode:'local'
+                                                            ,editable:false
+                                                            ,triggerAction:'all'
                                                             ,displayField:'descripcion'
                                                             ,hiddenName:'aniolectivo_id'
                                                             ,triggerAction:'all'
@@ -920,7 +938,9 @@ Ext.onReady(function(){
                                                         ,fieldLabel:'Carrera'
                                                         ,id:'combocarreracurId'
                                                         ,valueField:'id'
+                                                        ,editable:false
                                                         ,mode:'local'
+                                                        ,triggerAction:'all'
                                                         ,displayField:'denominacion'
                                                         ,hiddenName:'carrera_id'
                                                         ,store:new Ext.data.JsonStore({
@@ -968,7 +988,9 @@ Ext.onReady(function(){
                                                         ,fieldLabel:'Año Lectivo'
                                                         ,id:'comboaniolectivocurId'
                                                         ,valueField:'id'
+                                                        ,editable:false
                                                         ,mode:'local'
+                                                        ,triggerAction:'all'
                                                         ,displayField:'descripcion'
                                                         ,hiddenName:'aniolectivo_id'
                                                         ,store:new Ext.data.JsonStore({
@@ -1108,7 +1130,9 @@ Ext.onReady(function(){
                                                               ,fieldLabel:'Carrera'
                                                               ,id:'combocarreralistadoinscId'
                                                               ,valueField:'id'
+                                                              ,editable:false
                                                               ,mode:'local'
+                                                              ,triggerAction:'all'
                                                               ,displayField:'denominacion'
                                                               ,hiddenName:'carrera_id'
                                                               ,store:new Ext.data.JsonStore({
@@ -1144,7 +1168,9 @@ Ext.onReady(function(){
                                                               ,fieldLabel:'Año Lectivo'
                                                               ,id:'comboaniolectivolistadoinscId'
                                                               ,valueField:'id'
+                                                              ,editable:false
                                                               ,mode:'local'
+                                                              ,triggerAction:'all'
                                                               ,displayField:'descripcion'
                                                               ,hiddenName:'aniolectivo_id'
                                                               ,store:new Ext.data.JsonStore({
@@ -1265,7 +1291,9 @@ Ext.onReady(function(){
                                                     ,id:'combocarreramataprobadasId'
                                                     ,width:200
                                                     ,valueField:'id'
+                                                    ,editable:false
                                                     ,mode:'local'
+                                                    ,triggerAction:'all'
                                                     ,displayField:'denominacion'
                                                     ,hiddenName:'carrera_id'
                                                     ,store:new Ext.data.JsonStore({
@@ -1362,7 +1390,9 @@ Ext.onReady(function(){
                                                     ,id:'combocarreramatregularesId'
                                                     ,width:200
                                                     ,valueField:'id'
+                                                    ,editable:false
                                                     ,mode:'local'
+                                                    ,triggerAction:'all'
                                                     ,displayField:'denominacion'
                                                     ,hiddenName:'carrera_id'
                                                     ,store:new Ext.data.JsonStore({

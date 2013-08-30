@@ -317,3 +317,4 @@ if(Ext.form.RadioGroup){
     blankText : "Debe seleccionar un \u00E9tem de este grupo"
   });
 }
+

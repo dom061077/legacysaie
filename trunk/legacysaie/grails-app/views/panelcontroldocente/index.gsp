@@ -5,12 +5,14 @@
 
     <link rel="stylesheet" href="${resource(dir:'js/extjs/ux/css',file:'Portal.css')}"/>
     <link rel="stylesheet" href="${resource(dir:'js/extjs/ux/css',file:'GroupTab.css')}"/>
+    <link rel="stylesheet" href="${resource(dir:'js/extjs/ux/css',file:'RowEditor.css')}"/>
 
     <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"GroupTab.js")+'?id='+randomlink}"></script>
     <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"GroupTabPanel.js")+'?id='+randomlink}"></script>
     <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"Portal.js")+'?id='+randomlink}"></script>
     <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"PortalColumn.js")+'?id='+randomlink}"></script>
     <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"Portlet.js")+'?id='+randomlink}"></script>
+    <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"RowEditor.js")}"></script>
     <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"RowExpander.js")}"></script>
     <%--script type="text/javascript" src="${resource(dir:"js/panelcontroldocente",file:"panelcontroldocente.js")+'?id='+randomlink}"></script --%>
     <script type="text/javascript" src="${resource(dir:"js/panelcontroldocente",file:"panelcontroldocente.js")}"></script >
@@ -37,6 +39,7 @@
         var cerrarSesionUrl = '${createLink(uri:'/logout')}';
         var fechaexamenesnotasUrl = '${createLink(uri:'/panelControlDocente/cargaexamenfechas')}';
         var notasexamenesUrl = '${createLink(uri:'/panelControlDocente/notasexamen')}';
+        var updatenotaUrl = '${createLink(uri:'/panelControlDocente/savenota')}';
 
     </script>
 
