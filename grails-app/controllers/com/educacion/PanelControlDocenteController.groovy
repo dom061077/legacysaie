@@ -102,7 +102,7 @@ class PanelControlDocenteController {
             }
         }
         cargas.each{
-            recordList << [id: it.id,descripcion: formatDate(format: "dd/MM/yyyy",date: it.fechaExamen)+', '+it.tipo.name+', '+it.modalidad.name]
+            recordList << [id: it.id,descripcion: it.id+'-'+ formatDate(format: "dd/MM/yyyy",date: it.fechaExamen)+', '+it.tipo.name+', '+it.modalidad.name]
         }
         
         returnMap.rows=recordList
@@ -119,9 +119,21 @@ class PanelControlDocenteController {
             }
         }
         list?.each{
-            recordList << [id: it.id,nombrealumno:it.materia.denominacion,nota:it.nota]
+            recordList << [id: it.id,nombrealumno:it.inscripcionDetalle.inscripcion.matricula.alumno.apellido+', '+it.inscripcionDetalle.inscripcion.matricula.alumno.nombre,nota:it.nota]
         }
         returnMap.rows = recordList
+        render returnMap as JSON
+    }
+
+    def savenota(){
+        def returnMap = [:]
+        def examenInstance = Examen.get(params.id)
+        examenInstance.nota = params.nota.toString().toFloat()
+        if(examenInstance.save(flush: true)){
+            returnMap.success=true
+        }else{
+            returnMap.success=false
+        }
         render returnMap as JSON
     }
 

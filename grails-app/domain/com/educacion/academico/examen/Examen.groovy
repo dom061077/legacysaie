@@ -17,7 +17,7 @@ class Examen {
    static mapping = {
        version false
        id column:'examen', generator: 'increment'
-       cargaExamen column: 'caragaexamen'
+       cargaExamen column: 'cargaexamen'
        inscripcionDetalle column: 'inscripciondetalle'
        estado column: 'estado'
    }

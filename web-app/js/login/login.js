@@ -56,12 +56,6 @@ Ext.onReady(function(){
                 handler:function(){
                     loginform(loginForm);
                 }
-            },{
-                id:'cancelbuttonId',
-                text:'Salir',
-                handler: function(){
-                    window.location = homeUrl;
-                }
             }
         ]
     });
