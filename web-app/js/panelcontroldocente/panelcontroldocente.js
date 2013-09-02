@@ -151,22 +151,84 @@ Ext.onReady(function(){
                                                     width:700,
                                                     title:'Listado de Exámenes',
                                                     height:450,
+                                                    frame:true,
                                                     style: 'margin:0 auto;margin-top:50px;',
                                                     items:[
+                                                        {
+
+                                                            xtype:'fieldset',
+                                                            //width:400,
+                                                            title:'Filtros',
+                                                            items:[
+                                                                {
+                                                                    layout:'column',
+                                                                    frame:true,
+                                                                    border:false,
+                                                                    items:[
+                                                                        {
+                                                                            layout:'form',
+                                                                            border:false,
+                                                                            width:'45%',
+
+                                                                            items:{
+                                                                                xtype:'datefield',
+                                                                                fieldLabel:'Fecha desde',
+                                                                                msgTarget:'under',
+                                                                                anchor:'-10 ',
+                                                                                id:'fechaexamendesdeId'
+                                                                            }
+                                                                        },{
+                                                                            layout:'form',
+                                                                            border:false,
+                                                                            width:'45%',
+                                                                            items:{
+                                                                                xtype:'datefield',
+                                                                                fieldLabel:'hasta',
+                                                                                msgTarget:'under',
+                                                                                anchor:'-10 ',
+                                                                                id:'fechaexamenhastaId'
+                                                                            }
+                                                                        },{
+                                                                            layout:'form',
+                                                                            border:false,
+                                                                            width:'10%',
+                                                                            items:{
+                                                                                xtype:'button',
+                                                                                text:'Buscar',
+                                                                                listeners:{
+                                                                                    click:function(){
+                                                                                        Ext.getCmp('gridfechaexamenesId').getStore().load({
+                                                                                            params:{
+                                                                                                'fechadesde':Ext.getCmp('fechaexamendesdeId').getRawValue(),
+                                                                                                'fechahasta':Ext.getCmp('fechaexamenhastaId').getRawValue()
+                                                                                            }
+                                                                                        });
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        },
                                                         new Ext.grid.GridPanel({
                                                             id:'gridfechaexamenesId',
                                                             store:FechaExamenStore,
                                                             width:700,
-                                                            height:450,
+                                                            height:350,
                                                             columns: [
-                                                                {header: "id",dataIndex:'id',hidden:true},
-                                                                {header: "Fecha",width:80,sortable:false,dataIndex:'fecha'},
+                                                                {header: "Fecha Exámen",width:90,sortable:false,dataIndex:'fecha'},
                                                                 {header: "Año Lectivo",width:120,sortable:false,dataIndex:'aniolectivo'},
                                                                 {header: "Carrera",width:270,sortable:false,dataIndex:"carrera"},
                                                                 {header: "Materia",width:270,sortable:false,dataIndex:"materia"},
                                                                 {header: "Título",width:270,sortable:false,dataIndex:"titulo"},
                                                                 {header: "Tipo",width:100,sortable:false,dataIndex:"tipo"},
-                                                                {header: "Modalidad",width:100,sortable:false,dataIndex:"modalidad"}
+                                                                {header: "Modalidad",width:100,sortable:false,dataIndex:"modalidad"},
+                                                                {header: "id",dataIndex:'id',hidden:false,
+                                                                    renderer:function(val,meta,record){
+                                                                        return '<a target="_blank" href="'+reporteUrl+record.data.id+'"><img style="margin-left:15px " src="'+pdfUrl+'"></a>';
+                                                                    }
+                                                                }
                                                             ],
                                                             loadMask:true,
                                                             bbar: new Ext.PagingToolbar({
@@ -233,6 +295,14 @@ Ext.onReady(function(){
                                                                             aniolectivo_id:Ext.getCmp('comboaniolectivonotasId').hiddenField.value
                                                                         }
                                                                     });
+                                                                    Ext.getCmp('comboexamencargadoId').getStore().load({
+                                                                        params:{
+                                                                            docente_id:docenteId,
+                                                                            aniolectivo_id:Ext.getCmp('comboaniolectivonotasId').hiddenField.value,
+                                                                            materia_id:0
+                                                                        }
+                                                                    });
+
                                                                 }
                                                             }
 

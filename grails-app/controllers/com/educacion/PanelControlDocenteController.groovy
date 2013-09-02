@@ -74,6 +74,13 @@ class PanelControlDocenteController {
     def cargaexamenfechaslist(){
         def returnMap = [:]
         def recordList = []
+        log.debug "Parametros: $params"
+        java.text.DateFormat df = new java.text.SimpleDateFormat("dd/MM/yyyy")
+        java.util.Date fecha
+        java.sql.Date fechasqldesde,fechasqlhasta
+
+        
+
         def cargas = CargaExamen.createCriteria().list{
             docente{
                 eq("id",params.docente_id.toString().toInteger())
@@ -81,6 +88,15 @@ class PanelControlDocenteController {
             /*anioLectivo{
                 eq("id",params.aniolectivo_id.toString().toInteger())
             }*/
+            if (params.fechadesde && params.fechahasta){
+                fecha = df.parse(params.fechadesde)
+                fechasqldesde = new java.sql.Date(fecha.getTime())
+                fecha = df.parse(params.fechahasta)
+                fechasqlhasta = new java.sql.Date(fecha.getTime())
+                ge("fechaExamen",fechasqldesde)
+                le("fechaExamen",fechasqlhasta)
+            }
+
         }
         cargas.each{
             recordList << [id: it.id,fecha: formatDate(format: "dd/MM/yyyy",date: it.fechaExamen),carrera:it.carrera.denominacion,aniolectivo:it.anioLectivo.descripcion,materia:it.materia.denominacion, titulo: it.titulo, tipo:it.tipo.name, modalidad:it.modalidad.name]
@@ -135,6 +151,27 @@ class PanelControlDocenteController {
             returnMap.success=false
         }
         render returnMap as JSON
+    }
+    
+    def reportealumnosexamenes(){
+        log.debug "PARAMETRO CARGAEXAMEN: ${params.id}"
+        def listExamenes = Examen.createCriteria().list {
+            cargaExamen{
+                eq("id",params.id.toString().toLong())
+            }
+            inscripcionDetalle{
+                materia{
+                    order("denominacion","desc")
+                }
+            }
+        }
+        String reportsDirPath = servletContext.getRealPath("/reports/");
+        params.put("SUBREPORT_DIR", reportsDirPath+"/");
+        params.put("_format","PDF")
+        params.put("_file","listadofechaexamen")
+        params.put("_name","listadofechaexamen")
+        chain(controller:'jasper',action:'index',model:[data:listExamenes],params:params)
+
     }
 
 }
