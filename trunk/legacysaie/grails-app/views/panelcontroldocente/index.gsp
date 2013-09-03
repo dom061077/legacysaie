@@ -40,7 +40,7 @@
         var fechaexamenesnotasUrl = '${createLink(uri:'/panelControlDocente/cargaexamenfechas')}';
         var notasexamenesUrl = '${createLink(uri:'/panelControlDocente/notasexamen')}';
         var updatenotaUrl = '${createLink(uri:'/panelControlDocente/savenota')}';
-        var reporteUrl = '${createLink(uri:'/panelControLDocente/reportealumnosexamenes/')}';
+        var reporteUrl = '${createLink(uri:'/panelControlDocente/reportealumnosexamenes/')}';
         var pdfUrl = '${resource(dir:'/images',file:'pdf.png')}';
 
     </script>

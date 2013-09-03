@@ -155,6 +155,7 @@ class PanelControlDocenteController {
     
     def reportealumnosexamenes(){
         log.debug "PARAMETRO CARGAEXAMEN: ${params.id}"
+        def cargaExamenInstance = CargaExamen.get(params.id)
         def listExamenes = Examen.createCriteria().list {
             cargaExamen{
                 eq("id",params.id.toString().toLong())
@@ -165,11 +166,21 @@ class PanelControlDocenteController {
                 }
             }
         }
+        listExamenes.each {
+            log.debug it.inscripcionDetalle.inscripcion.matricula.alumno.apellido
+        }
         String reportsDirPath = servletContext.getRealPath("/reports/");
         params.put("SUBREPORT_DIR", reportsDirPath+"/");
         params.put("_format","PDF")
         params.put("_file","listadofechaexamen")
         params.put("_name","listadofechaexamen")
+        params.put("CARGAEXAMEN",cargaExamenInstance?.id)
+        params.put("ANIOLECTIVO",cargaExamenInstance?.anioLectivo?.descripcion)
+        params.put("CARRERA",cargaExamenInstance?.carrera?.denominacion)
+        params.put("MATERIA",cargaExamenInstance?.materia?.denominacion)
+        params.put("TIPO",cargaExamenInstance?.tipo?.name)
+        params.put("MODALIDAD",cargaExamenInstance?.modalidad?.name)
+        params.put("FECHAEXAMEN",new java.text.SimpleDateFormat("dd/MM/yyyy").format(cargaExamenInstance?.fechaExamen?.getTime()))
         chain(controller:'jasper',action:'index',model:[data:listExamenes],params:params)
 
     }

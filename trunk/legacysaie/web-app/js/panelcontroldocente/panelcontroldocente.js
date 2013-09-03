@@ -224,7 +224,7 @@ Ext.onReady(function(){
                                                                 {header: "Título",width:270,sortable:false,dataIndex:"titulo"},
                                                                 {header: "Tipo",width:100,sortable:false,dataIndex:"tipo"},
                                                                 {header: "Modalidad",width:100,sortable:false,dataIndex:"modalidad"},
-                                                                {header: "id",dataIndex:'id',hidden:false,
+                                                                {header: "Impresión",dataIndex:'Impresión',hidden:false,
                                                                     renderer:function(val,meta,record){
                                                                         return '<a target="_blank" href="'+reporteUrl+record.data.id+'"><img style="margin-left:15px " src="'+pdfUrl+'"></a>';
                                                                     }
@@ -405,9 +405,9 @@ Ext.onReady(function(){
                                                                     {header: "Alumno",width:350,sortable:false,dataIndex:'nombrealumno'},
                                                                     {header: "Nota",width:150,sortable:false,dataIndex:"nota"
                                                                             ,xtype:'numbercolumn'
-                                                                            ,align:'right',renderer: Ext.util.Format.numberRenderer('00,00/i')
+                                                                            ,align:'right',renderer: Ext.util.Format.numberRenderer('0,0.00/i')
                                                                             ,editor:{xtype:'numberfield',allowBlank:false,decimalPrecision:2
-                                                                                ,decimalSeparator:',',maxValue:10,minValue:0}}
+                                                                                ,decimalSeparator:'.',maxValue:10,minValue:0}}
                                                                 ],
                                                                 stripeRows: true,
                                                                 height:350,
