@@ -4,24 +4,137 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
-	<field name="inscripcionDetalle.inscripcion.matricula.pellido" class="java.lang.String"/>
-	<field name="nombre" class="java.lang.String"/>
+	<parameter name="CARGAEXAMEN" class="java.lang.String"/>
+	<parameter name="ANIOLECTIVO" class="java.lang.String"/>
+	<parameter name="CARRERA" class="java.lang.String"/>
+	<parameter name="MATERIA" class="java.lang.String"/>
+	<parameter name="TIPO" class="java.lang.String"/>
+	<parameter name="MODALIDAD" class="java.lang.String"/>
+	<parameter name="FECHAEXAMEN" class="java.lang.String"/>
+	<field name="inscripcionDetalle.inscripcion.matricula.alumno.apellido" class="java.lang.String"/>
+	<field name="inscripcionDetalle.inscripcion.matricula.alumno.nombre" class="java.lang.String"/>
+	<field name="nota" class="java.lang.Float"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
-		<band height="65" splitType="Stretch">
+		<band height="113" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="13" width="555" height="27"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="14" isBold="true"/>
+					<font fontName="Arial" size="14" isBold="true" isItalic="false" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Listado de Exámenes]]></text>
 			</staticText>
 			<image>
-				<reportElement x="11" y="11" width="133" height="29"/>
+				<reportElement x="24" y="7" width="133" height="29"/>
 				<imageExpression class="java.io.File"><![CDATA[new File($P{SUBREPORT_DIR}+"/images/","imagecomprobante.png")]]></imageExpression>
 			</image>
+			<textField>
+				<reportElement x="78" y="44" width="53" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{CARGAEXAMEN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="44" width="86" height="16"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Nº de Exámen:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="206" y="44" width="283" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{CARRERA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="165" y="44" width="40" height="16"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Carrera:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="68" y="60" width="188" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{ANIOLECTIVO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="60" width="60" height="16"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Año Lectivo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="60" width="41" height="16"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Materia:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="317" y="60" width="227" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{MATERIA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="76" width="28" height="16"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Tipo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="35" y="76" width="188" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{TIPO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="332" y="76" width="210" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{TIPO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="275" y="76" width="56" height="16"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Modalidad:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="390" y="13" width="154" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Fecha Impresión: "+new java.text.SimpleDateFormat("dd/MM/yyyy").format(new Date())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="92" width="86" height="16"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Fecha Examen:]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="84" y="92" width="100" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{FECHAEXAMEN}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -50,11 +163,6 @@
 	</columnHeader>
 	<detail>
 		<band height="21" splitType="Stretch">
-			<textField>
-				<reportElement x="11" y="0" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{apellido}]]></textFieldExpression>
-			</textField>
 			<rectangle>
 				<reportElement x="0" y="0" width="555" height="20"/>
 			</rectangle>
@@ -62,11 +170,18 @@
 				<reportElement x="427" y="1" width="1" height="20"/>
 			</line>
 			<textField>
-				<reportElement x="0" y="1" width="428" height="20"/>
+				<reportElement x="7" y="1" width="416" height="20"/>
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{apellido}+', '+$F{nombre}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{inscripcionDetalle.inscripcion.matricula.alumno.apellido}+', '+$F{inscripcionDetalle.inscripcion.matricula.alumno.nombre}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00;(###0.00)" isBlankWhenNull="true">
+				<reportElement x="457" y="1" width="50" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Float"><![CDATA[($F{nota}>0?$F{nota}:null)]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -74,20 +189,13 @@
 		<band height="45" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="25" splitType="Stretch">
+		<band height="17" splitType="Stretch">
 			<textField>
-				<reportElement x="65" y="0" width="100" height="20"/>
-				<textElement>
-					<font fontName="Arial"/>
+				<reportElement x="0" y="0" width="555" height="16"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="185" y="0" width="100" height="20"/>
-				<textElement>
-					<font fontName="Arial"/>
-				</textElement>
-				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_COUNT}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["página Nº "+$V{PAGE_NUMBER}+" de "+$V{PAGE_COUNT}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

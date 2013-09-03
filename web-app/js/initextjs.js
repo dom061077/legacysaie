@@ -2,6 +2,7 @@
 
 
 Ext.onReady(function(){
+            Ext.util.Format.decimalSeparator = ',';
 
             Ext.override(Ext.data.Store,{
                 listeners:{
