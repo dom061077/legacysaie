@@ -42,6 +42,9 @@
 var errorDoc=true
 var errorCupo=true
 
+var numerodocumentoaux;
+var returnnumdocflag=true;
+
 Ext.apply(Ext.form.VTypes,{
     cupolimiteText:'No hay cupo disponible para esta carrera',
     cupolimite: function cupoLimite(carrera){
@@ -49,6 +52,7 @@ Ext.apply(Ext.form.VTypes,{
             return true;
         if (carrera=='')
             return true;
+
         Ext.Ajax.request(
             {
                 url: cupoUrl,
@@ -75,6 +79,7 @@ Ext.apply(Ext.form.VTypes,{
                 }
             }
         );
+
         return errorCupo;
     }
 });
@@ -88,10 +93,16 @@ Ext.apply(Ext.form.VTypes,{
             return true;
         if (numdoc == '')
             return true;
+
         var vec= new Array(10);
+
+        if (numerodocumentoaux==numdoc)
+            return errorDoc;
+        numerodocumentoaux = numdoc;
         Ext.Ajax.request(
             {
                 url: '../alumno/existenumdoc',
+                method: 'POST',
                 async:false,
                 params : {
                     numdoc: numdoc
@@ -121,7 +132,11 @@ Ext.apply(Ext.form.VTypes,{
                 }
 
             } // end-ajax
+
         );
+
+
+
         return errorDoc;
        // return true;//true determina que la validacion pase false indica error en la validacion
     }
@@ -133,6 +148,7 @@ Ext.apply(Ext.form.VTypes,{
 
 Ext.onReady(function(){
     Ext.QuickTips.init();
+    connvtypes = new Ext.data.Connection();
     var provinciaStore = new Ext.data.JsonStore({
         root:'rows',
         url:'../location/provinciasjson',
@@ -248,7 +264,21 @@ Ext.onReady(function(){
                             fields:['id','descripcion'],
                             autoLoad:true
                         })
-                    },{
+                    },
+                    /*new Ext.form.TextFieldRemoteVal({
+                        fieldLabel:'Número de Documento',
+                        name:'numerodocumento',
+                        id:'numerodocumentoId',
+                        msgTarget:'under',
+                        remoteValidation: 'onValidate', 		// When start remote validation, value: 'onBlur' or 'onValidate'
+                        urlRemoteVal: validnumdocUrl, 					// Url for remote validation
+                        method: 'POST', 						// Optional, method for remote validation 'GET' or 'POST', default POST
+                        //paramsRemoteVal: { w: 'testPseudo' }, 	// Optional, additional parameter(s) (Object or String)
+                        timeout: 30, 							// Optional, timeout for validation request, default 30
+                        badServerRespText: 'badServerRespText', 			// Optional, text showing after bad server response, default: 'Error: bad server response during validation'
+                        badComText: 'badComText' 					// Optional, text showing after incorrect comunication, default: 'Error: validation unavailable'
+                    }),*/
+                    {
                         xtype:'numberfield',
                         id:'numerodocumentoId',
                         fieldLabel:'Número de Documento',

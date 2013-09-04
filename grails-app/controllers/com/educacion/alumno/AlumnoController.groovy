@@ -132,6 +132,21 @@ class AlumnoController {
             redirect(action: "show", id: id)
         }
     }
+
+
+    /*def existenumdoc(){
+        log.debug "Parametros: "+params
+        def returnMap = [:]
+        def alumnoInstance = Alumno.findByNumeroDocumento(params.numerodocumento)
+        if (alumnoInstance){
+            returnMap.success=false
+            returnMap.errors = "Ya existe el número de documento"   
+        }else{
+            returnMap.errors = ""
+            returnMap.success=true
+        }
+        render returnMap as JSON
+    }  */
     
     def existenumdoc(){
         

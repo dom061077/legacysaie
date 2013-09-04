@@ -19,7 +19,10 @@
 		<!-- link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css" -->
         <link rel="stylesheet" href="${resource(dir:'js/extjs/resources/css',file:'ext-all.css')}"/>
         <link rel="stylesheet" href="${resource(dir:'js/extjs/resources/css',file:'xtheme-gray.css')}"/>
+        <link rel="stylesheet" href="${resource(dir:'css/jquery-ui',file:'jquery-ui.css')}"/>
         <script type="text/javascript" src="${resource(dir:'js/jquery/jquery-1.6.2.min.js')}"></script>
+        <script type="text/javascript" src="${resource(dir:'js/jquery/jquery-ui.min.js')}"></script>
+        <script type="text/javascript" src="${resource(dir:'js/jquery/jquery.floatingmessage.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/extjs/adapter/jquery',file:'ext-jquery-adapter.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/extjs',file:'ext-all.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js',file:'initextjs.js')+'?id='+randomLink}"></script>
