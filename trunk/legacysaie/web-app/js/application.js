@@ -1,9 +1,14 @@
+var floatingmessage;
 if (typeof jQuery !== 'undefined') {
 	(function($) {
 		$('#spinner').ajaxStart(function() {
-			$(this).fadeIn();
+            floatingmessage = $('<div>Cargando... </div>').floatingMessage({
+                position : "bottom-left",
+                height : 15
+            });
+
 		}).ajaxStop(function() {
-			$(this).fadeOut();
+                floatingmessage.floatingMessage("destroy");
 		});
 	})(jQuery);
 }

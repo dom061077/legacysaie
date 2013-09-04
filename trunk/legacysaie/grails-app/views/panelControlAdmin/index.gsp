@@ -1,3 +1,5 @@
+
+
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
@@ -16,21 +18,9 @@
     <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"RowExpander.js")}"></script>
     <script type="text/javascript" src="${resource(dir:"js/panelcontroldocente",file:"panelcontroldocente.js")+'?id='+randomlink}"></script>
 
-    <style type="text/css">
-    .upload-icon {
-        background: url('${resource(dir:'js/extjs/resources/images',file:'image_add.png')}') no-repeat 0 0 !important;
-    }
-    #fi-button-msg {
-        border: 2px solid #ccc;
-        padding: 5px 10px;
-        background: #eee;
-        margin: 5px;
-        float: left;
-    }
-    </style>
     <script type="text/javascript">
-        var docente = '${docenteInstance.apellido+', '+docenteInstance.nombre}';
-        var docenteId = '${docenteInstance.id}';
+        var docente = '${docenteInstance?.apellido+', '+docenteInstance?.nombre}';
+        var docenteId = '${docenteInstance?.id}';
         var logoUrl = '${resource(dir:'reports/images',file:'imagecomprobante.png')}';
         var fechaexamenUrl = '${createLink(uri:'/panelControlDocente/cargaexamenfechaslist')}';
         var docentemateriaUrl = '${createLink(uri:'/panelControlDocente/docentematerias')}';
@@ -44,9 +34,10 @@
 
     </script>
 
-    <title>Panel de control de Docente</title>
+
+  <title></title>
 </head>
 <body>
-<div id="dummydiv"></div>
+
 </body>
 </html>
