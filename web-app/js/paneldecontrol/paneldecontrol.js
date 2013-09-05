@@ -39,6 +39,19 @@ Ext.onReady(function(){
         autoLoad:true
     });
 
+    var storefechaexamenes = new Ext.data.JsonStore({
+        root:'rows',
+        url:fechasexamenesUrl,
+        fields:['id','materia','docente','fechaexamen','tipo','modalidad'],
+        autoLoad:true
+    })
+
+    var storenotasexamenes = new Ext.data.JsonStore({
+        root:'rows',
+        url:fechanotasexamenesUrl,
+        fields:['id','materia','docente','fechaexamen','tipo','modalidad','nota']
+    });
+
     function habilitaUpdateAlumno(){
         Ext.getCmp('boxfotoId').hide();
         Ext.getCmp('imagenId').show();
@@ -1471,6 +1484,90 @@ Ext.onReady(function(){
 
                                 }
                             ]
+                        },{
+                            expanded:true,
+                            items:[
+                                {
+                                    title: 'Exámenes',
+                                    tabTip:'Información sobre exámenes' ,
+                                    style: 'padding: 10px'
+                                },{
+                                    title:'Fechas de Exámenes a Rendir',
+                                    tabTip:'Fechas de exámens',
+                                    style:'padding: 10px' ,
+                                    items:[
+                                        {
+                                          xtype:'form',
+                                          id:'formfechasexamenesId',
+                                          title:'Fechas de Exámenes',
+                                          frame:true,
+                                          height:400,
+                                          width:710,
+                                          style: 'margin:0 auto;margin-top:50px;',
+                                          items:[
+                                              new Ext.grid.GridPanel({
+                                                  id:'gridfechasexamenesId',
+                                                  store: storefechaexamenes,
+                                                  columns: [
+                                                      {header: "id",dataIndex:'id',hidden:true},
+                                                      {header: "Materia",width:200,sortable:false,dataIndex:'materia'},
+                                                      {header: "Docente",width:190,sortable:false,dataIndex:"docente"},
+                                                      {header: "Fecha Examen",width:90,sortable:false,dataIndex:"fechaexamen",renderer: Ext.util.Format.dateRenderer('d/m/y')},
+                                                      {header: "Tipo",width:110,sortable:false,dataIndex:"tipo"},
+                                                      {header: "Modalidad",width:110,sortable:false,dataIndex:"modalidad"}
+                                                  ],
+                                                  height:350,
+                                                  width:700,
+                                                  loadMask:true
+
+                                              })
+                                          ]
+                                        }
+
+                                    ]
+                                },{
+                                    title:'Notas de Exámenes',
+                                    tabTip:'Notas de exámenes',
+                                    style:'padding: 10px',
+                                    items:[
+                                        {
+                                            xtype:'form',
+                                            style: 'margin:0 auto;margin-top:50px;',
+                                            frame:true,
+                                            width:700,
+                                            height:400,
+                                            title:'Notas de Exámenes',
+                                            items:[
+                                                new Ext.grid.GridPanel({
+                                                    id:'gridfechasexamenesId',
+                                                    store: storenotasexamenes,
+                                                    columns: [
+                                                        {header: "id",dataIndex:'id',hidden:true},
+                                                        {header: "Materia",width:200,sortable:false,dataIndex:'materia'},
+                                                        {header: "Docente",width:190,sortable:false,dataIndex:"docente"},
+                                                        {header: "Fecha Examen",width:90,sortable:false,dataIndex:"fechaexamen",renderer: Ext.util.Format.dateRenderer('d/m/y')},
+                                                        {header: "Tipo",width:110,sortable:false,dataIndex:"tipo"},
+                                                        {header: "Modalidad",width:110,sortable:false,dataIndex:"modalidad"},
+                                                        {header: "Nota",width:80,sortable:false,dataIndex:"nota",align:'right',renderer: Ext.util.Format.numberRenderer('00,00/i')}
+                                                    ],
+                                                    height:350,
+                                                    width:680,
+                                                    loadMask:true,
+                                                    bbar: new Ext.PagingToolbar({
+                                                        pageSize: 10,
+                                                        store: storenotasexamenes,
+                                                        displayInfo:true,
+                                                        displayMsg: 'Visualizando registros {0} - {1} de {2}',
+                                                        emptyMsg: 'No hay registros para visualizar'
+                                                    })
+
+                                                })
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+
                         }
                 ]
             }

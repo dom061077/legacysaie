@@ -42,11 +42,6 @@ Ext.onReady(function(){
                 inputType: 'password',
                 fieldLabel: 'Password',
                 name: 'j_password'
-            }, {
-                xtype: 'checkbox',
-                fieldLabel: 'No cerrar sesión',
-                name: '_spring_security_remember_me',
-                checked: false
             }
         ],
         buttons:[
