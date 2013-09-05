@@ -11,6 +11,8 @@ import com.educacion.academico.materia.correlativa.MateriaAprobadaRendir
 import com.educacion.academico.carrera.Carrera
 import grails.converters.JSON
 import com.educacion.enums.EstadoInscripcionEnum
+import com.educacion.academico.examen.Examen
+import com.educacion.enums.EstadoExamen
 
 class PanelControlController {
     def springSecurityService
@@ -375,6 +377,84 @@ class PanelControlController {
         render returnMap as JSON
     }
 
+    def fechasexamenes(){
+        def returnMap = [:]
+        def recordList = []
+        def listExamenes
+        def alumnoInstance = springSecurityService.currentUser?.alumno
+        if (alumnoInstance){
+            listExamenes = Examen.createCriteria().list{
+                cargaExamen{
+                    le("fechaExamen",new java.sql.Date((new Date()).getTime()))
+                }
+                inscripcionDetalle{
+                    inscripcion{
+                        matricula{
+                            alumno{
+                                eq("id",alumnoInstance.id)
+                            }
+                        }
+                    }
+                }
+                eq("estado",EstadoExamen.I)
+            }
+            listExamenes.each{
+                recordList << [id: it.id,materia: it.inscripcionDetalle.materia.denominacion,docente:it.cargaExamen.docente.apellido+', '+it.cargaExamen.docente.nombre,fechaexamen:it.cargaExamen.fechaExamen,tipo:it.cargaExamen.tipo.name,modalidad:it.cargaExamen.modalidad.name]
 
+            }
+        }
+        returnMap.rows = recordList
+        returnMap.total = listExamenes.size()
+        render returnMap as JSON
+    }
+
+    def notasexamenes(){
+        def returnMap=[:]
+        def recordList=[]
+        def alumnoInstance = springSecurityService.currentUser?.alumno
+        def listExamenes
+        def totalRegistros
+        def pagingConfig = [max: params.limit as Integer ?:10, offset: params.start as Integer ?:0]
+        if (alumnoInstance){
+            listExamenes = Examen.createCriteria().list(pagingConfig){
+                cargaExamen{
+                    le("fechaExamen",new java.sql.Date((new Date()).getTime()))
+                }
+                inscripcionDetalle{
+                    inscripcion{
+                        matricula{
+                            alumno{
+                                eq("id",alumnoInstance.id)
+                            }
+                        }
+                    }
+                }
+                ne("estado",EstadoExamen.I)
+            }
+            totalRegistros = Examen.createCriteria().count(){
+                cargaExamen{
+                    le("fechaExamen",new java.sql.Date((new Date()).getTime()))
+                }
+                inscripcionDetalle{
+                    inscripcion{
+                        matricula{
+                            alumno{
+                                eq("id",alumnoInstance.id)
+                            }
+                        }
+                    }
+                }
+                ne("estado",EstadoExamen.I)
+            }
+            listExamenes.each{
+                recordList << [id: it.id,materia: it.inscripcionDetalle.materia.denominacion,docente:it.cargaExamen.docente.apellido+', '+it.cargaExamen.docente.nombre,fechaexamen:it.cargaExamen.fechaExamen,tipo:it.cargaExamen.tipo.name,modalidad:it.cargaExamen.modalidad.name,nota:it.nota]
+
+            }
+
+        }
+        returnMap.rows = recordList
+        returnMap.total = totalRegistros
+        render returnMap as JSON
+    }
 
 }

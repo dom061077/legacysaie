@@ -82,6 +82,8 @@
         var savealumnoUrl = '${createLink(uri:'/alumno/updatejsonpc')}';
         var pdfUrl = '${resource(dir:'/images',file:'pdf.png')}';
         var comprobanteUrl = '${createLink(uri:'/alumno/comprobanteinsc')}';
+        var fechasexamenesUrl = '${createLink(uri:'/panelControl/fechasexamenes')}';
+        var fechanotasexamenesUrl = '${createLink(uri:'/panelControl/notasexamenes')}';
     </script>
     <script type="text/javascript" src="${resource(dir:"js/paneldecontrol",file:"paneldecontrol.js")+'?id='+randomlink}"></script>
     <title>Panel de control</title>
