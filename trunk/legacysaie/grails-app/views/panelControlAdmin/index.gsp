@@ -16,10 +16,15 @@
     <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"Portlet.js")+'?id='+randomlink}"></script>
     <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"RowEditor.js")}"></script>
     <script type="text/javascript" src="${resource(dir:"js/extjs/ux",file:"RowExpander.js")}"></script>
-    <script type="text/javascript" src="${resource(dir:"js/panelcontroldocente",file:"panelcontroldocente.js")+'?id='+randomlink}"></script>
+    <script type="text/javascript" src="${resource(dir:"js/panelcontroladmin",file:"panelcontroladmin.js")+'?id='+randomlink}"></script>
 
     <script type="text/javascript">
-        var docente = '${docenteInstance?.apellido+', '+docenteInstance?.nombre}';
+        var usuario = '${userInstance?.realName}';
+        var usuariosalumnosUrl = '${createLink(uri:'/panelControlAdmin/usuariosalumnos')}';
+        var carreraUrl = '${createLink(uri:'/carrera/listjson')}';
+        var anioslectivosUrl = '${createLink(uri:'/carrera/listaniosjson')}';
+
+
         var docenteId = '${docenteInstance?.id}';
         var logoUrl = '${resource(dir:'reports/images',file:'imagecomprobante.png')}';
         var fechaexamenUrl = '${createLink(uri:'/panelControlDocente/cargaexamenfechaslist')}';
@@ -31,6 +36,7 @@
         var updatenotaUrl = '${createLink(uri:'/panelControlDocente/savenota')}';
         var reporteUrl = '${createLink(uri:'/panelControlDocente/reportealumnosexamenes/')}';
         var pdfUrl = '${resource(dir:'/images',file:'pdf.png')}';
+        
 
     </script>
 

@@ -16,6 +16,7 @@ class Matricula {
     Alumno alumno
     AnioLectivo anioLectivo
 
+    static belongsTo = [alumno:Alumno]
 
     static constraints = {
         comprobante nullable: true, blank: true

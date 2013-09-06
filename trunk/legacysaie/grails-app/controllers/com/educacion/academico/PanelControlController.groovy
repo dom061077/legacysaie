@@ -430,6 +430,11 @@ class PanelControlController {
                     }
                 }
                 ne("estado",EstadoExamen.I)
+                cargaExamen{
+                        order("fechaExamen","desc")
+                }
+
+
             }
             totalRegistros = Examen.createCriteria().count(){
                 cargaExamen{

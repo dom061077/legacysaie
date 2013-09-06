@@ -115,6 +115,24 @@ class CarreraController {
 
     }
 
+    def listaniosjson(){
+        def returnMap = [:]
+        def recordList = []
+        def anios
+        if (params.carrera_id){
+            anios = CarreraAnioLectivo.createCriteria().list {
+                eq("id.carrera.id",params.carrera_id)
+                order("id.anioLectivo.id","desc")
+            }
+            anios.each {
+                recordList << [id: it.id,descripcion:it.anioLectivo.descripcion]
+            }
+        }
+        returnMap.rows = recordList
+        render returnMap as JSON
+    }
+
+
     def cupocarrera(String carreraId,int anioLectivoId){
         def returnMap=[:]
         returnMap.success = true;
