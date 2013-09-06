@@ -49,7 +49,8 @@ Ext.onReady(function(){
     var storenotasexamenes = new Ext.data.JsonStore({
         root:'rows',
         url:fechanotasexamenesUrl,
-        fields:['id','materia','docente','fechaexamen','tipo','modalidad','nota']
+        fields:['id','materia','docente','fechaexamen','tipo','modalidad','nota'],
+        autoLoad:true
     });
 
     function habilitaUpdateAlumno(){
@@ -1502,7 +1503,7 @@ Ext.onReady(function(){
                                           title:'Fechas de Exámenes',
                                           frame:true,
                                           height:400,
-                                          width:710,
+                                          width:700,
                                           style: 'margin:0 auto;margin-top:50px;',
                                           items:[
                                               new Ext.grid.GridPanel({
@@ -1510,20 +1511,18 @@ Ext.onReady(function(){
                                                   store: storefechaexamenes,
                                                   columns: [
                                                       {header: "id",dataIndex:'id',hidden:true},
-                                                      {header: "Materia",width:200,sortable:false,dataIndex:'materia'},
+                                                      {header: "Materia",width:190,sortable:false,dataIndex:'materia'},
                                                       {header: "Docente",width:190,sortable:false,dataIndex:"docente"},
                                                       {header: "Fecha Examen",width:90,sortable:false,dataIndex:"fechaexamen",renderer: Ext.util.Format.dateRenderer('d/m/y')},
                                                       {header: "Tipo",width:110,sortable:false,dataIndex:"tipo"},
-                                                      {header: "Modalidad",width:110,sortable:false,dataIndex:"modalidad"}
+                                                      {header: "Modalidad",width:90,sortable:false,dataIndex:"modalidad"}
                                                   ],
                                                   height:350,
                                                   width:700,
                                                   loadMask:true
-
                                               })
                                           ]
                                         }
-
                                     ]
                                 },{
                                     title:'Notas de Exámenes',
@@ -1543,12 +1542,12 @@ Ext.onReady(function(){
                                                     store: storenotasexamenes,
                                                     columns: [
                                                         {header: "id",dataIndex:'id',hidden:true},
-                                                        {header: "Materia",width:200,sortable:false,dataIndex:'materia'},
-                                                        {header: "Docente",width:190,sortable:false,dataIndex:"docente"},
+                                                        {header: "Materia",width:180,sortable:false,dataIndex:'materia'},
+                                                        {header: "Docente",width:170,sortable:false,dataIndex:"docente"},
                                                         {header: "Fecha Examen",width:90,sortable:false,dataIndex:"fechaexamen",renderer: Ext.util.Format.dateRenderer('d/m/y')},
                                                         {header: "Tipo",width:110,sortable:false,dataIndex:"tipo"},
-                                                        {header: "Modalidad",width:110,sortable:false,dataIndex:"modalidad"},
-                                                        {header: "Nota",width:80,sortable:false,dataIndex:"nota",align:'right',renderer: Ext.util.Format.numberRenderer('00,00/i')}
+                                                        {header: "Modalidad",width:60,sortable:false,dataIndex:"modalidad"},
+                                                        {header: "Nota",width:50,sortable:false,dataIndex:"nota",align:'right',renderer: Ext.util.Format.numberRenderer('00,00/i')}
                                                     ],
                                                     height:350,
                                                     width:680,

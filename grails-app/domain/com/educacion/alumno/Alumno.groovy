@@ -4,6 +4,8 @@ import com.alumno.alumno.TipoDocumentoIdentidad
 import com.educacion.enums.SexoEnum
 //import com.educacion.academico.SituacionAcademica
 import com.educacion.administrativo.SituacionAdministrativa
+import com.educacion.academico.carrera.Matricula
+import com.educacion.seguridad.User
 
 
 class Alumno {
@@ -68,8 +70,10 @@ class Alumno {
     SituacionAdministrativa situacionAdministrativa
     byte[] imagen
 
-    TipoDocumentoIdentidad tipoDocumento
+    User user
 
+    TipoDocumentoIdentidad tipoDocumento
+    static hasMany = [matriculas:Matricula]
     static constraints = {
         numeroDocumento(blank: false,nullable: false)
         apellido(blank: false,nullable: false)
@@ -129,6 +133,8 @@ class Alumno {
         situacionAdministrativa blank:true, nullable: true
         registerconfirm blank: true, nullable:  true
         anioEgreso blank: true, nullable: true
+        
+        user blank:true, nullable: true
     }
 
     static mapping = {
