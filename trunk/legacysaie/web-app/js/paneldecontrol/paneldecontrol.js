@@ -1171,7 +1171,7 @@ Ext.onReady(function(){
                                                                       Ext.getCmp('comboaniolectivolistadoinscId').getStore().load({
                                                                           params:{
                                                                               alumnoId:alumnoId,
-                                                                              carreraId:rowselectedCarrera.get('id')
+                                                                              carreraId:Ext.getCmp('combocarreralistadoinscId').hiddenField.value//rowselectedCarrera.get('id')
                                                                           }
                                                                       });
 

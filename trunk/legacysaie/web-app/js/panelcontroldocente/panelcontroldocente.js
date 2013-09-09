@@ -185,7 +185,7 @@ Ext.onReady(function(){
                                                                                 xtype:'datefield',
                                                                                 fieldLabel:'hasta',
                                                                                 msgTarget:'under',
-                                                                                anchor:'-10 ',
+                                                                                anchor:'-10',
                                                                                 id:'fechaexamenhastaId'
                                                                             }
                                                                         },{
