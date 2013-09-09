@@ -2,6 +2,7 @@ package com.educacion.academico
 
 import com.educacion.enums.SexoEnum
 import com.alumno.alumno.TipoDocumentoIdentidad
+import com.educacion.seguridad.User
 
 class Docente {
     int id
@@ -22,8 +23,11 @@ class Docente {
     String telefonoCelular
     String telefonoMensaje
     String telefonoParticular
+    
+    User user 
 
     static constraints = {
+        user (blank:true,nullable: true)
     }
 
     static mapping ={

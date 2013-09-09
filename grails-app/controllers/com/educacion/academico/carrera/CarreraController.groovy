@@ -125,7 +125,7 @@ class CarreraController {
                 order("id.anioLectivo.id","desc")
             }
             anios.each {
-                recordList << [id: it.id,descripcion:it.anioLectivo.descripcion]
+                recordList << [id: it.anioLectivo.id,descripcion:it.anioLectivo.descripcion]
             }
         }
         returnMap.rows = recordList

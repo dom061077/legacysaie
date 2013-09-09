@@ -1,4 +1,61 @@
+var winalumno;
+function verUsuarioAlumno(){
+    //var gridrecord = pGrid.getSelectionModel().getSelected();
+    //var rowIndex = reservationsGrid.getStore().getAt(gridrecord[1]);
+    if(!winalumno){
+        winalumno = new Ext.Window({
+            layout:'fit',
+            width:500,
+            height:300,
+            modal:true,
+            //closeAction:'hide'
+            plain:true,
+            items:[
+                {
+                    xtype:'form',
+                    frame:true,
+                    border:false,
+                    items:[
+                        {
+                            xtype:'textfield',
+                            fieldLabel:'Nº Documento',
+                            id:'documentoalumnoId',
+                            name:'documentoalumno'
+                        },{
+                            xtype:'textfield',
+                            fieldLabel:'Nombre Docente',
+                            id:'nombrealumnoId',
+                            name:'nombrealumno'
+                        },{
+                            xtype:'textfield',
+                            fieldLabel:'E-mail',
+                            id:'emailalumnoId',
+                            name:'emailalumno'
+                        },{
+                            xtype:'textfield',
+                            fieldLabel:'Tiene Usuario',
+                            id:'tieneusuarioalumnoId',
+                            name:'tieneusuarioalumno'
+                        }
+                    ],buttons:[
+                        {
+                            text:'Crear usuario'
+                        },{
+                            text:'Enviar correo'
+                        },{
+                            text:'Cancelar'
+                            ,handler:function(){
+                                winalumno.close();
+                            }
+                        }
+                    ]
+                }
+            ]
 
+        });
+        winalumno.show();
+    }
+}
 Ext.onReady(function(){
     Ext.QuickTips.init();
 
@@ -42,6 +99,10 @@ Ext.onReady(function(){
         }
     }
 
+
+
+
+
     var nestedRowGrid = new Ext.grid.RowExpander({
         tpl: new Ext.XTemplate('<div class="detailData">','','</div>'),
         listeners:
@@ -59,6 +120,12 @@ Ext.onReady(function(){
         root:'rows',
         url:usuariosalumnosUrl,
         fields:['id','numerodocumento','nombrealumno','email','tieneusuario']
+    });
+
+    var usuariosDocentesStore = new Ext.data.JsonStore({
+        root:'rows',
+        url:usuariosdocentesUrl,
+        fields:['id','numerodocumento','nombredocente','email','tieneusuario']
     });
 
     var viewport = new Ext.Viewport(
@@ -138,6 +205,7 @@ Ext.onReady(function(){
                                                                     id:'combocarreraId',
                                                                     mode:'local',
                                                                     valueField:'id',
+                                                                    hiddenField:'id',
                                                                     editable:false,
                                                                     triggerAction:'all',
                                                                     displayField:'denominacion',
@@ -163,9 +231,11 @@ Ext.onReady(function(){
                                                                     id:'comboaniolectivoId',
                                                                     mode:'local',
                                                                     valueField:'id',
+                                                                    hiddenField:'id',
                                                                     editable:false,
                                                                     triggerAction:'all',
                                                                     displayField:'descripcion',
+                                                                    hiddenName:'aniolectivo_id',
                                                                     store:new Ext.data.JsonStore({
                                                                         root:'rows',
                                                                         url:anioslectivosUrl,
@@ -200,8 +270,9 @@ Ext.onReady(function(){
                                                                                     click:function(){
                                                                                         Ext.getCmp('gridusuariosalumnosId').getStore().load({
                                                                                             params:{
-                                                                                                'fechadesde':Ext.getCmp('fechaexamendesdeId').getRawValue(),
-                                                                                                'fechahasta':Ext.getCmp('fechaexamenhastaId').getRawValue()
+                                                                                                'carrera_id':Ext.getCmp('combocarreraId').hiddenField.value,
+                                                                                                'aniolectivo_id':Ext.getCmp('comboaniolectivoId').hiddenField.value,
+                                                                                                'filtronombre':Ext.getCmp('filtronombrealumnoId').getRawValue()
                                                                                             }
                                                                                         });
                                                                                     }
@@ -218,11 +289,15 @@ Ext.onReady(function(){
                                                             width:690,
                                                             height:250,
                                                             columns: [
-                                                                {header: "Nº de Documento",width:90,sortable:false,dataIndex:'numerodocumento'},
-                                                                {header: "Nombre de Alumno",width:120,sortable:false,dataIndex:'nombrealumno'},
-                                                                {header: "E-mail",width:270,sortable:false,dataIndex:"email"},
-                                                                {header: "Tiene Usuario?",width:270,sortable:false,dataIndex:"tieneusuario"},
-                                                                {header: "Ver",width:270,sortable:false,dataIndex:"id"}
+                                                                {header: "Nº de Documento",width:100,sortable:false,dataIndex:'numerodocumento'},
+                                                                {header: "Nombre de Alumno",width:200,sortable:false,dataIndex:'nombrealumno'},
+                                                                {header: "E-mail",width:100,sortable:false,dataIndex:"email"},
+                                                                {header: "Tiene Usuario?",width:90,sortable:false,dataIndex:"tieneusuario"
+                                                                    ,xtype:'checkcolumn'},
+                                                                {header: "Ver",width:60,sortable:false,dataIndex:"id",
+                                                                    renderer: function (val, meta, record) {
+                                                                    return '<a   href="#" onclick="verUsuarioAlumno()"><img style="margin-left:15px " src="'+pdfUrl+'"></a>';
+                                                                }}
                                                             ],
                                                             loadMask:true,
                                                             bbar: new Ext.PagingToolbar({
@@ -257,161 +332,67 @@ Ext.onReady(function(){
                                             {
                                                 xtype:'form',
                                                 style: 'margin:0 auto;margin-top:50px;',
-                                                title:'Carga de Notas',
+                                                title:'Usuarios Docentes',
                                                 id:'formcargadenotasId',
                                                 frame:true,
-                                                width:650,
-                                                height:450,
+                                                width:700,
+                                                height:400,
                                                 items:[
                                                     {
-                                                        xtype:'combo',
-                                                        fieldLabel:'Año Lectivo',
-                                                        id:'comboaniolectivonotasId',
-                                                        mode:'local',
-                                                        editable:false,
-                                                        displayField:'descripcion',
-                                                        valueField:'id',
-                                                        triggerAction:'all',
-                                                        hiddenName:'aniolectivo_id',
-                                                        store: new Ext.data.JsonStore({
-                                                            root:'rows',
-                                                            url:aniolectivoUrl,
-                                                            fields:['id','descripcion'],
-                                                            autoLoad:true
-                                                        }),
-                                                        listeners:{
-                                                            select:function(combobox,record,index){
-                                                                Ext.getCmp('combomaterianotasId').clearValue();
-                                                                Ext.getCmp('comboexamencargadoId').clearValue();
-                                                                Ext.getCmp('combomaterianotasId').getStore().load({
-                                                                    params:{
-                                                                        //docente_id:docenteId,
-                                                                        aniolectivo_id:Ext.getCmp('comboaniolectivonotasId').hiddenField.value
-                                                                    }
-                                                                });
-                                                                Ext.getCmp('comboexamencargadoId').getStore().load({
-                                                                    params:{
-                                                                        //docente_id:docenteId,
-                                                                        aniolectivo_id:Ext.getCmp('comboaniolectivonotasId').hiddenField.value,
-                                                                        materia_id:0
-                                                                    }
-                                                                });
-
-                                                            }
-                                                        }
-
-                                                    },
-                                                    {
-                                                        xtype:'combo',
-                                                        fieldLabel:'Materia',
-                                                        id:'combomaterianotasId',
-                                                        mode:'local',
-                                                        displayField:'denominacion',
-                                                        editable:false,
-                                                        triggerAction:'all',
-                                                        valueField:'id',
-                                                        width:350,
-                                                        hiddenName:'materia_id',
-                                                        store: new Ext.data.JsonStore({
-                                                            root:'rows',
-                                                            url:docentemateriaUrl,
-                                                            fields:['id','denominacion'],
-                                                            autoLoad:false
-                                                        }),
-                                                        listeners:{
-                                                            select:function(combobox,record,index){
-                                                                Ext.getCmp('comboexamencargadoId').clearValue();
-                                                                Ext.getCmp('comboexamencargadoId').getStore().load({
-                                                                    params:{
-                                                                        //docente_id:docenteId,
-                                                                        aniolectivo_id:Ext.getCmp('comboaniolectivonotasId').hiddenField.value,
-                                                                        materia_id:Ext.getCmp('combomaterianotasId').hiddenField.value
-                                                                    }
-                                                                });
-                                                            }
-                                                        }
-                                                    },
-                                                    {
-                                                        xtype:'combo',
-                                                        fieldLabel:'Examen Cargado',
-                                                        id:'comboexamencargadoId',
-                                                        mode:'local',
-                                                        editable:false,
-                                                        displayField:'descripcion',
-                                                        triggerAction:'all',
-                                                        valueField:'id',
-                                                        width:350,
-                                                        hiddenName:'examencargado_id',
-                                                        store: new Ext.data.JsonStore({
-                                                            root:'rows',
-                                                            url:fechaexamenesnotasUrl,
-                                                            fields:['id','descripcion'],
-                                                            autoLoad:false
-                                                        }),
-                                                        listeners:{
-                                                            select:function(combobox,record,index){
-                                                                Ext.getCmp('gridfechasdeexamenId').setTitle(
-                                                                    Ext.getCmp('comboaniolectivonotasId').getRawValue()+', '
-                                                                        +Ext.getCmp('combomaterianotasId').getRawValue()+', '
-                                                                        +Ext.getCmp('comboexamencargadoId').getRawValue()
-                                                                );
-                                                                Ext.getCmp('gridfechasdeexamenId').getStore().load({
-                                                                    params:{
-                                                                        cargaexamen_id:Ext.getCmp('comboexamencargadoId').hiddenField.value
-                                                                    }
-                                                                });
-                                                            }
-                                                        }
-                                                    }/*,
-
-                                                    new Ext.grid.GridPanel({
-                                                        id:'gridfechasdeexamenId',
-                                                        title:' ',
-                                                        stripeRows:true,
-                                                        store:new Ext.data.JsonStore({
-                                                            reader:new Ext.data.JsonReader({root:'rows',id:'id',fields: RecordNotas}),
-                                                            root:'rows',
-                                                            url:notasexamenesUrl,
-                                                            fields:['id','nombrealumno','nota']
-                                                            ,autoLoad:false
-                                                            ,listeners:{
-                                                                update:function(thisstore,record,operacion){
-                                                                    var conn = new Ext.data.Connection();
-                                                                    conn.request({
-                                                                        url:updatenotaUrl
-                                                                        ,method:'GET'
-                                                                        ,params:{
-                                                                            id:record.data.id
-                                                                            ,nota:record.data.nota
-                                                                        },
-                                                                        success: function(resp,opt){
-                                                                        },
-                                                                        failure: function(resp,opt){
-
+                                                        layout:'column',
+                                                        frame:false,
+                                                        width:500,
+                                                        border:false,
+                                                        items:[
+                                                                {
+                                                                    layout:'form',
+                                                                    border:false,
+                                                                    width:'80%',
+                                                                    items:[
+                                                                        {
+                                                                            xtype:'textfield',
+                                                                            fieldLabel:'Filtrar por Nombre',
+                                                                            labelWidth:250,
+                                                                            anchor:'-10',
+                                                                            id:'filtronombreId'
                                                                         }
-                                                                    });
+                                                                    ]
+                                                                },{
+                                                                    layout:'form',
+                                                                    border:false,
+                                                                    width:'20%',
+                                                                    items:[
+                                                                        {
+                                                                            xtype:'button',
+                                                                            text:'Filtrar'
+                                                                        }
+                                                                    ]
+
                                                                 }
-                                                            }
-                                                        }),
-                                                        plugins: [editor],
-                                                        columns: [
-                                                            {header: "Id",width:100,sortable:false,dataIndex:'id',hidden:true},
-                                                            {header: "Alumno",width:350,sortable:false,dataIndex:'nombrealumno'},
-                                                            {header: "Nota",width:150,sortable:false,dataIndex:"nota"
-                                                                ,xtype:'numbercolumn'
-                                                                ,align:'right',renderer: Ext.util.Format.numberRenderer('0,0.00/i')
-                                                                ,editor:{xtype:'numberfield',allowBlank:false,decimalPrecision:2
-                                                                ,decimalSeparator:'.',maxValue:10,minValue:0}}
-                                                        ],
-                                                        stripeRows: true,
-                                                        height:350,
-                                                        width:600,
-                                                        loadMask:true,
-                                                        iconCls: 'icon-grid',
-                                                        listeners:{
-                                                        }
-                                                    })
-                                                    */
+                                                        ]
+                                                    }, new Ext.grid.GridPanel({
+                                                            id:'gridusuariosdocentesId',
+                                                            store:usuariosDocentesStore,
+                                                            width:690,
+                                                            height:300,
+                                                            columns: [
+                                                                {header: "Nº de Documento",width:100,sortable:false,dataIndex:'numerodocumento'},
+                                                                {header: "Nombre del Docente",width:120,sortable:false,dataIndex:'nombredocente'},
+                                                                {header: "E-mail",width:270,sortable:false,dataIndex:"email"},
+                                                                {header: "Tiene Usuario?",width:100,sortable:false,dataIndex:"tieneusuario"
+                                                                    ,xtype:'checkcolumn'},
+                                                                {header: "Ver",width:80,sortable:false,dataIndex:"id"}
+                                                            ],
+                                                            loadMask:true,
+                                                            bbar: new Ext.PagingToolbar({
+                                                                pageSize: 10,
+                                                                store: usuariosDocentesStore,
+                                                                displayInfo:true,
+                                                                displayMsg: 'Visualizando registros {0} - {1} de {2}',
+                                                                emptyMsg: 'No hay registros para visualizar'
+                                                            })
+
+                                                        })
                                                 ]
                                             }
                                         ]
