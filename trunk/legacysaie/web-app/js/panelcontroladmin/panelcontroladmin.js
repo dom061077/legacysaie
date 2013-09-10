@@ -1,6 +1,6 @@
 var winalumno;
 function verUsuarioAlumno(){
-    //var gridrecord = pGrid.getSelectionModel().getSelected();
+    var gridrecord = Ext.getCmp('gridusuariosalumnosId').getSelectionModel().getSelected();
     //var rowIndex = reservationsGrid.getStore().getAt(gridrecord[1]);
     if(!winalumno){
         winalumno = new Ext.Window({
@@ -14,38 +14,100 @@ function verUsuarioAlumno(){
                 {
                     xtype:'form',
                     frame:true,
+                    id:'formusuarioalumnoId',
+                    url:sendemailUrl,
                     border:false,
                     items:[
                         {
+                            xtype:'hiddenfield',
+                            fieldLabel:'Id',
+                            id:'alumnoId',
+                            name:'id'
+                        },{
                             xtype:'textfield',
                             fieldLabel:'Nº Documento',
                             id:'documentoalumnoId',
+                            width:150,
+                            disabled:true,
                             name:'documentoalumno'
                         },{
                             xtype:'textfield',
-                            fieldLabel:'Nombre Docente',
+                            fieldLabel:'Apellido Alumno',
+                            disabled:true,
+                            id:'apellidoalumnoId',
+                            width:300,
+                            name:'apellidoalumno'
+                        },{
+                            xtype:'textfield',
+                            fieldLabel:'Nombre Alumno',
+                            disabled:true,
                             id:'nombrealumnoId',
+                            width:300,
                             name:'nombrealumno'
                         },{
                             xtype:'textfield',
                             fieldLabel:'E-mail',
+                            disabled:true,
+                            width:150,
                             id:'emailalumnoId',
                             name:'emailalumno'
                         },{
-                            xtype:'textfield',
+                            xtype:'checkbox',
                             fieldLabel:'Tiene Usuario',
+                            disabled:true,
                             id:'tieneusuarioalumnoId',
                             name:'tieneusuarioalumno'
                         }
                     ],buttons:[
                         {
-                            text:'Crear usuario'
-                        },{
-                            text:'Enviar correo'
+                            text:'Enviar correo',
+                            id:'enviarusuarioalumnoformId',
+                            handler:function(){
+                                /*
+                                loadMask.show();
+                                Ext.getCmp('formusuarioalumnoId').getForm().submit({
+                                    success: function(f,a){
+                                        loadMask.hide();
+                                        var respuesta = Ext.decode(resp.response.responseText);
+                                        mensaje = respuesta.msg+'<br><br>';
+                                        Ext.Msg.show({
+                                            title:'Mensajes',
+                                            //icon:Ext.MessageBox.INFO,
+                                            msg: mensaje,
+                                            buttons: Ext.MessageBox.OK,
+                                            fn: function(btn){
+                                                Ext.getCmp('gridcorrelfinId').getStore().load({
+                                                    params:{
+                                                        alumnoId:alumnoId,
+                                                        anioLectivoId:Ext.getCmp('comboaniolectivoId').hiddenField.value,
+                                                        carreraId:Ext.getCmp('combocarreraId').hiddenField.value
+                                                    }});
+
+                                            }
+                                        });
+                                    },
+                                    failure:function(f,a){
+                                        var respuesta = Ext.decode(resp.response.responseText);
+                                        mensaje = respuesta.msg+'<br><br>';
+                                        for(var i=0;i<respuesta.errors.length;i++){
+                                            mensaje = mensaje +'- '+respuesta.errors[i].msg+'<br>';
+                                        }
+                                        Ext.Msg.show({
+                                            title:'Mensajes',
+                                            icon:Ext.MessageBox.ERROR ,
+                                            msg: mensaje,
+                                            buttons: Ext.MessageBox.OK,
+                                            fn: function(btn){
+                                            }
+                                        });
+                                    }
+                                });
+                                */
+                            }
                         },{
                             text:'Cancelar'
                             ,handler:function(){
-                                winalumno.close();
+                                winalumno.hide();
                             }
                         }
                     ]
@@ -53,12 +115,29 @@ function verUsuarioAlumno(){
             ]
 
         });
-        winalumno.show();
     }
+
+    Ext.getCmp('formusuarioalumnoId').getForm().reset();
+    Ext.getCmp('formusuarioalumnoId').getForm().load({
+        url:usuarioalumnoformUrl,
+        params:{
+            id:gridrecord.id
+        },
+        success: function(f,a){
+        },
+        failure: function(f,a){
+            Ext.Msg.show({
+                title:'Error',
+                msg:a.result.mensaje
+            });
+        }
+    });
+    winalumno.show();
+
 }
 Ext.onReady(function(){
     Ext.QuickTips.init();
-
+   // var loadMask = new Ext.LoadMask(Ext.getBody(), {msg:'Enviando Información'});
 
     function processRowExpander(record, body, rowIndex){
         if(Ext.DomQuery.select("div.x-panel-bwrap",body).length==0){

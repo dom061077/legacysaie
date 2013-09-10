@@ -29,9 +29,11 @@
         var anioslectivosUrl = '${createLink(uri:'/carrera/listaniosjson')}';
         var usuariosdocentesUrl = '${createLink(uri:'/panelControlAdmin/usuariosdocentes')}';
         var pdfUrl = '${resource(dir:'/images',file:'pdf.png')}';
+        var usuarioalumnoformUrl = '${createLink(uri:'/panelControlAdmin/usuarioalumnoform')}';
+        var sendemailUrl = '${createLink(uri:'/panelControlAdmin/enviarcorreousuario')}';
 
 
-        var docenteId = '${docenteInstance?.id}';
+        /*var docenteId = '${docenteInstance?.id}';
         var logoUrl = '${resource(dir:'reports/images',file:'imagecomprobante.png')}';
         var fechaexamenUrl = '${createLink(uri:'/panelControlDocente/cargaexamenfechaslist')}';
         var docentemateriaUrl = '${createLink(uri:'/panelControlDocente/docentematerias')}';
@@ -41,6 +43,7 @@
         var notasexamenesUrl = '${createLink(uri:'/panelControlDocente/notasexamen')}';
         var updatenotaUrl = '${createLink(uri:'/panelControlDocente/savenota')}';
         var reporteUrl = '${createLink(uri:'/panelControlDocente/reportealumnosexamenes/')}';
+        */
 
         
 
