@@ -1,4 +1,5 @@
 var winalumno;
+var loadMask = new Ext.LoadMask(Ext.getBody(), {msg:'Enviando Información'});
 function verUsuarioAlumno(){
     var gridrecord = Ext.getCmp('gridusuariosalumnosId').getSelectionModel().getSelected();
     //var rowIndex = reservationsGrid.getStore().getAt(gridrecord[1]);
@@ -19,8 +20,9 @@ function verUsuarioAlumno(){
                     border:false,
                     items:[
                         {
-                            xtype:'hiddenfield',
+                            xtype:'textfield',
                             fieldLabel:'Id',
+                            hidden:true,
                             id:'alumnoId',
                             name:'id'
                         },{
@@ -63,20 +65,19 @@ function verUsuarioAlumno(){
                             text:'Enviar correo',
                             id:'enviarusuarioalumnoformId',
                             handler:function(){
-                                /*
                                 loadMask.show();
                                 Ext.getCmp('formusuarioalumnoId').getForm().submit({
                                     success: function(f,a){
                                         loadMask.hide();
-                                        var respuesta = Ext.decode(resp.response.responseText);
-                                        mensaje = respuesta.msg+'<br><br>';
+                                        var mensaje = a.result.mensaje+'<br><br>';
                                         Ext.Msg.show({
                                             title:'Mensajes',
                                             //icon:Ext.MessageBox.INFO,
                                             msg: mensaje,
                                             buttons: Ext.MessageBox.OK,
                                             fn: function(btn){
-                                                Ext.getCmp('gridcorrelfinId').getStore().load({
+                                                winalumno.hide();
+                                                Ext.getCmp('gridusuariosalumnosId').getStore().load({
                                                     params:{
                                                         alumnoId:alumnoId,
                                                         anioLectivoId:Ext.getCmp('comboaniolectivoId').hiddenField.value,
@@ -87,10 +88,11 @@ function verUsuarioAlumno(){
                                         });
                                     },
                                     failure:function(f,a){
-                                        var respuesta = Ext.decode(resp.response.responseText);
-                                        mensaje = respuesta.msg+'<br><br>';
-                                        for(var i=0;i<respuesta.errors.length;i++){
-                                            mensaje = mensaje +'- '+respuesta.errors[i].msg+'<br>';
+                                        loadMask.hide();
+                                        var mensaje = a.result.mensaje+'<br><br>';
+                                        var errores = a.result.errors;
+                                        for(var i=0;i<errores.length;i++){
+                                            mensaje = mensaje +'- '+errores[i].msg+'<br>';
                                         }
                                         Ext.Msg.show({
                                             title:'Mensajes',
@@ -102,7 +104,6 @@ function verUsuarioAlumno(){
                                         });
                                     }
                                 });
-                                */
                             }
                         },{
                             text:'Cancelar'
@@ -137,7 +138,7 @@ function verUsuarioAlumno(){
 }
 Ext.onReady(function(){
     Ext.QuickTips.init();
-   // var loadMask = new Ext.LoadMask(Ext.getBody(), {msg:'Enviando Información'});
+
 
     function processRowExpander(record, body, rowIndex){
         if(Ext.DomQuery.select("div.x-panel-bwrap",body).length==0){

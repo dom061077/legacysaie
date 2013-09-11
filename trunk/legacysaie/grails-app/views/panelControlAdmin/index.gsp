@@ -30,7 +30,8 @@
         var usuariosdocentesUrl = '${createLink(uri:'/panelControlAdmin/usuariosdocentes')}';
         var pdfUrl = '${resource(dir:'/images',file:'pdf.png')}';
         var usuarioalumnoformUrl = '${createLink(uri:'/panelControlAdmin/usuarioalumnoform')}';
-        var sendemailUrl = '${createLink(uri:'/panelControlAdmin/enviarcorreousuario')}';
+        var sendemailUrl = '${createLink(uri:'/panelControlAdmin/enviarcorreousuarioalumno')}';
+        var cerrarSesionUrl = '${createLink(uri:'/logout')}';
 
 
         /*var docenteId = '${docenteInstance?.id}';

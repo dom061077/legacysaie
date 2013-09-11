@@ -145,5 +145,7 @@ class LoginController {
             redirect(controller: 'panelControl',action:'index')
         if (userInstance.docente)
             redirect(controller: 'panelControlDocente',action: 'index')
+        if (!userInstance.alumno && !userInstance.docente)
+            redirect(controller: 'panelControlAdmin',action: 'index')
     }
 }
