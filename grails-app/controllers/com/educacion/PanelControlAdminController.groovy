@@ -8,6 +8,9 @@ import com.educacion.seguridad.User
 import com.educacion.alumno.Alumno
 import org.springframework.transaction.TransactionStatus
 import org.springframework.context.i18n.LocaleContextHolder
+import com.educacion.seguridad.Role
+import com.educacion.seguridad.UserRole
+import com.educacion.seguridad.User
 
 class PanelControlAdminController {
     def springSecurityService
@@ -117,15 +120,20 @@ class PanelControlAdminController {
         render returnMap as JSON
     }
     
-    def enviarcorreousuario(long id){
+    def enviarcorreousuarioalumno(long id){
         def returnMap = [:]
         def errorList = []
         def alumnoInstance = Alumno.get(id)
         def usuarioInstance
+        def rawPassword = generatePassword()
         if (alumnoInstance){
-            usuarioInstance = new User(username:alumnoInstance.numeroDocumento,realName:alumnoInstance.apellido+', '+alumnoInstance.nombre,enabled: true,alumno: alumnoInstance)
             if (!alumnoInstance.user){
-                    if (!usuarioInstance.save(flush:true)){
+                User.withTransaction{TransactionStatus status->
+                    usuarioInstance = new User(username:alumnoInstance.numeroDocumento,password: rawPassword,realName:alumnoInstance.apellido+', '+alumnoInstance.nombre,enabled: true,alumno: alumnoInstance)
+                    if (!usuarioInstance.save(flush: true)){
+                        alumnoInstance.user = usuarioInstance
+                        alumnoInstance.save()
+                        log.debug "Error al guardar usuarioInstance: "+usuarioInstance.errors.allErrors
                         status.setRollbackOnly()
                         returnMap.success = false
                         returnMap.mensaje = "Error al confirmar el correo"
@@ -134,14 +142,21 @@ class PanelControlAdminController {
                         }
                         returnMap.errors = errorList
                     }else{
-                        
+                        def alumnoRole = Role.findByAuthority("ROLE_ALUMNO")
+                        log.debug "VINCULANDO ROLE CON USUARIO"
+                        UserRole.create(usuarioInstance,alumnoRole)
                     }
+                }
+            }else{
+                alumnoInstance.user.username = alumnoInstance.numeroDocumento
+                alumnoInstance.user.password = rawPassword
+                alumnoInstance.save(flush: true)
             }
             String emailContent = """
-                        Para acceder al panel de control de alumno sus credenciales son:
-                        Usuario: ${usuarioInstance.username}
-                        Contraseña: ${usuarioInstance.password}
-                    """
+                            Para acceder al panel de control de alumno sus credenciales son:
+                            Usuario: ${alumnoInstance.user.username}
+                            Contraseña: ${rawPassword}
+                        """
             try{
                 sendMail{
                     to alumnoInstance.email.toString()
@@ -151,14 +166,28 @@ class PanelControlAdminController {
                 returnMap.success = true
                 returnMap.mensaje = "Correo enviado a la dirección: "+alumnoInstance.email
             }catch(Exception e){
+                log.debug e.message
                 returnMap.success = false
                 returnMap.mensaje = "Error al confirmar el correo"
                 errorList << [msg: "Servicio de correo no disponible"]
 
             }
         }
-
+        log.debug "Returnado el  JSON: "+ returnMap
+        returnMap.errors = errorList
         render returnMap as JSON
+    }
+
+    private String generatePassword(){
+            String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            StringBuilder builder = new StringBuilder();
+            log.debug "BASE ALFANUMERICA"+ ALPHA_NUMERIC_STRING
+            def count = 8
+            while (count-- != 0) {
+                int character = (int)(Math.random()*ALPHA_NUMERIC_STRING.length());
+                builder.append(ALPHA_NUMERIC_STRING.charAt(character));
+            }
+            return builder.toString();
     }
 
 }
