@@ -119,6 +119,83 @@ class PanelControlAdminController {
         
         render returnMap as JSON
     }
+
+    def usuariodocenteform(long id){
+        def returnMap = [:]
+        def docenteInstance = Docente.get(id)
+        if (docenteInstance){
+            returnMap.success = true
+            returnMap.data = [:]
+            returnMap.data.id = docenteInstance.id
+            returnMap.data.documentodocente = docenteInstance.numeroDocumento
+            returnMap.data.apellidodocente = docenteInstance.apellido
+            returnMap.data.nombredocente = docenteInstance.nombre
+            returnMap.data.emaildocente = docenteInstance.email
+            returnMap.data.tieneusuariodocente = (docenteInstance.user == null? false:true)
+        }else{
+            returnMap.success = false
+            returnMap.mensaje = "Error al recuperar datos"
+        }
+
+        render returnMap as JSON
+    }
+
+    def enviarcorreousuariodocente(long id){
+        def returnMap = [:]
+        def errorList = []
+        def docenteInstance = Docente.get(id)
+        def usuarioInstance
+        def rawPassword = generatePassword()
+        if (docenteInstance){
+            if (!docenteInstance.user){
+                User.withTransaction{TransactionStatus status->
+                    usuarioInstance = new User(username:docenteInstance.numeroDocumento,password: rawPassword,realName:docenteInstance.apellido+', '+docenteInstance.nombre,enabled: true,docente: docenteInstance)
+                    if (!usuarioInstance.save(flush: true)){
+                        docenteInstance.user = usuarioInstance
+                        docenteInstance.save()
+                        log.debug "Error al guardar usuarioInstance: "+usuarioInstance.errors.allErrors
+                        status.setRollbackOnly()
+                        returnMap.success = false
+                        returnMap.mensaje = "Error al confirmar el correo"
+                        usuarioInstance.errors.allErrors.each{
+                            errorList << [msg:messageSource.getMessage(it, LocaleContextHolder.locale)]
+                        }
+                        returnMap.errors = errorList
+                    }else{
+                        def alumnoRole = Role.findByAuthority("ROLE_ALUMNO")
+                        log.debug "VINCULANDO ROLE CON USUARIO"
+                        UserRole.create(usuarioInstance,alumnoRole)
+                    }
+                }
+            }else{
+                docenteInstance.user.username = docenteInstance.numeroDocumento
+                docenteInstance.user.password = rawPassword
+                docenteInstance.save(flush: true)
+            }
+            String emailContent = """
+                            Para acceder al panel de control de alumno sus credenciales son: <br>
+                            Usuario: <h1>${docenteInstance.user.username} </h1> <br>
+                            Contraseña: <h1> ${rawPassword} </h1>
+                        """
+            try{
+                sendMail{
+                    to docenteInstance.email.toString()
+                    subject "Usuario Alumno - Colegio Cruz Roja"
+                    html emailContent
+                }
+                returnMap.success = true
+                returnMap.mensaje = "Correo enviado a la dirección: "+docenteInstance.email
+            }catch(Exception e){
+                log.debug e.message
+                returnMap.success = false
+                returnMap.mensaje = "Error al confirmar el correo"
+                errorList << [msg: "Servicio de correo no disponible"]
+
+            }
+        }
+        returnMap.errors = errorList
+        render returnMap as JSON
+    }
     
     def enviarcorreousuarioalumno(long id){
         def returnMap = [:]
@@ -160,7 +237,7 @@ class PanelControlAdminController {
             try{
                 sendMail{
                     to alumnoInstance.email.toString()
-                    subject "Usuario Colegio Cruz Roja"
+                    subject "Usuario Alumno - Colegio Cruz Roja"
                     html emailContent
                 }
                 returnMap.success = true
@@ -179,7 +256,7 @@ class PanelControlAdminController {
     }
 
     private String generatePassword(){
-            String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             StringBuilder builder = new StringBuilder();
             log.debug "BASE ALFANUMERICA"+ ALPHA_NUMERIC_STRING
             def count = 8

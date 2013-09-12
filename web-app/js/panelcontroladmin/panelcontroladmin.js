@@ -1,5 +1,139 @@
 var winalumno;
+var windocente;
 var loadMask = new Ext.LoadMask(Ext.getBody(), {msg:'Enviando Información'});
+
+function verUsuarioDocente(){
+    var gridrecord = Ext.getCmp('gridusuariosdocentesId').getSelectionModel().getSelected();
+    if(!windocente){
+        windocente = new Ext.Window({
+            layout:'fit',
+            width:500,
+            height:300,
+            modal:true,
+            resizable:false,
+            //closeAction:'hide'
+            plain:true,
+            items:[
+                {
+                    xtype:'form',
+                    frame:true,
+                    id:'formusuariodocenteId',
+                    url:sendemaildocenteUrl,
+                    border:false,
+                    items:[
+                        {
+                            xtype:'textfield',
+                            fieldLabel:'Id',
+                            hidden:true,
+                            id:'docenteId',
+                            name:'id'
+                        },{
+                            xtype:'textfield',
+                            fieldLabel:'Nº Documento',
+                            id:'documentodocenteId',
+                            width:150,
+                            disabled:true,
+                            name:'documentodocente'
+                        },{
+                            xtype:'textfield',
+                            fieldLabel:'Apellido Docente',
+                            disabled:true,
+                            id:'apellidodocenteId',
+                            width:300,
+                            name:'apellidodocente'
+                        },{
+                            xtype:'textfield',
+                            fieldLabel:'Nombre Docente',
+                            disabled:true,
+                            id:'nombredocenteId',
+                            width:300,
+                            name:'nombredocente'
+                        },{
+                            xtype:'textfield',
+                            fieldLabel:'E-mail',
+                            disabled:true,
+                            width:150,
+                            id:'emaildocenteId',
+                            name:'emaildocente'
+                        },{
+                            xtype:'checkbox',
+                            fieldLabel:'Tiene Usuario',
+                            disabled:true,
+                            id:'tieneusuarioalumnoId',
+                            name:'tieneusuariodocente'
+                        }
+                    ],buttons:[
+                    {
+                        text:'Enviar correo',
+                        id:'enviarusuariodocenteformId',
+                        handler:function(){
+                            loadMask.show();
+                            Ext.getCmp('formusuariodocenteId').getForm().submit({
+                                success: function(f,a){
+                                    loadMask.hide();
+                                    var mensaje = a.result.mensaje+'<br><br>';
+                                    Ext.Msg.show({
+                                        title:'Mensajes',
+                                        //icon:Ext.MessageBox.INFO,
+                                        msg: mensaje,
+                                        buttons: Ext.MessageBox.OK,
+                                        fn: function(btn){
+                                            windocente.hide();
+                                            Ext.getCmp('gridusuariosdocentesId').getStore().load();
+
+                                        }
+                                    });
+                                },
+                                failure:function(f,a){
+                                    loadMask.hide();
+                                    var mensaje = a.result.mensaje+'<br><br>';
+                                    var errores = a.result.errors;
+                                    for(var i=0;i<errores.length;i++){
+                                        mensaje = mensaje +'- '+errores[i].msg+'<br>';
+                                    }
+                                    Ext.Msg.show({
+                                        title:'Mensajes',
+                                        icon:Ext.MessageBox.ERROR ,
+                                        msg: mensaje,
+                                        buttons: Ext.MessageBox.OK,
+                                        fn: function(btn){
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    },{
+                        text:'Cancelar'
+                        ,handler:function(){
+                            windocente.hide();
+                        }
+                    }
+                ]
+                }
+            ]
+
+        });
+    }
+
+    Ext.getCmp('formusuariodocenteId').getForm().reset();
+    Ext.getCmp('formusuariodocenteId').getForm().load({
+        url:usuariodocenteformUrl,
+        params:{
+            id:gridrecord.id
+        },
+        success: function(f,a){
+        },
+        failure: function(f,a){
+            Ext.Msg.show({
+                title:'Error',
+                msg:a.result.mensaje
+            });
+        }
+    });
+    windocente.show();
+
+}
+
 function verUsuarioAlumno(){
     var gridrecord = Ext.getCmp('gridusuariosalumnosId').getSelectionModel().getSelected();
     //var rowIndex = reservationsGrid.getStore().getAt(gridrecord[1]);
@@ -9,6 +143,7 @@ function verUsuarioAlumno(){
             width:500,
             height:300,
             modal:true,
+            resizable:false,
             //closeAction:'hide'
             plain:true,
             items:[
@@ -16,7 +151,7 @@ function verUsuarioAlumno(){
                     xtype:'form',
                     frame:true,
                     id:'formusuarioalumnoId',
-                    url:sendemailUrl,
+                    url:sendemailalumnoUrl,
                     border:false,
                     items:[
                         {
@@ -376,8 +511,9 @@ Ext.onReady(function(){
                                                                     ,xtype:'checkcolumn'},
                                                                 {header: "Ver",width:60,sortable:false,dataIndex:"id",
                                                                     renderer: function (val, meta, record) {
-                                                                    return '<a   href="#" onclick="verUsuarioAlumno()"><img style="margin-left:15px " src="'+pdfUrl+'"></a>';
-                                                                }}
+                                                                        return '<a   href="#" onclick="verUsuarioAlumno"><img style="margin-left:15px " src="'+pdfUrl+'"></a>';
+                                                                    }
+                                                                }
                                                             ],
                                                             loadMask:true,
                                                             bbar: new Ext.PagingToolbar({
@@ -444,7 +580,17 @@ Ext.onReady(function(){
                                                                     items:[
                                                                         {
                                                                             xtype:'button',
-                                                                            text:'Filtrar'
+                                                                            text:'Filtrar',
+                                                                            listeners:{
+                                                                                click:function(){
+                                                                                    Ext.getCmp('gridusuariosdocentesId').getStore().load({
+                                                                                        params:{
+                                                                                            'filtronombre':Ext.getCmp('filtronombreId').getValue()
+                                                                                        }
+                                                                                    });
+                                                                                }
+                                                                            }
+
                                                                         }
                                                                     ]
 
@@ -461,7 +607,10 @@ Ext.onReady(function(){
                                                                 {header: "E-mail",width:270,sortable:false,dataIndex:"email"},
                                                                 {header: "Tiene Usuario?",width:100,sortable:false,dataIndex:"tieneusuario"
                                                                     ,xtype:'checkcolumn'},
-                                                                {header: "Ver",width:80,sortable:false,dataIndex:"id"}
+                                                                {header: "Ver",width:80,sortable:false,dataIndex:"id",renderer: function (val, meta, record) {
+                                                                    return '<a   href="#" onclick="verUsuarioDocente()"><img style="margin-left:15px " src="'+pdfUrl+'"></a>';
+                                                                    }
+                                                                }
                                                             ],
                                                             loadMask:true,
                                                             bbar: new Ext.PagingToolbar({
@@ -486,4 +635,18 @@ Ext.onReady(function(){
                 }
             ]
         });
+
+    Ext.getCmp('gridusuariosalumnosId').getStore().on('beforeload',function(){
+        Ext.getCmp('gridusuariosalumnosId').getStore().baseParams={
+            'carrera_id':Ext.getCmp('combocarreraId').hiddenField.value,
+            'aniolectivo_id':Ext.getCmp('comboaniolectivoId').hiddenField.value,
+            'filtronombre':Ext.getCmp('filtronombrealumnoId').getRawValue()
+        }
+    });
+    Ext.getCmp('gridusuariosdocentesId').getStore().on('beforeload',function(){
+        Ext.getCmp('gridusuariosdocentesId').getStore().baseParams={
+            'filtronombre':Ext.getCmp('filtronombreId').getValue()
+        };
+    });
+
 });

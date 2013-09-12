@@ -30,7 +30,9 @@
         var usuariosdocentesUrl = '${createLink(uri:'/panelControlAdmin/usuariosdocentes')}';
         var pdfUrl = '${resource(dir:'/images',file:'pdf.png')}';
         var usuarioalumnoformUrl = '${createLink(uri:'/panelControlAdmin/usuarioalumnoform')}';
-        var sendemailUrl = '${createLink(uri:'/panelControlAdmin/enviarcorreousuarioalumno')}';
+        var usuariodocenteformUrl = '${createLink(uri:'/panelControlAdmin/usuariodocenteform')}';
+        var sendemailalumnoUrl = '${createLink(uri:'/panelControlAdmin/enviarcorreousuarioalumno')}';
+        var sendemaildocenteUrl = '${createLink(uri:'/panelControlAdmin/enviarcorreousuariodocente')}';
         var cerrarSesionUrl = '${createLink(uri:'/logout')}';
 
 
