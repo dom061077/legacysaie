@@ -204,6 +204,7 @@ class AlumnoController {
     
     def savejson(){
         log.debug "Parámetros: $params"
+        params.nombre = params.nombre.toString().toString().replace("+"," ")
         def success = true
         def errorList = []
         def mensaje = ''
@@ -229,7 +230,9 @@ class AlumnoController {
                     }
                 }else{
                     String emailContent = """
-                        Usted se ha registrado en la base de datos del colegio Cruz Roja con Nro de Documento: ${alumnoInstance.numeroDocumento}, apellido:<h1> ${alumnoInstance.apellido}, nombre: ${alumnoInstance.nombre}</h1>.<br>
+                        Usted se ha registrado en la base de datos del colegio Cruz Roja con <br>
+                        Nro de Documento: <h1>${alumnoInstance.numeroDocumento}</h1> <br>
+                        Apellido y Nombre:<h1> ${alumnoInstance.apellido}, ${alumnoInstance.nombre}</h1>.<br>
                         Para continuar con la inscripción haga click en el siguiente link: <br>
                         ${request.scheme}://${request.serverName}:${request.serverPort}${request.contextPath}/alumno/confirm/${alumnoInstance.registerconfirm}
                         Si no puede hacer click, copie y pegue el link en la barra de direcciones y luego pulse enter.
@@ -237,7 +240,7 @@ class AlumnoController {
                     try{
                         sendMail{
                             to alumnoInstance.email.toString()
-                            subject "Respuesta de Colegio Cruz Roja"
+                            subject "Respuesta Pre-Inscripción de Colegio Cruz Roja"
                             html emailContent
                         }
                         mensaje = 'Los datos se guardaron correctamente. <br> Revise el correo electrónico que ingresó y siga los pasos indicados alli para completar la preinscripción <br> Si no recibe ningún correo dirijase al colegio'
@@ -558,7 +561,7 @@ class AlumnoController {
                                                     try{
                                                         sendMail{
                                                             to alumnoInstance.email.toString()
-                                                            subject "Respuesta de Colegio Cruz Roja"
+                                                            subject "Respuesta de Colegio Cruz Roja - Comprobante e Pre-inscripción"
                                                             html emailContent
                                                         }
                                                         mensaje = 'La preinscripción se confirmó correctamente.<br>Revise su correo electrónico para obtener el comprobante de preinscripción';

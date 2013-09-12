@@ -172,7 +172,7 @@ Ext.onReady(function(){
 
                                                                             items:{
                                                                                 xtype:'datefield',
-                                                                                fieldLabel:'Fecha desde',
+                                                                                fieldLabel:'Fecha examen desde',
                                                                                 msgTarget:'under',
                                                                                 anchor:'-10 ',
                                                                                 id:'fechaexamendesdeId'
@@ -214,8 +214,8 @@ Ext.onReady(function(){
                                                         new Ext.grid.GridPanel({
                                                             id:'gridfechaexamenesId',
                                                             store:FechaExamenStore,
-                                                            width:700,
-                                                            height:350,
+                                                            width:680,
+                                                            height:320,
                                                             columns: [
                                                                 {header: "Fecha Exámen",width:90,sortable:false,dataIndex:'fecha'},
                                                                 {header: "Año Lectivo",width:120,sortable:false,dataIndex:'aniolectivo'},

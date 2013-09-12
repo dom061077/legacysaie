@@ -39,11 +39,14 @@
 */
 
 
-var errorDoc=true
-var errorCupo=true
+var errorDoc=true ;
+var errorCupo=true;
+var wizard;
 
 var numerodocumentoaux;
 var returnnumdocflag=true;
+
+var loadMask = new Ext.LoadMask(Ext.getBody(), {msg:'Enviando Información'});
 
 Ext.apply(Ext.form.VTypes,{
     cupolimiteText:'No hay cupo disponible para esta carrera',
@@ -169,7 +172,7 @@ Ext.onReady(function(){
         fields:['id','descripcion'],
         autoLoad:true
     });
-    var wizard = new Ext.ux.Wiz({
+    wizard = new Ext.ux.Wiz({
         title:'Registro de Alumno',
         closable:false,
         modal:false
@@ -248,14 +251,14 @@ Ext.onReady(function(){
                         hideLabel:false ,
                         fieldLabel:'Tipo de Documento',
                         msgTarget:'under',
-                        name:'tipodocumento',
+                        name:'tipoDocumento_id',
                         allowBlank:false,
                         triggerAction:'all',
                         layout:'form',
                         width:95,
                         hidden:false,
                         valueField:'id',
-                        hiddenName:'tipodocumento_id',
+                        hiddenName:'tipoDocumento',
                         displayField:'descripcion',
                         mode:'local',
                         store:new Ext.data.JsonStore({
@@ -1031,13 +1034,12 @@ Ext.onReady(function(){
     wizard.on('finish',function(wiz,datos){
         var conn = new Ext.data.Connection();
         Ext.MessageBox.show({
-            msg: 'Guardando datos. Por favor espere...',
-            progressText: 'Guardando...',
+            msg: 'Por favor espere...',
+            progressText: 'Enviando datos...',
             width:300,
             wait:true,
             waitConfig: {interval:200}
         });
-
         conn.request({
             url:'../alumno/savejson',
             method:'POST',
@@ -1051,12 +1053,11 @@ Ext.onReady(function(){
                 ,numeroDocumento: datos.datosdelalumnocarId.numerodocumento
                 ,legajo: datos.datosdelalumnocarId.legajo
                 ,email: datos.datoscontactoacademicoscarId.email
-
-
-
+                ,'tipoDocumento.id': Ext.getCmp('tipodocumentoId').hiddenField.value
             },
             success: function(resp,opt){
                 Ext.MessageBox.hide();
+
 
                 var respuesta = Ext.decode(resp.responseText);
                 var mensaje = respuesta.respuesta.msg+'<br><br>';
@@ -1092,6 +1093,16 @@ Ext.onReady(function(){
 
                 }
                 //('recaptcha_reload_btn')
+            },
+            failure: function(resp,opt){
+                Ext.Msg.show({
+                    title:'Error',
+                    icon:Ext.MessageBox.ERROR ,
+                    msg: 'Error en el registro de datos. Comuníquese vía telefónica con  el colegio',
+                    buttons: Ext.MessageBox.OK,
+                    fn: function(btn){
+                    }
+                });
             }
         });
     });

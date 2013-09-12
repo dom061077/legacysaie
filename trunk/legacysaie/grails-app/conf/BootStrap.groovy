@@ -15,7 +15,7 @@ class BootStrap {
 
 
     void createUsers(){
-        def alumnoInstance = Alumno.get(12)
+        def alumnoInstance = Alumno.get(2255)
         def docenteInstance = Docente.get(2)
         def userDocente = User.findByUsername('userdocente')
         if(!userDocente){
