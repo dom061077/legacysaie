@@ -59,7 +59,7 @@ function verUsuarioDocente(){
                             xtype:'checkbox',
                             fieldLabel:'Tiene Usuario',
                             disabled:true,
-                            id:'tieneusuarioalumnoId',
+                            id:'tieneusuariodocenteId',
                             name:'tieneusuariodocente'
                         }
                     ],buttons:[
@@ -371,7 +371,54 @@ Ext.onReady(function(){
                                     style: 'padding: 10px;'//,
                                     ,items:[
 
-                                ]
+                                    ]
+                                },{
+                                    title:'Cambiar Contraseña',
+                                    layout: 'fit',
+                                    iconCls: 'x-icon-templates',
+                                    tabTip: 'Cambiar password',
+                                    style: 'padding: 10px',
+                                    items: [
+                                        {
+                                            xtype:'panel',
+                                            items:[
+                                                {
+                                                    xtype:'form',
+                                                    title:'Cambio de Contraseña',
+                                                    frame:false,
+                                                    width:400,
+                                                    labelWidth:150,
+                                                    height:200,
+                                                    style: 'margin:0 auto;margin-top:50px;',
+                                                    url:'',
+                                                    items:[
+                                                        {
+                                                            xtype:'textfield',
+                                                            fieldLabel:'Nombre de Usuario',
+                                                            name:'nombreusuario',
+
+                                                            id:'nombreusuarioId'
+                                                        },{
+                                                            xtype:'textfield',
+                                                            fieldLabel:'Contraseña anterior',
+                                                            name:'passwordanterior',
+                                                            id:'passwordanteriorId'
+                                                        },{
+                                                            xtype:'textfield',
+                                                            fieldLabel:'Nueva Contraseña',
+                                                            name:'newpassword',
+                                                            id:'newpasswordId'
+                                                        },{
+                                                            xtype:'textfield',
+                                                            fieldLabel:'Repita Nueva Contraseña',
+                                                            name:'repeatnewpassword',
+                                                            id:'repeatnewpasswordId'
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 },{
                                     title:'Cerrar Sesión',
                                     iconCls: 'x-icon-close-session',
@@ -383,7 +430,6 @@ Ext.onReady(function(){
 
                                         }
                                     }
-
                                 }
                             ]
                         },
@@ -507,11 +553,10 @@ Ext.onReady(function(){
                                                                 {header: "Nº de Documento",width:100,sortable:false,dataIndex:'numerodocumento'},
                                                                 {header: "Nombre de Alumno",width:200,sortable:false,dataIndex:'nombrealumno'},
                                                                 {header: "E-mail",width:100,sortable:false,dataIndex:"email"},
-                                                                {header: "Tiene Usuario?",width:90,sortable:false,dataIndex:"tieneusuario"
-                                                                    ,xtype:'checkcolumn'},
+                                                                {header: "Tiene Usuario?",width:90,sortable:false,dataIndex:"tieneusuario"},
                                                                 {header: "Ver",width:60,sortable:false,dataIndex:"id",
                                                                     renderer: function (val, meta, record) {
-                                                                        return '<a   href="#" onclick="verUsuarioAlumno"><img style="margin-left:15px " src="'+pdfUrl+'"></a>';
+                                                                        return '<a   href="#" onclick="verUsuarioAlumno()"><img style="margin-left:15px " src="'+pdfUrl+'"></a>';
                                                                     }
                                                                 }
                                                             ],
@@ -603,10 +648,9 @@ Ext.onReady(function(){
                                                             height:300,
                                                             columns: [
                                                                 {header: "Nº de Documento",width:100,sortable:false,dataIndex:'numerodocumento'},
-                                                                {header: "Nombre del Docente",width:120,sortable:false,dataIndex:'nombredocente'},
-                                                                {header: "E-mail",width:270,sortable:false,dataIndex:"email"},
-                                                                {header: "Tiene Usuario?",width:100,sortable:false,dataIndex:"tieneusuario"
-                                                                    ,xtype:'checkcolumn'},
+                                                                {header: "Nombre del Docente",width:200,sortable:false,dataIndex:'nombredocente'},
+                                                                {header: "E-mail",width:170,sortable:false,dataIndex:"email"},
+                                                                {header: "Tiene Usuario?",width:100,sortable:false,dataIndex:"tieneusuario"},
                                                                 {header: "Ver",width:80,sortable:false,dataIndex:"id",renderer: function (val, meta, record) {
                                                                     return '<a   href="#" onclick="verUsuarioDocente()"><img style="margin-left:15px " src="'+pdfUrl+'"></a>';
                                                                     }

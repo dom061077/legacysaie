@@ -43,7 +43,7 @@ class PanelControlAdminController {
             }
 
             matriculas.each{
-                recordList << [id:it.id,numerodocumento:it.alumno.numeroDocumento,nombrealumno:it.alumno.apellido+', '+it.alumno.nombre,email:it.alumno.email,tieneusuario:(it.alumno.user==null?false:true)]
+                recordList << [id:it.id,numerodocumento:it.alumno.numeroDocumento,nombrealumno:it.alumno.apellido+', '+it.alumno.nombre,email:it.alumno.email,tieneusuario:(it.alumno.user==null?"No":"Si")]
             }
             totalRegistros = Matricula.createCriteria().count(){
                 carrera{
@@ -90,7 +90,7 @@ class PanelControlAdminController {
             }
         }
         docentes.each{
-            recordList << [id:it.id,numerodocumento: it.numeroDocumento,nombredocente:it.apellido+", "+it.nombre,email: it.email,tieneusuario: (it.user==null?false:true)]
+            recordList << [id:it.id,numerodocumento: it.numeroDocumento,nombredocente:it.apellido+", "+it.nombre,email: it.email,tieneusuario: (it.user==null?"No":"Si")]
         }
 
         returnMap.rows = recordList
