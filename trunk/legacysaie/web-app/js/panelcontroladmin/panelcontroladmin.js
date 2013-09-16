@@ -385,7 +385,7 @@ Ext.onReady(function(){
                                                 {
                                                     xtype:'form',
                                                     title:'Cambio de Contraseña',
-                                                    frame:false,
+                                                    frame:true,
                                                     width:400,
                                                     labelWidth:150,
                                                     height:200,
@@ -396,25 +396,35 @@ Ext.onReady(function(){
                                                             xtype:'textfield',
                                                             fieldLabel:'Nombre de Usuario',
                                                             name:'nombreusuario',
-
                                                             id:'nombreusuarioId'
                                                         },{
                                                             xtype:'textfield',
                                                             fieldLabel:'Contraseña anterior',
                                                             name:'passwordanterior',
+                                                            inputType:'password',
                                                             id:'passwordanteriorId'
                                                         },{
                                                             xtype:'textfield',
                                                             fieldLabel:'Nueva Contraseña',
                                                             name:'newpassword',
+                                                            inputType:'password',
                                                             id:'newpasswordId'
                                                         },{
                                                             xtype:'textfield',
                                                             fieldLabel:'Repita Nueva Contraseña',
                                                             name:'repeatnewpassword',
+                                                            inputType:'password',
                                                             id:'repeatnewpasswordId'
                                                         }
-                                                    ]
+                                                    ],
+                                                    buttons:[
+                                                    {
+                                                        text:'Cambiar'
+                                                    },{
+                                                        text:'Cancelar'
+                                                    }
+                                                ]
+
                                                 }
                                             ]
                                         }
