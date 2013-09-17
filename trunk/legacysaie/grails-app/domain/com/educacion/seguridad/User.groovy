@@ -23,6 +23,7 @@ class User {
 		password blank: false
         alumno blank:true, nullable: true
         docente blank: true,nullable: true
+        realName blank:true,nullable:true
 	}
 
 	static mapping = {
