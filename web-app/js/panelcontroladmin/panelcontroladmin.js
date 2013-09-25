@@ -2,6 +2,29 @@ var winalumno;
 var windocente;
 var loadMask = new Ext.LoadMask(Ext.getBody(), {msg:'Enviando Información'});
 
+
+Ext.apply(Ext.form.VTypes,{
+    changepasswordText:'La contraseña debe combinar letras con al menos un número o caracter especial  (!@#$%^&*()-_=+)',
+    changepassword:function(valor,field){
+        if(!valor.match(/[0-9!@#\$%\^&\*\(\)\-_=\+]+/i)){
+            return false;
+        }
+        if(!valor.match(/[a-zA-Z]+/i)){
+            return false;
+        }
+        if(Ext.getCmp('newpasswordId').getValue()!=Ext.getCmp('repeatnewpasswordId').getValue() &&
+            field.id=='repeatnewpasswordId'){
+            field.vtypeText = 'No coinciden las contraseñas';
+            return false;
+        }
+
+        return true
+    }
+});
+
+
+
+
 function verUsuarioDocente(){
     var gridrecord = Ext.getCmp('gridusuariosdocentesId').getSelectionModel().getSelected();
     if(!windocente){
@@ -385,41 +408,93 @@ Ext.onReady(function(){
                                                 {
                                                     xtype:'form',
                                                     title:'Cambio de Contraseña',
+                                                    url:changepasswordUrl,
+                                                    id:'formpasswordId',
                                                     frame:true,
-                                                    width:400,
+                                                    width:500,
                                                     labelWidth:150,
-                                                    height:200,
+                                                    height:225,
                                                     style: 'margin:0 auto;margin-top:50px;',
-                                                    url:'',
                                                     items:[
                                                         {
                                                             xtype:'textfield',
-                                                            fieldLabel:'Nombre de Usuario',
-                                                            name:'nombreusuario',
+                                                            hidden:true,
+                                                            value:usuarioId,
+                                                            name:'id',
+                                                            allowBlank:false,
                                                             id:'nombreusuarioId'
                                                         },{
                                                             xtype:'textfield',
                                                             fieldLabel:'Contraseña anterior',
                                                             name:'passwordanterior',
+                                                            msgTarget:'under',
+                                                            allowBlank:false,
                                                             inputType:'password',
                                                             id:'passwordanteriorId'
                                                         },{
                                                             xtype:'textfield',
                                                             fieldLabel:'Nueva Contraseña',
                                                             name:'newpassword',
+                                                            msgTarget:'under',
+                                                            allowBlank:false,
                                                             inputType:'password',
-                                                            id:'newpasswordId'
+                                                            id:'newpasswordId'//,
+                                                            //vtype:'changepassword'
                                                         },{
                                                             xtype:'textfield',
                                                             fieldLabel:'Repita Nueva Contraseña',
                                                             name:'repeatnewpassword',
+                                                            msgTarget:'under',
+                                                            allowBlank:false,
                                                             inputType:'password',
-                                                            id:'repeatnewpasswordId'
+                                                            id:'repeatnewpasswordId'//,
+                                                           // vtype:'changepassword'
                                                         }
                                                     ],
                                                     buttons:[
                                                     {
-                                                        text:'Cambiar'
+                                                        text:'Cambiar',
+                                                        handler:function(){
+                                                            var formpassword = Ext.getCmp('formpasswordId');
+                                                            if(formpassword.getForm().isValid()){
+                                                                if(Ext.getCmp('newpasswordId').getValue()!=Ext.getCmp('repeatnewpasswordId').getValue()){
+                                                                    Ext.Msg.show({
+                                                                        title:'Mensaje'
+                                                                        , icon:Ext.MessageBox.ERROR
+                                                                        , msg:'La nueva contraseña no coincide con su repetición'
+                                                                        , buttons:Ext.MessageBox.OK
+                                                                        , fn: function(btn){
+
+                                                                        }
+                                                                    });
+                                                                }else
+                                                                    formpassword.getForm().submit({
+                                                                        success: function(f,a){
+                                                                            Ext.Msg.show({
+                                                                                title:'Mensaje'
+                                                                                ,icon:Ext.MessageBox.INFO
+                                                                                ,buttons: Ext.MessageBox.OK
+                                                                                ,msg:a.result.mensaje
+                                                                            });
+                                                                        },
+                                                                        failure: function(f,a){
+                                                                            var mensaje = a.result.mensaje+'<br><br>';
+                                                                            for(var i=0;i<a.result.errors.length;i++){
+                                                                                mensaje = mensaje +'- '+a.result.errors[i].msg+'<br>';
+                                                                            }
+                                                                            Ext.Msg.show({
+                                                                                title: 'Error'
+                                                                                ,icon:Ext.MessageBox.ERROR
+                                                                                ,msg: mensaje,
+                                                                                buttons: Ext.MessageBox.OK,
+                                                                                fn: function(btn){
+
+                                                                                }
+                                                                            });
+                                                                        }
+                                                                    });
+                                                            }
+                                                        }
                                                     },{
                                                         text:'Cancelar'
                                                     }
