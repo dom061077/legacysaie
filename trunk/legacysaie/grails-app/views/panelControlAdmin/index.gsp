@@ -34,6 +34,8 @@
         var sendemailalumnoUrl = '${createLink(uri:'/panelControlAdmin/enviarcorreousuarioalumno')}';
         var sendemaildocenteUrl = '${createLink(uri:'/panelControlAdmin/enviarcorreousuariodocente')}';
         var cerrarSesionUrl = '${createLink(uri:'/logout')}';
+        var usuarioId = '${userInstance?.id}';
+        var changepasswordUrl = '${createLink(uri:'/panelControlAdmin/changepassword')}';
 
 
         /*var docenteId = '${docenteInstance?.id}';
