@@ -475,6 +475,9 @@ Ext.onReady(function(){
                                                                                 ,icon:Ext.MessageBox.INFO
                                                                                 ,buttons: Ext.MessageBox.OK
                                                                                 ,msg:a.result.mensaje
+                                                                                ,fn:function(btn){
+                                                                                    window.location='';
+                                                                                }
                                                                             });
                                                                         },
                                                                         failure: function(f,a){
