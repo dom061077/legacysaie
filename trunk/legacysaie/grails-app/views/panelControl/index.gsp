@@ -30,6 +30,9 @@
 
 
     <style type="text/css">
+        .x-icon-change-pass{
+            background-image: url('${resource(dir:"images/panelcontrol",file:"Key.png")}');
+        }
         .x-icon-close-session {
             background-image: url('${resource(dir:"images/panelcontrol",file:"close_session.png")}');
         }
@@ -84,6 +87,8 @@
         var comprobanteUrl = '${createLink(uri:'/alumno/comprobanteinsc')}';
         var fechasexamenesUrl = '${createLink(uri:'/panelControl/fechasexamenes')}';
         var fechanotasexamenesUrl = '${createLink(uri:'/panelControl/notasexamenes')}';
+        var usuarioId = '${userInstance?.id}';
+        var changepasswordUrl = '${createLink(uri:'/panelControl/changepassword')}';
     </script>
     <script type="text/javascript" src="${resource(dir:"js/paneldecontrol",file:"paneldecontrol.js")+'?id='+randomlink}"></script>
     <title>Panel de control</title>

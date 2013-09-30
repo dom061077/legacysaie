@@ -667,7 +667,124 @@ Ext.onReady(function(){
 
                                         }
                                     ]
-                                },{
+                                },
+                                {
+                                    title:'Cambiar Contraseña',
+                                    layout: 'fit',
+                                    iconCls: 'x-icon-change-pass',
+                                    tabTip: 'Cambiar password',
+                                    style: 'padding: 10px',
+                                    items: [
+                                        {
+                                            xtype:'panel',
+                                            items:[
+                                                {
+                                                    xtype:'form',
+                                                    title:'Cambio de Contraseña',
+                                                    url:changepasswordUrl,
+                                                    id:'formpasswordId',
+                                                    frame:true,
+                                                    width:500,
+                                                    labelWidth:150,
+                                                    height:225,
+                                                    style: 'margin:0 auto;margin-top:50px;',
+                                                    items:[
+                                                        {
+                                                            xtype:'textfield',
+                                                            hidden:true,
+                                                            value:usuarioId,
+                                                            name:'id',
+                                                            allowBlank:false,
+                                                            id:'nombreusuarioId'
+                                                        },{
+                                                            xtype:'textfield',
+                                                            fieldLabel:'Contraseña anterior',
+                                                            name:'passwordanterior',
+                                                            msgTarget:'under',
+                                                            allowBlank:false,
+                                                            inputType:'password',
+                                                            id:'passwordanteriorId'
+                                                        },{
+                                                            xtype:'textfield',
+                                                            fieldLabel:'Nueva Contraseña',
+                                                            name:'newpassword',
+                                                            msgTarget:'under',
+                                                            allowBlank:false,
+                                                            inputType:'password',
+                                                            id:'newpasswordId'//,
+                                                            //vtype:'changepassword'
+                                                        },{
+                                                            xtype:'textfield',
+                                                            fieldLabel:'Repita Nueva Contraseña',
+                                                            name:'repeatnewpassword',
+                                                            msgTarget:'under',
+                                                            allowBlank:false,
+                                                            inputType:'password',
+                                                            id:'repeatnewpasswordId'//,
+                                                            // vtype:'changepassword'
+                                                        }
+                                                    ],
+                                                    buttons:[
+                                                        {
+                                                            text:'Cambiar',
+                                                            handler:function(){
+                                                                var formpassword = Ext.getCmp('formpasswordId');
+                                                                if(formpassword.getForm().isValid()){
+                                                                    if(Ext.getCmp('newpasswordId').getValue()!=Ext.getCmp('repeatnewpasswordId').getValue()){
+                                                                        Ext.Msg.show({
+                                                                            title:'Mensaje'
+                                                                            , icon:Ext.MessageBox.ERROR
+                                                                            , msg:'La nueva contraseña no coincide con su repetición'
+                                                                            , buttons:Ext.MessageBox.OK
+                                                                            , fn: function(btn){
+
+                                                                            }
+                                                                        });
+                                                                    }else
+                                                                        formpassword.getForm().submit({
+                                                                            success: function(f,a){
+                                                                                Ext.Msg.show({
+                                                                                    title:'Mensaje'
+                                                                                    ,icon:Ext.MessageBox.INFO
+                                                                                    ,buttons: Ext.MessageBox.OK
+                                                                                    ,msg:a.result.mensaje
+                                                                                    ,fn:function(btn){
+                                                                                        window.location='';
+                                                                                    }
+                                                                                });
+                                                                            },
+                                                                            failure: function(f,a){
+                                                                                var mensaje = a.result.mensaje+'<br><br>';
+                                                                                for(var i=0;i<a.result.errors.length;i++){
+                                                                                    mensaje = mensaje +'- '+a.result.errors[i].msg+'<br>';
+                                                                                }
+                                                                                Ext.Msg.show({
+                                                                                    title: 'Error'
+                                                                                    ,icon:Ext.MessageBox.ERROR
+                                                                                    ,msg: mensaje,
+                                                                                    buttons: Ext.MessageBox.OK,
+                                                                                    fn: function(btn){
+
+                                                                                    }
+                                                                                });
+                                                                            }
+                                                                        });
+                                                                }
+                                                            }
+                                                        },{
+                                                            text:'Cancelar'
+                                                            ,handler:function(){
+                                                                window.location='';
+                                                            }
+                                                        }
+                                                    ]
+
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                                ,{
                                     title:'Cerrar Sesión',
                                     iconCls: 'x-icon-close-session',
                                     tabTip: 'Cierra su sesión de Usuario',

@@ -500,6 +500,9 @@ Ext.onReady(function(){
                                                         }
                                                     },{
                                                         text:'Cancelar'
+                                                        ,handler:function(){
+                                                            window.location='';
+                                                        }
                                                     }
                                                 ]
 
@@ -642,9 +645,9 @@ Ext.onReady(function(){
                                                                 {header: "Nombre de Alumno",width:200,sortable:false,dataIndex:'nombrealumno'},
                                                                 {header: "E-mail",width:100,sortable:false,dataIndex:"email"},
                                                                 {header: "Tiene Usuario?",width:90,sortable:false,dataIndex:"tieneusuario"},
-                                                                {header: "Ver",width:60,sortable:false,dataIndex:"id",
+                                                                {header: "Enviar Pass",width:100,sortable:false,dataIndex:"id",
                                                                     renderer: function (val, meta, record) {
-                                                                        return '<a   href="#" onclick="verUsuarioAlumno()"><img style="margin-left:15px " src="'+pdfUrl+'"></a>';
+                                                                        return '<a   href="#" onclick="verUsuarioAlumno()"><img style="margin-left:15px " src="'+mailUrl+'"></a>';
                                                                     }
                                                                 }
                                                             ],
@@ -739,8 +742,8 @@ Ext.onReady(function(){
                                                                 {header: "Nombre del Docente",width:200,sortable:false,dataIndex:'nombredocente'},
                                                                 {header: "E-mail",width:170,sortable:false,dataIndex:"email"},
                                                                 {header: "Tiene Usuario?",width:100,sortable:false,dataIndex:"tieneusuario"},
-                                                                {header: "Ver",width:80,sortable:false,dataIndex:"id",renderer: function (val, meta, record) {
-                                                                    return '<a   href="#" onclick="verUsuarioDocente()"><img style="margin-left:15px " src="'+pdfUrl+'"></a>';
+                                                                {header: "Enviar Pass",width:100,sortable:false,dataIndex:"id",renderer: function (val, meta, record) {
+                                                                    return '<a   href="#" onclick="verUsuarioDocente()"><img style="margin-left:15px " src="'+mailUrl+'"></a>';
                                                                     }
                                                                 }
                                                             ],

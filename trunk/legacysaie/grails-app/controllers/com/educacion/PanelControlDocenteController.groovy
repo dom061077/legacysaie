@@ -4,6 +4,8 @@ import com.educacion.academico.examen.CargaExamen
 import grails.converters.JSON
 import com.educacion.academico.carrera.AnioLectivo
 import com.educacion.academico.examen.Examen
+import com.educacion.seguridad.User
+import org.springframework.context.i18n.LocaleContextHolder
 
 class PanelControlDocenteController {
     def springSecurityService
@@ -184,5 +186,49 @@ class PanelControlDocenteController {
         chain(controller:'jasper',action:'index',model:[data:listExamenes],params:params)
 
     }
+
+    def changepassword(){
+        def usuarioInstance = User.get(params.id)
+        def returnMap=[:]
+        def errorList = []
+        returnMap.success = false
+        returnMap.mensaje = "La contraseña no pudo cambiarse"
+        if (usuarioInstance){
+            if (!params.newpassword.equals(params.repeatnewpassword)){
+                errorList  << [msg: "La nueva contraseña no coincide con su confirmación"]
+            }else{
+                if (!params.newpassword.matches(".*[a-zA-Z].*") || !params.newpassword.matches(".*[1-9!@#\$%^&*()-_=+].*")){
+                    errorList << [msg: "La contraseña debe combinar letras con al menos un número o caracter especial  (!@#\$%^&*()-_=+)"]
+                }else{
+                    usuarioInstance.password = params.newpassword
+                    if (usuarioInstance.save(flush: true)){
+                        returnMap.success = true
+                        returnMap.mensaje = "La contraseña se modificó correctamente"
+                    }else{
+                        usuarioInstance.errors.allErrors.each{
+                            errorList << [msg:messageSource.getMessage(it, LocaleContextHolder.locale)]
+                        }
+                    }
+                }
+            }
+        }else{
+            errorList << [msg: "Usuario no encontrado"]
+        }
+        returnMap.errors = errorList
+        render returnMap as JSON
+    }
+
+    private String generatePassword(){
+        String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder builder = new StringBuilder();
+        log.debug "BASE ALFANUMERICA"+ ALPHA_NUMERIC_STRING
+        def count = 8
+        while (count-- != 0) {
+            int character = (int)(Math.random()*ALPHA_NUMERIC_STRING.length());
+            builder.append(ALPHA_NUMERIC_STRING.charAt(character));
+        }
+        return builder.toString();
+    }
+
 
 }

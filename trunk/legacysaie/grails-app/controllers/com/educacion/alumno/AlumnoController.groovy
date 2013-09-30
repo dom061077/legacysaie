@@ -291,11 +291,11 @@ class AlumnoController {
         returnMap.data.numeroDomicilio = alumnoInstance.numeroDomicilio
         returnMap.data.barrioDomicilio = alumnoInstance.barrioDomicilio
         returnMap.data.paisDomicilio = alumnoInstance.paisDomicilio
-        returnMap.data.paisdomicilio_id = Pais.findByDescripcion(alumnoInstance.paisDomicilio).id
+        returnMap.data.paisdomicilio_id =(alumnoInstance.paisDomicilio!=null?Pais.findByDescripcion(alumnoInstance.paisDomicilio)?.id:0)
         returnMap.data.provinciaDomicilio = alumnoInstance.provinciaDomicilio
-        returnMap.data.provinciadomicilio_id = Provincia.findByDescripcion(alumnoInstance.provinciaDomicilio).id
+        returnMap.data.provinciadomicilio_id = (alumnoInstance.provinciaDomicilio!=null?Provincia.findByDescripcion(alumnoInstance.provinciaDomicilio)?.id:0)
         returnMap.data.localidadDomicilio = alumnoInstance.localidadDomicilio
-        returnMap.data.localidaddomicilio_id = Localidad.findByDescripcion(alumnoInstance.localidadDomicilio).id
+        returnMap.data.localidaddomicilio_id = (alumnoInstance.localidadDomicilio!=null?Localidad.findByDescripcion(alumnoInstance.localidadDomicilio).id:0)
         returnMap.data.celularParticular = alumnoInstance.celularParticular
         returnMap.data.telefonoParticular = alumnoInstance.telefonoParticular
         returnMap.data.telefonoAlternativo = alumnoInstance.telefonoAlternativo
@@ -307,11 +307,11 @@ class AlumnoController {
         returnMap.data.numeroDomicilioLaboral = alumnoInstance.numeroDomicilioLaboral
         returnMap.data.barrioLaboral = alumnoInstance.barrioLaboral
         returnMap.data.paisLaboral = alumnoInstance.paisLaboral
-        returnMap.data.paislaboral_id = Pais.findByDescripcion(alumnoInstance.paisLaboral).id
+        returnMap.data.paislaboral_id = (alumnoInstance.paisLaboral!=null?Pais.findByDescripcion(alumnoInstance.paisLaboral)?.id:0)
         returnMap.data.provinciaLaboral = alumnoInstance.provinciaLaboral
-        returnMap.data.provincialaboral_id = Provincia.findByDescripcion(alumnoInstance.provinciaLaboral).id
+        returnMap.data.provincialaboral_id = (alumnoInstance.provinciaLaboral!=null?Provincia.findByDescripcion(alumnoInstance.provinciaLaboral)?.id:0)
         returnMap.data.localidadLaboral = alumnoInstance.localidadLaboral
-        returnMap.data.localidadlaboral_id = Localidad.findByDescripcion(alumnoInstance.localidadLaboral).id
+        returnMap.data.localidadlaboral_id = (alumnoInstance.localidadLaboral!=null?Localidad.findByDescripcion(alumnoInstance.localidadLaboral).id:0)
         returnMap.data.lugarLaboral = alumnoInstance.lugarLaboral
 
 
