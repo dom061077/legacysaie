@@ -4,7 +4,16 @@ function loginform(form){
                window.location=homeUrl;
         },
         failure:function(form,action){
-               alert(action.result.error);
+               Ext.Msg.show({
+                   title:'Mensaje'
+                   ,icon:Ext.MessageBox.INFO
+                   ,msg:action.result.error
+                   ,buttons:Ext.MessageBox.OK
+                   ,handler:function(){
+                       Ext.getCmp('usernameId').focus(false,200);
+                   }
+
+               });
         }
     });
 }
@@ -41,7 +50,14 @@ Ext.onReady(function(){
                 xtype: 'textfield',
                 inputType: 'password',
                 fieldLabel: 'Password',
-                name: 'j_password'
+                name: 'j_password',
+                enableKeyEvents:true,
+                listeners:{
+                    keypress:function(component,event){
+                        if(event.getCharCode()==13)
+                            loginform(loginForm);
+                    }
+                }
             }
         ],
         buttons:[
@@ -54,7 +70,7 @@ Ext.onReady(function(){
             }
         ]
     });
-    Ext.getCmp('usernameId').focus();
+    Ext.getCmp('usernameId').focus(false,200);
 
 
     /*toolTip = new Ext.ToolTip({
