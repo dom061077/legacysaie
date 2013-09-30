@@ -28,7 +28,7 @@
         var carreraUrl = '${createLink(uri:'/carrera/listjson')}';
         var anioslectivosUrl = '${createLink(uri:'/carrera/listaniosjson')}';
         var usuariosdocentesUrl = '${createLink(uri:'/panelControlAdmin/usuariosdocentes')}';
-        var pdfUrl = '${resource(dir:'/images',file:'pdf.png')}';
+        var mailUrl = '${resource(dir:'/images',file:'email.png')}';
         var usuarioalumnoformUrl = '${createLink(uri:'/panelControlAdmin/usuarioalumnoform')}';
         var usuariodocenteformUrl = '${createLink(uri:'/panelControlAdmin/usuariodocenteform')}';
         var sendemailalumnoUrl = '${createLink(uri:'/panelControlAdmin/enviarcorreousuarioalumno')}';

@@ -17,6 +17,25 @@
     <script type="text/javascript" src="${resource(dir:"js/panelcontroldocente",file:"panelcontroldocente.js")+'?id='+randomlink}"></script>
 
     <style type="text/css">
+    .x-icon-carga-notas{
+        background-image: url('${resource(dir:"images/panelcontrol",file:"Report.png")}');
+    }
+
+
+    .x-icon-fechaexamen{
+        background-image: url('${resource(dir:"images/panelcontrol",file:"Calendar.png")}');
+    }
+
+
+    .x-icon-change-pass{
+        background-image: url('${resource(dir:"images/panelcontrol",file:"Key.png")}');
+    }
+
+    .x-icon-close-session {
+        background-image: url('${resource(dir:"images/panelcontrol",file:"close_session.png")}');
+    }
+
+
     .upload-icon {
         background: url('${resource(dir:'js/extjs/resources/images',file:'image_add.png')}') no-repeat 0 0 !important;
     }
@@ -41,6 +60,9 @@
         var updatenotaUrl = '${createLink(uri:'/panelControlDocente/savenota')}';
         var reporteUrl = '${createLink(uri:'/panelControlDocente/reportealumnosexamenes/')}';
         var pdfUrl = '${resource(dir:'/images',file:'pdf.png')}';
+        var usuarioId = '${userInstance?.id}';
+        var changepasswordUrl = '${createLink(uri:'/panelControl/changepassword')}';
+
 
     </script>
 
