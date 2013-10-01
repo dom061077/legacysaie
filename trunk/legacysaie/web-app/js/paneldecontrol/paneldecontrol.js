@@ -1381,11 +1381,97 @@ Ext.onReady(function(){
                                 items:[
                                 ]
                                 }, {
-                                    title: 'Impresión de Recibos',
+                                    title: 'Impresión de Cupón',
                                     iconCls: 'x-icon-impresion-recibos',
                                     tabTip: 'Impresión de Recibo Rapipago',
-                                    style: 'padding: 10px;'//,
-                                    //html: Ext.example.shortBogusMarkup
+                                    style: 'padding: 10px;',
+                                    items:[
+                                        {
+                                            xtype:'form',
+                                            id:'formcuponpagoId',
+                                            title:'Impresión de Cupón',
+                                            style: 'margin:0 auto;margin-top:50px;',
+                                            frame:true,
+                                            width:500,
+                                            items:[
+                                                {
+                                                    xtype:'combo',
+                                                    fieldLabel:'Carrera',
+                                                    width:200,
+                                                    mode:'local',
+                                                    trigger:'all',
+                                                    editable:false,
+                                                    valueField:'id',
+                                                    displayField:'id',
+                                                    hiddenName:'carreracuponpago_id',
+                                                    store:new Ext.data.JsonStore({
+                                                        root:'rows',
+                                                        url:carreraUrl,
+                                                        fields:['id','denominacion'],
+                                                        baseParams:{
+                                                            alumnoId: alumnoId
+                                                        },
+                                                        autoLoad:true
+                                                    }),
+                                                    name:'carreracuponpago',
+                                                    id:'carreracuponpagoId',
+                                                    listeners:{
+                                                        select:function(combobox,record,index){
+                                                            Ext.getCmp('cuotacuponpagoId').getStore().load({
+                                                                params:{
+                                                                    carrerapar:Ext.getCmp('carreracuponpagoId').hiddenField.value
+                                                                }
+                                                            });
+                                                        }
+                                                    }
+                                                },{
+                                                    xtype:'combo',
+                                                    fieldLabel:'Cuota/Mes',
+                                                    width:200,
+                                                    name:'cuotacuponpago',
+                                                    id:'cuotacuponpagoId',
+                                                    mode:'local',
+                                                    trigger:'all',
+                                                    editable:false,
+                                                    valueField:'id',
+                                                    displayField:'descripcion',
+                                                    hiddenName:'cuotacuponpago_id',
+                                                    store:new Ext.data.JsonStore({
+                                                        root:'rows',
+                                                        url:cuotacuponpagoUrl,
+                                                        fields:['id','descripcion'],
+                                                        autoLoad:false
+                                                    })
+                                                },new Ext.grid.GridPanel({
+                                                    id:'griddescinccuponpagoId',
+                                                    store:new Ext.data.JsonStore({
+                                                        root:'rows',
+                                                        url:correlFinal,
+                                                        fields:[{name:'concepto'},{name:'monto'}],
+                                                        autoLoad:false
+                                                    }),
+                                                    columns: [
+                                                        {header: "id",dataIndex:'id',hidden:true
+                                                        },
+                                                        {header: "Concepto",width:200,sortable:false,dataIndex:'concepto'},
+                                                        {header: "Monto",width:100,sortable:false,dataIndex:"monto"
+                                                            ,align:'right',renderer: Ext.util.Format.numberRenderer('00,00/i')}
+                                                    ],
+                                                    stripeRows: true,
+                                                    height:250,
+                                                    width:500,
+                                                    loadMask:true,
+                                                    title:'Materias a Inscribir',
+
+                                                })
+
+                                            ],buttons:[
+                                                {
+                                                    text:'Imprimir'
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }, {
                                 title: 'Estado de Deudas',
                                 iconCls: 'x-icon-listado-deudas',
@@ -1611,6 +1697,7 @@ Ext.onReady(function(){
                                     style: 'padding: 10px'
                                 },{
                                     title:'Fechas de Exámenes a Rendir',
+                                    iconCls: 'x-icon-fechaexamen',
                                     tabTip:'Fechas de exámens',
                                     style:'padding: 10px' ,
                                     items:[
@@ -1644,6 +1731,7 @@ Ext.onReady(function(){
                                 },{
                                     title:'Notas de Exámenes',
                                     tabTip:'Notas de exámenes',
+                                    iconCls: 'x-icon-carga-notas',
                                     style:'padding: 10px',
                                     items:[
                                         {

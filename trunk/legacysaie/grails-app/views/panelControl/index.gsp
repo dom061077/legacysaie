@@ -89,9 +89,20 @@
         var fechanotasexamenesUrl = '${createLink(uri:'/panelControl/notasexamenes')}';
         var usuarioId = '${userInstance?.id}';
         var changepasswordUrl = '${createLink(uri:'/panelControl/changepassword')}';
+        var cuotacuponpagoUrl='${createLink(uri:'/panelControl/cuotascuponpago')}';
+        var incdescpagocuponUrl = '${createLink(uri:'/panelControl/')}';
     </script>
     <script type="text/javascript" src="${resource(dir:"js/paneldecontrol",file:"paneldecontrol.js")+'?id='+randomlink}"></script>
     <title>Panel de control</title>
+    <style type="text/css">
+        .x-icon-carga-notas{
+            background-image: url('${resource(dir:"images/panelcontrol",file:"Report.png")}');
+        }
+        .x-icon-fechaexamen{
+            background-image: url('${resource(dir:"images/panelcontrol",file:"Calendar.png")}');
+        }
+    </style>
+
 
 </head>
 <body>

@@ -8,13 +8,14 @@ import com.educacion.academico.carrera.InscripcionDetalle
 import com.educacion.enums.EstadoInscripcionDetalleEnum
 import com.educacion.academico.materia.correlativa.MateriaRegularRendir
 import com.educacion.academico.materia.correlativa.MateriaAprobadaRendir
-import com.educacion.academico.carrera.Carrera
+
 import grails.converters.JSON
 import com.educacion.enums.EstadoInscripcionEnum
 import com.educacion.academico.examen.Examen
 import com.educacion.enums.EstadoExamen
 import com.educacion.seguridad.User
 import org.springframework.context.i18n.LocaleContextHolder
+import com.educacion.administrativo.cobranza.Cuota
 
 class PanelControlController {
     def springSecurityService
@@ -507,5 +508,27 @@ class PanelControlController {
         return builder.toString();
     }
 
+    def cuotascuponpago(String carrerapar){
+        def returnMap = [:]
+        def recordList = []
+        def cuotas = Cuota.createCriteria().list{
+            carrera{
+                eq("id",carrerapar)
+            }
+            ge("vencimiento",new java.sql.Date(new Date().getTime()))
+
+        }
+        cuotas.each{
+            recordList << [id: it.id,descripcion:(it.mes.toString()+"/"+it.anio.toString())]
+        }
+        returnMap.success = true
+        returnMap.rows = recordList
+
+        render returnMap as JSON
+    }
+
+    def descinccuponpago(){
+
+    }
 
 }
