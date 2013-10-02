@@ -19,7 +19,7 @@ class MatriculaController {
             }
         }
         matriculas.each {
-            recordList << [id:it.carrera.id,denominacion:it.carrera.denominacion]
+            recordList << [id:it.carrera.id,denominacion:it.carrera.denominacion,matricula: it.id]
         }
         returnMap.rows = recordList
         render returnMap as JSON

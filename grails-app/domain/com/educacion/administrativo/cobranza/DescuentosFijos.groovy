@@ -18,6 +18,6 @@ class DescuentosFijos {
         table 'descuentosfijos'
         version false
         matricula column: 'matricula'
-        descuento columno:'descuento'
+        descuento column: 'descuento'
     }
 }

@@ -12,7 +12,7 @@ import com.educacion.administrativo.cobranza.Cuota
  */
 class CuponPago {
     int id
-    java.sql.Date fechaAlta
+    java.sql.Date fechaAlta = new java.sql.Date(new java.util.Date().getTime())
     Matricula matricula
     Cuota cuota
     int numero
@@ -22,7 +22,7 @@ class CuponPago {
     Double importe1
     Double importe2
     Double importe3
-    boolean pagado
+    boolean pagado = false
     String codigoBarras
     
     static mapping = {
@@ -33,5 +33,16 @@ class CuponPago {
         fechaAlta column:'fechaalta'
         cuota column:'idcuotas'
         codigoBarras column: 'codigobarras'
+    }
+
+    def sigNumero(){
+        def max = CuponPago.executeQuery('select max(numero)+1 from cuponpago')[0]
+        if (max == null)
+            max = 1
+        return max
+    }
+
+    def beforeInsert = {
+        numero = sigNumero()
     }
 }

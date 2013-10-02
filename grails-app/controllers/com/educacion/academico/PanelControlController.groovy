@@ -16,8 +16,16 @@ import com.educacion.enums.EstadoExamen
 import com.educacion.seguridad.User
 import org.springframework.context.i18n.LocaleContextHolder
 import com.educacion.administrativo.cobranza.Cuota
+import com.educacion.administrativo.cobranza.DescuentosFijos
+import com.educacion.academico.carrera.Matricula
+import com.educacion.administrativo.cobranza.CuponPago
+import com.educacion.administrativo.cobranza.Descuento
 
 class PanelControlController {
+    static final String CODIGOBARRA_EMPRESA="0044"
+    static final String CODIGOBARRA_IDENTIFICADORCUENTA="0000000000"
+    static final String CODIGOBARRA_IDENTIFICADORCONCEPTO="1"
+
     def springSecurityService
     def index() {
         Random randomLink = new Random()
@@ -527,8 +535,108 @@ class PanelControlController {
         render returnMap as JSON
     }
 
-    def descinccuponpago(){
-
+    def descinccuponpago(int matriculapar){
+        def returnMap = [:]
+        def recordList = []
+        def descuentos = DescuentosFijos.createCriteria().list {
+            matricula {
+                eq("id",matriculapar)
+            }
+        }
+        
+        descuentos.each{
+            recordList << [concepto: it.descuento.descripcion,monto:it.descuento.importe,tipo:(it.descuento.sumaoresta.equals("1")?"Incremento":"Descuento")]
+        }
+        
+        returnMap.success = true
+        returnMap.rows = recordList
+        render returnMap as JSON
     }
+
+
+    def generarcupon(int matriculapar,int cuotacuponpago_id){
+        def returnMap = [:]
+        def errorList = []
+        def cuponPagoInstance
+        def cuotaInstance = Cuota.get(cuotapar)
+        def matriculaInstance = Matricula.get(matriculapar)
+        if (cuotaInstance && matriculaInstance){
+            def descuentosFijos = DescuentosFijos.createCriteria().list{
+                matricula{
+                    eq("id",matriculapar.toInteger())
+                }
+            }
+            def recargos = 0
+            def descuentos = 0
+            descuentosFijos.each{
+                if(it.descuento.sumaoresta=="1"){
+                    if(it.descuento.importe==null)
+                      recargos = recargos + cuotaInstance.importe*it.descuento.porcentaje/100
+                    else
+                      recargos = recargos + it.descuento.importe
+                }else{
+                    if(it.descuento.importe==null)
+                        descuentos = descuentos + cuotaInstance.importe*it.descuento.porcentaje/100
+                    else
+                        descuentos = descuentos + it.descuento.importe
+                }
+            }
+
+            def montoTotal = cuotaInstance.importe + recargos - descuentos
+            def descuentoCuota = Descuento.findByIncrementoCuota(true)
+            def importe2 = montoTotal + descuentoCuota?.importe
+            def importe3 = montoTotal + descuentoCuota?.importe + descuentoCuota?.importe
+            Calendar cal = Calendar.getInstance()
+            cal.setTime(cuotaInstance.getVencimiento())
+            cal.add(Calendar.DATE,30)
+            def vencimiento1 = cuotaInstance.getVencimiento()
+            def vencimiento2 = new java.sql.Date(cal.getTime())
+            cal.add(Calendar.DATE,30)
+            def vencimiento3 = new java.sql.Date(cal.getTime())
+
+
+            def codigoBarras = CODIGOBARRA_EMPRESA+CODIGOBARRA_IDENTIFICADORCONCEPTO
+                    +String.format("%08d",matriculaInstance.id)
+                    +new java.text.SimpleDateFormat("ddMMyy").format(cuotaInstance.getVencimiento()?.getTime())
+                    +g.formatNumber(number: montoTotal,format: "#######")
+                    +"30"
+                    +g.formatNumber(number: importe2, format: "#######")
+                    +"30"
+                    +g.formatNumber(numbre: importe3, format: "#######")
+                    +CODIGOBARRA_IDENTIFICADORCUENTA
+            def codigoBarrasSecuencia="1"
+            for (int i=1;i <= 13;i++){
+                codigobarrassecuencia+="3579"
+            }
+            codigoBarrasSecuencia = codigoBarrasSecuencia + "3"
+
+            def totalAlgoritmo=0
+            def digitoResultante
+            for (int i=0;i <= 53; i++){
+                totalAlgoritmo+=Integer.parseInt(codigoBarras[i])*Integer.parseInt(codigoBarrasSecuencia[i])
+            }
+            digitoResultante = (totalAlgoritmo / 2) % 10
+            codigoBarras+=digitoResultante.toString()
+            totalAlgoritmo += digitoResultante * 5
+            digitoResultante = (totalAlgoritmo / 2) % 10
+            codigoBarras+=digitoResultante.toString()
+            cuponPagoInstance = new CuponPago(matricula: matriculaInstance, cuota: cuotaInstance
+                        ,vencimiento1: cuotaInstance.vencimiento, vencimiento2: vencimiento2, vencimiento3: vencimiento3
+                        ,importe1: cuotaInstance.importe, importe2: importe2, importe3: importe3,codigoBarras: codigoBarras)
+            if (cuponPagoInstance.save(flush)){
+                returnMap.success = true
+                returnMap.mensaje = "Se generó el cupón"
+            }else{
+                returnMap.success = false
+                returnMap.mensaje = "Error al generar el cupón"
+            }
+        }else{
+
+        }
+        returnMap.errors = errorList
+
+        render returnMap as JSON
+    }
+
 
 }
