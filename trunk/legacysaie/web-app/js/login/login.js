@@ -24,7 +24,7 @@ Ext.onReady(function(){
     var loginForm = new Ext.FormPanel({
         style: 'margin:0 auto;margin-top:100px;',
         url:postLoginUrl,
-        title:'Ingreso al Panel de Control del Alumno',
+        title:'Ingreso a su Panel de Control',
         renderTo:'loginId',
         frame:true,
         width:350,

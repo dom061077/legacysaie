@@ -1,6 +1,7 @@
 Ext.onReady(function(){
     //TO DO EL LOAD DEL FORMULARIO
     Ext.QuickTips.init();
+    var matriculaseleccionadapagocuota;
     var loadMask = new Ext.LoadMask(Ext.getBody(), {msg:'Enviando Información'});
     var storeaux =  new Ext.data.JsonStore({
         root:'rows',
@@ -158,7 +159,7 @@ Ext.onReady(function(){
                     });
                 }
             });
-        }                                 Z
+        }
 
 
     }
@@ -1395,6 +1396,11 @@ Ext.onReady(function(){
                                             width:500,
                                             items:[
                                                 {
+                                                    xtype:'textfield'
+                                                    ,hidden:true
+                                                    ,name:'matriculapar'
+                                                    ,id:'matriculaparId'
+                                                },{
                                                     xtype:'combo',
                                                     fieldLabel:'Carrera',
                                                     width:200,
@@ -1417,6 +1423,7 @@ Ext.onReady(function(){
                                                     id:'carreracuponpagoId',
                                                     listeners:{
                                                         select:function(combobox,record,index){
+                                                            matriculaseleccionadapagocuota = record.json.matricula;
                                                             Ext.getCmp('cuotacuponpagoId').getStore().load({
                                                                 params:{
                                                                     carrerapar:Ext.getCmp('carreracuponpagoId').hiddenField.value
@@ -1441,33 +1448,58 @@ Ext.onReady(function(){
                                                         url:cuotacuponpagoUrl,
                                                         fields:['id','descripcion'],
                                                         autoLoad:false
-                                                    })
+                                                    }),
+                                                    listeners:{
+                                                        select: function(combobox,record,index){
+
+                                                            Ext.getCmp('griddescinccuponpagoId').getStore().load({
+                                                                params:{
+                                                                    matriculapar:matriculaseleccionadapagocuota
+                                                                }
+                                                            });
+                                                        }
+                                                    }
                                                 },new Ext.grid.GridPanel({
                                                     id:'griddescinccuponpagoId',
                                                     store:new Ext.data.JsonStore({
                                                         root:'rows',
-                                                        url:correlFinal,
-                                                        fields:[{name:'concepto'},{name:'monto'}],
+                                                        url:incdescpagocuponUrl,
+                                                        fields:[{name:'concepto'},{name:'monto'},{name:'tipo'}],
                                                         autoLoad:false
                                                     }),
                                                     columns: [
-                                                        {header: "id",dataIndex:'id',hidden:true
-                                                        },
-                                                        {header: "Concepto",width:200,sortable:false,dataIndex:'concepto'},
-                                                        {header: "Monto",width:100,sortable:false,dataIndex:"monto"
+                                                        {header: "Concepto",width:250,sortable:false,dataIndex:'concepto'},
+                                                        {header: "Tipo",width:100,sortable:false,dataIndex:'tipo'},
+                                                        {header: "Monto",width:80,sortable:false,dataIndex:"monto"
                                                             ,align:'right',renderer: Ext.util.Format.numberRenderer('00,00/i')}
+
                                                     ],
                                                     stripeRows: true,
                                                     height:250,
                                                     width:500,
                                                     loadMask:true,
-                                                    title:'Materias a Inscribir',
-
+                                                    title:'Descuentos y Recargos'
                                                 })
 
                                             ],buttons:[
                                                 {
                                                     text:'Imprimir'
+                                                    ,handler:function(){
+                                                        var formCuponPago = Ext.getCmp('formcuponpagoId').getForm();
+                                                        if(formCuponPago.isValid()){
+                                                            loadMask.show();
+                                                            formCuponPago().submit({
+                                                                success: function(f,a){
+                                                                    loadMask.hide();
+
+                                                                },
+                                                                failure: function(f,a){
+                                                                    loadMask.hide();
+
+                                                                }
+                                                            });
+                                                        }
+                                                    }
                                                 }
                                             ]
                                         }

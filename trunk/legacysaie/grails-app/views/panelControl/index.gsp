@@ -90,7 +90,7 @@
         var usuarioId = '${userInstance?.id}';
         var changepasswordUrl = '${createLink(uri:'/panelControl/changepassword')}';
         var cuotacuponpagoUrl='${createLink(uri:'/panelControl/cuotascuponpago')}';
-        var incdescpagocuponUrl = '${createLink(uri:'/panelControl/')}';
+        var incdescpagocuponUrl = '${createLink(uri:'/panelControl/descinccuponpago')}';
     </script>
     <script type="text/javascript" src="${resource(dir:"js/paneldecontrol",file:"paneldecontrol.js")+'?id='+randomlink}"></script>
     <title>Panel de control</title>
