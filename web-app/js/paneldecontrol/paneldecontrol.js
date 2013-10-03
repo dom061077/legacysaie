@@ -1392,6 +1392,7 @@ Ext.onReady(function(){
                                             id:'formcuponpagoId',
                                             title:'Impresión de Cupón',
                                             style: 'margin:0 auto;margin-top:50px;',
+                                            url:cuponpagogeneradorUrl,
                                             frame:true,
                                             width:500,
                                             items:[
@@ -1424,6 +1425,7 @@ Ext.onReady(function(){
                                                     listeners:{
                                                         select:function(combobox,record,index){
                                                             matriculaseleccionadapagocuota = record.json.matricula;
+                                                            Ext.getCmp('matriculaparId').setValue(record.json.matricula);
                                                             Ext.getCmp('cuotacuponpagoId').getStore().load({
                                                                 params:{
                                                                     carrerapar:Ext.getCmp('carreracuponpagoId').hiddenField.value
@@ -1488,14 +1490,22 @@ Ext.onReady(function(){
                                                         var formCuponPago = Ext.getCmp('formcuponpagoId').getForm();
                                                         if(formCuponPago.isValid()){
                                                             loadMask.show();
-                                                            formCuponPago().submit({
+                                                            formCuponPago.submit({
                                                                 success: function(f,a){
                                                                     loadMask.hide();
+                                                                    window.open(reportcuponpagoUrl,'CUPON','target=_blank')
 
                                                                 },
                                                                 failure: function(f,a){
                                                                     loadMask.hide();
-
+                                                                    Ext.Msg.show({
+                                                                        title:'Mensaje'
+                                                                        , icon:Ext.MessageBox.INFO
+                                                                        , msg:a.result.mensaje
+                                                                        , buttons:Ext.MessageBox.OK
+                                                                        , fn: function(btn){
+                                                                        }
+                                                                    });
                                                                 }
                                                             });
                                                         }

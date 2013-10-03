@@ -91,6 +91,8 @@
         var changepasswordUrl = '${createLink(uri:'/panelControl/changepassword')}';
         var cuotacuponpagoUrl='${createLink(uri:'/panelControl/cuotascuponpago')}';
         var incdescpagocuponUrl = '${createLink(uri:'/panelControl/descinccuponpago')}';
+        var cuponpagogeneradorUrl = '${createLink(uri:'/panelControl/generarcupon')}';
+        var reportcuponpagoUrl = '${createLink(uri:'/panelControl/impresioncuponpago/')}';
     </script>
     <script type="text/javascript" src="${resource(dir:"js/paneldecontrol",file:"paneldecontrol.js")+'?id='+randomlink}"></script>
     <title>Panel de control</title>
