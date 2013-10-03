@@ -558,8 +558,11 @@ class PanelControlController {
         def returnMap = [:]
         def errorList = []
         def cuponPagoInstance
-        def cuotaInstance = Cuota.get(cuotapar)
+        def cuotaInstance = Cuota.get(cuotacuponpago_id)
         def matriculaInstance = Matricula.get(matriculapar)
+        def vencimientoRecargo
+        def flagReturn = false
+        def mensajeReturn
         if (cuotaInstance && matriculaInstance){
             def descuentosFijos = DescuentosFijos.createCriteria().list{
                 matricula{
@@ -584,34 +587,32 @@ class PanelControlController {
 
             def montoTotal = cuotaInstance.importe + recargos - descuentos
             def descuentoCuota = Descuento.findByIncrementoCuota(true)
-            def importe2 = montoTotal + descuentoCuota?.importe
-            def importe3 = montoTotal + descuentoCuota?.importe + descuentoCuota?.importe
+            if (descuentoCuota.importe!=null)
+                vencimientoRecargo = descuentoCuota.importe;
+            else{
+                vencimientoRecargo = cuotaInstance.importe*descuentoCuota?.porcentaje/100
+            }
+            def importe2 = montoTotal + vencimientoRecargo
+            def importe3 = montoTotal + vencimientoRecargo + vencimientoRecargo
             Calendar cal = Calendar.getInstance()
             cal.setTime(cuotaInstance.getVencimiento())
             cal.add(Calendar.DATE,30)
             def vencimiento1 = cuotaInstance.getVencimiento()
-            def vencimiento2 = new java.sql.Date(cal.getTime())
+            def vencimiento2 = new java.sql.Date(cal.getTime().getTime())
             cal.add(Calendar.DATE,30)
-            def vencimiento3 = new java.sql.Date(cal.getTime())
+            def vencimiento3 = new java.sql.Date(cal.getTime().getDate())
 
 
-            def codigoBarras = CODIGOBARRA_EMPRESA+CODIGOBARRA_IDENTIFICADORCONCEPTO
-                    +String.format("%08d",matriculaInstance.id)
-                    +new java.text.SimpleDateFormat("ddMMyy").format(cuotaInstance.getVencimiento()?.getTime())
-                    +g.formatNumber(number: montoTotal,format: "#######")
-                    +"30"
-                    +g.formatNumber(number: importe2, format: "#######")
-                    +"30"
-                    +g.formatNumber(numbre: importe3, format: "#######")
-                    +CODIGOBARRA_IDENTIFICADORCUENTA
+            def codigoBarras = CODIGOBARRA_EMPRESA+CODIGOBARRA_IDENTIFICADORCONCEPTO+(100000000+matriculaInstance.id).toString().substring(1,8)+new java.text.SimpleDateFormat("ddMMyy").format(cuotaInstance.getVencimiento()?.getTime()) +(cuotaInstance.importe).toString().substring(1,9).replace('.','')+"30"+(importe2).toString().substring(1,9).replace('.','')+"30"+(importe3).toString().substring(1,9).replace('.','')+CODIGOBARRA_IDENTIFICADORCUENTA
             def codigoBarrasSecuencia="1"
             for (int i=1;i <= 13;i++){
-                codigobarrassecuencia+="3579"
+                codigoBarrasSecuencia+="3579"
             }
             codigoBarrasSecuencia = codigoBarrasSecuencia + "3"
 
             def totalAlgoritmo=0
             def digitoResultante
+            log.debug ('Codigo de barras:'+codigoBarras+' codigo de barras secuencia: '+codigoBarrasSecuencia)
             for (int i=0;i <= 53; i++){
                 totalAlgoritmo+=Integer.parseInt(codigoBarras[i])*Integer.parseInt(codigoBarrasSecuencia[i])
             }
@@ -620,23 +621,40 @@ class PanelControlController {
             totalAlgoritmo += digitoResultante * 5
             digitoResultante = (totalAlgoritmo / 2) % 10
             codigoBarras+=digitoResultante.toString()
-            cuponPagoInstance = new CuponPago(matricula: matriculaInstance, cuota: cuotaInstance
-                        ,vencimiento1: cuotaInstance.vencimiento, vencimiento2: vencimiento2, vencimiento3: vencimiento3
-                        ,importe1: cuotaInstance.importe, importe2: importe2, importe3: importe3,codigoBarras: codigoBarras)
+            cuponPagoInstance = new CuponPago(matricula: matriculaInstance, cuota: cuotaInstance,vencimiento1: cuotaInstance.vencimiento, vencimiento2: vencimiento2, vencimiento3: vencimiento3,importe1: cuotaInstance.importe, importe2: importe2, importe3: importe3,codigoBarras: codigoBarras)
             if (cuponPagoInstance.save(flush)){
-                returnMap.success = true
-                returnMap.mensaje = "Se generó el cupón"
+                flagReturn = true
+                mensajeReturn = "Se generó el cupón"
             }else{
-                returnMap.success = false
+                flagReturn = false
                 returnMap.mensaje = "Error al generar el cupón"
+                cuponPagoInstance.errors.allErrors.each{
+                    errorList << [msg:messageSource.getMessage(it, LocaleContextHolder.locale)]
+                }
+
             }
         }else{
-
+            mensajeReturn = "Matrícula no encontrada"
         }
         returnMap.errors = errorList
-
+        returnMap.success = flagReturn
+        returnMap.mensaje = mensajeReturn
         render returnMap as JSON
     }
 
+    def impresioncuponpago(int id){
+        def cuponPagoInstance = CuponPago.get(id)
+        def list = new ArrayList()
+        String reportPath = servletContext.getRealPath("/reports/")
+        if (cuponPagoInstance){
+            list.add(cuponPagoInstance)
+        }
+        params.put("_format","PDF")
+        params.put("_file","cuponrapipago")
+        params.put("_name","cuponrapipago")
+        params.put("REPORTPATH",reportPath)
+        chain(controller:'jasper',action:'index',model:[data:list],params:params)
+
+    }
 
 }
