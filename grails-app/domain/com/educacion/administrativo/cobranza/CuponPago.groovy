@@ -36,7 +36,7 @@ class CuponPago {
     }
 
     def sigNumero(){
-        def max = CuponPago.executeQuery('select max(numero)+1 from cuponpago')[0]
+        def max = CuponPago.executeQuery('select max(numero)+1 from CuponPago')[0]
         if (max == null)
             max = 1
         return max
