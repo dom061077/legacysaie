@@ -1493,7 +1493,7 @@ Ext.onReady(function(){
                                                             formCuponPago.submit({
                                                                 success: function(f,a){
                                                                     loadMask.hide();
-                                                                    window.open(reportcuponpagoUrl,'CUPON','target=_blank')
+                                                                    window.open(reportcuponpagoUrl+a.result.identificador,'CUPON','target=_blank')
 
                                                                 },
                                                                 failure: function(f,a){
@@ -1515,11 +1515,59 @@ Ext.onReady(function(){
                                         }
                                     ]
                                 }, {
-                                title: 'Estado de Deudas',
-                                iconCls: 'x-icon-listado-deudas',
-                                tabTip: 'Listado de Deudas',
-                                style: 'padding: 10px;'//,
-                                //html: Ext.example.shortBogusMarkup
+                                    title: 'Reimpresión de Cupón',
+                                    iconCls: 'x-icon-listado-deudas',
+                                    tabTip: 'Permite reimprimir cupones',
+                                    style: 'padding: 10px;',
+                                    items:[
+                                        {
+                                            xtype:'form',
+                                            frame:true,
+                                            style: 'margin:0 auto;margin-top:50px;',
+                                            items:[
+                                                new Ext.grid.GridPanel({
+                                                    id:'gridcorrelcurId',
+                                                    stripeRows:true,
+                                                    store:new Ext.data.JsonStore({
+                                                        root:'rows',
+                                                        url:correlCursar,
+                                                        fields:[{name:'id'},{name:'denominacion'},{name:'nivel'},{name:'seleccionada',type:'bool'}],
+                                                        autoLoad:false
+                                                    }),
+                                                    columns: [
+                                                        {header: "id",dataIndex:'id',hidden:true},
+                                                        {header: "Denominación",width:200,sortable:false,dataIndex:'denominacion'},
+                                                        {header: "Nivel",width:100,sortable:false,dataIndex:"nivel"},
+                                                        {
+                                                            xtype: 'checkcolumn',
+                                                            header: 'Seleccionada',
+                                                            dataIndex: 'seleccionada',
+                                                            width: 70,
+                                                            editor:{
+                                                                xtype:'checkbox'
+                                                            }
+                                                        }
+                                                    ],
+                                                    stripeRows: true,
+                                                    height:250,
+                                                    width:500,
+                                                    loadMask:true,
+
+                                                    title:'Materias a Inscribir',
+                                                    iconCls: 'icon-grid',
+                                                    listeners:{
+                                                    }
+                                                })
+                                            ]
+                                        }
+                                    ]
+
+                                }, {
+                                    title: 'Estado de Deudas',
+                                    iconCls: 'x-icon-listado-deudas',
+                                    tabTip: 'Listado de Deudas',
+                                    style: 'padding: 10px;'//,
+                                    //html: Ext.example.shortBogusMarkup
                                 }
                             ]
                         },{

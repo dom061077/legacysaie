@@ -603,15 +603,15 @@ class PanelControlController {
             def vencimiento3 = new java.sql.Date(cal.getTime().getDate())
 
 
-            def codigoBarras = CODIGOBARRA_EMPRESA+CODIGOBARRA_IDENTIFICADORCONCEPTO+(100000000+matriculaInstance.id).toString().substring(1,8)+new java.text.SimpleDateFormat("ddMMyy").format(cuotaInstance.getVencimiento()?.getTime()) +(cuotaInstance.importe).toString().substring(1,9).replace('.','')+"30"+(importe2).toString().substring(1,9).replace('.','')+"30"+(importe3).toString().substring(1,9).replace('.','')+CODIGOBARRA_IDENTIFICADORCUENTA
+            def codigoBarras = CODIGOBARRA_EMPRESA+CODIGOBARRA_IDENTIFICADORCONCEPTO+(100000000+matriculaInstance.id).toString().substring(1,9)+new java.text.SimpleDateFormat("ddMMyy").format(cuotaInstance.getVencimiento()?.getTime())+String.format("%.2f",100000+cuotaInstance.importe).replace('.','').replace(',','').substring(1,8)+"30"+String.format("%.2f",100000+importe2).replace('.','').replace(',','').substring(1,8)+"30"+String.format("%.2f",100000+importe3).replace('.','').replace(',','').substring(1,8)+CODIGOBARRA_IDENTIFICADORCUENTA
             def codigoBarrasSecuencia="1"
             for (int i=1;i <= 13;i++){
                 codigoBarrasSecuencia+="3579"
             }
             codigoBarrasSecuencia = codigoBarrasSecuencia + "3"
 
-            def totalAlgoritmo=0
-            def digitoResultante
+            double totalAlgoritmo=0
+            int digitoResultante
             log.debug ('Codigo de barras:'+codigoBarras+' codigo de barras secuencia: '+codigoBarrasSecuencia)
             for (int i=0;i <= 53; i++){
                 totalAlgoritmo+=Integer.parseInt(codigoBarras[i])*Integer.parseInt(codigoBarrasSecuencia[i])
@@ -622,9 +622,10 @@ class PanelControlController {
             digitoResultante = (totalAlgoritmo / 2) % 10
             codigoBarras+=digitoResultante.toString()
             cuponPagoInstance = new CuponPago(matricula: matriculaInstance, cuota: cuotaInstance,vencimiento1: cuotaInstance.vencimiento, vencimiento2: vencimiento2, vencimiento3: vencimiento3,importe1: cuotaInstance.importe, importe2: importe2, importe3: importe3,codigoBarras: codigoBarras)
-            if (cuponPagoInstance.save(flush)){
+            if (cuponPagoInstance.save(flush:true)){
                 flagReturn = true
                 mensajeReturn = "Se generó el cupón"
+                returnMap.identificador = cuponPagoInstance.id
             }else{
                 flagReturn = false
                 returnMap.mensaje = "Error al generar el cupón"
