@@ -648,6 +648,9 @@ class PanelControlController {
         def list = new ArrayList()
         String reportPath = servletContext.getRealPath("/reports/")
         if (cuponPagoInstance){
+            log.debug cuponPagoInstance.matricula.carrera.denominacion
+            log.debug cuponPagoInstance.matricula.alumno.apellido
+            log.debug cuponPagoInstance.cuota.mes
             list.add(cuponPagoInstance)
         }
         params.put("_format","PDF")
