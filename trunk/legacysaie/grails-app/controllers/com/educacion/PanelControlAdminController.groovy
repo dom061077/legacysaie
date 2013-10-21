@@ -220,10 +220,16 @@ class PanelControlAdminController {
                             errorList << [msg:messageSource.getMessage(it, LocaleContextHolder.locale)]
                         }
                         returnMap.errors = errorList
+                        returnMap.success = false
+                        log.debug "ERROR AL CONFIRMAR USUARIO ALUMNO: "+usuarioInstance.errors.allErrors
+                        returnMap.errors = errorList
+                        render returnMap as JSON
+                        return
                     }else{
                         def alumnoRole = Role.findByAuthority("ROLE_ALUMNO")
                         log.debug "VINCULANDO ROLE CON USUARIO"
                         UserRole.create(usuarioInstance,alumnoRole)
+                        alumnoInstance.user = usuarioInstance
                     }
                 }
             }else{
