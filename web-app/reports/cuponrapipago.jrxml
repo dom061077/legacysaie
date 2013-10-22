@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cuponrapipago" language="groovy" pageWidth="595" pageHeight="421" orientation="Landscape" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="264"/>
 	<parameter name="REPORTPATH" class="java.lang.String"/>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="fechaAlta" class="java.sql.Date"/>
@@ -20,6 +20,7 @@
 	<field name="matricula.alumno.numeroDocumento" class="java.lang.String"/>
 	<field name="matricula.alumno.apellido" class="java.lang.String"/>
 	<field name="matricula.alumno.nombre" class="java.lang.String"/>
+	<field name="codigoBarrasConvertido" class="java.lang.String"/>
 	<detail>
 		<band height="421" splitType="Stretch">
 			<rectangle>
@@ -429,16 +430,16 @@
 				<text><![CDATA[FUERA DE VENCIMIENTO, UNICAMENTE EN INSTITUTO]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="11" y="353" width="270" height="10"/>
+				<reportElement x="11" y="353" width="270" height="29"/>
 				<textElement>
-					<font fontName="Arial" size="7"/>
+					<font fontName="PF Interleaved 2 of 5" size="24"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Double"><![CDATA[$F{codigoBarras}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="306" y="353" width="270" height="10"/>
+				<reportElement x="306" y="353" width="270" height="29"/>
 				<textElement>
-					<font fontName="Arial" size="7"/>
+					<font fontName="PF Interleaved 2 of 5" size="24"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Double"><![CDATA[$F{codigoBarras}]]></textFieldExpression>
 			</textField>

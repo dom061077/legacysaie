@@ -191,7 +191,7 @@ class PanelControlAdminController {
                 log.debug e.message
                 returnMap.success = false
                 returnMap.mensaje = "Error al confirmar el correo"
-                errorList << [msg: "Servicio de correo no disponible"]
+                errorList << [msg: "Verifique que el Servicio de correo esté disponible y que el alumno tenga un e-mail cargado"]
 
             }
         }
@@ -254,7 +254,7 @@ class PanelControlAdminController {
                 log.debug e.message
                 returnMap.success = false
                 returnMap.mensaje = "Error al confirmar el correo"
-                errorList << [msg: "Servicio de correo no disponible"]
+                errorList << [msg: "Verifique que el Servicio de correo esté disponible y que el docente tenga un e-mail cargado"]
 
             }
         }
