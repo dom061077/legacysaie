@@ -651,6 +651,7 @@ class PanelControlController {
             log.debug cuponPagoInstance.matricula.carrera.denominacion
             log.debug cuponPagoInstance.matricula.alumno.apellido
             log.debug cuponPagoInstance.cuota.mes
+            log.debug cuponPagoInstance.codigoBarrasConvertido
             list.add(cuponPagoInstance)
         }
         params.put("_format","PDF")
