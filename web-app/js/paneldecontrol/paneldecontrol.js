@@ -1562,13 +1562,13 @@ Ext.onReady(function(){
                                         }
                                     ]
 
-                                }, {
+                                }/*, {
                                     title: 'Estado de Deudas',
                                     iconCls: 'x-icon-listado-deudas',
                                     tabTip: 'Listado de Deudas',
                                     style: 'padding: 10px;'//,
                                     //html: Ext.example.shortBogusMarkup
-                                }
+                                }*/
                             ]
                         },{
                             expanded:true,

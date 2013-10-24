@@ -30,15 +30,15 @@ class CuponPago {
         int posicion = 1;
         String textoFinal = "";
         String texto = codigoBarras
-        
+
         for (int i = texto.length() - 1; i > -1; i--)
         {
             //sumaDigitoVerif = sumaDigitoVerif + Convert.ToInt32(texto.Substring(i, 1)) * (posicion % 2 == 0 ? 1 : 3);
-            sumaDigitoVerif = sumaDigitoVerif + texto.substring(i,1).toInteger() * (posicion % 2 == 0 ? 1 : 3);
+            sumaDigitoVerif = sumaDigitoVerif + texto.substring(i,i+1).toInteger() * (posicion % 2 == 0 ? 1 : 3);
             posicion++;
         }
         //aqui agrego el dígito verificador a la cadena original/
-        texto = texto + (sumaDigitoVerif % 10 == 0 ? 0 : (10 - sumaDigitoVerif % 10)).ToString();
+        texto = texto + (sumaDigitoVerif % 10 == 0 ? 0 : (10 - sumaDigitoVerif % 10)).toString()
         //DigitoVerificador_tmp = (sumaDigitoVerif % 10 == 0 ? 0 : (10 - sumaDigitoVerif % 10)).ToString();
 
         //la longitud de la cadena debe ser par
@@ -46,14 +46,12 @@ class CuponPago {
             texto = "0" + texto;
 
         //Convierto los caracteres
-
-        for (int i = 0; i < texto.Length; i += 2)
+        for (int i = 0; i < texto.length(); i += 2)
         {
-            //if (Convert.ToInt32(texto.Substring(i, 2)) < 50)
-            if (Convert.ToInt32(texto.Substring(i, 2)) < 50)
-                textoFinal = textoFinal + (char)(Convert.ToInt32(texto.Substring(i, 2)) + 48);
+            if ( Integer.parseInt(texto.substring(i, i+2)) < 50)
+                textoFinal = textoFinal + (char)(Integer.parseInt(texto.substring(i,i+2)) + 48);
             else
-                textoFinal = textoFinal + (char)(Convert.ToInt32(texto.Substring(i, 2)) + 142);
+                textoFinal = textoFinal + (char)(Integer.parseInt(texto.substring(i,i+2)) + 142);
         }
         textoFinal = "(" + textoFinal + ")";
         return textoFinal;
