@@ -20,7 +20,7 @@ environments {
 						driverClassName = "com.mysql.jdbc.Driver"
 						username = "root"
 						password = "exito"
-					    dbCreate = "update" // one of 'create', 'create-drop','update'
+					    //dbCreate = "update" // one of 'create', 'create-drop','update'
 			            url = "jdbc:mysql://localhost/cruzroja"
 			            
 			     }
@@ -34,8 +34,14 @@ environments {
     production {
         dataSource {
             //dbCreate = "update"
-            url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
+            //url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
             pooled = true
+            driverClassName = "com.mysql.jdbc.Driver"
+            username = "root"
+            password = "exito"
+            //dbCreate = "update" // one of 'create', 'create-drop','update'
+            url = "jdbc:mysql://localhost/cruzroja"
+
             properties {
                maxActive = -1
                minEvictableIdleTimeMillis=1800000

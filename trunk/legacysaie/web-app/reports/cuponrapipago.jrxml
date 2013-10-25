@@ -432,16 +432,16 @@
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="11" y="353" width="270" height="29"/>
 				<textElement>
-					<font fontName="PF Interleaved 2 of 5" size="24"/>
+					<font fontName="PF Interleaved 2 of 5" size="14"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{codigoBarras}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{codigoBarrasConvertido}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="306" y="353" width="270" height="29"/>
 				<textElement>
-					<font fontName="PF Interleaved 2 of 5" size="24"/>
+					<font fontName="PF Interleaved 2 of 5" size="14"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{codigoBarras}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{codigoBarrasConvertido}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="11" y="393" width="47" height="10"/>
