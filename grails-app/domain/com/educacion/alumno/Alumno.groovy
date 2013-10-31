@@ -78,7 +78,7 @@ class Alumno {
         numeroDocumento(blank: false,nullable: false)
         apellido(blank: false,nullable: false)
         nombre(blank: false,nullable: false)
-        imagen(blank: true,nullable: true, maxSize:1024*30)
+        imagen(blank: true,nullable: true, maxSize:1024*300)
 
 
         tipoDocumento blank:true, nullable: true
@@ -135,6 +135,7 @@ class Alumno {
         anioEgreso blank: true, nullable: true
         
         user blank:true, nullable: true
+        legajo blank:true, nullable: true
     }
 
     static mapping = {
