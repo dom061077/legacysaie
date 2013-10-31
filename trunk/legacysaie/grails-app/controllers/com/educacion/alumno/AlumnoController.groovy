@@ -22,6 +22,9 @@ import com.educacion.enums.EstadoInscripcionEnum
 import com.educacion.academico.carrera.InscripcionDetalle
 import com.educacion.enums.EstadoInscripcionDetalleEnum
 import com.educacion.enums.TipoInscripcionDetalleEnum
+import org.imgscalr.Scalr
+import javax.imageio.ImageIO
+
 
 
 class AlumnoController {
@@ -177,13 +180,15 @@ class AlumnoController {
             def imagen = request.getFile('imagenphoto')
             if (!imagen.isEmpty()){
                 log.debug "HAY IMAGEN SELECCIONADA, clase del archivo: "+imagen.class
-                alumnoInstance.imagen = imagen.getBytes()
+                imagen=Scalr.resize(ImageIO.read(imagen.getInputStream()),50)
+                alumnoInstance.imagen = imagen.
             }else
                 alumnoInstance.imagen = oldimagen
             if (!alumnoInstance.save(flush: true)){
                 success = false
                 mensaje = 'Error en el registro de datos'
                 alumnoInstance.errors.allErrors.each{
+                    log.debug "Error: "+it
                     errorList << [msg:messageSource.getMessage(it,LCH.locale)]
                 }
             }else{

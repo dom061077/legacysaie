@@ -153,7 +153,7 @@ Ext.onReady(function(){
                         ,msg: mensaje,
                         buttons: Ext.MessageBox.OK,
                         fn: function(btn){
-
+                            loadMask.hide();
                         }
 
                     });
