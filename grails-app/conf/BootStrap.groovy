@@ -17,14 +17,14 @@ class BootStrap {
     void createUsers(){
         def alumnoInstance = Alumno.get(2255)
         def docenteInstance = Docente.get(2)
-        def userDocente = User.findByUsername('userdocente')
+        /*def userDocente = User.findByUsername('userdocente')
         if(!userDocente){
             def docenteRole = new Role(authority: 'ROLE_DOCENTE').save(failOnError: true)
             userDocente = new User(username: 'userdocente',password: 'userdocente',realName: 'USUARIO DOCENTE',enabled: true,docente: docenteInstance).save(failOnError: true)
             if (!userDocente.authorities.contains(docenteRole)) {
                 UserRole.create(userDocente, docenteRole)
             }
-        }
+        } */
         
         def userAdmin = User.findByUsername('useradmin')
         if(!userAdmin){
