@@ -57,6 +57,7 @@ grails.project.dependency.resolution = {
         compile ":recaptcha:0.6.5"
         compile ':spring-security-core:1.2.7.3'
         compile ":mail:1.0.1"
+        compile ":spring-mobile:0.5.1"
 
     }
 }
