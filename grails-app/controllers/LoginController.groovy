@@ -71,6 +71,7 @@ class LoginController {
     }
 
     def authSucccessAjax = {
+        log.debug "parametros de autenticacion: $params"
         render([success: true, username: springSecurityService.authentication.name] as JSON)
     }
 
@@ -99,7 +100,7 @@ class LoginController {
      * Callback after a failed login. Redirects to the auth page with a warning message.
      */
     def authfail = {
-
+        log.info "parametros: $params"
         def username = session[UsernamePasswordAuthenticationFilter.SPRING_SECURITY_LAST_USERNAME_KEY]
         String msg = ''
         def exception = session[WebAttributes.AUTHENTICATION_EXCEPTION]

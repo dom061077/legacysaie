@@ -27,10 +27,10 @@
         <form id="formulario" >
 
             <label> Usuario </label>
-            <input type="text" id="nombredeusuario" name="nombredeusuario">
+            <input type="text" id="j_username" name="j_username" required>
 
             <label> Password </label>
-            <input type="password" id="clave" name="clave" >
+            <input type="password" id="j_password" name="j_password" required>
 
             <input type="submit" value="Login" id="botonLogin">
 
@@ -38,6 +38,18 @@
     </div>
 
 </div>
+
+<div data-role="dialog" id="errorLoginId" data-theme="c">
+    <div data-role="header">
+        <h3>Error de Ingreso</h3>
+    </div>
+    <div data-role="content">
+        <div id="mensajeLoginErrorId"></div>
+    </div>
+</div>
+
+
+
 
 <div data-role="page" id="home">
 
@@ -49,38 +61,37 @@
         <h2> Bienvenido a la aplicacion </h2>
         <h3> Su usuario y password son válidos</h3>
     </div>
-
+    <div data-role="footer" data-id="foo1" data-position="fixed">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="a.html">Info</a></li>
+                <li><a href="b.html">Friends</a></li>
+                <li><a href="c.html">Albums</a></li>
+                <li><a href="d.html">Emails</a></li>
+            </ul>
+        </div><!-- /navbar -->
+    </div><!-- /footer -->
 </div>
 
 <script>
-
-  /*  $('#formulario').submit(function() {
-
-
+    var postUrl = "<%out << postUrl %>";
+    $('#formulario').submit(function() {
         // recolecta los valores que inserto el usuario
-        var datosUsuario = $("#nombredeusuario").val()
-        var datosPassword = $("#clave").val()
-
-        archivoValidacion = "http://revolucion.mobi/ejemplos/phonegap/envioFormulario/validacion_de_datos.php?jsoncallback=?"
-
-        $.getJSON( archivoValidacion, { usuario:datosUsuario ,password:datosPassword})
+        var datosUsuario = $("#j_username").val();
+        var datosPassword = $("#j_password").val();
+        $.post( postUrl, { j_username:datosUsuario ,j_password:datosPassword})
                 .done(function(respuestaServer) {
-
-                    alert(respuestaServer.mensaje + "\nGenerado en: " + respuestaServer.hora + "\n" +respuestaServer.generador)
-
-                    if(respuestaServer.validacion == "ok"){
-
-                        /// si la validacion es correcta, muestra la pantalla "home"
+                    if(respuestaServer.success==true){
                         $.mobile.changePage("#home")
 
                     }else{
-
                         /// ejecutar una conducta cuando la validacion falla
+                        $('#mensajeLoginErrorId').html(respuestaServer.error);
+                        $.mobile.changePage('#errorLoginId');
                     }
-
-                })
+                },'json');
         return false;
-    })                  */
+    })
 
 </script>
 </body>
