@@ -52,7 +52,6 @@
 
 
 <div data-role="page" id="home">
-
     <div data-role="header">
         <h1>Bienvenido</h1>
     </div>
@@ -64,7 +63,7 @@
     <div data-role="footer" data-id="foo1" data-position="fixed">
         <div data-role="navbar">
             <ul>
-                <li><a href="a.html">Info</a></li>
+                <li><a id="menuinfoId" href="#">Info</a></li>
                 <li><a href="b.html">Friends</a></li>
                 <li><a href="c.html">Albums</a></li>
                 <li><a href="d.html">Emails</a></li>
@@ -73,8 +72,13 @@
     </div><!-- /footer -->
 </div>
 
+
+
 <script>
     var postUrl = "<%out << postUrl %>";
+    $('#menuinfoId').click(function(){
+        $.mobile.changePage("");
+    });
     $('#formulario').submit(function() {
         // recolecta los valores que inserto el usuario
         var datosUsuario = $("#j_username").val();

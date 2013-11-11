@@ -14,7 +14,6 @@
 </head>
 <body>
 <div data-role="page" id="home">
-
     <div data-role="header">
         <h1>Bienvenido</h1>
     </div>
@@ -26,7 +25,7 @@
     <div data-role="footer" data-id="foo1" data-position="fixed">
         <div data-role="navbar">
             <ul>
-                <li><a href="a.html">Info</a></li>
+                <li><a id="menuinfoId" href="#">Info</a></li>
                 <li><a href="b.html">Friends</a></li>
                 <li><a href="c.html">Albums</a></li>
                 <li><a href="d.html">Emails</a></li>
@@ -34,5 +33,18 @@
         </div><!-- /navbar -->
     </div><!-- /footer -->
 </div>
+
+<div data-role="page" id="infocontentId">
+    <div data-role="header">
+        <h2>Información del Usuario</h2>
+    </div>
+</div>
+    <script>
+        $('#menuinfoId').click(function(){
+            //$.mobile.changePage("infocontentId");
+        });
+
+    </script>
+
 </body>
 </html>
