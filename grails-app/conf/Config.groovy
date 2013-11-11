@@ -142,7 +142,7 @@ log4j = {
 
     //trace 'org.hibernate.type'
     //debug 'org.hibernate.SQL'
-    debug  'grails.app.controllers.com'
+    debug  'grails.app.controllers'
     root {
         error 'stdout'/*, 'smtp'*/
        // additivity = true

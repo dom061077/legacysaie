@@ -13,12 +13,26 @@
   <title>Panel de Control de Administrador</title>
 </head>
 <body>
-    <div class="section" id="page1">
-        <div class="header"><h1>jQuery Mobile</h1></div>
-        <div class="content">
-            <p>First page!</p>
-        </div>
-        <div class="footer"><h1>O'Reilly</h1></div>
+<div data-role="page" id="home">
+
+    <div data-role="header">
+        <h1>Bienvenido</h1>
     </div>
+
+    <div data-role="content">
+        <h2> Bienvenido a la aplicacion </h2>
+        <h3> Su usuario y password son válidos</h3>
+    </div>
+    <div data-role="footer" data-id="foo1" data-position="fixed">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="a.html">Info</a></li>
+                <li><a href="b.html">Friends</a></li>
+                <li><a href="c.html">Albums</a></li>
+                <li><a href="d.html">Emails</a></li>
+            </ul>
+        </div><!-- /navbar -->
+    </div><!-- /footer -->
+</div>
 </body>
 </html>
