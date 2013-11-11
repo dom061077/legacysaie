@@ -14,7 +14,7 @@
     <script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery-1.6.2.min.js')}"></script>
     <script type="text/javascript" src="${resource(dir:'js/jqm',file:'jquery.mobile-1.3.2.js')}"></script>
 
-  <title></title>
+    <title></title>
 </head>
 <body>
 <div data-role="page" id="inicio">
