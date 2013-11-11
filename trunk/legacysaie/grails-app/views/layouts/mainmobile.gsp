@@ -14,6 +14,7 @@
     </head>
 <body>
 
+    <g:layoutBody/>
 </body>
 
 </html>

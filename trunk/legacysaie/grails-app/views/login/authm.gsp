@@ -82,7 +82,8 @@
         $.post( postUrl, { j_username:datosUsuario ,j_password:datosPassword})
                 .done(function(respuestaServer) {
                     if(respuestaServer.success==true){
-                        $.mobile.changePage("#home")
+                        //$.mobile.changePage("#home")
+                        window.location='<%out << createLink(uri:"/login/loginredirect")%>';
 
                     }else{
                         /// ejecutar una conducta cuando la validacion falla

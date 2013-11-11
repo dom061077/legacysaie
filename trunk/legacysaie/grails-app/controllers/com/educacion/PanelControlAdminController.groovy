@@ -17,8 +17,15 @@ class PanelControlAdminController {
     def springSecurityService
     MessageSource  messageSource
     def index() {
+        def view
+        //if (isNormal())
+        //    view = 'index'
+        //else
+            view = 'indexm'
+
         def userInstance = springSecurityService.currentUser
-        [userInstance:userInstance]
+        //[userInstance:userInstance]
+        render (view: view, model:[userInstance:userInstance])
     }
 
     def usuariosalumnos(){

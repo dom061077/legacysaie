@@ -148,11 +148,13 @@ class LoginController {
     
     def loginredirect(){
         def userInstance = springSecurityService.currentUser
+        def controllerUri
         if (userInstance.alumno)
-            redirect(controller: 'panelControl',action:'index')
+            controllerUri='panelControl'
         if (userInstance.docente)
-            redirect(controller: 'panelControlDocente',action: 'index')
+            controllerUri='panelControlDocente'
         if (!userInstance.alumno && !userInstance.docente)
-            redirect(controller: 'panelControlAdmin',action: 'index')
+            controllerUri='panelControlAdmin'
+        redirect(controller: controllerUri,action:'index')
     }
 }
