@@ -20,7 +20,31 @@
         <a href="${createLink(uri:"/logout")}"  data-direction="reverse" data-ajax="false" data-icon="delete"></a>
     </div>
 
+    <section id="pagecontentId" data-role="page">
+        <div data-role="content">
+            <label> Nombre Real del Usuario: </label>
+            <h3> ${userInstance.realName} </h3>
+            <a id="buttoncambiarpassId" href="#" data-role="button" data-inline="true" data-icon="star">Cambiar Contraseña</a>
+        </div>
+    </section>
+    <section id="pagechangepassId" data-role>
+        <div data-role="content" id="formchangepassId">
+            <form id="formulariochangepassId">
+                <label>Nombre de Usuario:</label>
+                <h3>${userInstance.username}</h3>
+                <input type="hidden" id="nombreusuarioId" name="id"/>
+                <label>Contraeña anterior:</label>
+                <input type="password" name="passwordanterior" id="passwordanteriorId" />
+                <label>Nueva Contraeña:</label>
+                <input type="password" name="repeatnewpassword" id="repeatnewpasswordId" />
+                <input type="submit" value="Confirmar"/>
+            </form>
+        </div>
+    </section>
     <g:layoutBody/>
+
+
+
     <div data-role="footer" data-id="foo1" data-position="fixed">
         <div data-role="navbar" data-theme="d">
             <ul>
