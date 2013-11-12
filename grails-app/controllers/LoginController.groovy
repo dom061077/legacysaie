@@ -42,17 +42,18 @@ class LoginController {
      * Show the login page.
      */
     def auth = {
-
+        log.debug "ingresando al auth"
         def config = SpringSecurityUtils.securityConfig
 
         if (springSecurityService.isLoggedIn()) {
+            log.debug "ESTA LOGUEADO Y REDIRECCIONA EL defaultTarget"
             redirect uri: config.successHandler.defaultTargetUrl
             return
         }
 
         String view = 'auth'
 
-        withMobileDevice{
+        if (!isNormal()){
             log.debug "ES UN DISPOSITIVO MOVIL"
             view = 'authm'
         }

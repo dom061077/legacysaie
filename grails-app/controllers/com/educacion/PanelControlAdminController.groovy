@@ -313,4 +313,8 @@ class PanelControlAdminController {
             return builder.toString();
     }
 
+    def infousum(){
+        [titlepage:"Información del Usuario",userInstance:springSecurityService.currentUser ]
+    }
+
 }
