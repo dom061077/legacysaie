@@ -1,7 +1,7 @@
 package legacysaie
 
 class HomeController {
-
+    def springSecurityService
     def index() {
         log.debug "INGRESO AL CONTROLLER HOME"
         if (isNormal())

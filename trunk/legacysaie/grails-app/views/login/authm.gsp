@@ -19,8 +19,8 @@
 <body>
 <div data-role="page" id="inicio">
 
-    <div data-role="header">
-        <h1>Autenticacion de Usuario</h1>
+    <div data-role="header" data-theme="d">
+        <h1>Ingreso Cruz Roja</h1>
     </div>
 
     <div data-role="content">
@@ -29,10 +29,10 @@
             <label> Usuario </label>
             <input type="text" id="j_username" name="j_username" required>
 
-            <label> Password </label>
+            <label> Contraseña </label>
             <input type="password" id="j_password" name="j_password" required>
 
-            <input type="submit" value="Login" id="botonLogin">
+            <input type="submit" value="Ingresar" id="botonLogin">
 
         </form>
     </div>

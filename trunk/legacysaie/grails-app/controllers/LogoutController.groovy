@@ -7,6 +7,13 @@ class LogoutController {
      */
     def index = {
         // TODO put any pre-logout code here
-        redirect uri: SpringSecurityUtils.securityConfig.logout.filterProcessesUrl // '/j_spring_security_logout'
+        log.debug "INGRESANDO A INDEX"
+        log.debug SpringSecurityUtils.securityConfig.logout.filterProcessesUrl
+        //if (isNormal())
+            redirect uri: SpringSecurityUtils.securityConfig.logout.filterProcessesUrl // '/j_spring_security_logout'
+        //else{
+        //    log.debug "REDIRECCIÓN A LOGIN MOBILE"
+        //    redirect (controller: "login",action: "auth")
+        //}
     }
 }
