@@ -17,30 +17,15 @@
 <div data-role="page" id="home" data-theme="f">
     <div data-role="header" data-theme="d">
         <h1>${(titlepage?titlepage:"Bienvenido")}</h1>
-        <a href="${createLink(uri:"/logout")}"  data-direction="reverse" data-ajax="false" data-icon="delete"></a>
+        <a href="${createLink(uri:"/logout")}"
+           data-transition="flip"
+           data-role="button"
+           data-icon="gear"
+           data-iconpos="notext"
+           class="ui-btn-right"
+           data-direction="reverse" data-ajax="false"></a>
     </div>
 
-    <section id="pagecontentId" data-role="page">
-        <div data-role="content">
-            <label> Nombre Real del Usuario: </label>
-            <h3> ${userInstance.realName} </h3>
-            <a id="buttoncambiarpassId" href="#" data-role="button" data-inline="true" data-icon="star">Cambiar Contraseña</a>
-        </div>
-    </section>
-    <section id="pagechangepassId" data-role>
-        <div data-role="content" id="formchangepassId">
-            <form id="formulariochangepassId">
-                <label>Nombre de Usuario:</label>
-                <h3>${userInstance.username}</h3>
-                <input type="hidden" id="nombreusuarioId" name="id"/>
-                <label>Contraeña anterior:</label>
-                <input type="password" name="passwordanterior" id="passwordanteriorId" />
-                <label>Nueva Contraeña:</label>
-                <input type="password" name="repeatnewpassword" id="repeatnewpasswordId" />
-                <input type="submit" value="Confirmar"/>
-            </form>
-        </div>
-    </section>
     <g:layoutBody/>
 
 
