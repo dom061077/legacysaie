@@ -277,19 +277,24 @@ class PanelControlAdminController {
         returnMap.success = false
         returnMap.mensaje = "La contraseña no pudo cambiarse"
         if (usuarioInstance){
-            if (!params.newpassword.equals(params.repeatnewpassword)){
-                errorList  << [msg: "La nueva contraseña no coincide con su confirmación"]
+            if (params.passwordanterior != springSecurityService.encodePassword(params.passwordanterior)){
+                flash.message = ""
+                render(view: 'editpass', model: [userInstance: usuarioInstance])
             }else{
-                if (!params.newpassword.matches(".*[a-zA-Z].*") || !params.newpassword.matches(".*[1-9!@#\$%^&*()-_=+].*")){
-                    errorList << [msg: "La contraseña debe combinar letras con al menos un número o caracter especial  (!@#\$%^&*()-_=+)"]
+                if (!params.newpassword.equals(params.repeatnewpassword)){
+                    errorList  << [msg: "La nueva contraseña no coincide con su confirmación"]
                 }else{
-                    usuarioInstance.password = params.newpassword
-                    if (usuarioInstance.save(flush: true)){
-                        returnMap.success = true
-                        returnMap.mensaje = "La contraseña se modificó correctamente"
+                    if (!params.newpassword.matches(".*[a-zA-Z].*") || !params.newpassword.matches(".*[1-9!@#\$%^&*()-_=+].*")){
+                        errorList << [msg: "La contraseña debe combinar letras con al menos un número o caracter especial  (!@#\$%^&*()-_=+)"]
                     }else{
-                        usuarioInstance.errors.allErrors.each{
-                            errorList << [msg:messageSource.getMessage(it, LocaleContextHolder.locale)]
+                        usuarioInstance.password = params.newpassword
+                        if (usuarioInstance.save(flush: true)){
+                            returnMap.success = true
+                            returnMap.mensaje = "La contraseña se modificó correctamente"
+                        }else{
+                            usuarioInstance.errors.allErrors.each{
+                                errorList << [msg:messageSource.getMessage(it, LocaleContextHolder.locale)]
+                            }
                         }
                     }
                 }
