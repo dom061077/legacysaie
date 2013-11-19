@@ -514,74 +514,91 @@ class AlumnoController {
                                     }else{
                                         //def anioLectivoInstance = AnioLectivo.load(params.aniolectivo.toString().toInteger())
                                         //def carreraInstance = Carrera.load(params.carrera)
-                                        def matriculaInstance = new Matricula(anioLectivo: carreraAnioLectivoInstance.anioLectivo,carrera:carreraAnioLectivoInstance.carrera,alumno: alumnoInstance)
-                                        matriculaInstance.estado = EstadoMatriculaEnum.I
-                                        if (cantMatriculas+1 > carreraAnioLectivoInstance.cupo)
-                                            matriculaInstance.suplente = SuplenteEnum.S
-                                        else
-                                            matriculaInstance.suplente = SuplenteEnum.T
-                                        if (!matriculaInstance.save(flush: true)){
-                                            status.setRollbackOnly()
-                                            success=false
-                                            mensaje = 'Error en el registro de datos'
-                                            matriculaInstance.errors.allErrors.each{
-                                                errorList << [msg:messageSource.getMessage(it, LCH.locale)]
+                                        def matriculas = Matricula.createCriteria().list{
+                                            anioLectivo{
+                                                eq("id",carreraAnioLectivoInstance.anioLectivo.id)
                                             }
-                                        } else{
-                                            def inscripcionInstance = new Inscripcion(matricula: matriculaInstance)
-                                            if(matriculaInstance.suplente.equals(SuplenteEnum.S)){
-                                                inscripcionInstance.estado = EstadoInscripcionEnum.S
-                                                inscripcionInstance.suplente = SuplenteEnum.S
-                                            }else{
-                                                inscripcionInstance.estado = EstadoInscripcionEnum.A
-                                                inscripcionInstance.suplente = SuplenteEnum.T
+                                            carrera{
+                                                eq("id",carreraAnioLectivoInstance.carrera.id)
                                             }
-
-                                            def materiaInstance
-                                            InscripcionDetalle inscDetInstance
-                                            detalleInscJson.each{
-                                                if (it.seleccionada){
-                                                    //EstadoInscripcionDetalleEnum estado
-                                                    //TipoInscripcionDetalleEnum tipoInscripcion
-                                                    inscDetInstance = new InscripcionDetalle()
-                                                    materiaInstance = Materia.load(it.id)
-                                                    inscripcionInstance.addToDetalle(new InscripcionDetalle(materia: materiaInstance,estado: EstadoInscripcionDetalleEnum.I,tipoInscripcion:TipoInscripcionDetalleEnum.C,notaFinal:0))
-                                                    //inscInstance.addToDetalle(new Object())
-                                                }
+                                            alumno{
+                                                eq("id",alumnoInstance.id)
                                             }
-                                            if(!inscripcionInstance.save(flush:true)){
-                                                status.setRollbackOnly()
-                                                success=false
-                                                mensaje = 'Error en el registro de datos'
-                                                matriculaInstance.errors.allErrors.each{
-                                                    errorList << [msg:messageSource.getMessage(it, LCH.locale)]
-                                                }
-                                            }else{
-                                                alumnoInstance.confirmado=true
-                                                if (alumnoInstance.save(flush:true)){
-                                                    String emailContent = """
-                                                            Su preinscripción ya fue confirmada. <br>
-                                                            Para imprimir el comprobante de haga  click en el siguiente link: <br>
-                                                            ${request.scheme}://${request.serverName}:${request.serverPort}${request.contextPath}/alumno/comprobante/${alumnoInstance.registerconfirm}
-                                                            Si no puede hacer click, copie y pegue el link en la barra de direcciones y luego pulse enter.
-                                                    """
-
-                                                    try{
-                                                        sendMail{
-                                                            to alumnoInstance.email.toString()
-                                                            subject "Respuesta de Colegio Cruz Roja - Comprobante e Pre-inscripción"
-                                                            html emailContent
-                                                        }
-                                                        mensaje = 'La preinscripción se confirmó correctamente.<br>Revise su correo electrónico para obtener el comprobante de preinscripción';
-                                                    }catch(Exception e){
-                                                        status.setRollbackOnly()
-                                                        success = false
-                                                        mensaje = 'Error al enviar el E-mail. La preinscripción no pudo confirmarse'
+                                        }
+                                        if (matriculas.size()>0){
+                                                success = false
+                                                mensaje = 'Error en registro de datos'
+                                                errorList << [msg:"Ya está registrada la matrícula para la carrera y año lectivo seleccionado. Por mayor información diríjase al colegio"]
+                                        }else{
+                                                def matriculaInstance = new Matricula(anioLectivo: carreraAnioLectivoInstance.anioLectivo,carrera:carreraAnioLectivoInstance.carrera,alumno: alumnoInstance)
+                                                matriculaInstance.estado = EstadoMatriculaEnum.I
+                                                if (cantMatriculas+1 > carreraAnioLectivoInstance.cupo)
+                                                    matriculaInstance.suplente = SuplenteEnum.S
+                                                else
+                                                    matriculaInstance.suplente = SuplenteEnum.T
+                                                if (!matriculaInstance.save(flush: true)){
+                                                    status.setRollbackOnly()
+                                                    success=false
+                                                    mensaje = 'Error en el registro de datos'
+                                                    matriculaInstance.errors.allErrors.each{
+                                                        errorList << [msg:messageSource.getMessage(it, LCH.locale)]
+                                                    }
+                                                } else{
+                                                    def inscripcionInstance = new Inscripcion(matricula: matriculaInstance)
+                                                    if(matriculaInstance.suplente.equals(SuplenteEnum.S)){
+                                                        inscripcionInstance.estado = EstadoInscripcionEnum.S
+                                                        inscripcionInstance.suplente = SuplenteEnum.S
+                                                    }else{
+                                                        inscripcionInstance.estado = EstadoInscripcionEnum.A
+                                                        inscripcionInstance.suplente = SuplenteEnum.T
                                                     }
 
-                                                }
+                                                    def materiaInstance
+                                                    InscripcionDetalle inscDetInstance
+                                                    detalleInscJson.each{
+                                                        if (it.seleccionada){
+                                                            //EstadoInscripcionDetalleEnum estado
+                                                            //TipoInscripcionDetalleEnum tipoInscripcion
+                                                            inscDetInstance = new InscripcionDetalle()
+                                                            materiaInstance = Materia.load(it.id)
+                                                            inscripcionInstance.addToDetalle(new InscripcionDetalle(materia: materiaInstance,estado: EstadoInscripcionDetalleEnum.I,tipoInscripcion:TipoInscripcionDetalleEnum.C,notaFinal:0))
+                                                            //inscInstance.addToDetalle(new Object())
+                                                        }
+                                                    }
+                                                    if(!inscripcionInstance.save(flush:true)){
+                                                        status.setRollbackOnly()
+                                                        success=false
+                                                        mensaje = 'Error en el registro de datos'
+                                                        matriculaInstance.errors.allErrors.each{
+                                                            errorList << [msg:messageSource.getMessage(it, LCH.locale)]
+                                                        }
+                                                    }else{
+                                                        alumnoInstance.confirmado=true
+                                                        if (alumnoInstance.save(flush:true)){
+                                                            String emailContent = """
+                                                                    Su preinscripción ya fue confirmada. <br>
+                                                                    Para imprimir el comprobante de haga  click en el siguiente link: <br>
+                                                                    ${request.scheme}://${request.serverName}:${request.serverPort}${request.contextPath}/alumno/comprobante/${alumnoInstance.registerconfirm}
+                                                                    Si no puede hacer click, copie y pegue el link en la barra de direcciones y luego pulse enter.
+                                                            """
 
-                                            }
+                                                            try{
+                                                                sendMail{
+                                                                    to alumnoInstance.email.toString()
+                                                                    subject "Respuesta de Colegio Cruz Roja - Comprobante e Pre-inscripción"
+                                                                    html emailContent
+                                                                }
+                                                                mensaje = 'La preinscripción se confirmó correctamente.<br>Revise su correo electrónico para obtener el comprobante de preinscripción';
+                                                            }catch(Exception e){
+                                                                status.setRollbackOnly()
+                                                                success = false
+                                                                mensaje = 'Error al enviar el E-mail. La preinscripción no pudo confirmarse'
+                                                            }
+
+                                                        }
+
+                                                    }
+                                                }
                                         }
                                     }
                                 }

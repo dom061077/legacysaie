@@ -1,4 +1,4 @@
-var floatingmessage;
+/*var floatingmessage;
 if (typeof jQuery !== 'undefined') {
 	(function($) {
 		$('#spinner').ajaxStart(function() {
@@ -11,4 +11,4 @@ if (typeof jQuery !== 'undefined') {
                 floatingmessage.floatingMessage("destroy");
 		});
 	})(jQuery);
-}
+} */
