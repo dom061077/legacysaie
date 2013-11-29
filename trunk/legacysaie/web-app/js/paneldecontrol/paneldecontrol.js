@@ -1514,7 +1514,7 @@ Ext.onReady(function(){
                                             ]
                                         }
                                     ]
-                                }, {
+                                }/*, {
                                     title: 'Reimpresión de Cupón',
                                     iconCls: 'x-icon-listado-deudas',
                                     tabTip: 'Permite reimprimir cupones',
@@ -1524,6 +1524,8 @@ Ext.onReady(function(){
                                             xtype:'form',
                                             frame:true,
                                             style: 'margin:0 auto;margin-top:50px;',
+                                            width:510,
+                                            height:280,
                                             items:[
                                                 new Ext.grid.GridPanel({
                                                     id:'gridcorrelcurId',
@@ -1562,7 +1564,7 @@ Ext.onReady(function(){
                                         }
                                     ]
 
-                                }/*, {
+                                }*//*, {
                                     title: 'Estado de Deudas',
                                     iconCls: 'x-icon-listado-deudas',
                                     tabTip: 'Listado de Deudas',

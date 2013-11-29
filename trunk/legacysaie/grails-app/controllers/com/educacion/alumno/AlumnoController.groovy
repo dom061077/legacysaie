@@ -180,11 +180,12 @@ class AlumnoController {
             def imagen = request.getFile('imagenphoto')
             if (!imagen.isEmpty()){
                 log.debug "HAY IMAGEN SELECCIONADA, clase del archivo: "+imagen.class
-                imagen=Scalr.resize(ImageIO.read(imagen.getInputStream()),50)
+                alumnoInstance.imagen = imagen
+                /*imagen=Scalr.resize(ImageIO.read(imagen.getInputStream()),50)
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()
                 ImageIO.write(imagen,"jpg",byteArrayOutputStream)
                 alumnoInstance.imagen = byteArrayOutputStream.toByteArray()
-                byteArrayOutputStream.close();
+                byteArrayOutputStream.close();*/
             }else
                 alumnoInstance.imagen = oldimagen
             if (!alumnoInstance.save(flush: true)){

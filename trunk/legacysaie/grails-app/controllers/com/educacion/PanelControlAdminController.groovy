@@ -18,9 +18,9 @@ class PanelControlAdminController {
     MessageSource  messageSource
     def index() {
         def view
-        //if (isNormal())
-        //    view = 'index'
-        //else
+        if (isNormal())
+            view = 'index'
+        else
             view = 'indexm'
 
         def userInstance = springSecurityService.currentUser
@@ -278,7 +278,7 @@ class PanelControlAdminController {
         returnMap.mensaje = "La contraseña no pudo cambiarse"
         if (usuarioInstance){
             if (params.passwordanterior != springSecurityService.encodePassword(params.passwordanterior)){
-                flash.message = ""
+                flash.message = "La contraseña actual no es correcta"
                 render(view: 'editpass', model: [userInstance: usuarioInstance])
             }else{
                 if (!params.newpassword.equals(params.repeatnewpassword)){

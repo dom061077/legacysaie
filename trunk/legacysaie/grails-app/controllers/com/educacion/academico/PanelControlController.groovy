@@ -519,13 +519,20 @@ class PanelControlController {
     def cuotascuponpago(String carrerapar){
         def returnMap = [:]
         def recordList = []
-        def cuotas = Cuota.createCriteria().list{
+        def cuotas=[]
+        def cuotasCarreras = Cuota.createCriteria().list{
             carrera{
-                eq("id",carrerapar)
+                    eq("id",carrerapar)
             }
             ge("vencimiento",new java.sql.Date(new Date().getTime()))
-
         }
+        def cuotasSinCarrera = Cuota.createCriteria().list{
+            isNull("carrera")
+            ge("vencimiento",new java.sql.Date(new Date().getTime()))
+        }
+        cuotas.addAll(cuotasCarreras)
+        cuotas.addAll(cuotasSinCarrera)
+        
         cuotas.each{
             recordList << [id: it.id,descripcion:(it.mes.toString()+"/"+it.anio.toString())]
         }
