@@ -1391,6 +1391,7 @@ Ext.onReady(function(){
                                             xtype:'form',
                                             id:'formcuponpagoId',
                                             title:'Impresión de Cupón',
+                                            labelWidth:150,
                                             style: 'margin:0 auto;margin-top:50px;',
                                             url:cuponpagogeneradorUrl,
                                             frame:true,
@@ -1448,19 +1449,25 @@ Ext.onReady(function(){
                                                     store:new Ext.data.JsonStore({
                                                         root:'rows',
                                                         url:cuotacuponpagoUrl,
-                                                        fields:['id','descripcion'],
+                                                        fields:['id','descripcion','importe'],
                                                         autoLoad:false
                                                     }),
                                                     listeners:{
                                                         select: function(combobox,record,index){
-
+                                                            Ext.getCmp('importecuotaId').setValue(record.data.importe);
                                                             Ext.getCmp('griddescinccuponpagoId').getStore().load({
                                                                 params:{
-                                                                    matriculapar:matriculaseleccionadapagocuota
+                                                                    matriculapar:matriculaseleccionadapagocuota,
+                                                                    cuotaid:record.data.id
                                                                 }
                                                             });
                                                         }
                                                     }
+                                                },{
+                                                    xtype:'numberfield',
+                                                    fieldLabel:'Importe de Cuota',
+                                                    id:'importecuotaId',
+                                                    disabled:true
                                                 },new Ext.grid.GridPanel({
                                                     id:'griddescinccuponpagoId',
                                                     store:new Ext.data.JsonStore({
@@ -1481,7 +1488,12 @@ Ext.onReady(function(){
                                                     width:500,
                                                     loadMask:true,
                                                     title:'Descuentos y Recargos'
-                                                })
+                                                }),{
+                                                    xtype:'numberfield',
+                                                    fieldLabel:'Total del Cupón',
+                                                    id:'totalcuponId',
+                                                    enabled:false
+                                                }
 
                                             ],buttons:[
                                                 {

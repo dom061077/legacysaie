@@ -93,6 +93,7 @@
         var incdescpagocuponUrl = '${createLink(uri:'/panelControl/descinccuponpago')}';
         var cuponpagogeneradorUrl = '${createLink(uri:'/panelControl/generarcupon/')}';
         var reportcuponpagoUrl = '${createLink(uri:'/panelControl/impresioncuponpago/')}';
+        var cuotasafectadasUrl = '${createLink(uri:'/panelControl/')}';
     </script>
     <script type="text/javascript" src="${resource(dir:"js/paneldecontrol",file:"paneldecontrol.js")+'?id='+randomlink}"></script>
     <title>Panel de control</title>
