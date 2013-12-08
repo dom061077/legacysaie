@@ -516,6 +516,8 @@ class PanelControlController {
         return builder.toString();
     }
 
+
+
     def cuotascuponpago(String carrerapar){
         def returnMap = [:]
         def recordList = []
@@ -534,7 +536,7 @@ class PanelControlController {
         cuotas.addAll(cuotasSinCarrera)
         
         cuotas.each{
-            recordList << [id: it.id,descripcion:(it.mes.toString()+"/"+it.anio.toString())]
+            recordList << [id: it.id,descripcion:(it.mes.toString()+"/"+it.anio.toString()),mes:it.mes,anio:it.anio,importe: it.importe]
         }
         returnMap.success = true
         returnMap.rows = recordList
@@ -542,7 +544,8 @@ class PanelControlController {
         render returnMap as JSON
     }
 
-    def descinccuponpago(int matriculapar){
+    def descinccuponpago(int matriculapar,int cuotaid){
+        Double importeFinal
         def returnMap = [:]
         def recordList = []
         def descuentos = DescuentosFijos.createCriteria().list {
@@ -552,6 +555,10 @@ class PanelControlController {
         }
         
         descuentos.each{
+            if(it.importe)
+                importeFinal=it.importe
+            else
+                importeFinal=
             recordList << [concepto: it.descuento.descripcion,monto:it.descuento.importe,tipo:(it.descuento.sumaoresta.equals("1")?"Incremento":"Descuento")]
         }
         
