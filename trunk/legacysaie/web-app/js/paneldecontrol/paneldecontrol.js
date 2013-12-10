@@ -1425,6 +1425,7 @@ Ext.onReady(function(){
                                                     id:'carreracuponpagoId',
                                                     listeners:{
                                                         select:function(combobox,record,index){
+                                                            Ext.getCmp('griddescinccuponpagoId').getStore().cleard
                                                             matriculaseleccionadapagocuota = record.json.matricula;
                                                             Ext.getCmp('matriculaparId').setValue(record.json.matricula);
                                                             Ext.getCmp('cuotacuponpagoId').getStore().load({
@@ -1454,6 +1455,24 @@ Ext.onReady(function(){
                                                     }),
                                                     listeners:{
                                                         select: function(combobox,record,index){
+                                                            var conn = new Ext.data.Connection();
+                                                            conn.request({
+                                                                url:totalgralcuponUrl,
+                                                                method:'POST',
+                                                                params:{
+                                                                    matriculapar:matriculaseleccionadapagocuota,
+                                                                    cuotaid:record.data.id
+                                                                },
+                                                                success: function(resp,opt){
+                                                                    var respuesta = Ext.decode(resp.responseText);
+                                                                    if (respuesta) {
+                                                                        if (respuesta.success){
+                                                                            Ext.getCmp('totalcuponId').setValue(respuesta.totalGral);
+                                                                        }
+                                                                    }
+                                                                }
+
+                                                            });
                                                             Ext.getCmp('importecuotaId').setValue(record.data.importe);
                                                             Ext.getCmp('griddescinccuponpagoId').getStore().load({
                                                                 params:{
@@ -1492,7 +1511,7 @@ Ext.onReady(function(){
                                                     xtype:'numberfield',
                                                     fieldLabel:'Total del Cupón',
                                                     id:'totalcuponId',
-                                                    enabled:false
+                                                    disabled:true
                                                 }
 
                                             ],buttons:[
