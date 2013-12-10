@@ -94,6 +94,7 @@
         var cuponpagogeneradorUrl = '${createLink(uri:'/panelControl/generarcupon/')}';
         var reportcuponpagoUrl = '${createLink(uri:'/panelControl/impresioncuponpago/')}';
         var cuotasafectadasUrl = '${createLink(uri:'/panelControl/')}';
+        var totalgralcuponUrl = '${createLink(uri:'/panelControl/totalRecibo')}';
     </script>
     <script type="text/javascript" src="${resource(dir:"js/paneldecontrol",file:"paneldecontrol.js")+'?id='+randomlink}"></script>
     <title>Panel de control</title>

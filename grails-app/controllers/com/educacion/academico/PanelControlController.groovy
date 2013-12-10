@@ -544,22 +544,46 @@ class PanelControlController {
         render returnMap as JSON
     }
 
-    def descinccuponpago(int matriculapar,int cuotaid){
+    def totalRecibo(int matriculapar,int cuotaid){
         Double importeFinal
+        Double totalGral
         def returnMap = [:]
-        def recordList = []
+        def cuotaInstance = Cuota.get(cuotaid)
         def descuentos = DescuentosFijos.createCriteria().list {
             matricula {
                 eq("id",matriculapar)
             }
         }
-        
+        totalGral=cuotaInstance.importe
         descuentos.each{
-            if(it.importe)
-                importeFinal=it.importe
+            if(it.descuento.importe>0)
+                importeFinal=it.descuento.importe
             else
-                importeFinal=
-            recordList << [concepto: it.descuento.descripcion,monto:it.descuento.importe,tipo:(it.descuento.sumaoresta.equals("1")?"Incremento":"Descuento")]
+                importeFinal= cuotaInstance.importe*it.descuento.porcentaje/100
+            totalGral = totalGral + importeFinal
+        }
+        returnMap.success = true
+        returnMap.totalGral = totalGral
+        render returnMap as JSON
+    }
+
+    def descinccuponpago(int matriculapar,int cuotaid){
+        Double importeFinal
+        def returnMap = [:]
+        def recordList = []
+        def cuotaInstance = Cuota.get(cuotaid)
+        def descuentos = DescuentosFijos.createCriteria().list {
+            matricula {
+                eq("id",matriculapar)
+            }
+        }
+        descuentos.each{
+            if(it.descuento.importe>0)
+                importeFinal=it.descuento.importe
+            else
+                importeFinal= cuotaInstance.importe*it.descuento.porcentaje/100
+            recordList << [concepto: it.descuento.descripcion,monto:importeFinal,tipo:(it.descuento.sumaoresta.equals("1")?"Incremento":"Descuento")]
+
         }
         
         returnMap.success = true
