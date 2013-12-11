@@ -1425,7 +1425,11 @@ Ext.onReady(function(){
                                                     id:'carreracuponpagoId',
                                                     listeners:{
                                                         select:function(combobox,record,index){
-                                                            Ext.getCmp('griddescinccuponpagoId').getStore().cleard
+                                                            Ext.getCmp('griddescinccuponpagoId').store.removeAll();
+                                                            Ext.getCmp('cuotacuponpagoId').store.removeAll();
+                                                            Ext.getCmp('cuotacuponpagoId').clearValue();
+                                                            Ext.getCmp('importecuotaId').setValue('');
+                                                            Ext.getCmp('totalcuponId').setValue('');
                                                             matriculaseleccionadapagocuota = record.json.matricula;
                                                             Ext.getCmp('matriculaparId').setValue(record.json.matricula);
                                                             Ext.getCmp('cuotacuponpagoId').getStore().load({
@@ -1456,6 +1460,10 @@ Ext.onReady(function(){
                                                     listeners:{
                                                         select: function(combobox,record,index){
                                                             var conn = new Ext.data.Connection();
+                                                            Ext.getCmp('griddescinccuponpagoId').store.removeAll();
+
+                                                            Ext.getCmp('importecuotaId').setValue('');
+                                                            Ext.getCmp('totalcuponId').setValue('');
                                                             conn.request({
                                                                 url:totalgralcuponUrl,
                                                                 method:'POST',
@@ -1485,6 +1493,7 @@ Ext.onReady(function(){
                                                 },{
                                                     xtype:'numberfield',
                                                     fieldLabel:'Importe de Cuota',
+                                                    style:'text-align: right',
                                                     id:'importecuotaId',
                                                     disabled:true
                                                 },new Ext.grid.GridPanel({
@@ -1510,6 +1519,7 @@ Ext.onReady(function(){
                                                 }),{
                                                     xtype:'numberfield',
                                                     fieldLabel:'Total del Cupón',
+                                                    style:'text-align:right',
                                                     id:'totalcuponId',
                                                     disabled:true
                                                 }
