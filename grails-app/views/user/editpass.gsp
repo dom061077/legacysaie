@@ -6,6 +6,7 @@
 </head>
 <body>
 
+    <div class="${flash.message?'flash-message':''}">${flash.message}</div>
 
     <g:form id="formularioChangePassId" action="changepass">
         <div class="ui-grid-a">
@@ -47,11 +48,15 @@
                 <input id="botonAceptar" id="botonAceptarId" type="submit" value="Confirmar" />
             </div>
             <div class="ui-block-b">
-                <a href="${createLink(controller:'panelControlAdmin',action:'infousum')}" data-role="button"  data-icon="back">Cancelar</a>
+                <a href="${createLink(controller:'panelControlAdmin',action:'infousum')}" data-role="button" data-theme='b'  data-icon="back">Cancelar</a>
             </div>
         </div>
     </g:form>
-
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.flash-message').message();
+        });
+    </script>
 
 </body>
 </html>

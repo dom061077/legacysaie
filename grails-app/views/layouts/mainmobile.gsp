@@ -7,15 +7,20 @@
 	<head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title><g:layoutTitle default="Grails"/></title>
+        <link rel="stylesheet" href="${resource(dir:'css',file:'Bootstrap.min.css')}" />
         <link rel="stylesheet" href="${resource(dir:'css',file:'jquery.mobile-1.3.2.css')}"/>
+        <link rel="stylesheet" href="${resource(dir:'css/mobile',file:'jquery.mobile.message.css')}"/>
         <script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery-1.6.2.min.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/jqm',file:'jquery.mobile-1.3.2.js')}"></script>
+        <script type="text/javascript" src="${resource(dir:'js/jqm',file:'jquery.mobile.message.js')}"></script>
+
+
         <g:layoutHead/>
         <r:layoutResources />
     </head>
 <body>
-<div data-role="page" id="home" data-theme="f">
-    <div data-role="header" data-theme="d">
+<div data-role="page" id="home" data-theme="b">
+    <div data-role="header" >
         <h1>${(titlepage?titlepage:"Bienvenido")}</h1>
         <a href="${createLink(uri:"/logout")}"
            data-transition="flip"

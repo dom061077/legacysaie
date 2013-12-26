@@ -114,7 +114,7 @@ class UserController {
         def usuarioInstance = springSecurityService.currentUser
         if (usuarioInstance){
             if (params.passwordanterior != springSecurityService.encodePassword(params.passwordanterior)){
-                flash.message = ""
+                flash.message = "Su contraseña actual no es válida"
                 render(view: 'editpass', model: [userInstance: usuarioInstance])
             }else{
                 if (!params.newpassword.equals(params.repeatnewpassword)){
