@@ -19,11 +19,11 @@
 <body>
 <div data-role="page" id="inicio">
 
-    <div data-role="header" data-theme="d">
+    <div data-role="header" data-theme="c">
         <h1>Ingreso Cruz Roja</h1>
     </div>
 
-    <div data-role="content">
+    <div data-role="content" data-theme="c">
         <form id="formulario" >
 
             <label> Usuario </label>
