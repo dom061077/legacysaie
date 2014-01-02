@@ -94,7 +94,7 @@ Ext.onReady(function(){
             items:[
                 new Ext.BoxComponent({
                     region:'north',
-                    height:50
+                    height:100
                     /*autoEl:{
                         tag:'div',
                         html:'<p>SUPRA PEZON</p>'

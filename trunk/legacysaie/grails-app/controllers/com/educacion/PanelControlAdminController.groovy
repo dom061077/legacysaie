@@ -277,7 +277,7 @@ class PanelControlAdminController {
         returnMap.success = false
         returnMap.mensaje = "La contraseña no pudo cambiarse"
         if (usuarioInstance){
-            if (params.passwordanterior != springSecurityService.encodePassword(params.passwordanterior)){
+            if (usuarioInstance.password.equals(springSecurityService.encodePassword(params.passwordanterior))){
                 flash.message = "La contraseña actual no es correcta"
                 render(view: 'editpass', model: [userInstance: usuarioInstance])
             }else{
