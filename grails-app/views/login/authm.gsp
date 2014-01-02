@@ -14,6 +14,11 @@
     <script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery-1.6.2.min.js')}"></script>
     <script type="text/javascript" src="${resource(dir:'js/jqm',file:'jquery.mobile-1.3.2.js')}"></script>
 
+
+    <link rel="stylesheet" href="${resource(dir:"css/jqueryvalidation",file:"validationEngine.jquery.css")}"/>
+    <script type="text/javascript" src="${resource(dir:'js/jquery/validation',file:'jquery.validationEngine-es.js')}"></script>
+    <script type="text/javascript" src="${resource(dir:'js/jquery/validation',file:'jquery.validationEngine.js')}"></script>
+
     <title></title>
 </head>
 <body>
@@ -24,15 +29,15 @@
     </div>
 
     <div data-role="content" data-theme="c">
-        <form id="formulario" >
+        <form id="formulario" onsubmit="return jQuery(this).validationEngine('validate');" method="post" class="formular" >
 
             <label> Usuario </label>
-            <input type="text" id="j_username" name="j_username" required>
+            <input type="text" id="j_username" name="j_username" class="validate[required] text-input"/>
 
             <label> Contraseña </label>
-            <input type="password" id="j_password" name="j_password" required>
+            <input type="password" id="j_password" name="j_password"  class="validate[required] text-input"/>
 
-            <input type="submit" value="Ingresar" id="botonLogin">
+            <input  class="submit"  type="submit" value="Ingresar" id="botonLogin" />
 
         </form>
     </div>
@@ -59,6 +64,10 @@
     $('#menuinfoId').click(function(){
         $.mobile.changePage("");
     });
+
+
+
+
     $('#formulario').submit(function() {
         // recolecta los valores que inserto el usuario
         var datosUsuario = $("#j_username").val();

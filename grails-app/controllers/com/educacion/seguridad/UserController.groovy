@@ -111,26 +111,31 @@ class UserController {
 
     def changepass(){
         log.debug "INGRESANDO AL METODO changepass"
-        def usuarioInstance = springSecurityService.currentUser
+        def usuarioInstance = (User)springSecurityService.currentUser
         if (usuarioInstance){
-            if (params.passwordanterior != springSecurityService.encodePassword(params.passwordanterior)){
+            log.debug "PASSWORD ACTUAL: ${usuarioInstance.password}"
+            log.debug "PASSWORD INGRESada: ${springSecurityService.encodePassword(params.passwordanterior)}"
+            if (!usuarioInstance.password.equals(springSecurityService.encodePassword(params.passwordanterior))){
                 flash.message = "Su contraseña actual no es válida"
                 render(view: 'editpass', model: [userInstance: usuarioInstance])
             }else{
                 if (!params.newpassword.equals(params.repeatnewpassword)){
                     //errorList  << [msg: "La nueva contraseña no coincide con su confirmación"]
                     log.debug "CONTRASEÑAS NO COINCIDEN"
-                    flash.message="La nueva contraseña y repetición no coincide"
+                    flash.message="La nueva contraseña y la repetición no coinciden"
                     render(view: 'editpass',model: [userInstance:usuarioInstance])
                 }else{
                     if (!params.newpassword.matches(".*[a-zA-Z].*") || !params.newpassword.matches(".*[1-9!@#\$%^&*()-_=+].*")){
                         //errorList << [msg: "La contraseña debe combinar letras con al menos un número o caracter especial  (!@#\$%^&*()-_=+)"]
+                        flash.message="La contraseña debe combinar leetras con al menos un número o caracter especial: (!@#\\\$%^&*()-_=+)"
                         render(view: 'editpass',model:[userInstance:usuarioInstance])
                     }else{
                         usuarioInstance.password = params.newpassword
                         if (usuarioInstance.save(flush: true)){
                             //returnMap.success = true
                             //returnMap.mensaje = "La contraseña se modificó correctamente"
+                            flash.message="La contraseña se modificó correctamente"
+                            redirect(controller: "panelControlAdmin",action: "infousum")
                         }else{
                             usuarioInstance.errors.allErrors.each{
                                 //errorList << [msg:messageSource.getMessage(it, LocaleContextHolder.locale)]

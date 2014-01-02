@@ -273,7 +273,7 @@ Ext.onReady(function(){
                 stripeRows:true,
                 store:storelistadoinscdet,
                 columns: [
-                    {header: "id",dataIndex:'id',hidden:false},
+                    {header: "id",dataIndex:'id',hidden:true},
                     {header: "Materia",width:200,sortable:false,dataIndex:'denominacion'},
                     {header: "Nivel",width:100,sortable:false,dataIndex:"nivel"},
                     {header: "Estado",width:100,sortable:false,dataIndex:"estado"},
@@ -326,7 +326,7 @@ Ext.onReady(function(){
         items:[
             new Ext.BoxComponent({
                 region:'north',
-                height:50
+                height:100
                 /*autoEl:{
                  tag:'div',
                  html:'<p>SUPRA PEZON</p>'
