@@ -326,7 +326,19 @@ Ext.onReady(function(){
         items:[
             new Ext.BoxComponent({
                 region:'north',
-                height:100
+                height:100,
+                html:
+                    '<div style="padding-left: 15px;padding-top: 15px;">'
+                    +'    <div style="float:left;"  id="grailsLogo" role="banner"><a href=""><img  src="" alt="Cruz Roja"/></a>'
+                    +'    </div>'
+                    +'    <div style="padding-left: 15px ;float: left; text-align: left">'
+                    +'       CRUZ ROJA <br>'
+                    +'        ARGENTINA <br>'
+                    +'        FILIAL CORDOBA <br>'
+                    +'        Instituto Superior de Enseñanza'
+                    +'    </div>'
+                    +'</div>'
+
                 /*autoEl:{
                  tag:'div',
                  html:'<p>SUPRA PEZON</p>'

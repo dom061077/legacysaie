@@ -41,21 +41,28 @@
 	</head>
 	<body>
         <header>
+            <%--
             <div style="padding-left: 15px;padding-top: 15px;">
                 <div style="float:left;"  id="grailsLogo" role="banner"><a href=""><img  src="${resource(dir: 'images', file: 'lefthead.png')}" alt="Cruz Roja"/></a>
                 </div>
-                <div style="padding-left: 15px ;float: left; font-weight: normal;font-size: 1.25em;text-align: center">
-                    Cruz Roja - Argentina <br>
-                    Filial Córdoba
+                <div style="padding-left: 15px ;float: left; text-align: left">
+                    CRUZ ROJA <br>
+                    ARGENTINA <br>
+                    FILIAL CORDOBA <br>
+                    Instituto Superior de Enseñanza
                 </div>
             </div>
+            --%>
         </header>
         <section>
 	        <g:layoutBody/>
         </section>
         <footer>
+            <%--
             <div class="footer" role="contentinfo"></div>
             <div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
+            --%>
+
             <g:javascript library="application"/>
             <r:layoutResources />
         </footer>

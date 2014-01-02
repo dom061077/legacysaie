@@ -55,7 +55,7 @@
     </script>
 
 
-  <title></title>
+  <title>Panel de Control de Administrador</title>
 </head>
 <body>
 
