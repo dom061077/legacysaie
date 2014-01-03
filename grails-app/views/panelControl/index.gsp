@@ -95,6 +95,8 @@
         var reportcuponpagoUrl = '${createLink(uri:'/panelControl/impresioncuponpago/')}';
         var cuotasafectadasUrl = '${createLink(uri:'/panelControl/')}';
         var totalgralcuponUrl = '${createLink(uri:'/panelControl/totalRecibo')}';
+        var imagecableftUrl = '${resource(dir:'images',file:'lefthead.png')}';
+        var imagecabrightUrl = '${resource(dir:'images',file:'righthead.png')}';
     </script>
     <script type="text/javascript" src="${resource(dir:"js/paneldecontrol",file:"paneldecontrol.js")+'?id='+randomlink}"></script>
     <title>Panel de control</title>
