@@ -1,3 +1,4 @@
+var randomnumber;
 Ext.onReady(function(){
     //TO DO EL LOAD DEL FORMULARIO
     Ext.QuickTips.init();
@@ -212,10 +213,11 @@ Ext.onReady(function(){
 
 
     var nestedRowGrid = new Ext.grid.RowExpander({
-        tpl: new Ext.XTemplate('<div class="detailData">','','</div>'),
+        tpl: new Ext.XTemplate('<div id="iddetaildata'+randomnumber+'" class="detailData">','','</div>'),
         listeners:
         {
             expand:function(ex,record,body,rowIndex){
+
                 processRowExpander(record,body,rowIndex);
             },
             collapse : function(ex,record,body,rowIndex){
@@ -269,7 +271,7 @@ Ext.onReady(function(){
         if(Ext.DomQuery.select("div.x-panel-bwrap",body).length==0){
             var innerRowDiv=Ext.DomQuery.select("div.detailData",body)[0];
             var nestedGrid = new Ext.grid.GridPanel({
-                id:'gridlistadoInscDetalleId',
+                id:'gridlistadoInscDetalleId'+record.data.id,
                 stripeRows:true,
                 store:storelistadoinscdet,
                 columns: [
@@ -282,7 +284,7 @@ Ext.onReady(function(){
                 stripeRows: true,
                 height:250,
                 width:500,
-                loadMask:true,
+                loadMask:false,
                 title:'Detalle de Mis Inscripciones',
                 iconCls: 'icon-grid',
                 listeners:{
@@ -329,7 +331,7 @@ Ext.onReady(function(){
                 height:100,
                 html:
                     '<div style="padding-left: 15px;padding-top: 15px;">'
-                    +'    <div style="float:left;"  id="grailsLogo" role="banner"><a href=""><img  src="" alt="Cruz Roja"/></a>'
+                    +'    <div style=" float:left;padding-left: 100px"  id="grailsLogo" role="banner"><a href=""><img  src="'+imagecableftUrl+'" alt="Cruz Roja"/></a>'
                     +'    </div>'
                     +'    <div style="padding-left: 15px ;float: left; text-align: left">'
                     +'       CRUZ ROJA <br>'
@@ -337,12 +339,26 @@ Ext.onReady(function(){
                     +'        FILIAL CORDOBA <br>'
                     +'        Instituto Superior de Enseñanza'
                     +'    </div>'
+                    +'    <div style="float:right;padding-right: 100px">'
+                    +'          <img src="'+imagecabrightUrl+'" />'
+                    +'    </div>'
                     +'</div>'
 
                 /*autoEl:{
                  tag:'div',
                  html:'<p>SUPRA PEZON</p>'
                  } */
+            }),
+            new Ext.BoxComponent({
+                region:'east',
+                width:100
+            }),
+            new Ext.BoxComponent({
+                region:'south',
+                height:25,
+                html:'<p style="text-align: center">'
+                    +'© 2014 Instituto Superior Cruz Roja Argentina - Filial Códoba'
+                    +'</p>'
             }),
             {
                 xtype: 'grouptabpanel',
@@ -365,7 +381,7 @@ Ext.onReady(function(){
                                             ,frame:true
                                             ,title:'Datos del Alumno    '
                                             ,id:'formalumnoId'
-                                            ,style: 'margin:0 auto;margin-top:50px;'
+                                            ,style: 'margin:0 auto;margin-top:10px;'
                                             ,height:450
                                             ,width:450
                                             ,url:savealumnoUrl
@@ -1919,7 +1935,12 @@ Ext.onReady(function(){
 
                         }
                 ]
-            }
+            },
+            new Ext.BoxComponent({
+                region:'west',
+                width:100
+            }),
+
         ]
     });
 
