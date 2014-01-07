@@ -94,6 +94,8 @@ Ext.ux.grid.RowExpander = Ext.extend(Ext.util.Observable, {
         this.bodyContent = {};
     },
 
+
+
     getRowClass : function(record, rowIndex, p, ds){
         p.cols = p.cols-1;
         var content = this.bodyContent[record.id];

@@ -217,7 +217,11 @@ Ext.onReady(function(){
         listeners:
         {
             expand:function(ex,record,body,rowIndex){
-
+                randomnumber = Math.floor(Math.random()*11);
+                grid = Ext.getCmp('gridlistadoinscripcionesId');
+                for (var i = 0; i < grid.getStore().data.length; i++) {
+                    nestedRowGrid.toggleRow(i);
+                }
                 processRowExpander(record,body,rowIndex);
             },
             collapse : function(ex,record,body,rowIndex){
@@ -271,7 +275,7 @@ Ext.onReady(function(){
         if(Ext.DomQuery.select("div.x-panel-bwrap",body).length==0){
             var innerRowDiv=Ext.DomQuery.select("div.detailData",body)[0];
             var nestedGrid = new Ext.grid.GridPanel({
-                id:'gridlistadoInscDetalleId'+record.data.id,
+                id:'gridlistadoInscDetalleId',
                 stripeRows:true,
                 store:storelistadoinscdet,
                 columns: [
@@ -1939,7 +1943,7 @@ Ext.onReady(function(){
             new Ext.BoxComponent({
                 region:'west',
                 width:100
-            }),
+            })
 
         ]
     });

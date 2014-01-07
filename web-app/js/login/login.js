@@ -25,7 +25,7 @@ Ext.onReady(function(){
         style: 'margin:0 auto;margin-top:100px;',
         url:postLoginUrl,
         title:'Ingreso a su Panel de Control',
-        renderTo:'loginId',
+        //renderTo:'loginId',
         frame:true,
         width:350,
         items:[
@@ -83,5 +83,54 @@ Ext.onReady(function(){
         closable: true
     });
     toolTip.show();*/
+
+    var viewport = new Ext.Viewport({
+        layout:'border',
+        items:[
+            new Ext.BoxComponent({
+                region:'north',
+                height:100,
+                html:
+                    '<div style="padding-left: 15px;padding-top: 15px;">'
+                        +'    <div style=" float:left;padding-left: 100px"  id="grailsLogo" role="banner"><a href=""><img  src="'+imagecableftUrl+'" alt="Cruz Roja"/></a>'
+                        +'    </div>'
+                        +'    <div style="padding-left: 15px ;float: left; text-align: left">'
+                        +'       CRUZ ROJA <br>'
+                        +'        ARGENTINA <br>'
+                        +'        FILIAL CORDOBA <br>'
+                        +'        Instituto Superior de Enseñanza'
+                        +'    </div>'
+                        +'    <div style="float:right;padding-right: 100px">'
+                        +'          <img src="'+imagecabrightUrl+'" />'
+                        +'    </div>'
+                        +'</div>'
+
+                /*autoEl:{
+                 tag:'div',
+                 html:'<p>SUPRA PEZON</p>'
+                 } */
+            }),
+            new Ext.BoxComponent({
+                region:'east',
+                width:100
+            }),
+            new Ext.BoxComponent({
+                region:'south',
+                height:25,
+                html:'<p style="text-align: center">'
+                    +'© 2014 Instituto Superior Cruz Roja Argentina - Filial Códoba'
+                    +'</p>'
+            }),
+            {
+                region:'center',
+                xtype:'panel',
+                items:[loginForm]
+            },
+            new Ext.BoxComponent({
+                region:'west',
+                width:100
+            })
+        ]
+    });
 
 });
