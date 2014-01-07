@@ -20,11 +20,12 @@
             else
                 document.getElementById('divMayus').style.visibility = 'hidden';
         }
+        var imagecableftUrl = '${resource(dir:'images',file:'lefthead.png')}';
+        var imagecabrightUrl = '${resource(dir:'images',file:'righthead.png')}';
+
     </script>
 </head>
 
 <body>
-    <div id='loginId'>
-    </div>
 </body>
 </html>

@@ -49,6 +49,8 @@
         var updatenotaUrl = '${createLink(uri:'/panelControlDocente/savenota')}';
         var reporteUrl = '${createLink(uri:'/panelControlDocente/reportealumnosexamenes/')}';
         */
+        var imagecableftUrl = '${resource(dir:'images',file:'lefthead.png')}';
+        var imagecabrightUrl = '${resource(dir:'images',file:'righthead.png')}';
 
         
 

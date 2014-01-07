@@ -63,6 +63,8 @@
         var usuarioId = '${userInstance?.id}';
         var changepasswordUrl = '${createLink(uri:'/panelControl/changepassword')}';
 
+        var imagecableftUrl = '${resource(dir:'images',file:'lefthead.png')}';
+        var imagecabrightUrl = '${resource(dir:'images',file:'righthead.png')}';
 
     </script>
 
