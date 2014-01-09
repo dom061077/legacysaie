@@ -666,7 +666,7 @@ Ext.onReady(function(){
                                                             id:'gridusuariosalumnosId',
                                                             store:usuariosAlumnosStore,
                                                             width:690,
-                                                            height:250,
+                                                            height:200,
                                                             columns: [
                                                                 {header: "Nº de Documento",width:100,sortable:false,dataIndex:'numerodocumento'},
                                                                 {header: "Nombre de Alumno",width:200,sortable:false,dataIndex:'nombrealumno'},

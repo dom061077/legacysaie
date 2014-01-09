@@ -2,6 +2,7 @@ var randomnumber;
 Ext.onReady(function(){
     //TO DO EL LOAD DEL FORMULARIO
     Ext.QuickTips.init();
+    var nestedRowIndxAnt=0;
     var matriculaseleccionadapagocuota;
     var loadMask = new Ext.LoadMask(Ext.getBody(), {msg:'Enviando Información'});
     var storeaux =  new Ext.data.JsonStore({
@@ -218,10 +219,10 @@ Ext.onReady(function(){
         {
             expand:function(ex,record,body,rowIndex){
                 randomnumber = Math.floor(Math.random()*11);
-                grid = Ext.getCmp('gridlistadoinscripcionesId');
-                for (var i = 0; i < grid.getStore().data.length; i++) {
-                    nestedRowGrid.toggleRow(i);
-                }
+                if (nestedRowIndxAnt != rowIndex)
+                    nestedRowGrid.toggleRow(nestedRowIndxAnt);
+                nestedRowIndxAnt = rowIndex;
+
                 processRowExpander(record,body,rowIndex);
             },
             collapse : function(ex,record,body,rowIndex){
@@ -286,7 +287,7 @@ Ext.onReady(function(){
                     {header: "Nota Final", width:80,dataIndex:"notafinal",align:'right',renderer: Ext.util.Format.numberRenderer('00,00/i')}
                 ],
                 stripeRows: true,
-                height:250,
+                height:150,
                 width:500,
                 loadMask:false,
                 title:'Detalle de Mis Inscripciones',
@@ -324,7 +325,10 @@ Ext.onReady(function(){
         autoLoad:false
     });
 
-
+    function verdetalle(cabid){
+        var grid = Ext.getCmp('gridlistadoInscDetalleId');
+        grid.getStore().load();
+    }
 
 
     var viewport = new Ext.Viewport({
@@ -1282,11 +1286,11 @@ Ext.onReady(function(){
                                               items:[
                                                   {
                                                       xtype:'form',
-                                                      style: 'margin:0 auto;margin-top:50px;',
+                                                      style: 'margin:0 auto;margin-top:10px;',
                                                       id:'formlistadoinscId',
                                                       frame:true,
                                                       width:650,
-                                                      height:450,
+                                                      height:445,
                                                       title:'Mis Inscripciones',
                                                       items:[
                                                           {
@@ -1359,25 +1363,29 @@ Ext.onReady(function(){
                                                                   }
                                                               }
                                                           },
-
-
                                                            new Ext.grid.GridPanel({
                                                               id:'gridlistadoinscripcionesId',
                                                               stripeRows:true,
                                                               store:storelistadoinscripciones,
+                                                              title:'Datos Principales de Inscripción',
                                                               columns: [
-                                                                  nestedRowGrid,
+                                                                  //nestedRowGrid,
                                                                   {header: "Carrera",width:200,sortable:false,dataIndex:'carrera'},
                                                                   {header: "Año",width:150,sortable:false,dataIndex:"aniolectivo"},
-                                                                  {header: "Fecha",width:100,sortable:true,dataIndex:"fecha",renderer: Ext.util.Format.dateRenderer('d/m/y')},
-                                                                  {header: "Comprobante",dataIndex:'id',hidden:false
+                                                                  {header: "Fecha",width:60,sortable:true,dataIndex:"fecha",renderer: Ext.util.Format.dateRenderer('d/m/y')},
+                                                                  {header: "Comprobante",width:80,dataIndex:'id',hidden:false
                                                                       ,renderer: function (val, meta, record) {
                                                                             return '<a target="_blank"  href="'+comprobanteUrl+'/?id='+record.data.id+'"><img style="margin-left:15px " src="'+pdfUrl+'"></a>';
                                                                         }
+                                                                  },
+                                                                  {header: "Detalle",width:80,dataIndex:'',hidden:false
+                                                                      ,renderer: function(val,meta,record){
+                                                                            return '<a target="_blank" onclick="verdetalle()"  href="#"><img style="margin-left:15px " src="'+pdfUrl+'"></a>';
+                                                                      }
                                                                   }
                                                               ],
-                                                              stripeRows: true,
-                                                              height:350,
+                                                              //stripeRows: true,
+                                                              height:150,
                                                               width:600,
                                                               loadMask:true,
                                                               bbar: new Ext.PagingToolbar({
@@ -1387,7 +1395,27 @@ Ext.onReady(function(){
                                                                    displayMsg: 'Visualizando registros {0} - {1} de {2}',
                                                                    emptyMsg: 'No hay registros para visualizar'
                                                                }),
-                                                              plugins:nestedRowGrid,
+                                                              //plugins:nestedRowGrid,
+                                                              iconCls: 'icon-grid',
+                                                              listeners:{
+                                                              }
+                                                          }) ,
+                                                          new Ext.grid.GridPanel({
+                                                              id:'gridlistadoInscDetalleId',
+                                                              stripeRows:true,
+                                                              store:storelistadoinscdet,
+                                                              columns: [
+                                                                  {header: "id",dataIndex:'id',hidden:true},
+                                                                  {header: "Materia",width:200,sortable:false,dataIndex:'denominacion'},
+                                                                  {header: "Nivel",width:100,sortable:false,dataIndex:"nivel"},
+                                                                  {header: "Estado",width:100,sortable:false,dataIndex:"estado"},
+                                                                  {header: "Nota Final", width:80,dataIndex:"notafinal",align:'right',renderer: Ext.util.Format.numberRenderer('00,00/i')}
+                                                              ],
+                                                              stripeRows: true,
+                                                              height:200,
+                                                              width:500,
+                                                              loadMask:false,
+                                                              title:'Detalle de Mis Inscripciones',
                                                               iconCls: 'icon-grid',
                                                               listeners:{
                                                               }
