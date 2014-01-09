@@ -272,46 +272,7 @@ Ext.onReady(function(){
     });
 
 
-    function processRowExpander(record, body, rowIndex){
-        if(Ext.DomQuery.select("div.x-panel-bwrap",body).length==0){
-            var innerRowDiv=Ext.DomQuery.select("div.detailData",body)[0];
-            var nestedGrid = new Ext.grid.GridPanel({
-                id:'gridlistadoInscDetalleId',
-                stripeRows:true,
-                store:storelistadoinscdet,
-                columns: [
-                    {header: "id",dataIndex:'id',hidden:true},
-                    {header: "Materia",width:200,sortable:false,dataIndex:'denominacion'},
-                    {header: "Nivel",width:100,sortable:false,dataIndex:"nivel"},
-                    {header: "Estado",width:100,sortable:false,dataIndex:"estado"},
-                    {header: "Nota Final", width:80,dataIndex:"notafinal",align:'right',renderer: Ext.util.Format.numberRenderer('00,00/i')}
-                ],
-                stripeRows: true,
-                height:150,
-                width:500,
-                loadMask:false,
-                title:'Detalle de Mis Inscripciones',
-                iconCls: 'icon-grid',
-                listeners:{
-                },
-                renderTo: innerRowDiv,
-                listeners: {
-                    cellclick: function(grid,rowIndex, columnIndex,e){
-                        e.stopEvent();
-                    },
-                    headerclick:function(grid,columnIndex,e){
-                        e.stopEvent();
-                    }
-                }
-            });
-            storelistadoinscdet.load({
-                params:{
-                    inscripcionId:record.data.id
-                }
-            });
 
-        }
-    }
 
     Ext.QuickTips.init();
     var storelistadoinscripciones = new Ext.data.JsonStore({
