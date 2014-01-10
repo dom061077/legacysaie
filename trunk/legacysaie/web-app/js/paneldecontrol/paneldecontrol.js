@@ -1,4 +1,17 @@
 var randomnumber;
+
+function verdetalle(cabid){
+    var grid = Ext.getCmp('gridlistadoInscDetalleId');
+    grid.getStore().load({
+        params:{
+            inscripcionId:cabid
+        }
+    });
+    var index = grid.getStore().findExact('id',cabid);
+    var record = grid.getStore().getAt(index);
+}
+
+
 Ext.onReady(function(){
     //TO DO EL LOAD DEL FORMULARIO
     Ext.QuickTips.init();
@@ -236,7 +249,7 @@ Ext.onReady(function(){
     var storelistadoinscdet = new Ext.data.JsonStore({
         root:'rows',
         url:inscDetUrl,
-        fields:[{name:'id'},{name:'denominacion'},{name:'nivel'},{name:'estado'},{name:'notafinal',type:'float'}],
+        fields:[{name:'id'},{name:'cabid'},{name:'denominacion'},{name:'nivel'},{name:'estado'},{name:'notafinal',type:'float'}],
         autoLoad:false
     });
 
@@ -286,10 +299,6 @@ Ext.onReady(function(){
         autoLoad:false
     });
 
-    function verdetalle(cabid){
-        var grid = Ext.getCmp('gridlistadoInscDetalleId');
-        grid.getStore().load();
-    }
 
 
     var viewport = new Ext.Viewport({
@@ -1331,6 +1340,7 @@ Ext.onReady(function(){
                                                               title:'Datos Principales de Inscripción',
                                                               columns: [
                                                                   //nestedRowGrid,
+                                                                  {header:'Nº de Insc.',width:80,hidden:false,dataIndex:'id'},
                                                                   {header: "Carrera",width:200,sortable:false,dataIndex:'carrera'},
                                                                   {header: "Año",width:150,sortable:false,dataIndex:"aniolectivo"},
                                                                   {header: "Fecha",width:60,sortable:true,dataIndex:"fecha",renderer: Ext.util.Format.dateRenderer('d/m/y')},
@@ -1341,13 +1351,13 @@ Ext.onReady(function(){
                                                                   },
                                                                   {header: "Detalle",width:80,dataIndex:'',hidden:false
                                                                       ,renderer: function(val,meta,record){
-                                                                            return '<a target="_blank" onclick="verdetalle()"  href="#"><img style="margin-left:15px " src="'+pdfUrl+'"></a>';
+                                                                            return '<a onclick="verdetalle('+record.data.id+')"  href="#"><img style="margin-left:15px " src="'+pdfUrl+'"></a>';
                                                                       }
                                                                   }
                                                               ],
                                                               //stripeRows: true,
                                                               height:150,
-                                                              width:600,
+                                                              width:650,
                                                               loadMask:true,
                                                               bbar: new Ext.PagingToolbar({
                                                                    pageSize: 10,
@@ -1367,6 +1377,7 @@ Ext.onReady(function(){
                                                               store:storelistadoinscdet,
                                                               columns: [
                                                                   {header: "id",dataIndex:'id',hidden:true},
+                                                                  {header: "Nº de Insc.",dataIndex:'cabid',width:80},
                                                                   {header: "Materia",width:200,sortable:false,dataIndex:'denominacion'},
                                                                   {header: "Nivel",width:100,sortable:false,dataIndex:"nivel"},
                                                                   {header: "Estado",width:100,sortable:false,dataIndex:"estado"},
@@ -1374,7 +1385,7 @@ Ext.onReady(function(){
                                                               ],
                                                               stripeRows: true,
                                                               height:200,
-                                                              width:500,
+                                                              width:650,
                                                               loadMask:false,
                                                               title:'Detalle de Mis Inscripciones',
                                                               iconCls: 'icon-grid',

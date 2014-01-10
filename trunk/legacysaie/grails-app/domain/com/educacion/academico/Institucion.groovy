@@ -12,6 +12,7 @@ class Institucion {
     String ingregsosBrutos
     String codigoIVA
     String web
+    boolean preinscripcionAbierta
 
     static constraints = {
     }
@@ -21,5 +22,6 @@ class Institucion {
         version false
         ingresosBrutos column : 'ingresosbrutos'
         codigoIVA  column:'codigoiva'
+        preinscripcionAbierta column: 'preinscripcionabierta'
     }
 }
