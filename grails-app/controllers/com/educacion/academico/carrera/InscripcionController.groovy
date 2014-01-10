@@ -24,7 +24,7 @@ class InscripcionController {
              }
         }
         inscripciones.each{
-            recordList << [id:it.id,denominacion:it.materia.denominacion,nivel:it.materia.nivel.descripcion,estado:it.estado.name,notafinal:it.notaFinal]
+            recordList << [id:it.id,cabid:it.inscripcion.id,denominacion:it.materia.denominacion,nivel:it.materia.nivel.descripcion,estado:it.estado.name,notafinal:it.notaFinal]
         }
         returnMap.rows = recordList
         returnMap.success = true

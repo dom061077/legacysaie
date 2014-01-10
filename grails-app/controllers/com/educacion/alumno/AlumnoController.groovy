@@ -24,6 +24,7 @@ import com.educacion.enums.EstadoInscripcionDetalleEnum
 import com.educacion.enums.TipoInscripcionDetalleEnum
 import org.imgscalr.Scalr
 import javax.imageio.ImageIO
+import com.educacion.academico.Institucion
 
 
 
@@ -47,6 +48,7 @@ class AlumnoController {
 
     def create() {
         Random randomLink = new Random()
+        def institucionInstance = Institucion.get()
         def aniosLectivos = AnioLectivo.createCriteria().list{
             eq("estado",1)
             order("anio","desc")
