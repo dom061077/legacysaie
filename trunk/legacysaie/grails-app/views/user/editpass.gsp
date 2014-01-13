@@ -1,10 +1,11 @@
 <html>
 <head>
-  <meta name="layout" content="mainmobile">
+
   <link rel="stylesheet" href="${resource(dir:"css/jqueryvalidation",file:"validationEngine.jquery.css")}"/>
   <script type="text/javascript" src="${resource(dir:'js/jquery/validation',file:'jquery.validationEngine-es.js')}"></script>
   <script type="text/javascript" src="${resource(dir:'js/jquery/validation',file:'jquery.validationEngine.js')}"></script>
   <title></title>
+    <meta name="layout" content="mainmobile">
 </head>
 <body>
 
@@ -30,19 +31,19 @@
                 <!--label--> Contraseña Actual: <!--/label -->
             </div>
             <div class="ui-block-b">
-                <input type="password" id="passwordanteriorId" name="passwordanterior" data-validation-placeholder="This is a placeholder" class="validate[required] text-input"/>
+                <input type="password" id="passwordanteriorId" name="passwordanterior" data-prompt-position='topLeft'  class="validate[required] text-input"/>
             </div>
             <div class="ui-block-a">
                 <label> Nueva Contraseña:</label>
             </div>
             <div class="ui-block-b">
-                <input type="password" id="newpasswordId" name="newpassword" data-validation-placeholder="This is a placeholder" class="validate[required] text-input">
+                <input type="password" id="newpasswordId" name="newpassword" data-prompt-position='topLeft' class="validate[required] text-input">
             </div>
             <div class="ui-block-a">            
                 <!--label--> Repita Nueva Contraseña:<!--/label-->
             </div>
             <div class="ui-block-b">
-                <input type="password" id="repeatnewpasswordId" name="repeatnewpassword" data-validation-placeholder="This is a placeholder" class="validate[required] text-input">
+                <input type="password" id="repeatnewpasswordId" name="repeatnewpassword" data-prompt-position='topLeft' class="validate[required] text-input">
             </div>
         </div>    
         <div class="ui-grid-a">

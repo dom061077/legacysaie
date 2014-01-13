@@ -6,11 +6,12 @@
         <link rel="stylesheet" href="${resource(dir:'css',file:'jquery.mobile-1.3.2.css')}"/>
         <!--link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile.structure-1.2.0.min.css" / -->
         <link rel="stylesheet" href="${resource(dir:'css/mobile',file:'jquery.mobile.message.css')}"/>
+        <link rel="stylesheet" href="${resource(dir:"css/jqueryvalidation",file:"validationEngine.jquery.css")}"/>
         <script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery-1.8.2.min.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/jqm',file:'jquery.mobile-1.3.2.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/jqm',file:'jquery.mobile.message.js')}"></script>
-        <!--script type="text/javascript" src="${resource(dir:'js/jquery/validation',file:'jquery.validationEngine.js')}"></script-->
-        <!--script type="text/javascript" src="${resource(dir:'js/jquery/validation',file:'jquery.validationEngine-es.js')}"></script-->
+        <script type="text/javascript" src="${resource(dir:'js/jquery/validation',file:'jquery.validationEngine.js')}"></script>
+        <script type="text/javascript" src="${resource(dir:'js/jquery/validation',file:'jquery.validationEngine-es.js')}"></script>
 
 
         <g:layoutHead/>
