@@ -1,9 +1,4 @@
 <html>
-<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
-<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
-<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"><!--<![endif]-->
 	<head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title><g:layoutTitle default="Grails"/></title>
@@ -11,9 +6,11 @@
         <link rel="stylesheet" href="${resource(dir:'css',file:'jquery.mobile-1.3.2.css')}"/>
         <!--link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile.structure-1.2.0.min.css" / -->
         <link rel="stylesheet" href="${resource(dir:'css/mobile',file:'jquery.mobile.message.css')}"/>
-        <script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery-1.6.2.min.js')}"></script>
+        <script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery-1.8.2.min.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/jqm',file:'jquery.mobile-1.3.2.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/jqm',file:'jquery.mobile.message.js')}"></script>
+        <!--script type="text/javascript" src="${resource(dir:'js/jquery/validation',file:'jquery.validationEngine.js')}"></script-->
+        <!--script type="text/javascript" src="${resource(dir:'js/jquery/validation',file:'jquery.validationEngine-es.js')}"></script-->
 
 
         <g:layoutHead/>
