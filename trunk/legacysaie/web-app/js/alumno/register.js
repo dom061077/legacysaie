@@ -48,6 +48,16 @@ var returnnumdocflag=true;
 
 var loadMask = new Ext.LoadMask(Ext.getBody(), {msg:'Enviando Información'});
 
+Ext.apply(Ext.layout.FormLayout.prototype, {
+    originalRenderItem: Ext.layout.FormLayout.prototype.renderItem,
+    renderItem: function(c, position, target){
+        if (c && !c.rendered && c.isFormField && c.fieldLabel && !c.allowBlank) {
+            c.fieldLabel = '<span style="color: rgb(255, 0, 0); padding-left: 2px;">*</span>'+ c.fieldLabel ;
+        }
+        this.originalRenderItem.apply(this, arguments);
+    }
+});
+
 Ext.apply(Ext.form.VTypes,{
     cupolimiteText:'No hay cupo disponible para esta carrera',
     cupolimite: function cupoLimite(carrera){
@@ -1035,10 +1045,11 @@ Ext.onReady(function(){
         var conn = new Ext.data.Connection();
         Ext.MessageBox.show({
             msg: 'Por favor espere...',
-            progressText: 'Enviando datos...',
+            //progressText: 'Enviando datos...',
             width:300,
             wait:true,
             waitConfig: {interval:200}
+
         });
         conn.request({
             url:'../alumno/savejson',
@@ -1095,6 +1106,7 @@ Ext.onReady(function(){
                 //('recaptcha_reload_btn')
             },
             failure: function(resp,opt){
+
                 Ext.Msg.show({
                     title:'Error',
                     icon:Ext.MessageBox.ERROR ,

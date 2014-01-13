@@ -10,7 +10,7 @@
 
     <div class="${flash.message?'flash-message':''}">${flash.message}</div>
 
-    <form id="formularioChangePassId" action="changepass" class="formular" method="post" onsubmit="return jQuery(this).validationEngine('validate');">
+    <form id="formularioChangePassId" action="changepass" class="formular" method="post" >
         <div class="ui-grid-a">
             <div class="ui-block-a">
                 <!--label--> Nombre de Usuario: <!--/label-->
@@ -57,6 +57,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
             $('.flash-message').message({type:"error"});
+            $('#formularioChangePassId').validationEngine();
         });
     </script>
 
