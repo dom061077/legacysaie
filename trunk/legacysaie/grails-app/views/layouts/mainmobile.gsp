@@ -12,7 +12,10 @@
         <script type="text/javascript" src="${resource(dir:'js/jqm',file:'jquery.mobile.message.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/jquery/validation',file:'jquery.validationEngine.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/jquery/validation',file:'jquery.validationEngine-es.js')}"></script>
-
+        <script type="text/javascript" src="${resource(dir:'js',file:'application.js')}"></script>
+        <script type="text/javascript">
+            var urlsession = '<% out << g.createLink(controller:'login',action:'auth')%>';
+        </script>
 
         <g:layoutHead/>
         <r:layoutResources />

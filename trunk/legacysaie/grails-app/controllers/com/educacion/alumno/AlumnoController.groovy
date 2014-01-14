@@ -48,13 +48,17 @@ class AlumnoController {
 
     def create() {
         Random randomLink = new Random()
-        def institucionInstance = Institucion.get()
-        def aniosLectivos = AnioLectivo.createCriteria().list{
-            eq("estado",1)
-            order("anio","desc")
+        def institucionInstance = Institucion.get(new Long(1))
+        if (institucionInstance.preinscripcionAbierta){
+            def aniosLectivos = AnioLectivo.createCriteria().list{
+                eq("estado",1)
+                order("anio","desc")
+            }
+            def anioLectivoInstance = aniosLectivos.get(0)
+            [alumnoInstance: new Alumno(params),randomlink:randomLink.nextInt(100000),aniolectivoInstance:anioLectivoInstance]
+        }else{
+            render(view: 'preinscclosed')
         }
-        def anioLectivoInstance = aniosLectivos.get(0)
-        [alumnoInstance: new Alumno(params),randomlink:randomLink.nextInt(100000),aniolectivoInstance:anioLectivoInstance]
     }
 
     def save() {
