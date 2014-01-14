@@ -9,7 +9,7 @@ class Institucion {
     String cp
     String provincia
     String cuit
-    String ingregsosBrutos
+    String ingresosBrutos
     String codigoIVA
     String web
     boolean preinscripcionAbierta

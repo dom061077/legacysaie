@@ -31,19 +31,19 @@
                 <!--label--> Contraseña Actual: <!--/label -->
             </div>
             <div class="ui-block-b">
-                <input type="password" id="passwordanteriorId" name="passwordanterior" data-prompt-position='topLeft'  class="validate[required] text-input"/>
+                <input type="password" id="passwordanteriorId" name="passwordanterior" data-prompt-position='inline'  class="validate[required] text-input"/>
             </div>
             <div class="ui-block-a">
                 <label> Nueva Contraseña:</label>
             </div>
             <div class="ui-block-b">
-                <input type="password" id="newpasswordId" name="newpassword" data-prompt-position='topLeft' class="validate[required] text-input">
+                <input type="password" id="newpasswordId" name="newpassword" data-prompt-position='inline' class="validate[required] text-input">
             </div>
             <div class="ui-block-a">            
                 <!--label--> Repita Nueva Contraseña:<!--/label-->
             </div>
             <div class="ui-block-b">
-                <input type="password" id="repeatnewpasswordId" name="repeatnewpassword" data-prompt-position='topLeft' class="validate[required] text-input">
+                <input type="password" id="repeatnewpasswordId" name="repeatnewpassword" data-prompt-position='inline' class="validate[required] text-input">
             </div>
         </div>    
         <div class="ui-grid-a">

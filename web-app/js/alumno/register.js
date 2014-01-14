@@ -991,7 +991,7 @@ Ext.onReady(function(){
                         width:400,
                         layout:'form',
                         name:'localidadgarante'
-                    },{
+                    }/*,{
                      xtype:'panel',
                      itemId:'reCaptcha',
                      border:false,
@@ -1007,7 +1007,7 @@ Ext.onReady(function(){
                             }
                         }
 
-                     }
+                     } */
                 ]
             })/*,{
                 xtype:'panel',

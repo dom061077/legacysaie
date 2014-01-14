@@ -9,7 +9,7 @@
         <script type="text/javascript" src="${resource(dir:'js/extjs/plugins/wizard',file:'Header.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/extjs/plugins/wizard',file:'Card.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/extjs/plugins/fileuploadfield',file:'FileUploadField.js')}"></script>
-        <script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
+        <!-- script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script -->
 
         <script type="text/javascript" src="${resource(dir:'js/alumno',file: 'register.js')+'?id='+randomlink}"></script>
 
