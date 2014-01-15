@@ -9,9 +9,16 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
+  <meta name="layout" content="main">
   <title></title>
+
+  <script type="text/javascript" src="${resource(dir:'js/alumno',file:'preinscclosed.js')}"></script>
+  <script type="text/javascript">
+        var imagecableftUrl = '${resource(dir:'images',file:'lefthead.png')}';
+        var imagecabrightUrl = '${resource(dir:'images',file:'righthead.png')}';
+  </script>
 </head>
 <body>
-       LA PREINSCRIPCIÓN NO ESTA ABIERTA
+
 </body>
 </html>

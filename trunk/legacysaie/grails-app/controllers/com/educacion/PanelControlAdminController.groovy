@@ -18,9 +18,9 @@ class PanelControlAdminController {
     MessageSource  messageSource
     def index() {
         def view
-        //if (isNormal())
-        //    view = 'index'
-        //else
+        if (isNormal())
+            view = 'index'
+        else
             view = 'indexm'
 
         def userInstance = springSecurityService.currentUser

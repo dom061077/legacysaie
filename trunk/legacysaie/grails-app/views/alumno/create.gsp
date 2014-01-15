@@ -2,6 +2,7 @@
 <!doctype html>
 <html>
 	<head>
+        <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
         <link rel="stylesheet" href="${resource(dir:'js/extjs/resources/css',file:'ext-ux-wiz.css')}"/>
         <link rel="stylesheet" href="${resource(dir: 'js/extjs/plugins/fileuploadfield/css',file:'fileuploadfield.css')}"/>
         <script type="text/javascript" src="${resource(dir:'js/extjs/plugins/wizard',file:'CardLayout.js')}"></script>
@@ -12,6 +13,7 @@
         <!-- script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script -->
 
         <script type="text/javascript" src="${resource(dir:'js/alumno',file: 'register.js')+'?id='+randomlink}"></script>
+
 
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'alumno.label', default: 'Alumno')}" />
@@ -34,6 +36,9 @@
             var aniolectivoId = ${aniolectivoInstance?.id};
             var aniolectivoDesc = '${aniolectivoInstance?.descripcion}';
             var homeUrl = 'http://www.iscrafcordoba.edu.ar/'
+            var imagecableftUrl = '${resource(dir:'images',file:'lefthead.png')}';
+            var imagecabrightUrl = '${resource(dir:'images',file:'righthead.png')}';
+
         </script>
 	</head>
 	<body>
