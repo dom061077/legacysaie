@@ -10,7 +10,7 @@
 <html>
 <head>
   <meta name="layout" content="main">
-  <title></title>
+  <title>Cruz Roja - Filial Córdoba</title>
 
   <script type="text/javascript" src="${resource(dir:'js/alumno',file:'preinscclosed.js')}"></script>
   <script type="text/javascript">
