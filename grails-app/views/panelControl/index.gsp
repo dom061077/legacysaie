@@ -84,6 +84,7 @@
         var localidadUrl = '${createLink(uri:'/location/localidadesjson')}';
         var savealumnoUrl = '${createLink(uri:'/alumno/updatejsonpc')}';
         var pdfUrl = '${resource(dir:'/images',file:'pdf.png')}';
+        var refreshUrl = '${resource(dir:'/images/panelcontrol',file:'refresh.gif')}';
         var comprobanteUrl = '${createLink(uri:'/alumno/comprobanteinsc')}';
         var fechasexamenesUrl = '${createLink(uri:'/panelControl/fechasexamenes')}';
         var fechanotasexamenesUrl = '${createLink(uri:'/panelControl/notasexamenes')}';

@@ -863,6 +863,8 @@ Ext.onReady(function(){
                                                             ,triggerAction:'all'
                                                             ,displayField:'denominacion'
                                                             ,hiddenName:'carrera_id'
+                                                            ,allowBlank:false
+                                                            ,msgTarget:'under'
                                                             ,store:new Ext.data.JsonStore({
                                                                 root:'rows',
                                                                 url:carreraUrl,
@@ -920,6 +922,8 @@ Ext.onReady(function(){
                                                             ,displayField:'descripcion'
                                                             ,hiddenName:'aniolectivo_id'
                                                             ,triggerAction:'all'
+                                                            ,allowBlank:false
+                                                            ,msgTarget:'under'
                                                             ,store:new Ext.data.JsonStore({
                                                                     root:'rows',
                                                                     url:anioLectivoUrl,
@@ -935,6 +939,7 @@ Ext.onReady(function(){
                                                                     combo.setValue(rowselected.get('descripcion'));
                                                                 }, */
                                                                 select:function(combobox,record,index){
+                                                                    Ext.getCmp('inscripcionfinalbtnId').disable();
                                                                     Ext.getCmp('gridcorrelfinId').getStore().load({
                                                                         params:{
                                                                             alumnoId:alumnoId,
@@ -952,7 +957,12 @@ Ext.onReady(function(){
                                                                 root:'rows',
                                                                 url:correlFinal,
                                                                 fields:[{name:'id'},{name:'denominacion'},{name:'nivel'},{name:'seleccionada',type:'bool'}],
-                                                                autoLoad:false
+                                                                autoLoad:false,
+                                                                listeners:{
+                                                                    load:function(store,records,options){
+                                                                      Ext.getCmp('inscripcionfinalbtnId').enable();
+                                                                    }
+                                                                }
                                                             }),
                                                             columns: [
                                                                 {header: "id",dataIndex:'id',hidden:true
@@ -983,52 +993,55 @@ Ext.onReady(function(){
                                                     buttons:[
                                                         {
                                                             text:'Inscribir en Final',
+                                                            id:'inscripcionfinalbtnId',
                                                             handler: function(){
-                                                                var rowselectedMatricula = Ext.getCmp('comboaniolectivoId').getStore().getAt(0);
-                                                                Ext.getCmp('matriculafinalId').setValue(rowselectedMatricula.get('matricula'));
-                                                                Ext.getCmp('inscfinalmateriasId').setValue(getRowsDataFinal());
-                                                                loadMask.show();
-                                                                Ext.getCmp('forminscfinalId').getForm().submit({
-                                                                    success: function(f,resp){
-                                                                        loadMask.hide();
-                                                                        var respuesta = Ext.decode(resp.response.responseText);
-                                                                        mensaje = respuesta.msg+'<br><br>';
-                                                                        Ext.Msg.show({
-                                                                            title:'Mensajes',
-                                                                            //icon:Ext.MessageBox.INFO,
-                                                                            msg: mensaje,
-                                                                            buttons: Ext.MessageBox.OK,
-                                                                            fn: function(btn){
-                                                                                Ext.getCmp('gridcorrelfinId').getStore().load({
-                                                                                    params:{
-                                                                                    alumnoId:alumnoId,
-                                                                                    anioLectivoId:Ext.getCmp('comboaniolectivoId').hiddenField.value,
-                                                                                    carreraId:Ext.getCmp('combocarreraId').hiddenField.value
-                                                                                }});
+                                                                if(Ext.getCmp('forminscfinalId').getForm().isValid()){
+                                                                    var rowselectedMatricula = Ext.getCmp('comboaniolectivoId').getStore().getAt(0);
+                                                                    Ext.getCmp('matriculafinalId').setValue(rowselectedMatricula.get('matricula'));
+                                                                    Ext.getCmp('inscfinalmateriasId').setValue(getRowsDataFinal());
+                                                                    loadMask.show();
+                                                                    Ext.getCmp('forminscfinalId').getForm().submit({
+                                                                        success: function(f,resp){
+                                                                            loadMask.hide();
+                                                                            var respuesta = Ext.decode(resp.response.responseText);
+                                                                            mensaje = respuesta.msg+'<br><br>';
+                                                                            Ext.Msg.show({
+                                                                                title:'Mensajes',
+                                                                                //icon:Ext.MessageBox.INFO,
+                                                                                msg: mensaje,
+                                                                                buttons: Ext.MessageBox.OK,
+                                                                                fn: function(btn){
+                                                                                    Ext.getCmp('gridcorrelfinId').getStore().load({
+                                                                                        params:{
+                                                                                        alumnoId:alumnoId,
+                                                                                        anioLectivoId:Ext.getCmp('comboaniolectivoId').hiddenField.value,
+                                                                                        carreraId:Ext.getCmp('combocarreraId').hiddenField.value
+                                                                                    }});
 
+                                                                                }
+                                                                            });
+
+                                                                        },
+                                                                        failure: function(f,resp){
+                                                                            loadMask.hide();
+                                                                            var respuesta = Ext.decode(resp.response.responseText);
+                                                                            mensaje = respuesta.msg+'<br><br>';
+                                                                            for(var i=0;i<respuesta.errors.length;i++){
+                                                                                mensaje = mensaje +'- '+respuesta.errors[i].msg+'<br>';
                                                                             }
-                                                                        });
 
-                                                                    },
-                                                                    failure: function(f,resp){
-                                                                        var respuesta = Ext.decode(resp.response.responseText);
-                                                                        mensaje = respuesta.msg+'<br><br>';
-                                                                        for(var i=0;i<respuesta.errors.length;i++){
-                                                                            mensaje = mensaje +'- '+respuesta.errors[i].msg+'<br>';
+                                                                            Ext.Msg.show({
+                                                                                title:'Mensajes',
+                                                                                icon:Ext.MessageBox.ERROR ,
+                                                                                msg: mensaje,
+                                                                                buttons: Ext.MessageBox.OK,
+                                                                                fn: function(btn){
+                                                                                }
+                                                                            });
+
                                                                         }
-
-                                                                        Ext.Msg.show({
-                                                                            title:'Mensajes',
-                                                                            icon:Ext.MessageBox.ERROR ,
-                                                                            msg: mensaje,
-                                                                            buttons: Ext.MessageBox.OK,
-                                                                            fn: function(btn){
-                                                                            }
-                                                                        });
-
-                                                                    }
-                                                                });
-
+                                                                    });
+                                                                }
                                                             }
                                                         }
                                                     ]
@@ -1081,6 +1094,8 @@ Ext.onReady(function(){
                                                         ,triggerAction:'all'
                                                         ,displayField:'denominacion'
                                                         ,hiddenName:'carrera_id'
+                                                        ,allowBlank:false
+                                                        ,msgTarget:'under'
                                                         ,store:new Ext.data.JsonStore({
                                                             root:'rows',
                                                             url:carreraUrl,
@@ -1131,6 +1146,8 @@ Ext.onReady(function(){
                                                         ,triggerAction:'all'
                                                         ,displayField:'descripcion'
                                                         ,hiddenName:'aniolectivo_id'
+                                                        ,allowBlank:false
+                                                        ,msgTarget:'under'
                                                         ,store:new Ext.data.JsonStore({
                                                         root:'rows',
                                                         url:anioLectivoUrl,
@@ -1146,6 +1163,7 @@ Ext.onReady(function(){
                                                              combo.setValue(rowselected.get('descripcion'));
                                                              }, */
                                                             select:function(combobox,record,index){
+                                                                Ext.getCmp('inscribircursadobtnId').disable();
                                                                 Ext.getCmp('gridcorrelcurId').getStore().load({
                                                                     params:{
                                                                         alumnoId:alumnoId,
@@ -1164,7 +1182,12 @@ Ext.onReady(function(){
                                                             root:'rows',
                                                             url:correlCursar,
                                                             fields:[{name:'id'},{name:'denominacion'},{name:'nivel'},{name:'seleccionada',type:'bool'}],
-                                                            autoLoad:false
+                                                            autoLoad:false,
+                                                            listeners:{
+                                                                load:  function(grid,record,options){
+                                                                    Ext.getCmp('inscribircursadobtnId').enable();
+                                                                }
+                                                            }
                                                         }),
                                                         columns: [
                                                             {header: "id",dataIndex:'id',hidden:true},
@@ -1193,50 +1216,54 @@ Ext.onReady(function(){
                                                 ],buttons:[
                                                         {
                                                             text:'Inscribir en Cursado',
+                                                            id:'inscribircursadobtnId',
                                                             handler: function(){
-                                                                var rowselectedMatricula = Ext.getCmp('comboaniolectivocurId').getStore().getAt(0);
-                                                                Ext.getCmp('matriculacursadoId').setValue(rowselectedMatricula.get('matricula'));
-                                                                Ext.getCmp('insccursadomateriasId').setValue(getRowsDataCursar());
-                                                                loadMask.show();
-                                                                Ext.getCmp('formcursadoId').getForm().submit({
-                                                                    success: function(f,resp){
-                                                                        loadMask.hide();
-                                                                        var respuesta = Ext.decode(resp.response.responseText);
-                                                                        mensaje = respuesta.msg+'<br><br>';
-                                                                        Ext.Msg.show({
-                                                                            title:'Mensajes',
-                                                                            //icon:Ext.MessageBox.INFO,
-                                                                            msg: mensaje,
-                                                                            buttons: Ext.MessageBox.OK,
-                                                                            fn: function(btn){
-                                                                                Ext.getCmp('gridcorrelcurId').getStore().load({
-                                                                                    alumnoId:alumnoId,
-                                                                                    anioLectivoId:Ext.getCmp('comboaniolectivocurId').hiddenField.value,
-                                                                                    carreraId:Ext.getCmp('combocarreracurId').hiddenField.value
-                                                                                })
+                                                                if(Ext.getCmp('formcursadoId').getForm().isValid()){
+                                                                    var rowselectedMatricula = Ext.getCmp('comboaniolectivocurId').getStore().getAt(0);
+                                                                    Ext.getCmp('matriculacursadoId').setValue(rowselectedMatricula.get('matricula'));
+                                                                    Ext.getCmp('insccursadomateriasId').setValue(getRowsDataCursar());
+                                                                    loadMask.show();
+                                                                    Ext.getCmp('formcursadoId').getForm().submit({
+                                                                        success: function(f,resp){
+                                                                            loadMask.hide();
+                                                                            var respuesta = Ext.decode(resp.response.responseText);
+                                                                            mensaje = respuesta.msg+'<br><br>';
+                                                                            Ext.Msg.show({
+                                                                                title:'Mensajes',
+                                                                                //icon:Ext.MessageBox.INFO,
+                                                                                msg: mensaje,
+                                                                                buttons: Ext.MessageBox.OK,
+                                                                                fn: function(btn){
+                                                                                    Ext.getCmp('gridcorrelcurId').getStore().load({
+                                                                                        alumnoId:alumnoId,
+                                                                                        anioLectivoId:Ext.getCmp('comboaniolectivocurId').hiddenField.value,
+                                                                                        carreraId:Ext.getCmp('combocarreracurId').hiddenField.value
+                                                                                    })
 
+                                                                                }
+                                                                            });
+
+                                                                        },
+                                                                        failure: function(f,resp){
+                                                                            loadMask.hide();
+                                                                            var respuesta = Ext.decode(resp.response.responseText);
+                                                                            mensaje = respuesta.msg+'<br><br>';
+                                                                            for(var i=0;i<respuesta.errors.length;i++){
+                                                                                mensaje = mensaje +'- '+respuesta.errors[i].msg+'<br>';
                                                                             }
-                                                                        });
 
-                                                                    },
-                                                                    failure: function(f,resp){
-                                                                        var respuesta = Ext.decode(resp.response.responseText);
-                                                                        mensaje = respuesta.msg+'<br><br>';
-                                                                        for(var i=0;i<respuesta.errors.length;i++){
-                                                                            mensaje = mensaje +'- '+respuesta.errors[i].msg+'<br>';
+                                                                            Ext.Msg.show({
+                                                                                title:'Mensajes',
+                                                                                icon:Ext.MessageBox.ERROR ,
+                                                                                msg: mensaje,
+                                                                                buttons: Ext.MessageBox.OK,
+                                                                                fn: function(btn){
+                                                                                }
+                                                                            });
+
                                                                         }
-
-                                                                        Ext.Msg.show({
-                                                                            title:'Mensajes',
-                                                                            icon:Ext.MessageBox.ERROR ,
-                                                                            msg: mensaje,
-                                                                            buttons: Ext.MessageBox.OK,
-                                                                            fn: function(btn){
-                                                                            }
-                                                                        });
-
-                                                                    }
-                                                                });
+                                                                    });
+                                                                }
                                                             }
                                                         }
                                                     ]
@@ -1260,13 +1287,14 @@ Ext.onReady(function(){
                                                       id:'formlistadoinscId',
                                                       frame:true,
                                                       width:650,
-                                                      height:445,
+                                                      height:460,
                                                       title:'Mis Inscripciones',
                                                       items:[
                                                           {
                                                               xtype:'combo'
                                                               ,fieldLabel:'Carrera'
                                                               ,id:'combocarreralistadoinscId'
+                                                              ,width:250
                                                               ,valueField:'id'
                                                               ,editable:false
                                                               ,mode:'local'
@@ -1330,6 +1358,7 @@ Ext.onReady(function(){
                                                                           }
                                                                       });
                                                                       rowselectedAnioLectivo = Ext.getCmp('combocarreralistadoinscId').getStore().getAt(0);
+                                                                      verdetalle(0);
                                                                   }
                                                               }
                                                           },
@@ -1338,27 +1367,27 @@ Ext.onReady(function(){
                                                               stripeRows:true,
                                                               store:storelistadoinscripciones,
                                                               title:'Datos Principales de Inscripción',
+                                                              loadMask:true,
                                                               columns: [
                                                                   //nestedRowGrid,
-                                                                  {header:'Nº de Insc.',width:80,hidden:false,dataIndex:'id'},
+                                                                  {header:'Nº de Insc.',width:70,hidden:false,dataIndex:'id'},
                                                                   {header: "Carrera",width:200,sortable:false,dataIndex:'carrera'},
                                                                   {header: "Año",width:150,sortable:false,dataIndex:"aniolectivo"},
                                                                   {header: "Fecha",width:60,sortable:true,dataIndex:"fecha",renderer: Ext.util.Format.dateRenderer('d/m/y')},
-                                                                  {header: "Comprobante",width:80,dataIndex:'id',hidden:false
+                                                                  {header: "Comprobante",width:70,dataIndex:'id',hidden:false
                                                                       ,renderer: function (val, meta, record) {
                                                                             return '<a target="_blank"  href="'+comprobanteUrl+'/?id='+record.data.id+'"><img style="margin-left:15px " src="'+pdfUrl+'"></a>';
                                                                         }
                                                                   },
-                                                                  {header: "Detalle",width:80,dataIndex:'',hidden:false
+                                                                  {header: "Detalle",width:70,dataIndex:'',hidden:false
                                                                       ,renderer: function(val,meta,record){
-                                                                            return '<a onclick="verdetalle('+record.data.id+')"  href="#"><img style="margin-left:15px " src="'+pdfUrl+'"></a>';
+                                                                            return '<a onclick="verdetalle('+record.data.id+')"  href="#"><img style="margin-left:15px " src="'+refreshUrl+'"></a>';
                                                                       }
                                                                   }
                                                               ],
                                                               //stripeRows: true,
-                                                              height:150,
-                                                              width:650,
-                                                              loadMask:true,
+                                                              height:200,
+                                                              width:640,
                                                               bbar: new Ext.PagingToolbar({
                                                                    pageSize: 10,
                                                                    store: storelistadoinscripciones,
@@ -1374,6 +1403,7 @@ Ext.onReady(function(){
                                                           new Ext.grid.GridPanel({
                                                               id:'gridlistadoInscDetalleId',
                                                               stripeRows:true,
+                                                              loadMask:true,
                                                               store:storelistadoinscdet,
                                                               columns: [
                                                                   {header: "id",dataIndex:'id',hidden:true},
@@ -1386,7 +1416,7 @@ Ext.onReady(function(){
                                                               stripeRows: true,
                                                               height:200,
                                                               width:650,
-                                                              loadMask:false,
+                                                              loadMask:true,
                                                               title:'Detalle de Mis Inscripciones',
                                                               iconCls: 'icon-grid',
                                                               listeners:{

@@ -68,6 +68,7 @@ class InscripcionController {
         inscInstance.estado = EstadoInscripcionEnum.G
         inscInstance.suplente = SuplenteEnum.T
         def detalleInscJson = JSON.parse(params.insccursadomaterias)
+        def flagseleccion=false
         InscripcionDetalle inscDetInstance
         detalleInscJson.each{
             if (it.seleccionada){
@@ -77,18 +78,23 @@ class InscripcionController {
                 materiaInstance = Materia.load(it.id)
                 inscInstance.addToDetalle(new InscripcionDetalle(materia: materiaInstance,estado: EstadoInscripcionDetalleEnum.I,tipoInscripcion:TipoInscripcionDetalleEnum.C,notaFinal:0))
                 //inscInstance.addToDetalle(new Object())
-
+                flagseleccion=true
             }
         }
-        if (!inscInstance.save(flush: true)){
-            success = false
-            mensaje = 'Error en el registro de datos'
-            inscInstance.errors.allErrors.each{
-                errorList << errorList << [msg:messageSource.getMessage(it, LocaleContextHolder.locale)]
-            }
+        if (!flagseleccion){
+            success=false
+            mensaje = 'Error, seleccione al menos una materia para registrar la inscripción'
         }else{
-            log.debug "SE GUARDO CORRECTAMENTE....."
-            mensaje = 'Los datos se guardaron correctamente'
+            if (!inscInstance.save(flush: true)){
+                success = false
+                mensaje = 'Error en el registro de datos'
+                inscInstance.errors.allErrors.each{
+                    errorList << errorList << [msg:messageSource.getMessage(it, LocaleContextHolder.locale)]
+                }
+            }else{
+                log.debug "SE GUARDO CORRECTAMENTE....."
+                mensaje = 'Los datos se guardaron correctamente'
+            }
         }
         def response = [:]
         response.success = success
@@ -110,6 +116,7 @@ class InscripcionController {
         inscInstance.estado = EstadoInscripcionEnum.G
         inscInstance.suplente = SuplenteEnum.T
         def detalleInscJson = JSON.parse(params.inscfinalmaterias)
+        def flagseleccionada=false
         InscripcionDetalle inscDetInstance
         detalleInscJson.each{
             if (it.seleccionada){
@@ -119,19 +126,25 @@ class InscripcionController {
                 materiaInstance = Materia.load(it.id)
                 inscInstance.addToDetalle(new InscripcionDetalle(materia: materiaInstance,estado: EstadoInscripcionDetalleEnum.I,tipoInscripcion:TipoInscripcionDetalleEnum.R,notaFinal:0))
                 //inscInstance.addToDetalle(new Object())
-
+                flagseleccionada=true
             }
         }
-        if (!inscInstance.save(flush: true)){
-            success = false
-            mensaje = 'Error en el registro de datos'
-            inscInstance.errors.allErrors.each{
-                errorList << errorList << [msg:messageSource.getMessage(it, LocaleContextHolder.locale)]
-            }
+        if (!flagseleccionada){
+            success=false
+            mensaje = 'Error, seleccione al menos una materia para registrar la inscripción'
         }else{
-            log.debug "SE GUARDO CORRECTAMENTE....."
-            mensaje = 'Los datos se guardaron correctamente'
+            if (!inscInstance.save(flush: true)){
+                success = false
+                mensaje = 'Error en el registro de datos'
+                inscInstance.errors.allErrors.each{
+                    errorList << errorList << [msg:messageSource.getMessage(it, LocaleContextHolder.locale)]
+                }
+            }else{
+                log.debug "SE GUARDO CORRECTAMENTE....."
+                mensaje = 'Los datos se guardaron correctamente'
+            }
         }
+
         def response = [:]
         response.success = success
         response.errors = errorList

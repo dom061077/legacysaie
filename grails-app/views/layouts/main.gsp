@@ -28,6 +28,7 @@
         <script type="text/javascript">
             var loginurl = '${createLink(uri:'/login')}';
             var provurl = '${createLink(uri:'/location/provinciasjson')}';
+            var urlsession = '${createLink(uri:'/login/auth')}';
             <%
 				out << "var blankimagePath='"+"${resource(dir:'js')}';";
 
