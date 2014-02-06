@@ -695,6 +695,7 @@ class AlumnoController {
         }
         params.put("tipoinscripcion_param",tipoInscripcion_param)
         params.put("titulo",titulo)
+        params.put("SUBREPORT_DIR",servletContext.getRealPath("/reports/"))
         chain(controller:'jasper',action:'index',model:[data:list],params:params)
     }
 }
