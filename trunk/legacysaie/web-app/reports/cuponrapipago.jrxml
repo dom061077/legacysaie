@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cuponrapipago" language="groovy" pageWidth="595" pageHeight="421" orientation="Landscape" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cuponrapipago" language="groovy" pageWidth="595" pageHeight="421" orientation="Landscape" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e16a2b3c-9fab-4e74-92ae-6724efe43133">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="264"/>
+	<property name="ireport.y" value="247"/>
 	<parameter name="REPORTPATH" class="java.lang.String"/>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="fechaAlta" class="java.sql.Date"/>
@@ -24,43 +24,43 @@
 	<detail>
 		<band height="421" splitType="Stretch">
 			<rectangle>
-				<reportElement x="306" y="169" width="270" height="135"/>
+				<reportElement uuid="87b61dbf-6194-49d3-8944-cb92cc9ce1f8" x="306" y="169" width="270" height="135"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="11" y="169" width="270" height="135"/>
+				<reportElement uuid="d8cf95b6-0b77-4b6d-a34a-48b7d27fb780" x="11" y="169" width="270" height="135"/>
 			</rectangle>
 			<image>
-				<reportElement x="0" y="0" width="62" height="50"/>
-				<imageExpression class="java.lang.String"><![CDATA[new File($P{REPORTPATH}+"/images/","imagecomprobante.png")]]></imageExpression>
+				<reportElement uuid="e5a2a815-7a85-468c-97c3-905c8e11b09b" x="0" y="0" width="62" height="50"/>
+				<imageExpression><![CDATA[new File($P{REPORTPATH}+"/images/","imagecomprobante.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="306" y="0" width="62" height="50"/>
-				<imageExpression class="java.lang.String"><![CDATA[new File($P{REPORTPATH}+"/images/","imagecomprobante.png")]]></imageExpression>
+				<reportElement uuid="a540f48e-6b65-4cf6-b714-04a42e02f645" x="306" y="0" width="62" height="50"/>
+				<imageExpression><![CDATA[new File($P{REPORTPATH}+"/images/","imagecomprobante.png")]]></imageExpression>
 			</image>
 			<elementGroup>
 				<staticText>
-					<reportElement x="61" y="13" width="236" height="13"/>
+					<reportElement uuid="d97b92ab-0348-47d1-adcd-6773034a7976" x="61" y="13" width="236" height="13"/>
 					<textElement textAlignment="Center">
 						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[INSTITUTO SUPERIOR CRUZ ROJA ARGENTINA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="61" y="25" width="236" height="7"/>
+					<reportElement uuid="79135439-fd38-4196-91d2-6d7a9529552b" x="61" y="25" width="236" height="7"/>
 					<textElement textAlignment="Center">
 						<font fontName="Arial" size="6" isBold="false"/>
 					</textElement>
 					<text><![CDATA[Filial CBA Pres. Jurd. Nac. Nº 379 C.]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="62" y="44" width="236" height="7"/>
+					<reportElement uuid="318ac2ea-69e8-4d09-a441-20f11430c7d8" x="62" y="44" width="236" height="7"/>
 					<textElement textAlignment="Center">
 						<font fontName="Arial" size="6" isBold="false"/>
 					</textElement>
 					<text><![CDATA[TE: 4527161 - CORDOBA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="61" y="34" width="236" height="7"/>
+					<reportElement uuid="af3da843-0e6b-4c22-9eb6-410513d52e37" x="61" y="34" width="236" height="7"/>
 					<textElement textAlignment="Center">
 						<font fontName="Arial" size="6" isBold="false"/>
 					</textElement>
@@ -68,409 +68,407 @@
 				</staticText>
 			</elementGroup>
 			<staticText>
-				<reportElement x="367" y="44" width="220" height="7"/>
+				<reportElement uuid="79d31df7-6970-41f6-b778-4c9ea9ddbfe8" x="367" y="44" width="220" height="7"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="6" isBold="false"/>
 				</textElement>
 				<text><![CDATA[TE: 4527161 - CORDOBA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="367" y="25" width="220" height="7"/>
+				<reportElement uuid="d617b382-8f1e-425e-ae73-bea68989e591" x="367" y="25" width="220" height="7"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="6" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Filial CBA Pres. Jurd. Nac. Nº 379 C.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="367" y="13" width="220" height="13"/>
+				<reportElement uuid="2af96a28-790e-44d4-ad1a-f66f8215a0e8" x="367" y="13" width="220" height="13"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[INSTITUTO SUPERIOR CRUZ ROJA ARGENTINA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="367" y="34" width="220" height="7"/>
+				<reportElement uuid="2413ef43-cd8f-4867-8c0c-0355a7922ddf" x="367" y="34" width="220" height="7"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="6" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Juan de Garay 2096 - Bº Pueyrredon (5012)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="11" y="70" width="24" height="9"/>
+				<reportElement uuid="a57bd307-f42e-435d-98c9-df22b4f7d7e9" x="11" y="70" width="24" height="9"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[D.N.I]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="158" y="70" width="28" height="9"/>
+				<reportElement uuid="7d720f60-d85a-446b-9002-67cd76469cfa" x="158" y="70" width="28" height="9"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TICKET]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="453" y="70" width="28" height="9"/>
+				<reportElement uuid="0a6d1b59-8307-4401-8e4c-613e684d8f23" x="453" y="70" width="28" height="9"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TICKET]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="306" y="70" width="24" height="9"/>
+				<reportElement uuid="a740e54a-9bde-4517-b584-23368d75c592" x="306" y="70" width="24" height="9"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[D.N.I]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="35" y="70" width="78" height="9"/>
+				<reportElement uuid="29b25270-4d86-470f-96d0-e10d671c8aea" x="35" y="70" width="78" height="9"/>
 				<textElement>
 					<font fontName="Arial" size="7"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{matricula.alumno.numeroDocumento}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{matricula.alumno.numeroDocumento}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="189" y="70" width="78" height="9"/>
+				<reportElement uuid="c7ebceb9-9fab-444a-bf31-0d372f96600a" x="189" y="70" width="78" height="9"/>
 				<textElement>
 					<font fontName="Arial" size="7"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{numero}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="330" y="70" width="78" height="9"/>
+				<reportElement uuid="8ec6c312-ba6a-45d2-9b22-2db22a7e4040" x="330" y="70" width="78" height="9"/>
 				<textElement>
 					<font fontName="Arial" size="7"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{matricula.alumno.numeroDocumento}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{matricula.alumno.numeroDocumento}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="484" y="70" width="78" height="9"/>
+				<reportElement uuid="6c51b1b9-f0f9-435f-860a-4d47bcdfdbf3" x="484" y="70" width="78" height="9"/>
 				<textElement>
 					<font fontName="Arial" size="7"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{numero}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="11" y="87" width="78" height="9"/>
+				<reportElement uuid="d0bcd1bf-7e05-44da-a671-ccaf878e82b5" x="11" y="87" width="78" height="9"/>
 				<textElement>
 					<font fontName="Arial" size="7"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{matricula.alumno.apellido}+', '+$F{matricula.alumno.nombre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{matricula.alumno.apellido}+', '+$F{matricula.alumno.nombre}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="11" y="107" width="78" height="9"/>
+				<reportElement uuid="25f80a45-f7d4-46a5-9551-3a43faa4ad56" x="11" y="107" width="78" height="9"/>
 				<textElement>
 					<font fontName="Arial" size="7"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{matricula.carrera.denominacion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{matricula.carrera.denominacion}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="11" y="126" width="78" height="9"/>
+				<reportElement uuid="e8cbcc0d-d0c9-4da7-b3a4-8895908542ff" x="11" y="126" width="78" height="9"/>
 				<textElement>
 					<font fontName="Arial" size="7"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{cuota.mes}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cuota.mes}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="306" y="107" width="78" height="9"/>
+				<reportElement uuid="ddfa708a-0682-4132-87be-c6b6e16f9e19" x="306" y="107" width="78" height="9"/>
 				<textElement>
 					<font fontName="Arial" size="7"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{matricula.carrera.denominacion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{matricula.carrera.denominacion}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="306" y="87" width="78" height="9"/>
+				<reportElement uuid="d1e36af0-5d73-4e35-881f-0bcbd3c06478" x="306" y="87" width="78" height="9"/>
 				<textElement>
 					<font fontName="Arial" size="7"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{matricula.alumno.apellido}+', '+$F{matricula.alumno.nombre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{matricula.alumno.apellido}+', '+$F{matricula.alumno.nombre}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="306" y="126" width="78" height="9"/>
+				<reportElement uuid="40cd81e8-6c76-43eb-a540-a8af1c47c9e9" x="306" y="126" width="78" height="9"/>
 				<textElement>
 					<font fontName="Arial" size="7"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{cuota.mes}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cuota.mes}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="11" y="214" width="270" height="1"/>
+				<reportElement uuid="b5433bec-b859-4304-87e2-b2886d8d6220" x="11" y="214" width="270" height="1"/>
 			</line>
 			<line>
-				<reportElement x="11" y="259" width="270" height="1"/>
+				<reportElement uuid="2d8caf62-6740-4f25-ad32-6627189a4fa5" x="11" y="259" width="270" height="1"/>
 			</line>
 			<line>
-				<reportElement x="306" y="214" width="270" height="1"/>
+				<reportElement uuid="1fd8bb3f-4bd0-45f9-a728-1d3c2bc49349" x="306" y="214" width="270" height="1"/>
 			</line>
 			<line>
-				<reportElement x="306" y="259" width="270" height="1"/>
+				<reportElement uuid="fe8fa422-3174-4c96-b91a-264aab17d6ff" x="306" y="259" width="270" height="1"/>
 			</line>
 			<staticText>
-				<reportElement x="23" y="174" width="62" height="10"/>
+				<reportElement uuid="ef908b13-3f70-4911-8ee3-3163bcdd3597" x="23" y="174" width="62" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[1º VENCIMIENTO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="23" y="219" width="62" height="10"/>
+				<reportElement uuid="beb29865-168b-49d0-a259-933044f97f78" x="23" y="219" width="62" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[1º VENCIMIENTO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="23" y="265" width="62" height="10"/>
+				<reportElement uuid="21c7a972-0b29-4908-9832-65064c0d1f8f" x="23" y="265" width="62" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[1º VENCIMIENTO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="24" y="192" width="27" height="10"/>
+				<reportElement uuid="c30e7a2c-a49a-45bf-9f56-b791ef9af0d0" x="24" y="192" width="27" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="false"/>
 				</textElement>
 				<text><![CDATA[FECHA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="24" y="237" width="27" height="10"/>
+				<reportElement uuid="869ba6a8-0316-47f0-9721-457a5f959369" x="24" y="237" width="27" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="false"/>
 				</textElement>
 				<text><![CDATA[FECHA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="24" y="283" width="27" height="10"/>
+				<reportElement uuid="db7eb455-01df-45f5-a33d-c77b935ff0c6" x="24" y="283" width="27" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="false"/>
 				</textElement>
 				<text><![CDATA[FECHA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="168" y="192" width="34" height="10"/>
+				<reportElement uuid="ddc042ba-e971-4740-89a7-b338d48cc035" x="168" y="192" width="34" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="false"/>
 				</textElement>
 				<text><![CDATA[IMPORTE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="168" y="237" width="34" height="10"/>
+				<reportElement uuid="d696ac14-750e-4623-89a0-047fb369f8d7" x="168" y="237" width="34" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="false"/>
 				</textElement>
 				<text><![CDATA[IMPORTE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="168" y="283" width="34" height="10"/>
+				<reportElement uuid="a43e2301-a6fe-43ce-979e-e21a70e5740d" x="168" y="283" width="34" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="false"/>
 				</textElement>
 				<text><![CDATA[IMPORTE]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="58" y="192" width="76" height="10"/>
+				<reportElement uuid="7b878d7e-d33f-4809-821d-6bb67401d21b" x="58" y="192" width="76" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7"/>
 				</textElement>
-				<textFieldExpression class="java.util.Date"><![CDATA[$F{vencimiento1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{vencimiento1}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="58" y="237" width="76" height="10"/>
+				<reportElement uuid="cbac876b-8e50-4330-b1f7-ea1bfc5993ed" x="58" y="237" width="76" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7"/>
 				</textElement>
-				<textFieldExpression class="java.util.Date"><![CDATA[$F{vencimiento2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{vencimiento2}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="58" y="283" width="76" height="10"/>
+				<reportElement uuid="df432850-d406-4860-99bc-7dfde0f106c1" x="58" y="283" width="76" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7"/>
 				</textElement>
-				<textFieldExpression class="java.util.Date"><![CDATA[$F{vencimiento3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{vencimiento3}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="202" y="192" width="65" height="10"/>
+				<reportElement uuid="df42a9e9-5e91-4457-84aa-ccd8ce99195d" x="202" y="192" width="65" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Double"><![CDATA[$F{importe1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{importe1}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="202" y="237" width="65" height="10"/>
+				<reportElement uuid="e15ca341-709c-456f-a8bf-b8cb0b0849a3" x="202" y="237" width="65" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Double"><![CDATA[$F{importe2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{importe2}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="202" y="283" width="65" height="10"/>
+				<reportElement uuid="582352e8-8036-4ae8-8523-9acd406eafe0" x="202" y="283" width="65" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Double"><![CDATA[$F{importe3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{importe3}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="462" y="192" width="34" height="10"/>
+				<reportElement uuid="7800d613-6289-44d9-9ada-8069acfd185b" x="462" y="192" width="34" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="false"/>
 				</textElement>
 				<text><![CDATA[IMPORTE]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="352" y="237" width="76" height="10"/>
+				<reportElement uuid="671c68d3-6eb0-489a-a167-eaf36d756267" x="352" y="237" width="76" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7"/>
 				</textElement>
-				<textFieldExpression class="java.util.Date"><![CDATA[$F{vencimiento2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{vencimiento2}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="317" y="265" width="62" height="10"/>
+				<reportElement uuid="776cc347-3704-406d-9256-7aae2210af42" x="317" y="265" width="62" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[1º VENCIMIENTO]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="496" y="192" width="65" height="10"/>
+				<reportElement uuid="ffb8f5b8-4cc4-4b6d-80ee-bcbccc3b4edd" x="496" y="192" width="65" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Double"><![CDATA[$F{importe1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{importe1}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="352" y="192" width="76" height="10"/>
+				<reportElement uuid="a542a41a-8f01-456e-9776-e86620cf5d9a" x="352" y="192" width="76" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7"/>
 				</textElement>
-				<textFieldExpression class="java.util.Date"><![CDATA[$F{vencimiento1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{vencimiento1}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="462" y="283" width="34" height="10"/>
+				<reportElement uuid="739cbe9f-bd87-4b82-8348-6609499cbd14" x="462" y="283" width="34" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="false"/>
 				</textElement>
 				<text><![CDATA[IMPORTE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="318" y="237" width="27" height="10"/>
+				<reportElement uuid="a2a18bd5-bb94-4d72-90b3-a70deab35f42" x="318" y="237" width="27" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="false"/>
 				</textElement>
 				<text><![CDATA[FECHA]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="352" y="283" width="76" height="10"/>
+				<reportElement uuid="d120daff-689d-42d7-b8af-3510de2c3e9e" x="352" y="283" width="76" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7"/>
 				</textElement>
-				<textFieldExpression class="java.util.Date"><![CDATA[$F{vencimiento3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{vencimiento3}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="462" y="237" width="34" height="10"/>
+				<reportElement uuid="22850454-7dee-4dcb-bf6b-9b2411b4d598" x="462" y="237" width="34" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="false"/>
 				</textElement>
 				<text><![CDATA[IMPORTE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="317" y="174" width="62" height="10"/>
+				<reportElement uuid="eb509604-6d74-456d-9030-14ac0efca8f7" x="317" y="174" width="62" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[1º VENCIMIENTO]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="496" y="237" width="65" height="10"/>
+				<reportElement uuid="b66d1299-6a44-475e-841b-7a59f08eb381" x="496" y="237" width="65" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Double"><![CDATA[$F{importe2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{importe2}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="318" y="283" width="27" height="10"/>
+				<reportElement uuid="4181bc9a-b896-4a4e-a559-327d637462c2" x="318" y="283" width="27" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="false"/>
 				</textElement>
 				<text><![CDATA[FECHA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="318" y="192" width="27" height="10"/>
+				<reportElement uuid="69108ce9-f739-415d-9e48-4ece41d7bf83" x="318" y="192" width="27" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="false"/>
 				</textElement>
 				<text><![CDATA[FECHA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="317" y="219" width="62" height="10"/>
+				<reportElement uuid="04920726-7c7f-4180-999e-bb133c1c7077" x="317" y="219" width="62" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[1º VENCIMIENTO]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="496" y="283" width="65" height="10"/>
+				<reportElement uuid="00ce1298-db45-40a9-b47a-f368875817c8" x="496" y="283" width="65" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Double"><![CDATA[$F{importe3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{importe3}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="24" y="313" width="195" height="10"/>
+				<reportElement uuid="e3f3df82-a780-44e0-878a-1a89e4b08a5d" x="24" y="313" width="195" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="false"/>
 				</textElement>
 				<text><![CDATA[FUERA DE VENCIMIENTO, UNICAMENTE EN INSTITUTO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="318" y="313" width="195" height="10"/>
+				<reportElement uuid="f61de371-22cb-4e22-a8cf-464902fdf668" x="318" y="313" width="195" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="false"/>
 				</textElement>
 				<text><![CDATA[FUERA DE VENCIMIENTO, UNICAMENTE EN INSTITUTO]]></text>
 			</staticText>
-			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="11" y="353" width="270" height="29"/>
-				<textElement>
-					<font fontName="PF Interleaved 2 of 5" size="14"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{codigoBarrasConvertido}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="306" y="353" width="270" height="29"/>
-				<textElement>
-					<font fontName="PF Interleaved 2 of 5" size="14"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{codigoBarrasConvertido}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement x="11" y="393" width="47" height="10"/>
+				<reportElement uuid="3b4a1431-328e-4bd5-b15f-e32953c3ee82" x="11" y="393" width="47" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="false"/>
 				</textElement>
 				<text><![CDATA[IMPRESO EL]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="62" y="393" width="100" height="10"/>
+				<reportElement uuid="51a48e75-9229-4ae8-b3f0-c442e2589f04" x="62" y="393" width="100" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7"/>
 				</textElement>
-				<textFieldExpression class="java.util.Date"><![CDATA[$F{fechaAlta}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{fechaAlta}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="306" y="393" width="47" height="10"/>
+				<reportElement uuid="2dd57538-6eaf-49c7-9258-1d7394ce8f6b" x="317" y="393" width="47" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="false"/>
 				</textElement>
 				<text><![CDATA[IMPRESO EL]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="355" y="393" width="100" height="10"/>
+				<reportElement uuid="9471be05-6f6b-436b-8e35-1a89d3b5ac07" x="355" y="393" width="100" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="7"/>
 				</textElement>
-				<textFieldExpression class="java.util.Date"><![CDATA[$F{fechaAlta}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{fechaAlta}]]></textFieldExpression>
 			</textField>
+			<componentElement>
+				<reportElement uuid="11b5417b-9bf5-407c-8bda-67c25894fd9b" x="11" y="332" width="270" height="35"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Int2of5" drawText="true" checksumRequired="false" barHeight="60">
+					<jr:codeExpression><![CDATA[$F{codigoBarras}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<componentElement>
+				<reportElement uuid="d566c852-6918-40ae-aac3-0333a6afde03" x="306" y="332" width="270" height="35"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Int2of5" drawText="false" checksumRequired="false">
+					<jr:codeExpression><![CDATA[$F{codigoBarras}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
 		</band>
 	</detail>
 </jasperReport>
