@@ -12,7 +12,7 @@ grails.project.dependency.resolution = {
         // specify dependency exclusions here; for example, uncomment this to disable ehcache:
         // excludes 'ehcache'
     }
-    log "error" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
+    log "warn" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
     checksums true // Whether to verify checksums on resolve
 
     repositories {
@@ -42,7 +42,7 @@ grails.project.dependency.resolution = {
         runtime ":jquery:1.7.2"
         runtime ":resources:1.1.6"
         runtime ':db-reverse-engineer:0.5'
-        runtime ':jasper:1.5'
+        compile ':jasper:1.5'
 
         // Uncomment these (or add new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0"
@@ -58,6 +58,7 @@ grails.project.dependency.resolution = {
         compile ':spring-security-core:1.2.7.3'
         compile ":mail:1.0.1"
         compile ":spring-mobile:0.5.1"
+
 
     }
 }
