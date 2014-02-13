@@ -858,6 +858,7 @@ Ext.onReady(function(){
                                                             ,fieldLabel:'Carrera'
                                                             ,id:'combocarreraId'
                                                             ,valueField:'id'
+                                                            ,width:200
                                                             ,mode:'local'
                                                             ,editable:false
                                                             ,triggerAction:'all'
@@ -915,6 +916,7 @@ Ext.onReady(function(){
                                                         {   xtype:'combo'
                                                             ,fieldLabel:'Año Lectivo'
                                                             ,id:'comboaniolectivoId'
+                                                            ,with:200
                                                             ,valueField:'id'
                                                             ,mode:'local'
                                                             ,editable:false
@@ -1088,6 +1090,7 @@ Ext.onReady(function(){
                                                         xtype:'combo'
                                                         ,fieldLabel:'Carrera'
                                                         ,id:'combocarreracurId'
+                                                        ,width:200
                                                         ,valueField:'id'
                                                         ,editable:false
                                                         ,mode:'local'
@@ -1469,10 +1472,10 @@ Ext.onReady(function(){
                                                     fieldLabel:'Carrera',
                                                     width:200,
                                                     mode:'local',
-                                                    trigger:'all',
+                                                    triggerAction:'all',
                                                     editable:false,
                                                     valueField:'id',
-                                                    displayField:'id',
+                                                    displayField:'denominacion',
                                                     hiddenName:'carreracuponpago_id',
                                                     store:new Ext.data.JsonStore({
                                                         root:'rows',
@@ -1508,7 +1511,7 @@ Ext.onReady(function(){
                                                     name:'cuotacuponpago',
                                                     id:'cuotacuponpagoId',
                                                     mode:'local',
-                                                    trigger:'all',
+                                                    triggerAction:'all',
                                                     editable:false,
                                                     valueField:'id',
                                                     displayField:'descripcion',
