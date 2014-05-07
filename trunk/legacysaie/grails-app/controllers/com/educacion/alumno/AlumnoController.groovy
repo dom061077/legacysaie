@@ -25,6 +25,7 @@ import com.educacion.enums.TipoInscripcionDetalleEnum
 import org.imgscalr.Scalr
 import javax.imageio.ImageIO
 import com.educacion.academico.Institucion
+import java.text.SimpleDateFormat
 
 
 
@@ -231,6 +232,12 @@ class AlumnoController {
             errorList << [msg: 'El código de verificación no coincide']
             success=false
         }else{
+
+            params.fechaNacimiento_year=params.fechaNacimiento.substring(6,10)
+            params.fechaNacimiento_month=params.fechaNacimiento.substring(3,5)
+            params.fechaNacimiento_day=params.fechaNacimiento.substring(0,2)
+
+
             alumnoInstance = new Alumno(params)
             log.debug "Datos del alumno, id: ${alumnoInstance.id}, apellido: ${alumnoInstance.apellido}, nombre: ${alumnoInstance.nombre}"
             log.debug "EMAIL: ${alumnoInstance.email}"

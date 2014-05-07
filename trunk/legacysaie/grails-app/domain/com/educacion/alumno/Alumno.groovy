@@ -67,6 +67,7 @@ class Alumno {
     String registerconfirm
     boolean confirmado
     //falta mapear el campo sitacademica
+    //boolean situacionAcademica
     SituacionAdministrativa situacionAdministrativa
     byte[] imagen
 
@@ -75,9 +76,9 @@ class Alumno {
     TipoDocumentoIdentidad tipoDocumento
     static hasMany = [matriculas:Matricula]
     static constraints = {
-        numeroDocumento(blank: false,nullable: false)
-        apellido(blank: false,nullable: false)
-        nombre(blank: false,nullable: false)
+        numeroDocumento(blank: false,nullable: false,maxSize: 10, minSize: 10)
+        apellido(blank: false,nullable: false,maxSize: 50)
+        nombre(blank: false,nullable: false, maxSize: 50)
         imagen(blank: true,nullable: true, maxSize:1024*300)
 
 
@@ -130,6 +131,7 @@ class Alumno {
         provincia blank:true, nullable: true
         localidadGarante blank:true, nullable: true
         //falta mapear el campo sitacademica
+        //situacionAcademica blank:true, nullable: true
         situacionAdministrativa blank:true, nullable: true
         registerconfirm blank: true, nullable:  true
         anioEgreso blank: true, nullable: true
@@ -164,7 +166,7 @@ class Alumno {
         establecimiento(column: 'establecimiento')
         titulo(column: 'titulo')
         anioEgreso(column: 'anioegreso')
-        situacionAcademica(column: 'situacionacademica')
+        //situacionAcademica(column: 'situacionacademica')
         //legajo(column:legajo)
         lugarLaboral(column: 'lugarlaboral')
         telefonoLaboral(column: 'telefonolaboral')

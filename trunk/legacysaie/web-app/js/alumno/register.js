@@ -97,6 +97,14 @@ Ext.apply(Ext.form.VTypes,{
     }
 });
 
+
+/*
+* phone: function(value,field){
+ return value.replace(/[ \-\(\)]/g,'').length == 10;
+ },
+ phoneText: 'Wrong phone number, please make sure it contains 10 digits',
+ phoneMask: /[ \d\-\(\)]/
+* */
 Ext.apply(Ext.form.VTypes,{
     //cuitVal: /^\d{2}\-\d{8}\-\d{1}$/,
 
@@ -260,7 +268,7 @@ Ext.onReady(function(){
                     border    : false,
                     bodyStyle : 'background:none;',
                     html      : 'Bienvenido al registro de datos personales del <strong>Colegio de la Cruz Roja Argentina</strong>, '+
-                        ' es necesario que cargue todos los datos que incluye la registración.<br/><br/>'+
+                        ' es necesario que cargue todos los datos marcados con rojo que incluye la registración.<br/><br/>'+
                         'Por favor, pulse el botón "siguiente" para comenzar la carga de datos.'
                 }]
             }),
@@ -357,6 +365,7 @@ Ext.onReady(function(){
                         fieldLabel:'Apellido',
                         width:260,
                         allowBlank:false,
+                        style : {textTransform: "uppercase"},
                         msgTarget:'under',
                         layout:'form',
                         name:'apellido'
@@ -365,6 +374,7 @@ Ext.onReady(function(){
                         id:'nombreId',
                         fieldLabel:'Nombre',
                         allowBlank: false,
+                        style : {textTransform: "uppercase"},
                         width:260,
                         msgTarget: 'under',
                         layout:'form',
@@ -473,6 +483,7 @@ Ext.onReady(function(){
                         xtype:'textfield'
                         ,id:'calledomicilioId'
                         ,fieldLabel:'Calle del Domicilio'
+                        ,style : {textTransform: "uppercase"}
                         ,msgTarget:'under'
                         ,allowBlank:true
                         ,name:'calledomicilio'
@@ -489,6 +500,7 @@ Ext.onReady(function(){
                         xtype:'textfield'
                         ,id:'barriodomicilioId'
                         ,fieldLabel:'Barrio Domicilio'
+                        ,style : {textTransform: "uppercase"}
                         ,msgTarget:'under'
                         ,allowBlank:true
                         ,name:'barriodomicilio'
@@ -585,7 +597,7 @@ Ext.onReady(function(){
                 ,items:[
                     {
                         xtype:'fieldset',
-                        title:'Domicilio',
+                        title:'Contacto',
                         items:[
                             {
                                 xtype:'textfield',
@@ -626,7 +638,8 @@ Ext.onReady(function(){
                             {
                                 xtype:'textfield',
                                 id:'establecimientoId',
-                                fieldLabel:'Establecimineot de Procedencia',
+                                fieldLabel:'Establecimiento de Procedencia',
+                                style : {textTransform: "uppercase"},
                                 msgTarget:'under',
                                 name:'establecimientoprocedencia',
                                 allowBlank:true
@@ -634,6 +647,7 @@ Ext.onReady(function(){
                                 xtype:'textfield',
                                 id:'tituloobtenidoId',
                                 fieldLabel:'Título Obtenido',
+                                style : {textTransform: "uppercase"},
                                 msgTarget:'under',
                                 name:'tituloobtenido',
                                 allowBlank:true
@@ -646,14 +660,15 @@ Ext.onReady(function(){
                                 allowNegative:false,
                                 maxLength:4,
                                 allowBlank:true
-                            },{
-                                xtype:'textfield',
-                                id:'situacionacademica',
-                                fieldLabel:'Situación Académica',
-                                msgTarget:'under',
+                            }/*,{
+                                xtype:'checkfield',
+                                id:'secundariocompletoId',
+                                fieldLabel:'Secundario completo'
+                                ,style : {textTransform: "uppercase"}
+                                ,msgTarget:'under',
                                 name:'situacionacademica',
                                 allowBlank:true
-                            },{
+                            }*/,{
                                 xtype:'textfield',
                                 id:'legajoId',
                                 fieldLabel:'Legajo',
@@ -678,6 +693,7 @@ Ext.onReady(function(){
                         ,id:'lugarlaboralId'
                         ,fieldLabel:'Lugar Laboral'
                         ,msgTarget:'under'
+                        ,style : {textTransform: "uppercase"}
                         ,name:'lugarlaboral'
                         ,allowBlank:true
                     },{
@@ -691,6 +707,7 @@ Ext.onReady(function(){
                         xtype:'textfield'
                         ,id:'callelaboralId'
                         ,fieldLabel:'Calle'
+                        ,style : {textTransform: "uppercase"}
                         ,msgTarget:'under'
                         ,name:'callelaboral'
                         ,allowBlank:true
@@ -705,6 +722,7 @@ Ext.onReady(function(){
                         xtype:'textfield'
                         ,id:'barriolaboralId'
                         ,fieldLabel:'Barrio Laboral'
+                        ,style : {textTransform: "uppercase"}
                         ,msgTarget:'under'
                         ,name:'barriolaboral'
                         ,allowBlank:true
@@ -793,6 +811,7 @@ Ext.onReady(function(){
                         ,id:'apellidonombretutorId'
                         ,fieldLabel:'Apellido y Nombre del Tutor'
                         ,msgTarget:'under'
+                        ,style : {textTransform: "uppercase"}
                         ,layout:'form'
                         ,name:'apellidonombretutor'
                         ,allowBlank:true
@@ -800,6 +819,7 @@ Ext.onReady(function(){
                         xtype:'textfield'
                         ,id:'profesiontutorId'
                         ,fieldLabel:'Profesión del Tutor'
+                        ,style : {textTransform: "uppercase"}
                         ,msgTarget:'under'
                         ,layout:'form'
                         ,name:'profesiontutor'
@@ -808,6 +828,7 @@ Ext.onReady(function(){
                         xtype:'textfield'
                         ,id:'parentescotutorId'
                         ,fieldLabel:'Parentesco del Tutor'
+                        ,style : {textTransform: "uppercase"}
                         ,msgTarget:'under'
                         ,layout:'form'
                         ,name:'parentescotutor'
@@ -824,6 +845,7 @@ Ext.onReady(function(){
                         xtype:'textfield'
                         ,id:'calletutorId'
                         ,fieldLabel:'Calle'
+                        ,style : {textTransform: "uppercase"}
                         ,msgTarget:'under'
                         ,layout:'form'
                         ,name:'calletutor'
@@ -840,6 +862,7 @@ Ext.onReady(function(){
                         xtype:'textfield'
                         ,id:'barriotutorId'
                         ,fieldLabel:'Barrio del Tutor'
+                        ,style : {textTransform: "uppercase"}
                         ,msgTarget:'under'
                         ,layout:'form'
                         ,name:'barriotutor'
@@ -924,6 +947,7 @@ Ext.onReady(function(){
                         xtype:'textfield'
                         ,id:'apellidonombregaranteId'
                         ,fieldLabel:'Apellido y Nombre del Garante'
+                        ,style : {textTransform: "uppercase"}
                         ,msgTarget:'under'
                         ,layout:'form'
                         ,name:'apellidonombregarante'
@@ -932,6 +956,7 @@ Ext.onReady(function(){
                         xtype:'textfield'
                         ,id:'profesiongaranteId'
                         ,fieldLabel:'Profesión del Garante'
+                        ,style : {textTransform: "uppercase"}
                         ,msgTarget:'under'
                         ,layout:'form'
                         ,name:'profesiongarante'
@@ -940,6 +965,7 @@ Ext.onReady(function(){
                         xtype:'textfield'
                         ,id:'parentescogaranteId'
                         ,fieldLabel:'Parentesco del Garante'
+                        ,style : {textTransform: "uppercase"}
                         ,msgTarget:'under'
                         ,layout:'form'
                         ,name:'parentescogarante'
@@ -956,6 +982,7 @@ Ext.onReady(function(){
                         xtype:'textfield'
                         ,id:'callegaranteId'
                         ,fieldLabel:'Calle'
+                        ,style : {textTransform: "uppercase"}
                         ,msgTarget:'under'
                         ,layout:'form'
                         ,name:'callegarante'
@@ -972,6 +999,7 @@ Ext.onReady(function(){
                         xtype:'textfield'
                         ,id:'barriogaranteId'
                         ,fieldLabel:'Barrio del Garante'
+                        ,style : {textTransform: "uppercase"}
                         ,msgTarget:'under'
                         ,layout:'form'
                         ,name:'barriogarante'
@@ -1041,7 +1069,7 @@ Ext.onReady(function(){
                         width:400,
                         layout:'form',
                         name:'localidadgarante'
-                    }/*,{
+                    },{
                      xtype:'panel',
                      itemId:'reCaptcha',
                      border:false,
@@ -1057,7 +1085,7 @@ Ext.onReady(function(){
                             }
                         }
 
-                     } */
+                     }
                 ]
             })/*,{
                 xtype:'panel',
@@ -1108,13 +1136,71 @@ Ext.onReady(function(){
             params:{
                 recaptcha_response_field : datos.datosdelgaranteId.recaptcha_response_field
                 ,recaptcha_challenge_field: datos.datosdelgaranteId.recaptcha_challenge_field
-                ,apellido:datos.datosdelalumnocarId.apellido
-                ,nombre:datos.datosdelalumnocarId.nombre
-                ,sexo:datos.datosdelalumnocarId.sexo_id
-                ,numeroDocumento: datos.datosdelalumnocarId.numerodocumento
-                ,legajo: datos.datosdelalumnocarId.legajo
-                ,email: datos.datoscontactoacademicoscarId.email
                 ,'tipoDocumento.id': Ext.getCmp('tipodocumentoId').hiddenField.value
+                ,numeroDocumento: datos.datosdelalumnocarId.numerodocumento
+                ,apellido:Ext.getCmp('apellidoId').getValue()
+                ,nombre:Ext.getCmp('nombreId').getValue()
+                ,sexo:datos.datosdelalumnocarId.sexo_id
+                ,fechaNacimiento :  datos.datosdelalumnocarId.fechanacimiento
+                ,paisNacimiento : Ext.getCmp('paisnacimientoId').getRawValue()
+                ,provinciaNacimiento : Ext.getCmp('provincianacimientoId').getRawValue()
+                ,localidadNacimiento: Ext.getCmp('localidadnacimientoId').getRawValue()
+                ,calleDomicilio: Ext.getCmp('calledomicilioId').getValue()
+                ,numeroDomicilio: Ext.getCmp('numerodomicilioId').getValue()
+                ,barrioDomicilio: Ext.getCmp('barriodomicilioId').getValue()
+                ,paisDomicilio: Ext.getCmp('paisdomicilioId').getRawValue()
+                ,provinciaDomicilio: Ext.getCmp('provinciadomicilioId').getRawValue()
+                ,localidadDomicilio: Ext.getCmp('localidaddomicilioId').getRawValue()
+
+
+                ,telefonoParticular: Ext.getCmp('telefonoparticularId').getValue()
+                ,celularParticular: Ext.getCmp('telefonocelularId').getValue()
+                ,telefonoAlternativo: Ext.getCmp('telefonoalternativoId').getValue()
+                ,email: datos.datoscontactoacademicoscarId.email
+                ,establecimiento: Ext.getCmp('establecimientoId').getValue()
+                ,titulo: Ext.getCmp('tituloobtenidoId').getValue()
+                ,anioEgreso: datos.datoscontactoacademicoscarId.anioegreso
+                //este campo luego analizar si va o no,situacionAdministrativa:datos.datoscontactoacademicoscarId.situacionacademica
+                ,legajo: datos.datoscontactoacademicoscarId.legajo
+
+
+                ,lugarLaboral: Ext.getCmp('lugarlaboralId').getValue()
+                ,telefonoLaboral: datos.datoslaboralesId.telefonolaboral
+                ,calleLaboral: Ext.getCmp('callelaboralId').getValue()
+                ,numeroDomicilioLaboral: datos.datoslaboralesId.numerocallelaboral
+                ,barrioLaboral: Ext.getCmp('barriolaboralId').getValue()
+                ,paisLaboral: Ext.getCmp('paislaboralId').getRawValue()
+                ,provinciaLaboral: Ext.getCmp('provincialaboralId').getRawValue()
+                ,localidadLaboral: Ext.getCmp('localidadlaboralId').getRawValue()
+
+                ,apellidoNombreTutor: Ext.getCmp('apellidonombretutorId').getValue()
+                ,profesion: Ext.getCmp('profesiontutorId').getValue()
+                ,parentescoTutor: Ext.getCmp('parentescotutorId').getValue()
+                ,telefonoTutor: datos.datosdeltutorId.telefonotutor
+                ,calleTutor: Ext.getCmp('calletutorId').getValue()
+                ,numeroDomicilioTutor: datos.datosdeltutorId.numerocalletutor
+                ,barrioTutor: Ext.getCmp('barriotutorId').getValue()
+                ,paisTutor: Ext.getCmp('paistutorId').getValue()
+                ,provinciaTutor: Ext.getCmp('provinciatutorId').getValue()
+                ,localidadTutor: Ext.getCmp('localidadtutorId').getValue()
+
+
+
+                ,apellidoNombreGarante:Ext.getCmp('apellidonombregaranteId').getValue()
+                ,profesionGarante: Ext.getCmp('profesiongaranteId').getValue()
+                ,parentescoGarante: Ext.getCmp('parentescogaranteId').getValue()
+                ,telefonoGarante: datos.datosdelgaranteId.telefonogarante
+                ,calleGarante: Ext.getCmp('callegaranteId').getValue()
+                ,numeroDomiciolioGarante: datos.datosdelgaranteId.numerocallegarante
+                ,barrioGarante: Ext.getCmp('barriogaranteId').getValue()
+                ,paisGarante: Ext.getCmp('paisgaranteId').getRawValue()
+                ,provincia: Ext.getCmp('provinciagaranteId').getRawValue()
+                ,localidadGarante: Ext.getCmp('localidadgaranteId').getRawValue()
+
+
+
+                ,legajo: datos.datosdelalumnocarId.legajo
+
             },
             success: function(resp,opt){
                 Ext.MessageBox.hide();
@@ -1160,7 +1246,7 @@ Ext.onReady(function(){
                 Ext.Msg.show({
                     title:'Error',
                     icon:Ext.MessageBox.ERROR ,
-                    msg: 'Error en el registro de datos. Comuníquese vía telefónica con  el colegio',
+                    msg: 'Error en el registro de datos. Intente más tarde o comuníquese vía telefónica con  el colegio',
                     buttons: Ext.MessageBox.OK,
                     fn: function(btn){
                     }

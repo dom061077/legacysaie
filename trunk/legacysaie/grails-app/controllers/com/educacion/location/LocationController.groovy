@@ -51,7 +51,7 @@ class LocationController {
             }
         }
         localidades.each {
-            recordList << [id: it.id,descripcion: it.descripcion+' ( COD.POSTAL: '+it.codigoPostal+')']
+            recordList << [id: it.id,descripcion: it.descripcion]
         }
         returnMap.rows = recordList
         render returnMap as JSON
