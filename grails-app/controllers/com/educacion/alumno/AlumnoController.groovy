@@ -248,6 +248,9 @@ class AlumnoController {
                     success=false
                     mensaje = 'Error en el registro de datos'
                     alumnoInstance.errors.allErrors.each{
+                        it.getCodes().each{
+                            log.debug "Código error: "+it
+                        }
                         errorList << [msg:messageSource.getMessage(it, LCH.locale)]
                     }
                 }else{

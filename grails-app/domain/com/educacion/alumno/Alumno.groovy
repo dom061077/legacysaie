@@ -84,52 +84,52 @@ class Alumno {
 
         tipoDocumento blank:true, nullable: true
         fechaNacimiento blank:true, nullable: true
-        paisNacimiento blank:true, nullable: true
-        provinciaNacimiento blank:true, nullable: true
-        localidadNacimiento blank:true, nullable: true
-        calleDomicilio blank:true, nullable: true
-        numeroDomicilio blank:true, nullable: true
-        barrioDomicilio blank:true, nullable: true
-        paisDomicilio blank:true, nullable: true
-        provinciaDomicilio blank:true, nullable: true
-        localidadDomicilio blank:true, nullable: true
-        telefonoParticular blank:true, nullable: true
-        celularParticular blank:true, nullable: true
-        email blank:true, nullable: true
-        telefonoAlternativo blank:true, nullable: true
-        establecimiento blank:true, nullable: true
-        titulo blank:true, nullable: true
+        paisNacimiento blank:true, nullable: true, maxSize: 40
+        provinciaNacimiento blank:true, nullable: true, maxSize: 40
+        localidadNacimiento blank:true, nullable: true, maxSize: 40
+        calleDomicilio blank:true, nullable: true, maxSize: 60
+        numeroDomicilio blank:true, nullable: true, maxSize: 10
+        barrioDomicilio blank:true, nullable: true, maxSize: 60
+        paisDomicilio blank:true, nullable: true, maxSize: 40
+        provinciaDomicilio blank:true, nullable: true, maxSize: 40
+        localidadDomicilio blank:true, nullable: true, maxSize: 40
+        telefonoParticular blank:true, nullable: true, maxSize: 25
+        celularParticular blank:true, nullable: true, maxSize: 25
+        email blank:true, nullable: true, maxSize: 60
+        telefonoAlternativo blank:true, nullable: true, maxSize: 25
+        establecimiento blank:true, nullable: true, maxSize: 60
+        titulo blank:true, nullable: true, maxSize: 100
         anioEgreso blank:true, nullable: true
         //situacionAcademica blank:true, nullable: true
         //legajo(column:legajo)
-        lugarLaboral blank:true, nullable: true
-        telefonoLaboral blank:true, nullable: true
-        calleLaboral blank:true, nullable: true
-        numeroDomicilioLaboral blank:true, nullable: true
-        barrioLaboral blank:true, nullable: true
-        paisLaboral blank:true, nullable: true
-        provinciaLaboral blank:true, nullable: true
-        localidadLaboral blank:true, nullable: true
-        apellidoNombreTutor blank:true, nullable: true
-        profesion blank:true, nullable: true
-        parentescoTutor blank:true, nullable: true
-        telefonoTutor blank:true, nullable: true
-        calleTutor blank:true, nullable: true
-        numeroDomicilioTutor blank:true, nullable: true
-        barrioTutor blank:true, nullable: true
-        paisTutor blank:true, nullable: true
-        provinciaTutor blank:true, nullable: true
-        localidadTutor blank:true, nullable: true
-        apellidoNombreGarante blank:true, nullable: true
-        profesionGarante blank:true, nullable: true
-        parentescoGarante blank:true, nullable: true
-        telefonoGarante blank:true, nullable: true
-        calleGarante blank:true, nullable: true
-        numeroDomiciolioGarante blank:true, nullable: true
-        barrioGarante blank:true, nullable: true
-        paisGarante blank:true, nullable: true
-        provincia blank:true, nullable: true
-        localidadGarante blank:true, nullable: true
+        lugarLaboral blank:true, nullable: true, maxSize: 50
+        telefonoLaboral blank:true, nullable: true, maxSize: 25
+        calleLaboral blank:true, nullable: true, maxSize: 60
+        numeroDomicilioLaboral blank:true, nullable: true, maxSize: 10
+        barrioLaboral blank:true, nullable: true, maxSize: 60
+        paisLaboral blank:true, nullable: true, maxSize: 40
+        provinciaLaboral blank:true, nullable: true, maxSize: 40
+        localidadLaboral blank:true, nullable: true, maxSize: 40
+        apellidoNombreTutor blank:true, nullable: true, maxSize: 60
+        profesion blank:true, nullable: true, maxSize: 60
+        parentescoTutor blank:true, nullable: true, maxSize: 50
+        telefonoTutor blank:true, nullable: true, maxSize: 25
+        calleTutor blank:true, nullable: true, maxSize: 60
+        numeroDomicilioTutor blank:true, nullable: true, maxSize: 10
+        barrioTutor blank:true, nullable: true, maxSize: 60
+        paisTutor blank:true, nullable: true, maxSize: 40
+        provinciaTutor blank:true, nullable: true, maxSize: 40
+        localidadTutor blank:true, nullable: true, maxSize: 40
+        apellidoNombreGarante blank:true, nullable: true , maxSize: 60
+        profesionGarante blank:true, nullable: true, maxSize: 60
+        parentescoGarante blank:true, nullable: true , maxSize: 50
+        telefonoGarante blank:true, nullable: true, maxSize: 25
+        calleGarante blank:true, nullable: true, maxSize: 60
+        numeroDomiciolioGarante blank:true, nullable: true, maxSize: 10
+        barrioGarante blank:true, nullable: true, maxSize: 60
+        paisGarante blank:true, nullable: true, maxSize: 40
+        provincia blank:true, nullable: true, maxSize: 40
+        localidadGarante blank:true, nullable: true, maxSize: 40
         //falta mapear el campo sitacademica
         //situacionAcademica blank:true, nullable: true
         situacionAdministrativa blank:true, nullable: true
