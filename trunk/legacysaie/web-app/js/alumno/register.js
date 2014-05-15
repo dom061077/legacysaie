@@ -432,6 +432,12 @@ Ext.onReady(function(){
                                 provinciaCmb.store.load({
                                     params:{'pais_id':Ext.getCmp('paisnacimientoId').hiddenField.value}
                                 });
+                                var localidadCmb = Ext.getCmp('localidadnacimientoId');
+                                localidadCmb.clearValue();
+                                localidadCmb.store.load({
+                                    params:{'provincia_id':Ext.getCmp('provincianacimientoId').hiddenField.value}
+                                });
+
                             }
                         }
 
