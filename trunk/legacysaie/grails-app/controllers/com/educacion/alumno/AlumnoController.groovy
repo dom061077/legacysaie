@@ -708,4 +708,10 @@ class AlumnoController {
         params.put("SUBREPORT_DIR",servletContext.getRealPath("/reports/"))
         chain(controller:'jasper',action:'index',model:[data:list],params:params)
     }
+
+    def changepassword(){
+        def email = params.email
+        def username = params.username
+
+    }
 }

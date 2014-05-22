@@ -95,7 +95,7 @@ class Alumno {
         localidadDomicilio blank:true, nullable: true, maxSize: 40
         telefonoParticular blank:true, nullable: true, maxSize: 25
         celularParticular blank:true, nullable: true, maxSize: 25
-        email blank:true, nullable: true, maxSize: 60
+        email blank:true, nullable: true, maxSize: 60, unique:true
         telefonoAlternativo blank:true, nullable: true, maxSize: 25
         establecimiento blank:true, nullable: true, maxSize: 60
         titulo blank:true, nullable: true, maxSize: 100

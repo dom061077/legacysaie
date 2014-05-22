@@ -16,6 +16,7 @@ class User {
 	boolean passwordExpired
     Alumno alumno
     Docente docente
+    String email
 
 
 	static constraints = {
@@ -24,6 +25,7 @@ class User {
         alumno blank:true, nullable: true
         docente blank: true,nullable: true
         realName blank:true,nullable:true
+        email(blank: true,nullable:true)
 	}
 
 	static mapping = {
