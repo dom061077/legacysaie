@@ -21,6 +21,103 @@ function loginform(form){
 
 Ext.onReady(function(){
     Ext.QuickTips.init();
+    var formChangePassword=new Ext.form.FormPanel ({
+        url:'../subRubro/savejson',
+        id:'formSubrubroId',
+        frame:true,
+        width:450,
+        height:150,
+        items:[
+            {
+                xtype:'textfield',
+                name:'nombreSubrubro',
+                id:'nombreSubrubroId',
+                fieldLabel:'Nombre Sub-Rubro',
+                width:200
+            }/*,{
+             xtype:'combo',
+             fieldLabel:'Rubro',
+             id:'altarubroId',
+             name:'rubro.id',
+             store:rubroStore,
+             mode:'local',
+             valueField:'id',
+             forceSelection:true,
+             allowBlank:false,
+             displayField:'nombreRubro',
+             width:200
+             }*/
+        ],
+        buttons:[
+            {
+                text:'Guardar',
+                handler:function(){
+                    formSubrubro.getForm().submit({
+                        params:{
+                            'rubro.id':Ext.getCmp('idRubro').hiddenField.value
+                        },
+                        success:function(f,a){
+                            var subrubro = Ext.getCmp('idSubrubro')
+                            subrubro.clearValue();
+                            subrubro.store.load({
+                                params:{'rubroid':Ext.getCmp('idRubro').hiddenField.value}
+                            });
+                            subrubro.enable();
+                            winSubrubro.hide();
+                            Ext.getCmp('idSubrubro').setValue(a.result.nombreSubrubro);
+                            Ext.getCmp('idSubrubro').hiddenField.value=a.result.idSubRubro;
+
+                        },
+                        failure:function(f,a){
+                            var msg="";
+                            if (a.failureType==Ext.form.Action.CONNECT_FAILURE ||
+                                a.failureType==Ext.form.Action.SERVER_INVALID){
+                                Ext.Msg.alert('Error','El servidor no Responde')
+                            }
+                            if (a.result){
+                                if (a.result.loginredirect==true){
+                                    Ext.Msg.alert('Su sesion de usuario a caducado, ingrese nuevamente');
+                                    window.location='../logout/index';
+                                }
+                                if (a.result.errors){
+                                    for (var i=0; i<a.result.errors.length;i++){
+                                        msg=msg+a.result.errors[i].title+'\r\n';
+                                    }
+                                    Ext.Msg.alert(msg);
+                                }
+                            }
+
+                        }
+
+                    });
+                }
+            },{
+                text:'Cancelar',
+                handler:function(){
+                    winSubrubro.hide();
+                }
+            }
+        ]
+    });
+
+
+    var winSubrubro=new Ext.Window({
+        title:'Agregar Sub-Rubro',
+        resizable:false,
+        modal:true,
+        formPanel: null,
+        width:400,
+        height:200,
+        closeAction:'hide',
+        plain: true,
+        items:[formChangePassword]
+    });
+
+
+    function changepassword(){
+
+    }
+
     var loginForm = new Ext.FormPanel({
         style: 'margin:0 auto;margin-top:100px;',
         url:postLoginUrl,
@@ -47,17 +144,38 @@ Ext.onReady(function(){
                     //}
                 }
             },{
-                xtype: 'textfield',
-                inputType: 'password',
-                fieldLabel: 'Password',
-                name: 'j_password',
-                enableKeyEvents:true,
-                listeners:{
-                    keypress:function(component,event){
-                        if(event.getCharCode()==13)
-                            loginform(loginForm);
+                layout:'column',
+                border:false,
+                anchor:'0',
+                items:[
+                    {
+                        width:390,
+                        layout:'form',
+                        border:false,
+                        items:{
+                            xtype: 'textfield',
+                            inputType: 'password',
+                            fieldLabel: 'Password',
+                            name: 'j_password',
+                            enableKeyEvents:true,
+                            listeners:{
+                                keypress:function(component,event){
+                                    if(event.getCharCode()==13)
+                                        loginform(loginForm);
+                                }
+                            }
+                        }
+                    } ,{
+                        width:390,
+                        layout:'form',
+                        border: false,
+                        items:{
+                            xtype:'label',
+                            html:'<a href="">¿Olvidó su contraseña?</a>'
+                        }
                     }
-                }
+
+                ]
             }
         ],
         buttons:[
