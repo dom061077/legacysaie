@@ -205,7 +205,12 @@ class PanelControlAdminController {
         returnMap.errors = errorList
         render returnMap as JSON
     }
-    
+
+    def enviarpasswolvidada(String email){
+        def usuario = User.findByEmail(email)
+
+    }
+
     def enviarcorreousuarioalumno(long id){
         def returnMap = [:]
         def errorList = []
