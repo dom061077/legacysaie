@@ -25,7 +25,7 @@ class User {
         alumno blank:true, nullable: true
         docente blank: true,nullable: true
         realName blank:true,nullable:true
-        email(blank: true,nullable:true)
+        email(blank: true,nullable:true,unique:true)
 	}
 
 	static mapping = {

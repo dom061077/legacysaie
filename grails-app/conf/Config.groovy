@@ -1,3 +1,6 @@
+import org.apache.log4j.RollingFileAppender
+import org.apache.log4j.DailyRollingFileAppender
+
 // locations to search for config files that get merged into the main config;
 // config files can be ConfigSlurper scripts, Java properties files, or classes
 // in the classpath in ConfigSlurper format
@@ -11,10 +14,6 @@
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
 
-import org.apache.log4j.Level
-import org.apache.log4j.net.SMTPAppender
-import org.apache.log4j.RollingFileAppender
-import org.apache.log4j.DailyRollingFileAppender
 //import org.apache.log4j.
 //TimeBasedRollingPolicy
 
