@@ -76,7 +76,7 @@ class Alumno {
     TipoDocumentoIdentidad tipoDocumento
     static hasMany = [matriculas:Matricula]
     static constraints = {
-        numeroDocumento(blank: false,nullable: false,maxSize: 10, minSize: 10)
+        numeroDocumento(blank: false,nullable: false,maxSize: 8, minSize: 8)
         apellido(blank: false,nullable: false,maxSize: 50)
         nombre(blank: false,nullable: false, maxSize: 50)
         imagen(blank: true,nullable: true, maxSize:1024*300)
