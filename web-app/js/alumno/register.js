@@ -1081,7 +1081,7 @@ Ext.onReady(function(){
                      border:false,
                      listeners:{
                             afterRender:function(){
-                                Recaptcha.create("6LfYyfQSAAAAAHkWGU_iYOOpZAbny_JSPpH4wQhM",//siempre va la clave publica
+                                Recaptcha.create("6Lco8fQSAAAAAIo2qfbxYL04QmkowFjBChV2beYu",//siempre va la clave publica
                                     Ext.getDom(this.body),
                                     {
                                         theme: "clean",

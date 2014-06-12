@@ -5,7 +5,8 @@ class HomeController {
     def index() {
         log.debug "INGRESO AL CONTROLLER HOME"
         if (isNormal())
-            render(view: '/index')
+            //render(view: '/index')
+            redirect(controller: 'login','auth')
         else{
         def userInstance = springSecurityService.currentUser
         def controllerUri
