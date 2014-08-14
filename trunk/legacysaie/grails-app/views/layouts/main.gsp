@@ -33,7 +33,8 @@
 				out << "var blankimagePath='"+"${resource(dir:'js')}';";
 
 			%>
-            Ext.BLANK_IMAGE_URL =blankimagePath+ '/extjs/resources/images/default/s.gif';
+            //Ext.BLANK_IMAGE_URL =blankimagePath+ '/extjs/resources/images/default/s.gif';
+            Ext.BLANK_IMAGE_URL = '<% out << resource(dir:'/js/extjs/resources/images/default',file:'s.gif') %>';
         </script>
 
 		<g:layoutHead/>
