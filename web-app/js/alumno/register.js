@@ -267,7 +267,7 @@ Ext.onReady(function(){
                 items : [{
                     border    : false,
                     bodyStyle : 'background:none;',
-                    html      : 'Bienvenido al registro de datos personales del <strong>Colegio de la Cruz Roja Argentina</strong>, '+
+                    html      : 'Bienvenido al registro de datos personales del <strong>INSTITUTO SUPERIOR CRUZ ROJA ARGENTINA – FILIAL CÓRDOBA</strong>, '+
                         ' es necesario que cargue todos los datos marcados con rojo que incluye la registración.<br/><br/>'+
                         'Por favor, pulse el botón "siguiente" para comenzar la carga de datos.'
                 }]
@@ -1081,7 +1081,7 @@ Ext.onReady(function(){
                      border:false,
                      listeners:{
                             afterRender:function(){
-                                Recaptcha.create("6Lco8fQSAAAAAIo2qfbxYL04QmkowFjBChV2beYu",//siempre va la clave publica
+                                Recaptcha.create("6Lc6dPgSAAAAAPOwGa9-CmSE_HdprJ-ci5aflPWJ",//siempre va la clave publica
                                     Ext.getDom(this.body),
                                     {
                                         theme: "clean",

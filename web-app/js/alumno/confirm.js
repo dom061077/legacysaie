@@ -163,7 +163,7 @@ Ext.onReady(function(){
                 border:false,
                 listeners:{
                     afterRender:function(){
-                        Recaptcha.create("6LfTZcwSAAAAAISkWiE7aqtH3xa7vdmu7GL9O7bm",
+                        Recaptcha.create("6Lc6dPgSAAAAAPOwGa9-CmSE_HdprJ-ci5aflPWJ",
                             Ext.getDom(this.body),
                             {
                                 theme: "clean",
